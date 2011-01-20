@@ -1,0 +1,1 @@
+This folder contains the WSDL documentation tool. A tool to generate service documentation from wsdl annotations.
