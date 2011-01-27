@@ -1,0 +1,1790 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+					
+		<xs:element name="addListRequest" type="tns:AddListRequestType"/>
+		<xs:element name="addListResponse" type="tns:AddListResponseType"/>
+			<xs:complexType name="AddListRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="userName" type="xs:string"/>
+							<xs:element minOccurs="1" name="listName" type="xs:string"/>
+							<xs:element minOccurs="0" name="userId" type="xs:long"/>
+							<xs:element minOccurs="1" name="listCategory" type="tns:ListCategoryType"/>
+							<xs:element minOccurs="0" name="creatorId" type="xs:long"/>
+							<xs:element minOccurs="1" name="visibility" type="tns:VisibilityType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listEntry" type="tns:EntryType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listAttribute" type="tns:AttributeType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>			
+			<xs:complexType name="AddListResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+								<xs:element minOccurs="0" name="listId" type="xs:long"/>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entryId" type="xs:long"/>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entryAttrId" type="xs:long"/>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeId" type="xs:long"/>
+								<xs:element minOccurs="0" name="error" type="xs:string"/>
+								<xs:element minOccurs="0" name="addListResult" type="xs:string"/>
+								<xs:element minOccurs="0" name="addListEntryResult" type="xs:string"/>
+								<xs:element minOccurs="0" name="addListEntryAttrResult" type="xs:string"/>
+								<xs:element minOccurs="0" name="addListAttributeResult" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:simpleType name="ListCategoryType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="WishList"/>
+					<xs:enumeration value="GiftList"/>
+					<xs:enumeration value="RegistryList"/>
+					<xs:enumeration value="SharedList"/>
+					<xs:enumeration value="CustomList"/>
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:simpleType name="CreatorCategoryType">
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="eBayUser"/>
+					<xs:enumeration value="eBayAdjustency"/>
+					<xs:enumeration value="eBayAdjustencyUser"/>
+					<xs:enumeration value="eBayAffiliateUser"/>
+					<xs:enumeration value="eBay"/>
+					<xs:enumeration value="thirdParty"/>
+					<xs:enumeration value="eBayAnonymous"/>
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:simpleType name="VisibilityType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="public"/>
+					<xs:enumeration value="private"/>
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:complexType name="EntryType">
+				<xs:annotation>
+					<xs:documentation>				
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<!-- entryId is required in setEntry operation -->
+					<xs:element minOccurs="1" name="userId" type="xs:long"/>
+					<xs:element minOccurs="0" name="entryTagMapId" type="xs:long"/>
+					<xs:element minOccurs="0" name="entryId" type="xs:long"/>
+					<xs:element name="entryValue" type="xs:long"/>
+					<xs:element minOccurs="1" name="entryCategory" type="tns:EntryCategoryType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="entryAttribute" type="tns:AttributeType"/>
+					<xs:element minOccurs="0" name="creationDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="modificationDate" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:simpleType name="EntryCategoryType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="eBayItem"/>
+					<!-- universal item is item external to ebay -->
+					<xs:enumeration value="universalItem"/>
+					<xs:enumeration value="myEbaySavedSearch"/>
+					<xs:enumeration value="myEbaySavedSeller"/>
+					<xs:enumeration value="customEntry"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="AttributeType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="attributeId" type="xs:long"/>
+					<xs:element minOccurs="1" name="attributeName" type="xs:string"/>
+					<xs:element minOccurs="1" name="attributeValue" type="xs:string"/>
+					<xs:element minOccurs="0" name="creationDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="modificationDate" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- end of addList -->
+			<xs:element name="getListRequest" type="tns:GetListRequestType"/>
+			<xs:element name="getListResponse" type="tns:GetListResponseType"/>
+			
+			<xs:complexType name="GetListRequestType">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="returnEntryAttributes" type="xs:boolean"/>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetListResponseType">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="error" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listEntry" type="tns:EntryType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listAttributes" type="tns:AttributeType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="list" type="tns:ListType">
+            			</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="ListType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="listId" type="xs:long"/>
+					<xs:element minOccurs="0" name="listName" type="xs:string"/>
+					<xs:element minOccurs="0" name="listCategory" type="tns:ListCategoryType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="listEntry" type="tns:EntryType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="listAttributes" type="tns:AttributeType"/>
+					<xs:element minOccurs="0" name="listCreationDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="listModificationDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="entryId" type="xs:long"/>
+					<xs:element minOccurs="0" name="EntryValue" type="xs:string"/>
+					<xs:element minOccurs="0" name="entryCategory" type="tns:EntryCategoryType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="entryAttributes" type="tns:AttributeType"/>
+					<xs:element minOccurs="0" name="entryCreationDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="entryModificationDate" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- end getList -->
+			
+			<xs:element name="getListsRequest" type="tns:GetListsRequestType"/>
+			<xs:element name="getListsResponse" type="tns:GetListsResponseType"/>
+			
+			<xs:complexType name="GetListsRequestType">
+				<xs:annotation>
+					<xs:documentation>					
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="returnEntryAttributes" type="xs:boolean"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listId" type="xs:long"/>						
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetListsResponseType">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="message" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listEntry" type="tns:EntryType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listAttributes" type="tns:AttributeType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="list" type="tns:ListType">
+            			</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end getLists -->
+			<xs:element name="renameListRequest" type="tns:RenameListRequestType"/>
+			<xs:element name="renameListResponse" type="tns:RenameListResponseType"/>
+			<xs:complexType name="RenameListRequestType">
+				<xs:annotation>
+					<xs:documentation>					
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+							<xs:element minOccurs="1" name="listName" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RenameListResponseType">
+				<xs:annotation>
+					<xs:documentation>				
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="error" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end renameList -->
+			
+			<xs:element name="setListVisibilityRequest" type="tns:SetListVisibilityRequestType"/>
+			<xs:element name="setListVisibilityResponse" type="tns:SetListVisibilityResponseType"/>
+			<xs:complexType name="SetListVisibilityRequestType">
+				<xs:annotation>
+					<xs:documentation>					
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+							<xs:element minOccurs="1" name="visibility" type="tns:VisibilityType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SetListVisibilityResponseType">
+				<xs:annotation>
+					<xs:documentation>				
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="isSuccess" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end SetListVisibility -->
+			
+			<xs:element name="removeListsRequest" type="tns:RemoveListsRequestType"/>
+			<xs:element name="removeListsResponse" type="tns:RemoveListsResponseType"/>
+			<xs:complexType name="RemoveListsRequestType">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RemoveListsResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<!-- listIds that could not be removed -->
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="listId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="error" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end remove Lists -->
+			<xs:element name="removeAllEntriesRequest" type="tns:RemoveAllEntriesRequestType"/>
+			<xs:element name="removeAllEntriesResponse" type="tns:RemoveAllEntriesResponseType"/>
+			<xs:complexType name="RemoveAllEntriesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RemoveAllEntriesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<!-- listIds that could not be removed -->
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="listId" type="xs:long">
+            			</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				
+			</xs:complexType>
+			<!-- end remove AllEntries -->
+			<xs:element name="addEntryRequest" type="tns:addEntryRequestType"/>
+			<xs:element name="addEntryResponse" type="tns:addEntryResponseType"/>
+			<xs:complexType name="addEntryRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element name="listId" type="xs:long"/>
+							<xs:element name="listEntry" type="tns:EntryType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			
+			<xs:complexType name="addEntryResponseType">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element name="entyId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="listId" type="xs:long">
+            			</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end addEntry -->
+			
+			<xs:element name="addEntriesRequest" type="tns:addEntriesRequestType"/>
+			<xs:element name="addEntriesResponse" type="tns:addEntriesResponseType"/>
+			<xs:complexType name="addEntriesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element name="listId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="listEntry" type="tns:EntryType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				
+			</xs:complexType>
+			
+			<xs:complexType name="addEntriesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="entryId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				
+			</xs:complexType>
+			
+			<!-- end addEntries -->
+			<xs:element name="getEntriesRequest" type="tns:getEntriesRequestType"/>
+			<xs:element name="getEntriesResponse" type="tns:getEntriesResponseType"/>
+			<xs:complexType name="getEntriesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="returnEntryAttributes" type="xs:boolean"/>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			
+			<xs:complexType name="getEntriesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="message" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listEntry" type="tns:EntryType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listAttributes" type="tns:AttributeType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end getEntries -->
+			<xs:element name="setEntriesRequest" type="tns:setEntriesRequestType"/>
+			<xs:element name="setEntriesResponse" type="tns:setEntriesResponseType"/>
+			<xs:complexType name="setEntriesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listEntry" type="tns:EntryType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="setEntriesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<!-- add more if needed -->
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="corelationId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end setEntries -->
+			<xs:element name="removeEntriesRequest" type="tns:RemoveEntriesRequestType"/>
+			<xs:element name="removeEntriesResponse" type="tns:RemoveEntriesResponseType"/>
+			<xs:complexType name="RemoveEntriesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="entryId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RemoveEntriesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<!-- add more if needed -->
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="corelationId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end remove Entries -->
+			
+			
+			
+			<xs:element name="addListAttributesRequest" type="tns:addListAttributesRequestType"/>
+			<xs:element name="addListAttributesResponse" type="tns:addListAttributesResponseType"/>
+			<xs:complexType name="addListAttributesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="attribute" type="tns:AttributeType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="addListAttributesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<!-- add more if needed -->
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listAttributeId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end addListAttributes -->
+			
+			<xs:element name="addEntryAttributesRequest" type="tns:addEntryAttributesRequestType"/>
+			<xs:element name="addEntryAttributesResponse" type="tns:addEntryAttributesResponseType"/>
+			<xs:complexType name="addEntryAttributesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="entryId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="attribute" type="tns:AttributeType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="addEntryAttributesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<!-- add more if needed -->
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="entryAttributeId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end addEntryAttributes -->
+			
+			<xs:element name="removeEntryAttributesRequest" type="tns:removeEntryAttributesRequestType"/>
+			<xs:element name="removeEntryAttributesResponse" type="tns:removeEntryAttributesResponseType"/>
+			<xs:complexType name="removeEntryAttributesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="entryId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="entryAttributeIds" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="removeEntryAttributesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="corelationId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end removeEntryAttributes -->
+			
+			<xs:element name="setEntryAttributesRequest" type="tns:setEntryAttributesRequestType"/>
+			<xs:element name="setEntryAttributesResponse" type="tns:setEntryAttributesResponseType"/>
+			<xs:complexType name="setEntryAttributesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="entryId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="attribute" type="tns:AttributeType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="setEntryAttributesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end setEntryAttributes -->
+			
+			<xs:element name="getEntryAttributesRequest" type="tns:getEntryAttributesRequestType"/>
+			<xs:element name="getEntryAttributesResponse" type="tns:getEntryAttributesResponseType"/>
+			<xs:complexType name="getEntryAttributesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="entryId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getEntryAttributesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="message" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="tns:AttributeType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end getEntryAttributes -->
+			
+			<xs:element name="getListAttributesRequest" type="tns:getListAttributesRequestType"/>
+			<xs:element name="getListAttributesResponse" type="tns:getListAttributesResponseType"/>
+			<xs:complexType name="getListAttributesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getListAttributesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="message" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listAttribute" type="tns:AttributeType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end getListAttributes -->
+			<xs:element name="setListAttributesRequest" type="tns:setListAttributesRequestType"/>
+			<xs:element name="setListAttributesResponse" type="tns:setListAttributesResponseType"/>
+			<xs:complexType name="setListAttributesRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="attribute" type="tns:AttributeType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="setListAttributesResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<!-- add more per required -->
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end setListAttributes -->
+			
+			<xs:element name="removeListAttributeRequest" type="tns:removeListAttributeRequestType"/>
+			<xs:element name="removeListAttributeResponse" type="tns:removeListAttributeResponseType"/>
+			<xs:complexType name="removeListAttributeRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="listId" type="xs:long"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="listAttributeIds" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="removeListAttributeResponseType">
+				<xs:annotation>
+					<xs:documentation>
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<!-- add more if needed -->
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="corelationId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- end removeListAttribute -->
+			
+			<xs:element name="findByCreatorIdRequest" type="tns:findByCreatorIdRequestType"/>
+			<xs:element name="findByCreatorIdResponse" type="tns:findByCreatorIdResponseType"/>
+			<xs:complexType name="findByCreatorIdRequestType">
+				<xs:annotation>
+					<xs:documentation>			
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="userName" type="xs:string"/>
+							<xs:element minOccurs="0" name="creatorId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="findByCreatorIdResponseType">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseListServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="message" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listEntry" type="tns:EntryType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="listAttributes" type="tns:AttributeType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="list" type="tns:ListType">
+            			</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		
+			<!-- end findByCreatorId -->
+			
+			
+			<!-- end findByListName -->
+			<xs:complexType abstract="true" name="BaseListServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base List class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+					<xs:sequence>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+							
+			</xs:complexType>
+			
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+				
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseListServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations in Incentive Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+					ErrorMessage to indicate any Error/Warning occured as part of service call.
+					Any run time error will not be reported here, but will be reported aspart of
+					soap fault.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+					This represents error details.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+					represent contextual data associated with an error.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+					Reprents the level of error. E.g. Error/Warning
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+					Reprents the error catagorization. Request and Application Error are mostly occured due to 
+					invalid data passed in request. System Error cannot be fixed by changing request values and 
+					mostly occured due to application failure.						 
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			</xs:schema>
+	</wsdl:types>
+	
+<wsdl:message name="addEntryAttributesRequest">
+
+<wsdl:part element="ns0:addEntryAttributesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="addEntryAttributesResponse">
+
+<wsdl:part element="ns0:addEntryAttributesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="removeEntryAttributesRequest">
+
+<wsdl:part element="ns0:removeEntryAttributesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="removeEntryAttributesResponse">
+
+<wsdl:part element="ns0:removeEntryAttributesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="setEntryAttributesRequest">
+
+<wsdl:part element="ns0:setEntryAttributesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="setEntryAttributesResponse">
+
+<wsdl:part element="ns0:setEntryAttributesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="getEntryAttributesRequest">
+
+<wsdl:part element="ns0:getEntryAttributesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="getEntryAttributesResponse">
+
+<wsdl:part element="ns0:getEntryAttributesResponse" name="messageParameters"/>
+
+</wsdl:message>
+	
+<wsdl:message name="addListRequest">
+
+<wsdl:part element="ns0:addListRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="addListResponse">
+
+<wsdl:part element="ns0:addListResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+
+<wsdl:message name="getListRequest">
+
+<wsdl:part element="ns0:getListRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="getListResponse">
+
+<wsdl:part element="ns0:getListResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="getListsRequest">
+
+<wsdl:part element="ns0:getListsRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="getListsResponse">
+
+<wsdl:part element="ns0:getListsResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+
+<wsdl:message name="renameListRequest">
+
+<wsdl:part element="ns0:renameListRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="renameListResponse">
+
+<wsdl:part element="ns0:renameListResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="setListVisibilityRequest">
+
+<wsdl:part element="ns0:setListVisibilityRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="setListVisibilityResponse">
+
+<wsdl:part element="ns0:setListVisibilityResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+
+<wsdl:message name="removeListsRequest">
+
+<wsdl:part element="ns0:removeListsRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="removeListsResponse">
+
+<wsdl:part element="ns0:removeListsResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="removeAllEntriesRequest">
+
+<wsdl:part element="ns0:removeAllEntriesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="removeAllEntriesResponse">
+
+<wsdl:part element="ns0:removeAllEntriesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+
+<wsdl:message name="getEntriesRequest">
+
+<wsdl:part element="ns0:getEntriesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+
+
+<wsdl:message name="setEntriesRequest">
+
+<wsdl:part element="ns0:setEntriesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="setEntriesResponse">
+
+<wsdl:part element="ns0:setEntriesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+
+<wsdl:message name="removeEntriesRequest">
+
+<wsdl:part element="ns0:removeEntriesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="removeEntriesResponse">
+
+<wsdl:part element="ns0:removeEntriesResponse" name="messageParameters"/>
+
+</wsdl:message>
+<wsdl:message name="addEntryRequest">
+
+<wsdl:part element="ns0:addEntryRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="addEntryResponse">
+
+<wsdl:part element="ns0:addEntryResponse" name="messageParameters"/>
+
+</wsdl:message>
+<wsdl:message name="addEntriesRequest">
+
+<wsdl:part element="ns0:addEntriesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="addEntriesResponse">
+
+<wsdl:part element="ns0:addEntriesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="addListAttributesRequest">
+
+<wsdl:part element="ns0:addListAttributesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="addListAttributesResponse">
+
+<wsdl:part element="ns0:addListAttributesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+
+<wsdl:message name="getListAttributesRequest">
+
+<wsdl:part element="ns0:getListAttributesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="getListAttributesResponse">
+
+<wsdl:part element="ns0:getListAttributesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+
+<wsdl:message name="setListAttributesRequest">
+
+<wsdl:part element="ns0:setListAttributesRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="setListAttributesResponse">
+
+<wsdl:part element="ns0:setListAttributesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="removeListAttributeRequest">
+
+<wsdl:part element="ns0:removeListAttributeRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="removeListAttributeResponse">
+
+<wsdl:part element="ns0:removeListAttributeResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+
+<wsdl:message name="findByCreatorIdRequest">
+
+<wsdl:part element="ns0:findByCreatorIdRequest" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="findByCreatorIdResponse">
+
+<wsdl:part element="ns0:findByCreatorIdResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+<wsdl:message name="getEntriesResponse">
+
+<wsdl:part element="ns0:getEntriesResponse" name="messageParameters"/>
+
+</wsdl:message>
+
+    <wsdl:portType name="ListServicePortType">
+    	<wsdl:operation name="addEntryAttributes">
+			<wsdl:input message="ns0:addEntryAttributesRequest"/>
+			<wsdl:output message="ns0:addEntryAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeEntryAttributes">
+			<wsdl:input message="ns0:removeEntryAttributesRequest"/>
+			<wsdl:output message="ns0:removeEntryAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setEntryAttributes">
+			<wsdl:input message="ns0:setEntryAttributesRequest"/>
+			<wsdl:output message="ns0:setEntryAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getEntryAttributes">
+			<wsdl:input message="ns0:getEntryAttributesRequest"/>
+			<wsdl:output message="ns0:getEntryAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addList">
+			<wsdl:input message="ns0:addListRequest"/>
+			<wsdl:output message="ns0:addListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getList">
+			<wsdl:input message="ns0:getListRequest"/>
+			<wsdl:output message="ns0:getListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getLists">
+			<wsdl:input message="ns0:getListsRequest"/>
+			<wsdl:output message="ns0:getListsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="renameList">
+			<wsdl:input message="ns0:renameListRequest"/>
+			<wsdl:output message="ns0:renameListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setListVisibility">
+			<wsdl:input message="ns0:setListVisibilityRequest"/>
+			<wsdl:output message="ns0:setListVisibilityResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeLists">
+			<wsdl:input message="ns0:removeListsRequest"/>
+			<wsdl:output message="ns0:removeListsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeAllEntries">
+			<wsdl:input message="ns0:removeAllEntriesRequest"/>
+			<wsdl:output message="ns0:removeAllEntriesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addEntry">
+			<wsdl:input message="ns0:addEntryRequest"/>
+			<wsdl:output message="ns0:addEntryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addEntries">
+			<wsdl:input message="ns0:addEntriesRequest"/>
+			<wsdl:output message="ns0:addEntriesResponse"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getEntries">
+			<wsdl:input message="ns0:getEntriesRequest"/>
+			<wsdl:output message="ns0:getEntriesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setEntries">
+			<wsdl:input message="ns0:setEntriesRequest"/>
+			<wsdl:output message="ns0:setEntriesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeEntries">
+			<wsdl:input message="ns0:removeEntriesRequest"/>
+			<wsdl:output message="ns0:removeEntriesResponse"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="addListAttributes">
+			<wsdl:input message="ns0:addListAttributesRequest"/>
+			<wsdl:output message="ns0:addListAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getListAttributes">
+			<wsdl:input message="ns0:getListAttributesRequest"/>
+			<wsdl:output message="ns0:getListAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setListAttributes">
+			<wsdl:input message="ns0:setListAttributesRequest"/>
+			<wsdl:output message="ns0:setListAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeListAttribute">
+			<wsdl:input message="ns0:removeListAttributeRequest"/>
+			<wsdl:output message="ns0:removeListAttributeResponse"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="findByCreatorId">
+			<wsdl:input message="ns0:findByCreatorIdRequest"/>
+			<wsdl:output message="ns0:findByCreatorIdResponse"/>
+		</wsdl:operation>
+
+		    </wsdl:portType>
+	
+	<wsdl:binding name="ListServiceHttpBinding" type="ns0:ListServicePortType">
+		<http:binding verb="POST"/>
+		
+		<wsdl:operation name="addEntryAttributes">
+			<http:operation location="ListService/addEntryAttributes"/>
+			<wsdl:input>
+				<mime:content part="addEntryAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="addEntryAttributesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="removeEntryAttributes">
+			<http:operation location="ListService/removeEntryAttributes"/>
+			<wsdl:input>
+				<mime:content part="removeEntryAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="removeEntryAttributesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="setEntryAttributes">
+			<http:operation location="ListService/setEntryAttributes"/>
+			<wsdl:input>
+				<mime:content part="setEntryAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="setEntryAttributesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getEntryAttributes">
+			<http:operation location="ListService/getEntryAttributes"/>
+			<wsdl:input>
+				<mime:content part="getEntryAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getEntryAttributesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="addList">
+			<http:operation location="ListService/addList"/>
+			<wsdl:input>
+				<mime:content part="addListRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="addListResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getList">
+			<http:operation location="ListService/getList"/>
+			<wsdl:input>
+				<mime:content part="getListRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getListResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeLists">
+			<http:operation location="ListService/removeLists"/>
+			<wsdl:input>
+				<mime:content part="removeListsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="removeListsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeAllEntries">
+			<http:operation location="ListService/removeAllEntries"/>
+			<wsdl:input>
+				<mime:content part="removeAllEntriesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="removeAllEntriesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeEntries">
+			<http:operation location="ListService/removeEntries"/>
+			<wsdl:input>
+				<mime:content part="removeEntriesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="removeEntriesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addEntry">
+			<http:operation location="ListService/addEntry"/>
+			<wsdl:input>
+				<mime:content part="addEntryRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="addEntryResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addEntries">
+			<http:operation location="ListService/addEntries"/>
+			<wsdl:input>
+				<mime:content part="addEntriesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="addEntriesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getEntries">
+			<http:operation location="ListService/getEntries"/>
+			<wsdl:input>
+				<mime:content part="getEntriesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getEntriesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setEntries">
+			<http:operation location="ListService/setEntries"/>
+			<wsdl:input>
+				<mime:content part="setEntriesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="setEntriesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addListAttributes">
+			<http:operation location="ListService/addListAttributes"/>
+			<wsdl:input>
+				<mime:content part="addListAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="addListAttributesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getListAttributes">
+			<http:operation location="ListService/getListAttributes"/>
+			<wsdl:input>
+				<mime:content part="getListAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getListAttributesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setListAttributes">
+			<http:operation location="ListService/setListAttributes"/>
+			<wsdl:input>
+				<mime:content part="setListAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="setListAttributessResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="renameList">
+			<http:operation location="ListService/renameList"/>
+			<wsdl:input>
+				<mime:content part="renameListRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="renameListResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setListVisibility">
+			<http:operation location="ListService/setListVisibility"/>
+			<wsdl:input>
+				<mime:content part="renameListRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="renameListResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+	</wsdl:binding>
+	
+	<wsdl:binding name="ListServiceSOAP12Binding" type="ns0:ListServicePortType">
+
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="addList">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/addList"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getList">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getList"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getLists">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getLists"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeLists">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/removeLists"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeAllEntries">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/removeAllEntries"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeEntries">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/removeEntries"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addEntry">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/addEntry"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addEntries">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/addEntries"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getEntries">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getEntries"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setEntries">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/setEntries"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="addListAttributes">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/addListAttributes"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getListAttributes">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getListAttributes"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setListAttributes">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/setListAttributes"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeListAttribute">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/removeListAttribute"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="renameList">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/renameList"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="setListVisibility">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/setListVisibility"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="findByCreatorId">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/findByCreatorId"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="addEntryAttributes">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/addEntryAttributes"/>
+			<wsdl:input>
+			<soap:body use="literal"/>
+			</wsdl:input>
+			
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			
+		</wsdl:operation>
+		
+		<wsdl:operation name="removeEntryAttributes">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/removeEntryAttributes"/>
+			<wsdl:input>
+			<soap:body use="literal"/>
+			</wsdl:input>
+			
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			
+		</wsdl:operation>
+		
+		<wsdl:operation name="setEntryAttributes">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/setEntryAttributes"/>
+			<wsdl:input>
+			<soap:body use="literal"/>
+			</wsdl:input>
+			
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			
+		</wsdl:operation>
+		
+		<wsdl:operation name="getEntryAttributes">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getEntryAttributes"/>
+			
+			<wsdl:input>
+			<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			
+		</wsdl:operation>
+		
+	</wsdl:binding>
+
+	<wsdl:service name="ListService">
+		<wsdl:port binding="ns0:ListServiceSOAP12Binding" name="ListServiceSOAP12port_http">
+			<soap12:address location="http://services.ebay.com/ListService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

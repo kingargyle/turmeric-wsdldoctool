@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/webutility/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="WebUtilityService" targetNamespace="http://www.ebay.com/marketplace/webutility/v1/services">
+  <types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/webutility/v1/services">
+
+    	<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+
+    	<xs:complexType name="GetVersionResponse">
+    		<xs:annotation>
+    			<xs:documentation/>
+
+    			<xs:appinfo/>
+    		</xs:annotation>
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseServiceResponse">
+    				<xs:sequence/>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:simpleType name="AckValue">
+    		<xs:annotation>
+    			<xs:documentation>
+    				Indicates whether the error is a severe error
+    				(causing the request to fail) or an informational
+    				error (a warning) that should be communicated to the
+    				user.
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:restriction base="xs:string">
+    			<xs:enumeration value="Success">
+    				<xs:annotation>
+    					<xs:documentation>
+    						The request was processed successfully, but
+    						something occurred that may affect your
+    						application or the user.
+    					</xs:documentation>
+    				</xs:annotation>
+    			</xs:enumeration>
+    			<xs:enumeration value="Failure">
+    				<xs:annotation>
+    					<xs:documentation>
+    						The request that triggered the error was
+    						processed successfully but with some
+    						warnings.
+    					</xs:documentation>
+    				</xs:annotation>
+    			</xs:enumeration>
+    			<xs:enumeration value="Warning">
+    				<xs:annotation>
+    					<xs:documentation>
+    						The request that triggered the error was
+    						processed successfully but with some
+    						warnings.
+    					</xs:documentation>
+    				</xs:annotation>
+    			</xs:enumeration>
+    			<xs:enumeration value="PartialFailure">
+    				<xs:annotation>
+    					<xs:documentation>
+    						The request that triggered the error was not
+    						processed successfully. When a serious
+    						application-level error occurs, the error is
+    						returned instead of the business data.
+    					</xs:documentation>
+    				</xs:annotation>
+    			</xs:enumeration>
+    		</xs:restriction>
+    	</xs:simpleType>
+    	<xs:complexType abstract="true" name="BaseServiceRequest">
+    		<xs:annotation>
+    			<xs:documentation>
+    				This is the base class for request container for all
+    				service operations.
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:sequence>
+    			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    	<xs:complexType abstract="true" name="BaseServiceResponse">
+    		<xs:annotation>
+    			<xs:documentation>
+    				Base response container for all service operations.
+    				Contains error information associated with the
+    				request.
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:sequence>
+    			<xs:element name="ack" type="tns:AckValue">
+    				<xs:annotation>
+    					<xs:appinfo>
+    						<CallInfo>
+    							<AllCalls/>
+    							<Returned>Always</Returned>
+
+    						</CallInfo>
+    					</xs:appinfo>
+    					<xs:documentation>
+
+    					</xs:documentation>
+    				</xs:annotation>
+    			</xs:element>
+    			<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+    				<xs:annotation>
+    					<xs:appinfo>
+    						<CallInfo>
+    							<AllCalls/>
+    							<Returned>Conditionally</Returned>
+    						</CallInfo>
+    					</xs:appinfo>
+    					<xs:documentation>
+    						Information for an error or warning that
+    						occurred when eBay processed the request.
+    					</xs:documentation>
+    				</xs:annotation>
+    			</xs:element>
+    			<xs:element minOccurs="0" name="version" type="xs:string">
+    				<xs:annotation>
+    					<xs:appinfo>
+    						<CallInfo>
+    							<AllCalls/>
+    							<Returned>Always</Returned>
+
+    						</CallInfo>
+    					</xs:appinfo>
+    					<xs:documentation/>
+    				</xs:annotation>
+    			</xs:element>
+    			<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+    				<xs:annotation>
+    					<xs:appinfo>
+    						<CallInfo>
+    							<AllCalls/>
+    							<Returned>Always</Returned>
+    						</CallInfo>
+    					</xs:appinfo>
+    					<xs:documentation/>
+    				</xs:annotation>
+    			</xs:element>
+    			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    	<xs:simpleType name="ErrorCategory">
+    		<xs:annotation>
+    			<xs:documentation>
+    				Documentation goes here.
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:restriction base="xs:token">
+    			<xs:enumeration value="System"/>
+    			<xs:enumeration value="Application"/>
+    			<xs:enumeration value="Request"/>
+    		</xs:restriction>
+    	</xs:simpleType>
+    	<xs:complexType name="ErrorData">
+    		<xs:annotation>
+    			<xs:appinfo/>
+    			<xs:documentation>
+    				Documentation goes here
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:sequence>
+    			<xs:element name="errorId" type="xs:long"/>
+    			<xs:element name="domain" type="xs:string"/>
+    			<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+    			<xs:element name="severity" type="tns:ErrorSeverity"/>
+    			<xs:element name="category" type="tns:ErrorCategory"/>
+    			<xs:element name="message" type="xs:string"/>
+    			<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+    			<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    	<xs:complexType name="ErrorMessage">
+    		<xs:annotation>
+    			<xs:appinfo/>
+    			<xs:documentation>
+    				Documentation goes here
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:sequence>
+    			<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    	<xs:complexType name="ErrorParameter">
+    		<xs:annotation>
+    			<xs:appinfo/>
+    			<xs:documentation>
+    				Documentation goes here
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:simpleContent>
+    			<xs:extension base="xs:string">
+    				<xs:attribute name="name" type="xs:string" use="optional"/>
+    			</xs:extension>
+    		</xs:simpleContent>
+    	</xs:complexType>
+    	<xs:simpleType name="ErrorSeverity">
+    		<xs:annotation>
+    			<xs:documentation>
+    				Documentation goes here.
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:restriction base="xs:token">
+    			<xs:enumeration value="Error"/>
+    			<xs:enumeration value="Warning"/>
+    		</xs:restriction>
+    	</xs:simpleType>
+
+
+
+    	<xs:complexType name="IsUserSignedInRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseWebUtilityRequest">
+    				<xs:sequence>
+
+
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:complexType name="IsUserSignedInResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseServiceResponse">
+    				<xs:sequence>
+    					<xs:element name="value" type="xs:boolean">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:complexType name="GetUserIDRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseWebUtilityRequest">
+    				<xs:sequence/>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:complexType name="GetUserIDResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseServiceResponse">
+    				<xs:sequence>
+
+    					<xs:element name="value" type="xs:string">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:complexType name="HttpCookie">
+    		<xs:sequence>
+    			<xs:element name="name" type="xs:string"/>
+    			<xs:element name="value" type="xs:string"/>
+    			<xs:element maxOccurs="1" minOccurs="0" name="domain" type="xs:string"/>
+    			<xs:element maxOccurs="1" minOccurs="0" name="maxAge" type="xs:int"/>
+    			<xs:element maxOccurs="1" minOccurs="0" name="path" type="xs:string"/>
+    			<xs:element maxOccurs="1" minOccurs="0" name="version" type="xs:int"/>
+    			<xs:element maxOccurs="1" minOccurs="0" name="secure" type="xs:boolean"/>
+    		</xs:sequence>
+    	</xs:complexType>
+
+
+    	<xs:element name="isUserSignedInResponse" type="tns:IsUserSignedInResponse">
+    	</xs:element>
+    	<xs:element name="getUserIDResponse" type="tns:GetUserIDResponse">
+    	</xs:element>
+    	<xs:element name="getUserIDRequest" type="tns:GetUserIDRequest"/>
+    	<xs:element name="isUserSignedInRequest" type="tns:IsUserSignedInRequest"/>
+
+    	<xs:complexType name="BaseWebUtilityRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseServiceRequest">
+    				<xs:sequence>
+
+
+    					<xs:element maxOccurs="unbounded" minOccurs="0" name="cookie" type="tns:HttpCookie">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+
+    	<xs:complexType name="GetCookieletsRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseWebUtilityRequest">
+    				<xs:sequence>
+    					<xs:element maxOccurs="unbounded" minOccurs="1" name="cookieletID" type="xs:int">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:complexType name="GetCookieletsResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseServiceResponse">
+    				<xs:sequence>
+    					<xs:element maxOccurs="unbounded" minOccurs="1" name="cookieletValue" type="tns:CookieletValue">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+    	<xs:element name="getTrackingCookieletsRequest" type="tns:GetTrackingCookieletsRequest">
+
+    	</xs:element>
+    	<xs:element name="getTrackingCookieletsResponse" type="tns:GetTrackingCookieletsResponse">
+
+    	</xs:element>
+
+    	<xs:complexType name="SetCookieletsRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseWebUtilityRequest">
+    				<xs:sequence>
+    					<xs:element maxOccurs="unbounded" minOccurs="1" name="cookieletValue" type="tns:CookieletValue">
+    					</xs:element>
+    					<xs:element maxOccurs="1" minOccurs="0" name="domain" type="xs:string">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:complexType name="SetCookieletsResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseServiceResponse">
+    				<xs:sequence>
+    					<xs:element maxOccurs="unbounded" minOccurs="0" name="cookie" type="tns:HttpCookie">
+    					</xs:element>
+
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+    	<xs:element name="setTrackingCookieletsRequest" type="tns:SetTrackingCookieletsRequest">
+
+    	</xs:element>
+    	<xs:element name="setTrackingCookieletsResponse" type="tns:SetTrackingCookieletsResponse">
+
+    	</xs:element>
+
+    	<xs:element name="cleanCookiesForSignOutRequest" type="tns:CleanCookiesForSignOutRequest">
+
+    	</xs:element>
+    	<xs:element name="cleanCookiesForSignOutResponse" type="tns:CleanCookiesForSignOutResponse">
+
+    	</xs:element>
+    
+    	<xs:complexType name="CleanCookiesForSignOutRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseWebUtilityRequest"/>
+    		</xs:complexContent>
+    	</xs:complexType>
+    
+    	<xs:complexType name="CleanCookiesForSignOutResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseServiceResponse">
+    				<xs:sequence>
+    					<xs:element maxOccurs="unbounded" minOccurs="1" name="cookie" type="tns:HttpCookie">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+    
+    	<xs:complexType name="CookieletValue">
+    		<xs:sequence>
+    			<xs:element name="id" type="xs:int"/>
+    			<xs:element name="value" type="xs:string"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    
+    	<xs:complexType name="CBId">
+    		<xs:sequence>
+    			<xs:element name="cookieletId" type="xs:int"/>
+    			<xs:element maxOccurs="1" minOccurs="0" name="cookieBitIndex" type="xs:int"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    
+    	<xs:complexType name="CBValue">
+    		<xs:sequence>
+    			<xs:element name="cookieletId" type="xs:int"/>
+    			<xs:element maxOccurs="1" minOccurs="0" name="cookieletValue" type="xs:string">
+    			</xs:element>
+    			<xs:element maxOccurs="1" minOccurs="0" name="cookieBitIndex" type="xs:int"/>
+    			<xs:element maxOccurs="1" minOccurs="0" name="cookieBitValue" type="xs:boolean"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    
+    	<xs:complexType name="BaseCBGetRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseWebUtilityRequest">
+    				<xs:sequence>
+    					<xs:element maxOccurs="unbounded" minOccurs="1" name="cbId" type="tns:CBId">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:complexType name="BaseCBGetResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseServiceResponse">
+    				<xs:sequence>
+    					<xs:element maxOccurs="unbounded" minOccurs="1" name="cbValue" type="tns:CBValue">
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:extension>
+    		</xs:complexContent>
+    	</xs:complexType>
+
+    	<xs:complexType name="GetGlobalHeadCookiesRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseCBGetRequest"/>
+    		</xs:complexContent>
+    	</xs:complexType>
+    
+    	<xs:complexType name="GetGlobalHeadCookiesResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:BaseCBGetResponse"/>
+    		</xs:complexContent>
+    	</xs:complexType>
+    	<xs:element name="getGlobalHeadCookiesRequest" type="tns:GetGlobalHeadCookiesRequest">
+
+    	</xs:element>
+    	<xs:element name="getGlobalHeadCookiesResponse" type="tns:GetGlobalHeadCookiesResponse">
+
+    	</xs:element>
+    
+    	<xs:complexType name="GetTrackingCookieletsRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:GetCookieletsRequest"/>
+    		</xs:complexContent>
+    	</xs:complexType>
+    
+    	<xs:complexType name="GetTrackingCookieletsResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:GetCookieletsResponse"/>
+    		</xs:complexContent>
+    	</xs:complexType>
+    
+    	<xs:complexType name="SetTrackingCookieletsRequest">
+    		<xs:complexContent>
+    			<xs:extension base="tns:SetCookieletsRequest"/>
+    		</xs:complexContent>
+    	</xs:complexType>
+    
+    	<xs:complexType name="SetTrackingCookieletsResponse">
+    		<xs:complexContent>
+    			<xs:extension base="tns:SetCookieletsResponse"/>
+    		</xs:complexContent>
+    	</xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="getUserIDResponse">
+    <part element="tns:getUserIDResponse" name="parameters">
+    </part>
+  </message>
+  <message name="getTrackingCookieletsRequest">
+    <part element="tns:getTrackingCookieletsRequest" name="parameters">
+    </part>
+  </message>
+  <message name="isUserSignedInRequest">
+    <part element="tns:isUserSignedInRequest" name="parameters">
+    </part>
+  </message>
+  <message name="setTrackingCookieletsRequest">
+    <part element="tns:setTrackingCookieletsRequest" name="parameters">
+    </part>
+  </message>
+  <message name="setTrackingCookieletsResponse">
+    <part element="tns:setTrackingCookieletsResponse" name="parameters">
+    </part>
+  </message>
+  <message name="isUserSignedInResponse">
+    <part element="tns:isUserSignedInResponse" name="parameters">
+    </part>
+  </message>
+  <message name="getTrackingCookieletsResponse">
+    <part element="tns:getTrackingCookieletsResponse" name="parameters">
+    </part>
+  </message>
+  <message name="getUserIDRequest">
+    <part element="tns:getUserIDRequest" name="parameters">
+    </part>
+  </message>
+  <message name="getVersionResponse">
+    <part element="tns:getVersionResponse" name="parameters">
+    </part>
+  </message>
+  <wsdl:message name="cleanCookiesForSignOutRequest">
+  	<wsdl:part element="tns:cleanCookiesForSignOutRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="cleanCookiesForSignOutResponse">
+  	<wsdl:part element="tns:cleanCookiesForSignOutResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getGlobalHeadCookiesRequest">
+  	<wsdl:part element="tns:getGlobalHeadCookiesRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getGlobalHeadCookiesResponse">
+  	<wsdl:part element="tns:getGlobalHeadCookiesResponse" name="parameters"/>
+  </wsdl:message>
+  <portType name="WebUtilityServicePort">
+    <operation name="getVersion">
+<wsdl:documentation>get service version. </wsdl:documentation>
+      <output message="tns:getVersionResponse">
+    </output>
+    </operation>
+    <operation name="isUserSignedIn">
+<wsdl:documentation>This operation is used to check if user signed in.  Will check USERID in s cookie.  If set, return true.  Otherwise return false. All cookies in the domain need to pass in for validation. </wsdl:documentation>
+      <input message="tns:isUserSignedInRequest">
+    </input>
+      <output message="tns:isUserSignedInResponse">
+    </output>
+    </operation>
+    <operation name="getUserID">
+<wsdl:documentation>This operation will get user id.  Will check USERID cookielet first.  f null, chek USERID_SIGNIN.  If null, check PERSISTENT_JS_USERID.  All cookies in the domain need to pass in for validation.  </wsdl:documentation>
+      <input message="tns:getUserIDRequest">
+    </input>
+      <output message="tns:getUserIDResponse">
+    </output>
+    </operation>
+    <operation name="getTrackingCookielets">
+<wsdl:documentation>This operation will get cookielet values for tracking.  All cookies in the domain need to pass in for validation. Will only tracking related cookielets: SOJOURNER_GUID,TRACKING_GUID, PERSISTENT_JS_USERID,ACCOUNT_ID, PERSISTENT_USERIDANDCHECK,COOKIE_SOJOURNER_SAW, USAGE,EXPERIMENT_TREATMENTS, SOJOURNER_CLICKID, PERSISTENT_USERIDANDCHECK,  EBAY_JS, REG,   </wsdl:documentation>
+      <input message="tns:getTrackingCookieletsRequest">
+    </input>
+      <output message="tns:getTrackingCookieletsResponse">
+    </output>
+    </operation>
+    <operation name="setTrackingCookielets">
+<wsdl:documentation>This operation will set cookielet value for tracking purpose.  All cookies in the domain need to pass in for validation.  All cookies will be returned.  SOJOURNER_GUID, SOJOURNER_CLICKID and SOJOURNER_SESSION_GUID are allowed to set. </wsdl:documentation>
+      <input message="tns:setTrackingCookieletsRequest">
+    </input>
+      <output message="tns:setTrackingCookieletsResponse">
+    </output>
+    </operation>
+    <wsdl:operation name="cleanCookiesForSignOut">
+    	<wsdl:documentation>This operation will delete cookielets for sign out.  All the cookies in domain need to pass in.  Cookielets need to be deleted will be the same as eBay sign out.  The remaining cookies will be returned. </wsdl:documentation>
+    	<wsdl:input message="tns:cleanCookiesForSignOutRequest"/>
+    	<wsdl:output message="tns:cleanCookiesForSignOutResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getGlobalHeadCookies">
+    	<wsdl:documentation>This operation will get cookielet and cookieBit values for tracking.  All cookies in the domain need to pass in for validation. Will only get global headrelated cookielets: COOKIE_EBX_CART, COOKIE_PH_FIRST_NAME,COOKIE_PH_MSG_ALERT_COUNT, COOKIE_USERID_SIGNIN
+, COOKIE_MIXED_PERSISTENT,  COOKIE_MAGIC_REBATE_INFO, COOKIE_EBAY_HT and cookie bits.
+</wsdl:documentation>
+    	<wsdl:input message="tns:getGlobalHeadCookiesRequest"/>
+    	<wsdl:output message="tns:getGlobalHeadCookiesResponse"/>
+    </wsdl:operation>
+  </portType>
+  <binding name="WebUtilityServiceSOAPBinding" type="tns:WebUtilityServicePort">
+
+  	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  	<operation name="getVersion">
+
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/webutility/v1/services/getVersion"/>
+  		<output>
+
+  			<soap:body use="literal"/>
+  		</output>
+  	</operation>
+  	<operation name="isUserSignedIn">
+
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/webutility/v1/services/isUserSignedIn"/>
+  		<input>
+
+  			<soap:body use="literal"/>
+  		</input>
+  		<output>
+
+  			<soap:body use="literal"/>
+  		</output>
+  	</operation>
+  	<operation name="getUserID">
+
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/webutility/v1/services/getUserID"/>
+  		<input>
+
+  			<soap:body use="literal"/>
+  		</input>
+  		<output>
+
+  			<soap:body use="literal"/>
+  		</output>
+  	</operation>
+  	<operation name="getTrackingCookielets">
+
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/webutility/v1/services/getTrackingCookielets"/>
+  		<input>
+
+  			<soap:body use="literal"/>
+  		</input>
+  		<output>
+
+  			<soap:body use="literal"/>
+  		</output>
+  	</operation>
+  	<operation name="setTrackingCookielets">
+
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/webutility/v1/services/setTrackingCookielets"/>
+  		<input>
+
+  			<soap:body use="literal"/>
+  		</input>
+  		<output>
+
+  			<soap:body use="literal"/>
+  		</output>
+  	</operation>
+  	<wsdl:operation name="cleanCookiesForSignOut">
+
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/webutility/v1/services/cleanCookiesForSignOut"/>
+  		<wsdl:input>
+
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output>
+
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="getGlobalHeadCookies">
+
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/webutility/v1/services/getGlobalHeadCookies"/>
+  		<wsdl:input>
+
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output>
+
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  </binding>
+  <binding name="WebUtilityServiceHttpBinding" type="tns:WebUtilityServicePort">
+
+  	<http:binding verb="POST"/>
+  	<operation name="getVersion">
+
+  		<http:operation location="/getVersion"/>
+  		<output>
+  			<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</output>
+  	</operation>
+  	<operation name="isUserSignedIn">
+
+  		<http:operation location="/isUserSignedIn"/>
+  		<input>
+  			<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</input>
+  		<output>
+  			<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</output>
+  	</operation>
+  	<operation name="getUserID">
+
+  		<http:operation location="/getUserID"/>
+  		<input>
+  			<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</input>
+  		<output>
+  			<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</output>
+  	</operation>
+  	<operation name="getTrackingCookielets">
+
+  		<http:operation location="/getTrackingCookielets"/>
+  		<input>
+  			<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</input>
+  		<output>
+  			<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</output>
+  	</operation>
+  	<operation name="setTrackingCookielets">
+
+  		<http:operation location="/setTrackingCookielets"/>
+  		<input>
+  			<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</input>
+  		<output>
+  			<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</output>
+  	</operation>
+  	<wsdl:operation name="cleanCookiesForSignOut">
+
+  		<http:operation location="/cleanCookiesForSignOut"/>
+  		<wsdl:input>
+  			<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</wsdl:input>
+  		<wsdl:output>
+  			<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="getGlobalHeadCookies">
+
+  		<http:operation location="/getGlobalHeadCookies"/>
+  		<wsdl:input>
+  			<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</wsdl:input>
+  		<wsdl:output>
+  			<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		</wsdl:output>
+  	</wsdl:operation>
+  </binding>
+  <service name="WebUtilityService">
+<wsdl:documentation>
+	<Version>1.0.0</Version>
+	WebUtilityService provides some web utilities, including checking if userSignedIn, getUserId and get/set sojournerGUID and clean cookie for sign out.  JavaScript should not call this service </wsdl:documentation>
+    <port binding="tns:WebUtilityServiceHttpBinding" name="WebUtilityServiceHttp">
+      <http:address location="http://svcs.ebay.com/services/webutility/v1/WebUtilityService"/>
+    </port>
+    <port binding="tns:WebUtilityServiceSOAPBinding" name="WebUtilityServiceSOAP">
+      <soap12:address location="http://svcs.ebay.com/services/webutility/v1/WebUtilityService"/>
+      <soap:address location="http://svcs.ebay.com/services/webutility/v1/WebUtilityService"/>
+    </port>
+  </service>
+</definitions>

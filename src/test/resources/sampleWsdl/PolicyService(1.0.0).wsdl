@@ -1,0 +1,1999 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xacml="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os">
+			<!-- -->
+			<xs:element name="PolicySet" type="xacml:PolicySetType"/>
+			<xs:complexType name="PolicySetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="xacml:Description"/>
+					<xs:element minOccurs="0" ref="xacml:PolicySetDefaults"/>
+					<xs:element ref="xacml:Target"/>
+					<xs:choice maxOccurs="unbounded" minOccurs="0">
+						<xs:element ref="xacml:PolicySet"/>
+						<xs:element ref="xacml:Policy"/>
+						<xs:element ref="xacml:PolicySetIdReference"/>
+						<xs:element ref="xacml:PolicyIdReference"/>
+						<xs:element ref="xacml:CombinerParameters"/>
+						<xs:element ref="xacml:PolicyCombinerParameters"/>
+						<xs:element ref="xacml:PolicySetCombinerParameters"/>
+					</xs:choice>
+					<xs:element minOccurs="0" ref="xacml:Obligations"/>
+				</xs:sequence>
+				<xs:attribute name="PolicySetId" type="xs:anyURI" use="required"/>
+				<xs:attribute default="1.0" name="Version" type="xacml:VersionType"/>
+				<xs:attribute name="PolicyCombiningAlgId" type="xs:anyURI" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="CombinerParameters" type="xacml:CombinerParametersType"/>
+			<xs:complexType name="CombinerParametersType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" ref="xacml:CombinerParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="CombinerParameter" type="xacml:CombinerParameterType"/>
+			<xs:complexType name="CombinerParameterType">
+				<xs:sequence>
+					<xs:element ref="xacml:AttributeValue"/>
+				</xs:sequence>
+				<xs:attribute name="ParameterName" type="xs:string" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="RuleCombinerParameters" type="xacml:RuleCombinerParametersType"/>
+			<xs:complexType name="RuleCombinerParametersType">
+				<xs:complexContent>
+					<xs:extension base="xacml:CombinerParametersType">
+						<xs:attribute name="RuleIdRef" type="xs:string" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="PolicyCombinerParameters" type="xacml:PolicyCombinerParametersType"/>
+			<xs:complexType name="PolicyCombinerParametersType">
+				<xs:complexContent>
+					<xs:extension base="xacml:CombinerParametersType">
+						<xs:attribute name="PolicyIdRef" type="xs:anyURI" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="PolicySetCombinerParameters" type="xacml:PolicySetCombinerParametersType"/>
+			<xs:complexType name="PolicySetCombinerParametersType">
+				<xs:complexContent>
+					<xs:extension base="xacml:CombinerParametersType">
+						<xs:attribute name="PolicySetIdRef" type="xs:anyURI" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="PolicySetIdReference" type="xacml:IdReferenceType"/>
+			<xs:element name="PolicyIdReference" type="xacml:IdReferenceType"/>
+			<!-- -->
+			<xs:element name="PolicySetDefaults" type="xacml:DefaultsType"/>
+			<xs:element name="PolicyDefaults" type="xacml:DefaultsType"/>
+			<xs:complexType name="DefaultsType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element ref="xacml:XPathVersion"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="XPathVersion" type="xs:anyURI"/>
+			<!-- -->
+			<xs:complexType name="IdReferenceType">
+				<xs:simpleContent>
+					<xs:extension base="xs:anyURI">
+						<xs:attribute name="Version" type="xacml:VersionMatchType" use="optional"/>
+						<xs:attribute name="EarliestVersion" type="xacml:VersionMatchType" use="optional"/>
+						<xs:attribute name="LatestVersion" type="xacml:VersionMatchType" use="optional"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:simpleType name="VersionType">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(\d+\.)*\d+"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<!-- -->
+			<xs:simpleType name="VersionMatchType">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="((\d+|\*)\.)*(\d+|\*|\+)"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<!-- -->
+			<xs:element name="Policy" type="xacml:PolicyType"/>
+			<xs:complexType name="PolicyType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="xacml:Description"/>
+					<xs:element minOccurs="0" ref="xacml:PolicyDefaults"/>
+					<xs:element minOccurs="0" ref="xacml:CombinerParameters"/>
+					<xs:element ref="xacml:Target"/>
+					<xs:choice maxOccurs="unbounded">
+						<xs:element minOccurs="0" ref="xacml:CombinerParameters"/>
+						<xs:element minOccurs="0" ref="xacml:RuleCombinerParameters"/>
+						<xs:element ref="xacml:VariableDefinition"/>
+						<xs:element ref="xacml:Rule"/>
+					</xs:choice>
+					<xs:element minOccurs="0" ref="xacml:Obligations"/>
+				</xs:sequence>
+				<xs:attribute name="PolicyId" type="xs:anyURI" use="required"/>
+				<xs:attribute default="1.0" name="Version" type="xacml:VersionType"/>
+				<xs:attribute name="RuleCombiningAlgId" type="xs:anyURI" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Description" type="xs:string"/>
+			<!-- -->
+			<xs:element name="Rule" type="xacml:RuleType"/>
+			<xs:complexType name="RuleType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="xacml:Description"/>
+					<xs:element minOccurs="0" ref="xacml:Target"/>
+					<xs:element minOccurs="0" ref="xacml:Condition"/>
+				</xs:sequence>
+				<xs:attribute name="RuleId" type="xs:string" use="required"/>
+				<xs:attribute name="Effect" type="xacml:EffectType" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:simpleType name="EffectType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Permit"/>
+					<xs:enumeration value="Deny"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<!-- -->
+			<xs:element name="Target" type="xacml:TargetType"/>
+			<xs:complexType name="TargetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="xacml:Subjects"/>
+					<xs:element minOccurs="0" ref="xacml:Resources"/>
+					<xs:element minOccurs="0" ref="xacml:Actions"/>
+					<xs:element minOccurs="0" ref="xacml:Environments"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Subjects" type="xacml:SubjectsType"/>
+			<xs:complexType name="SubjectsType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:Subject"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Subject" type="xacml:SubjectType"/>
+			<xs:complexType name="SubjectType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:SubjectMatch"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Resources" type="xacml:ResourcesType"/>
+			<xs:complexType name="ResourcesType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:Resource"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Resource" type="xacml:ResourceType"/>
+			<xs:complexType name="ResourceType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:ResourceMatch"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Actions" type="xacml:ActionsType"/>
+			<xs:complexType name="ActionsType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:Action"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Action" type="xacml:ActionType"/>
+			<xs:complexType name="ActionType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:ActionMatch"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Environments" type="xacml:EnvironmentsType"/>
+			<xs:complexType name="EnvironmentsType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:Environment"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Environment" type="xacml:EnvironmentType"/>
+			<xs:complexType name="EnvironmentType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:EnvironmentMatch"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="SubjectMatch" type="xacml:SubjectMatchType"/>
+			<xs:complexType name="SubjectMatchType">
+				<xs:sequence>
+					<xs:element ref="xacml:AttributeValue"/>
+					<xs:choice>
+						<xs:element ref="xacml:SubjectAttributeDesignator"/>
+						<xs:element ref="xacml:AttributeSelector"/>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="MatchId" type="xs:anyURI" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="ResourceMatch" type="xacml:ResourceMatchType"/>
+			<xs:complexType name="ResourceMatchType">
+				<xs:sequence>
+					<xs:element ref="xacml:AttributeValue"/>
+					<xs:choice>
+						<xs:element ref="xacml:ResourceAttributeDesignator"/>
+						<xs:element ref="xacml:AttributeSelector"/>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="MatchId" type="xs:anyURI" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="ActionMatch" type="xacml:ActionMatchType"/>
+			<xs:complexType name="ActionMatchType">
+				<xs:sequence>
+					<xs:element ref="xacml:AttributeValue"/>
+					<xs:choice>
+						<xs:element ref="xacml:ActionAttributeDesignator"/>
+						<xs:element ref="xacml:AttributeSelector"/>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="MatchId" type="xs:anyURI" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="EnvironmentMatch" type="xacml:EnvironmentMatchType"/>
+			<xs:complexType name="EnvironmentMatchType">
+				<xs:sequence>
+					<xs:element ref="xacml:AttributeValue"/>
+					<xs:choice>
+						<xs:element ref="xacml:EnvironmentAttributeDesignator"/>
+						<xs:element ref="xacml:AttributeSelector"/>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="MatchId" type="xs:anyURI" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="VariableDefinition" type="xacml:VariableDefinitionType"/>
+			<xs:complexType name="VariableDefinitionType">
+				<xs:sequence>
+					<xs:element ref="xacml:Expression"/>
+				</xs:sequence>
+				<xs:attribute name="VariableId" type="xs:string" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element abstract="true" name="Expression" type="xacml:ExpressionType"/>
+			<xs:complexType abstract="true" name="ExpressionType"/>
+			<!-- -->
+			<xs:element name="VariableReference" substitutionGroup="xacml:Expression" type="xacml:VariableReferenceType"/>
+			<xs:complexType name="VariableReferenceType">
+				<xs:complexContent>
+					<xs:extension base="xacml:ExpressionType">
+						<xs:attribute name="VariableId" type="xs:string" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="AttributeSelector" substitutionGroup="xacml:Expression" type="xacml:AttributeSelectorType"/>
+			<xs:complexType name="AttributeSelectorType">
+				<xs:complexContent>
+					<xs:extension base="xacml:ExpressionType">
+						<xs:attribute name="RequestContextPath" type="xs:string" use="required"/>
+						<xs:attribute name="DataType" type="xs:anyURI" use="required"/>
+						<xs:attribute default="false" name="MustBePresent" type="xs:boolean" use="optional"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="ResourceAttributeDesignator" substitutionGroup="xacml:Expression" type="xacml:AttributeDesignatorType"/>
+			<xs:element name="ActionAttributeDesignator" substitutionGroup="xacml:Expression" type="xacml:AttributeDesignatorType"/>
+			<xs:element name="EnvironmentAttributeDesignator" substitutionGroup="xacml:Expression" type="xacml:AttributeDesignatorType"/>
+			<!-- -->
+			<xs:complexType name="AttributeDesignatorType">
+				<xs:complexContent>
+					<xs:extension base="xacml:ExpressionType">
+						<xs:attribute name="AttributeId" type="xs:anyURI" use="required"/>
+						<xs:attribute name="DataType" type="xs:anyURI" use="required"/>
+						<xs:attribute name="Issuer" type="xs:string" use="optional"/>
+						<xs:attribute default="false" name="MustBePresent" type="xs:boolean" use="optional"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="SubjectAttributeDesignator" substitutionGroup="xacml:Expression" type="xacml:SubjectAttributeDesignatorType"/>
+			<xs:complexType name="SubjectAttributeDesignatorType">
+				<xs:complexContent>
+					<xs:extension base="xacml:AttributeDesignatorType">
+						<xs:attribute default="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" name="SubjectCategory" type="xs:anyURI" use="optional"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="AttributeValue" substitutionGroup="xacml:Expression" type="xacml:AttributeValueType"/>
+			<xs:complexType mixed="true" name="AttributeValueType">
+				<xs:complexContent>
+					<xs:extension base="xacml:ExpressionType">
+						<xs:sequence>
+							<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="lax"/>
+						</xs:sequence>
+						<xs:attribute name="DataType" type="xs:anyURI" use="required"/>
+						<xs:anyAttribute namespace="##any" processContents="lax"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Function" substitutionGroup="xacml:Expression" type="xacml:FunctionType"/>
+			<xs:complexType name="FunctionType">
+				<xs:complexContent>
+					<xs:extension base="xacml:ExpressionType">
+						<xs:attribute name="FunctionId" type="xs:anyURI" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Condition" type="xacml:ConditionType"/>
+			<xs:complexType name="ConditionType">
+				<xs:sequence>
+					<xs:element ref="xacml:Expression"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Apply" substitutionGroup="xacml:Expression" type="xacml:ApplyType"/>
+			<xs:complexType name="ApplyType">
+				<xs:complexContent>
+					<xs:extension base="xacml:ExpressionType">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" ref="xacml:Expression"/>
+						</xs:sequence>
+						<xs:attribute name="FunctionId" type="xs:anyURI" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Obligations" type="xacml:ObligationsType"/>
+			<xs:complexType name="ObligationsType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="xacml:Obligation"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Obligation" type="xacml:ObligationType"/>
+			<xs:complexType name="ObligationType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" ref="xacml:AttributeAssignment"/>
+				</xs:sequence>
+				<xs:attribute name="ObligationId" type="xs:anyURI" use="required"/>
+				<xs:attribute name="FulfillOn" type="xacml:EffectType" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="AttributeAssignment" type="xacml:AttributeAssignmentType"/>
+			<xs:complexType mixed="true" name="AttributeAssignmentType">
+				<xs:complexContent>
+					<xs:extension base="xacml:AttributeValueType">
+						<xs:attribute name="AttributeId" type="xs:anyURI" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+		</xs:schema>
+		<xs:schema xmlns:Q1="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:import namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os"/>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+					This is the base class for request container for all service operations.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+			Base response container for all service operations. Contains error information
+			associated with the request.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+					
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+					Information for an error or warning that occurred when eBay processed the
+					request.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BasePolicyServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+					This is the base class for request container for all operations in Policy Service.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="resourceName" type="xs:string"/>
+							<xs:element minOccurs="0" name="operationName" type="xs:string"/>
+							<xs:element minOccurs="0" name="resourceType" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BasePolicyServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+					Base response container for all service operations in Authorization Service.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+			    </xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetAuthenticationPolicyRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicyServiceRequest">
+			    </xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetAuthenticationPolicyResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicyServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="policy" type="tns:AuthenticationPolicy"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetAuthorizationPolicyRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicyServiceRequest">
+			    </xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetAuthorizationPolicyResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicyServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="policy" type="tns:AuthorizationPolicy"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetRateLimitingPolicyRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicyServiceRequest">
+			    </xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetRateLimitingPolicyResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicyServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="policy" type="tns:RateLimitingPolicy"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SubjectType">
+				<xs:sequence>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SubjectGroupType">
+				<xs:sequence>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="name" type="xs:string"/>
+				</xs:sequence>
+				<xs:attribute name="calculator" type="xs:string" use="optional"/>
+			</xs:complexType>
+			<xs:complexType name="BasePolicy">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="resourceName" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="operationName" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="resourceType" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AuthenticationPolicy">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicy">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="authenticationScheme" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AuthorizationPolicy">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicy">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="policyScheme" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subject" type="tns:SubjectType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectGroup" type="tns:SubjectGroupType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RateLimitingPolicy">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicy">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="policyScheme" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectGroup" type="tns:SubjectGroupType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+					Indicates whether the error is a severe error (causing the request to fail)
+					or an informational error (a warning) that should be communicated to the
+					user.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+							The request was processed successfully, but something occurred that may
+							affect your application or the user.				
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+							The request that triggered the error was not processed successfully.
+							When a serious application-level error occurs, the error is returned
+							instead of the business data.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+							The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+							The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+					ErrorMessage to indicate any Error/Warning occured as part of service call.
+					Any run time error will not be reported here, but will be reported aspart of
+					soap fault.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+					This represents error details.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+					represent contextual data associated with an error.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+					Reprents the level of error. E.g. Error/Warning
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+					Reprents the error catagorization. Request and Application Error are mostly occured due to 
+					invalid data passed in request. System Error cannot be fixed by changing request values and 
+					mostly occured due to application failure.						 
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="getAuthenticationPolicyRequest" nillable="true" type="tns:GetAuthenticationPolicyRequest"/>
+			<xs:element name="getAuthenticationPolicyResponse" nillable="true" type="tns:GetAuthenticationPolicyResponse"/>
+			<xs:element name="getAuthorizationPolicyRequest" nillable="true" type="tns:GetAuthorizationPolicyRequest"/>
+			<xs:element name="getAuthorizationPolicyResponse" nillable="true" type="tns:GetAuthorizationPolicyResponse"/>
+			<xs:element name="getRateLimitingPolicyRequest" nillable="true" type="tns:GetRateLimitingPolicyRequest"/>
+			<xs:element name="getRateLimitingPolicyResponse" nillable="true" type="tns:GetRateLimitingPolicyResponse"/>
+			<xs:element name="getPolicyResponse" type="tns:GetPolicyResponse"/>
+			<xs:element name="getPolicyRequest" type="tns:GetPolicyRequest"/>
+			<xs:complexType name="GetPolicyRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="policyKey" type="tns:PolicyKey">
+            				</xs:element>
+							<!--xs:element name="policyType" type="tns:PolicyDomain"/>
+            					<xs:element name="serviceName" type="xs:string"	minOccurs="0"/>
+            					<xs:element name="properties"  type="tns:Properties"/>
+            					<xs:element name="extendedProperties" type="tns:Properties"/-->
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetPolicyResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BasePolicyServiceResponse">
+						<xs:sequence>
+							<!--xs:element name="policySet" type="tns:PolicySet" /-->
+							<xs:element name="policy" type="tns:Policy"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="Property">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Properties">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:element name="entries" type="tns:Property"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="PolicySet" type="tns:PolicySet"/>
+			<xs:complexType name="PolicySet">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="xacml:Description"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Policy"/>
+				</xs:sequence>
+				<xs:attribute name="PolicySetId" type="xs:anyURI" use="required"/>
+				<xs:attribute default="1.0" name="Version" type="xacml:VersionType"/>
+				<xs:attribute name="PolicyCombiningAlgId" type="xs:anyURI" use="required"/>
+				<xs:attribute name="LastModified" type="xs:dateTime"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Policy" type="tns:Policy"/>
+			<xs:complexType name="Policy">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="xacml:Description"/>
+					<xs:element ref="tns:Target"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Rule"/>
+				</xs:sequence>
+				<xs:attribute name="PolicyId" type="xs:long"/>
+				<xs:attribute default="1.0" name="Version" type="xacml:VersionType"/>
+				<xs:attribute name="RuleCombiningAlgId" type="xs:anyURI"/>
+				<xs:attribute name="PolicyType" type="tns:PolicyType" use="required"/>
+				<xs:attribute name="LastModified" type="xs:dateTime"/>
+				<xs:attribute name="PolicyName" type="xs:token"/>
+				<xs:attribute name="Active" type="xs:boolean"/>
+				<xs:attribute name="CreatedBy" type="xs:string"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Rule" type="tns:Rule"/>
+			<xs:complexType name="Rule">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="xacml:Description"/>
+					<!--
+				<xs:element ref="tns:Target" minOccurs="0"/>
+			-->
+					<xs:element minOccurs="0" ref="tns:Condition"/>
+				</xs:sequence>
+				<xs:attribute name="RuleId" type="xs:long"/>
+				<xs:attribute name="Effect" type="tns:EffectType" use="required"/>
+				<xs:attribute name="RuleName" type="xs:string" use="required"/>
+				<xs:attribute name="Priority" type="xs:int"/>
+				<xs:attribute name="Version" type="xs:int"/>
+				<!--
+			<xs:attribute name="SubjectType" type="tns:SubjectDomain"/>
+		-->
+				<xs:attribute name="RolloverPeriod" type="xs:long"/>
+				<xs:attribute name="EffectDuration" type="xs:long"/>
+				<xs:attribute name="ConditionDuration" type="xs:long"/>
+				<!--
+			<xs:attribute name="ApplyToIndividual" type="xs:boolean" default="false"></xs:attribute>
+			<xs:attribute name="ApplyToEach" type="xs:boolean" default="false"></xs:attribute>
+			<xs:attribute name="ApplyToAll" type="xs:boolean" default="false"></xs:attribute>
+		-->
+			</xs:complexType>
+			<!-- -->
+			<xs:simpleType name="PolicyType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AUTHZ"/>
+					<xs:enumeration value="RL"/>
+					<xs:enumeration value="BLACKLIST"/>
+					<xs:enumeration value="WHITELIST"/>
+					<xs:enumeration value="GLOBAL_WHITELIST"/>
+					<xs:enumeration value="GLOBAL_BLACKLIST"/>
+					<!--xs:enumeration value="ALERT"/-->
+					<!--xs:enumeration value="EXCEPTION"/-->
+				</xs:restriction>
+			</xs:simpleType>
+			<!-- -->
+			<xs:simpleType name="EffectType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Allow"/>
+					<xs:enumeration value="Flag"/>
+					<xs:enumeration value="Challenge"/>
+					<xs:enumeration value="Block"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<!-- -->
+			<!--<xs:simpleType name="SubjectDomain">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EBAYUSER"/>
+			<xs:enumeration value="EBAYAPP"/>
+			<xs:enumeration value="EBAYDEV"/>
+			<xs:enumeration value="CSUSER"/>
+			<xs:enumeration value="CSAPP"/>
+			<xs:enumeration value="CSDEV"/>
+			<xs:enumeration value="IP"/>
+			<xs:enumeration value="POOL"/>
+			<xs:enumeration value="MACHINE"/>
+			<xs:enumeration value="SERVICE"/>
+			<xs:enumeration value="PROXY"/>
+			<xs:enumeration value="PROCESS"/>
+		</xs:restriction>
+	</xs:simpleType>-->
+			<xs:simpleType name="UpdateMode">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="REPLACE"/>
+					<xs:enumeration value="UPDATE"/>
+					<xs:enumeration value="DELETE"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<!-- -->
+			<xs:simpleType name="ResourceType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SERVICE"/>
+					<xs:enumeration value="WEB"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<!-- -->
+			<xs:element name="Target" type="tns:Target"/>
+			<xs:complexType name="Target">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="tns:Resources"/>
+					<xs:element minOccurs="0" ref="tns:Subjects"/>
+					<xs:element minOccurs="0" ref="tns:Events"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Subjects" type="tns:Subjects"/>
+			<xs:complexType name="Subjects">
+				<xs:sequence>
+					<!--		
+			<xs:element name="Subject" type="xacml:SubjectType" minOccurs="0" maxOccurs="unbounded"/>
+-->
+					<!--
+			<xs:element name="Subject" type="xacml:SubjectType" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="SubjectType" type="tns:SubjectDomain"/>
+				</xs:complexType>
+			</xs:element>
+-->
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="Subject" type="tns:Subject">
+						<!--			
+                        <xs:complexType>
+                        	<xs:complexContent>
+                        		<xs:extension
+                        			base="xacml:SubjectType">
+                        			<xs:attribute name="SubjectType"
+                        				type="xs:string" />
+                        			<xs:attribute name="SubjectName"
+                        				type="xs:string" use="required" />
+                        			<xs:attribute name="subjectId"
+                        				type="xs:long">
+                        			</xs:attribute>
+                        		</xs:extension>
+                        	</xs:complexContent>
+                        </xs:complexType>
+-->
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:SubjectGroup"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Subject" type="tns:Subject"/>
+			<xs:complexType name="Subject">
+				<xs:complexContent>
+					<xs:extension base="xacml:SubjectType">
+						<!--xs:attribute name="SubjectId" type="xs:long"/-->
+						<xs:attribute name="SubjectName" type="xs:token" use="required"/>
+						<xs:attribute name="SubjectType" type="xs:string" use="required"/>
+						<xs:attribute name="Description" type="xs:string"/>
+						<xs:attribute name="IpMask" type="xs:string" use="optional"/>
+						<xs:attribute name="ExternalSubjectId" type="xs:long"/>
+						<xs:attribute name="LastUpdatedDate" type="xs:dateTime"/>
+						<xs:attribute name="CreatedBy" type="xs:string"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="SubjectGroup" type="tns:SubjectGroup"/>
+			<xs:complexType name="SubjectGroup">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Subject"/>
+					<xs:element minOccurs="0" ref="xacml:SubjectMatch"/>
+				</xs:sequence>
+				<!--xs:attribute name="SubjectGroupId" type="xs:long"/-->
+				<xs:attribute name="SubjectGroupName" type="xs:string" use="required"/>
+				<xs:attribute name="SubjectType" type="xs:string" use="required"/>
+				<xs:attribute name="SubjectGroupCalculator" type="xs:string"/>
+				<xs:attribute default="false" name="ApplyToEach" type="xs:boolean">
+		</xs:attribute>
+				<xs:attribute default="false" name="ApplyToAll" type="xs:boolean">
+		</xs:attribute>
+				<xs:attribute name="LastUpdatedDate" type="xs:dateTime"/>
+				<xs:attribute name="CreatedBy" type="xs:string"/>
+				<xs:attribute name="Description" type="xs:string"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Resources" type="tns:Resources"/>
+			<xs:complexType name="Resources">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="tns:Resource"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Resource" type="tns:Resource"/>
+			<xs:complexType name="Resource">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Operation"/>
+				</xs:sequence>
+				<xs:attribute name="ResourceId" type="xs:long"/>
+				<xs:attribute name="ResourceName" type="xs:string" use="required"/>
+				<xs:attribute name="ResourceType" type="tns:ResourceType" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Operation" type="tns:Operation"/>
+			<xs:complexType name="Operation">
+				<xs:attribute name="OperationId" type="xs:long"/>
+				<xs:attribute name="OperationName" type="xs:string" use="required"/>
+				<xs:attribute name="ResourceId" type="xs:long"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Events" type="tns:Events"/>
+			<xs:complexType name="Events">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" ref="tns:Event"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Event" type="tns:Event"/>
+			<xs:complexType name="Event">
+				<xs:attribute name="EventId" type="xs:long"/>
+				<xs:attribute name="EventName" type="xs:string" use="required"/>
+				<xs:attribute name="EventType" type="xs:string" use="required"/>
+			</xs:complexType>
+			<!-- -->
+			<xs:element name="Expression" type="tns:Expression"/>
+			<!-- -->
+			<xs:element name="Condition" type="tns:Condition"/>
+			<xs:complexType name="Condition">
+				<xs:sequence>
+					<xs:element ref="tns:Expression"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- -->
+			<xs:complexType name="PrimitiveValue">
+				<xs:attribute name="value" use="required"/>
+				<xs:attribute name="type" type="tns:SupportedPrimitive" use="required"/>
+			</xs:complexType>
+			<xs:complexType name="Variable">
+				<xs:attribute name="type" type="tns:SupportedPrimitive" use="required"/>
+				<xs:attribute name="src" use="required"/>
+				<xs:attribute name="name"/>
+			</xs:complexType>
+			<xs:simpleType name="SupportedPrimitive">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="int"/>
+					<xs:enumeration value="ipV4"/>
+					<xs:enumeration value="string"/>
+					<xs:enumeration value="boolean"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Function">
+				<xs:sequence>
+					<xs:sequence maxOccurs="unbounded">
+						<xs:choice>
+							<xs:element maxOccurs="unbounded" name="Variable" type="tns:Variable"/>
+							<xs:element name="EnumeratedTypeValue" type="tns:EnumeratedTypeValue"/>
+							<xs:element name="PrimitiveValue" type="tns:PrimitiveValue"/>
+							<xs:element name="Function" type="tns:Function"/>
+						</xs:choice>
+					</xs:sequence>
+					<xs:element minOccurs="0" name="Comment" type="xs:string"/>
+				</xs:sequence>
+				<xs:attribute name="id" type="tns:AllBuiltInFunctions" use="required"/>
+			</xs:complexType>
+			<xs:simpleType name="AllBuiltInFunctions">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AND"/>
+					<xs:enumeration value="EQ"/>
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="GT"/>
+					<xs:enumeration value="MemberOf"/>
+					<xs:enumeration value="NEQ"/>
+					<xs:enumeration value="OR"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Expression">
+				<xs:choice>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="PrimitiveValue" type="tns:PrimitiveValue"/>
+							<xs:element name="Variable" type="tns:Variable"/>
+							<xs:element name="Function" type="tns:Function"/>
+						</xs:choice>
+						<xs:element minOccurs="0" name="Comment" type="xs:string"/>
+					</xs:sequence>
+				</xs:choice>
+				<xs:attribute name="name">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="ANDMemberOfSample"/>
+							<xs:enumeration value="ANDSample"/>
+							<xs:enumeration value="EQSample2"/>
+							<xs:enumeration value="SimpleFunction1"/>
+							<xs:enumeration value="name"/>
+							<xs:enumeration value="simpleValue"/>
+							<xs:enumeration value="simplestExpression"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:complexType>
+			<xs:complexType name="EnumeratedTypeValue">
+				<xs:attribute name="value" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="InternalIPGroup"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="type" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Group"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:complexType>
+			<xs:complexType name="PolicyKey">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="policyId" type="xs:long"/>
+					<xs:element name="policyName" type="xs:token"/>
+					<xs:element name="policyType" type="tns:PolicyType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="createPolicyRequest" type="tns:CreatePolicyRequest">
+	</xs:element>
+			<xs:element name="createPolicyResponse" type="tns:CreatePolicyResponse">
+	</xs:element>
+			<xs:complexType name="CreatePolicyRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="policy" type="tns:Policy"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreatePolicyResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="policyId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="updatePolicyRequest" type="tns:UpdatePolicyRequest">
+	</xs:element>
+			<xs:element name="updatePolicyResponse" type="tns:UpdatePolicyResponse">
+
+	</xs:element>
+			<xs:element name="deletePolicyRequest" type="tns:DeletePolicyRequest">
+	</xs:element>
+			<xs:element name="deletePolicyResponse" type="tns:DeletePolicyResponse">
+	</xs:element>
+			<xs:element name="getResourcesRequest" type="tns:GetResourcesRequest">
+	</xs:element>
+			<xs:element name="getResourcesResponse" type="tns:GetResourcesResponse">
+	</xs:element>
+			<xs:element name="getOperationsRequest" type="tns:GetOperationsRequest">
+	</xs:element>
+			<xs:element name="getOperationsResponse" type="tns:GetOperationsResponse">
+	</xs:element>
+			<xs:element name="createSubjectsRequest" type="tns:CreateSubjectsRequest">
+	</xs:element>
+			<xs:element name="createSubjectsResponse" type="tns:CreateSubjectsResponse">
+	</xs:element>
+			<xs:element name="createSubjectGroups" type="tns:CreateSubjectGroupsRequest">
+	</xs:element>
+			<xs:element name="createSubjectGroupsResponse" type="tns:CreateSubjectGroupsResponse">
+	</xs:element>
+			<xs:element name="findSubjectsRequest" type="tns:FindSubjectsRequest">
+	</xs:element>
+			<xs:element name="findSubjectsResponse" type="tns:FindSubjectsResponse">
+	</xs:element>
+			<xs:element name="findExternalSubjectsRequest" type="tns:FindExternalSubjectsRequest">
+	</xs:element>
+			<xs:element name="findExternalSubjectsResponse" type="tns:FindExternalSubjectsResponse">
+	</xs:element>
+			<xs:element name="findSubjectGroupsRequest" type="tns:FindSubjectGroupsRequest">
+	</xs:element>
+			<xs:element name="findSubjectGroupsResponse" type="tns:FindSubjectGroupsResponse">
+	</xs:element>
+			<xs:element name="updateSubjectGroupRequest" type="tns:UpdateSubjectGroupRequest">
+	</xs:element>
+			<xs:element name="updateSubjectGroupResponse" type="tns:UpdateSubjectGroupResponse">
+	</xs:element>
+			<xs:element name="createExternalSubjectReferencesRequest" type="tns:CreateExternalSubjectReferenceRequest">
+	</xs:element>
+			<xs:element name="createExternalSubjectReferencesResponse" type="tns:CreateExternalSubjectReferencesResponse">
+	</xs:element>
+			<xs:complexType name="UpdatePolicyRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="updateMode" type="tns:UpdateMode">
+					</xs:element>
+							<xs:element name="policy" type="tns:Policy"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="DeletePolicyRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="policyKey" type="tns:PolicyKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetResourcesRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="resourceKey" type="tns:ResourceKey"/>
+							<xs:element name="paginationHander" type="tns:PaginationHander">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetOperationsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="resourceKey" type="tns:ResourceKey"/>
+							<!--xs:element name="operations"
+								type="tns:Operation"-->
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="operationKey" type="tns:OperationKey"/>
+							<xs:element name="paginationHander" type="tns:PaginationHander">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateSubjectsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="subjects" type="tns:Subject"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateSubjectsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectIds" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateSubjectGroupsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="subjectGroups" type="tns:SubjectGroup"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateSubjectGroupsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectGroupIds" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="DeletePolicyResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="success" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetOperationsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="operations" type="tns:Operation"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetResourcesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="resources" type="tns:Resource">
+					</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdatePolicyResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="success" type="xs:boolean">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateExternalSubjectReferenceRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="subject" type="tns:Subject">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateSubjectGroupRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="subjectGroupKey" type="tns:SubjectGroupKey">
+            				</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="subjects" type="tns:Subject">
+            				</xs:element>
+							<xs:element maxOccurs="1" minOccurs="1" name="updateMode" type="tns:UpdateMode">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateSubjectGroupResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="success" type="xs:boolean">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateExternalSubjectReferencesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectIds" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="FindSubjectsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="subjectQuery" type="tns:SubjectQuery">
+							</xs:element>
+							<xs:element name="paginationHander" type="tns:PaginationHander">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="FindSubjectGroupsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="subjectGroupQuery" type="tns:SubjectGroupQuery">
+							</xs:element>
+							<xs:element name="paginationHander" type="tns:PaginationHander">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="FindExternalSubjectsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="subjectQuery" type="tns:SubjectQuery">
+							</xs:element>
+							<xs:element name="paginationHander" type="tns:PaginationHander">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="FindSubjectsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjects" type="tns:Subject">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="FindSubjectGroupsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectGroups" type="tns:SubjectGroup">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="FindExternalSubjectsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjects" type="tns:Subject">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SubjectTypeKey">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="subjectTypeId" type="xs:long"/>
+					<xs:element name="subjectType" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SubjectKey">
+				<xs:sequence>
+					<xs:element name="subjectType" type="xs:string"/>
+					<xs:element minOccurs="0" name="subjectName" type="xs:token"/>
+					<xs:element minOccurs="0" name="subjectId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SubjectGroupKey">
+				<xs:sequence>
+					<xs:element name="subjectType" type="xs:string">
+            		</xs:element>
+					<xs:element minOccurs="0" name="subjectGroupName" type="xs:token">
+            		</xs:element>
+					<xs:element minOccurs="0" name="subjectGroupId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SubjectQuery">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectTypeKey" type="tns:SubjectTypeKey">
+            		</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectKey" type="tns:SubjectKey">
+            		</xs:element>
+					<xs:element name="queryString" type="xs:token"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SubjectGroupQuery">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectTypeKey" type="tns:SubjectTypeKey">
+            		</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectGroupKey" type="tns:SubjectGroupKey">
+            		</xs:element>
+            		<xs:element default="false" name="includeSubjects" type="xs:boolean">
+            		</xs:element>
+					<!--xs:element name="QueryString" type="xs:token"/-->
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ResourceKey">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="resourceId" type="xs:long"/>
+					<xs:element name="resourceType" type="tns:ResourceType">
+            		</xs:element>
+					<xs:element minOccurs="0" name="resourceName" type="xs:token"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="OperationKey">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="operationId" type="xs:long"/>
+					<xs:element minOccurs="0" name="operationName" type="xs:token"/>
+					<xs:element name="resourceName" type="xs:token"/>
+					<xs:element name="resourceType" type="tns:ResourceType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="findPoliciesRequest" type="tns:FindPoliciesRequest"/>
+			<xs:element name="findPoliciesResponse" type="tns:FindPoliciesResponse">
+            </xs:element>
+			<xs:complexType name="FindPoliciesRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="lastUpdatedDate" type="xs:dateTime">
+            				</xs:element>
+<!--
+							<xs:element name="policyType" type="tns:PolicyType" maxOccurs="unbounded" minOccurs="0">
+            				</xs:element>
+-->            				
+							<xs:element maxOccurs="unbounded" name="policyKey" type="tns:PolicyKey">
+            				</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="resourceKey" type="tns:ResourceKey">
+            				</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="operationKey" type="tns:OperationKey">
+            				</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectKey" type="tns:SubjectKey">
+            				</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectGroupKey" type="tns:SubjectGroupKey">
+            				</xs:element>
+							<xs:element minOccurs="0" name="outputSelector" type="tns:PolicyOutputSelector">
+            				</xs:element>
+							<xs:element minOccurs="0" name="paginationHandler" type="tns:PaginationHander">
+            				</xs:element>
+							<xs:element minOccurs="0" name="queryCondition" type="tns:QueryCondition">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="PolicyOutputSelector">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ALL"/>
+					<xs:enumeration value="RESOURCES"/>
+					<xs:enumeration value="SUBJECTS"/>
+					<xs:enumeration value="RULES"/>
+					<xs:enumeration value="SUBJECTGROUPS"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="FindPoliciesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="policySet" type="tns:PolicySet">
+            				</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PaginationHander">
+				<xs:sequence>
+					<xs:element name="pageSize" type="xs:int"/>
+					<xs:element name="pageCount" type="xs:int"/>
+					<xs:element name="totalCount" type="xs:int"/>
+					<xs:element name="nextPageNumber" type="xs:int">
+            		</xs:element>
+					<xs:element name="pageHandler" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="QueryCondition">
+				<xs:sequence>
+					<xs:element name="resolution" type="tns:Resolution">
+            		</xs:element>
+					<xs:element maxOccurs="unbounded" name="query" type="tns:Query"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="Resolution">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AND"/>
+					<xs:enumeration value="OR"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Query">
+				<xs:sequence>
+					<xs:element name="QueryType" type="xs:string"/>
+					<xs:element name="QueryValue" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:attribute name="NewAttribute" type="xs:string"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getAuthenticationPolicyRequest">
+		<wsdl:part element="ns0:getAuthenticationPolicyRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAuthorizationPolicyRequest">
+		<wsdl:part element="ns0:getAuthorizationPolicyRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAuthorizationPolicyResponse">
+		<wsdl:part element="ns0:getAuthorizationPolicyResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAuthenticationPolicyResponse">
+		<wsdl:part element="ns0:getAuthenticationPolicyResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getRateLimitingPolicyResponse">
+		<wsdl:part element="ns0:getRateLimitingPolicyResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getRateLimitingPolicyRequest">
+		<wsdl:part element="ns0:getRateLimitingPolicyRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getPolicyRequest">
+		<wsdl:part element="ns0:getPolicyRequest" name="parameters">
+  	</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getPolicyResponse">
+		<wsdl:part element="ns0:getPolicyResponse" name="parameters">
+  	</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createPolicyRequest">
+		<wsdl:part element="ns0:createPolicyRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="createPolicyResponse">
+		<wsdl:part element="ns0:createPolicyResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="updatePolicyRequest">
+		<wsdl:part element="ns0:updatePolicyRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="updatePolicyResponse">
+		<wsdl:part element="ns0:updatePolicyResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="deletePolicyRequest">
+		<wsdl:part element="ns0:deletePolicyRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="deletePolicyResponse">
+		<wsdl:part element="ns0:deletePolicyResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getResourcesRequest">
+		<wsdl:part element="ns0:getResourcesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getResourcesResponse">
+		<wsdl:part element="ns0:getResourcesResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getOperationsRequest">
+		<wsdl:part element="ns0:getOperationsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getOperationsResponse">
+		<wsdl:part element="ns0:getOperationsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="createSubjectsRequest">
+		<wsdl:part element="ns0:createSubjectsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="createSubjectsResponse">
+		<wsdl:part element="ns0:createSubjectsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="createSubjectGroupsRequest">
+		<wsdl:part element="ns0:createSubjectGroups" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="createSubjectGroupsResponse">
+		<wsdl:part element="ns0:createSubjectGroupsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findSubjectsRequest">
+		<wsdl:part element="ns0:findSubjectsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findSubjectsResponse">
+		<wsdl:part element="ns0:findSubjectsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findExternalSubjectsRequest">
+		<wsdl:part element="ns0:findExternalSubjectsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findExternalSubjectsResponse">
+		<wsdl:part element="ns0:findExternalSubjectsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findSubjectGroupsRequest">
+		<wsdl:part element="ns0:findSubjectGroupsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findSubjectGroupsResponse">
+		<wsdl:part element="ns0:findSubjectGroupsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="updateSubjectGroupRequest">
+		<wsdl:part element="ns0:updateSubjectGroupRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="updateSubjectGroupResponse">
+		<wsdl:part element="ns0:updateSubjectGroupResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="createExternalSubjectReferencesRequest">
+		<wsdl:part element="ns0:createExternalSubjectReferencesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="createExternalSubjectReferencesResponse">
+		<wsdl:part element="ns0:createExternalSubjectReferencesResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findPoliciesRequest">
+		<wsdl:part element="ns0:findPoliciesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findPoliciesResponse">
+		<wsdl:part element="ns0:findPoliciesResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="PolicyServicePort">
+		<wsdl:operation name="getAuthenticationPolicy">
+			<wsdl:input message="ns0:getAuthenticationPolicyRequest"/>
+			<wsdl:output message="ns0:getAuthenticationPolicyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getAuthorizationPolicy">
+			<wsdl:input message="ns0:getAuthorizationPolicyRequest"/>
+			<wsdl:output message="ns0:getAuthorizationPolicyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getRateLimitingPolicy">
+			<wsdl:input message="ns0:getRateLimitingPolicyRequest"/>
+			<wsdl:output message="ns0:getRateLimitingPolicyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPolicy">
+			<wsdl:documentation>Get plicy according to policy id or policy type and nam</wsdl:documentation>
+			<wsdl:input message="ns0:getPolicyRequest"/>
+			<wsdl:output message="ns0:getPolicyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="createPolicy">
+			<wsdl:documentation>create a polic</wsdl:documentation>
+			<wsdl:input message="ns0:createPolicyRequest"/>
+			<wsdl:output message="ns0:createPolicyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updatePolicy">
+			<wsdl:documentation>update a given polic</wsdl:documentation>
+			<wsdl:input message="ns0:updatePolicyRequest"/>
+			<wsdl:output message="ns0:updatePolicyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="deletePolicy">
+			<wsdl:documentation>delete a polic</wsdl:documentation>
+			<wsdl:input message="ns0:deletePolicyRequest"/>
+			<wsdl:output message="ns0:deletePolicyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getResources">
+			<wsdl:documentation>get resources according to resource key</wsdl:documentation>
+			<wsdl:input message="ns0:getResourcesRequest"/>
+			<wsdl:output message="ns0:getResourcesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getOperations">
+			<wsdl:documentation>get operations according to resource keys or operation key</wsdl:documentation>
+			<wsdl:input message="ns0:getOperationsRequest"/>
+			<wsdl:output message="ns0:getOperationsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="createSubjects">
+			<wsdl:documentation>create subject</wsdl:documentation>
+			<wsdl:input message="ns0:createSubjectsRequest"/>
+			<wsdl:output message="ns0:createSubjectsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="createSubjectGroups">
+			<wsdl:documentation>create subject group</wsdl:documentation>
+			<wsdl:input message="ns0:createSubjectGroupsRequest"/>
+			<wsdl:output message="ns0:createSubjectGroupsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findSubjects">
+			<wsdl:documentation>find subject</wsdl:documentation>
+			<wsdl:input message="ns0:findSubjectsRequest"/>
+			<wsdl:output message="ns0:findSubjectsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findExternalSubjects">
+			<wsdl:documentation>find external subject</wsdl:documentation>
+			<wsdl:input message="ns0:findExternalSubjectsRequest"/>
+			<wsdl:output message="ns0:findExternalSubjectsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findSubjectGroups">
+			<wsdl:documentation>find subject group</wsdl:documentation>
+			<wsdl:input message="ns0:findSubjectGroupsRequest"/>
+			<wsdl:output message="ns0:findSubjectGroupsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateSubjectGroup">
+			<wsdl:documentation>update subject grou</wsdl:documentation>
+			<wsdl:input message="ns0:updateSubjectGroupRequest"/>
+			<wsdl:output message="ns0:updateSubjectGroupResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="createExternalSubjectReferences">
+			<wsdl:documentation>link subject to an external entit</wsdl:documentation>
+			<wsdl:input message="ns0:createExternalSubjectReferencesRequest"/>
+			<wsdl:output message="ns0:createExternalSubjectReferencesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findPolicies">
+			<wsdl:documentation>find policie</wsdl:documentation>
+			<wsdl:input message="ns0:findPoliciesRequest"/>
+			<wsdl:output message="ns0:findPoliciesResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PolicyServiceHttpBinding" type="ns0:PolicyServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getAuthenticationPolicy">
+			<http:operation location="PolicyService/getAuthenticationPolicy"/>
+			<wsdl:input>
+				<mime:content part="getAuthenticationPolicyRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAuthenticationPolicyResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAuthorizationPolicy">
+			<http:operation location="PolicyService/getAuthorizationPolicy"/>
+			<wsdl:input>
+				<mime:content part="getAuthorizationPolicyRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAuthorizationPolicyResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRateLimitingPolicy">
+			<http:operation location="PolicyService/getRateLimitingPolicy"/>
+			<wsdl:input>
+				<mime:content part="getRateLimitingPolicyRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getRateLimitingPolicyResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPolicy">
+			<http:operation location="PolicyService/getPolicy"/>
+			<wsdl:input>
+				<mime:content part="getPolicyRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getPolicyResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createPolicy">
+			<http:operation location="PolicyService/createPolicy"/>
+			<wsdl:input>
+				<mime:content part="createPolicyRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createPolicyResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deletePolicy">
+			<http:operation location="PolicyService/deletePolicy"/>
+			<wsdl:input>
+				<mime:content part="deletePolicyRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="deletePolicyResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updatePolicy">
+			<http:operation location="PolicyService/updatePolicy"/>
+			<wsdl:input>
+				<mime:content part="updatePolicyRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updatePolicyResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getResources">
+			<http:operation location="PolicyService/getResources"/>
+			<wsdl:input>
+				<mime:content part="getResourcesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getResourcesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOperations">
+			<http:operation location="PolicyService/getOperations"/>
+			<wsdl:input>
+				<mime:content part="getOperationsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getOperationsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createSubjects">
+			<http:operation location="PolicyService/createSubjects"/>
+			<wsdl:input>
+				<mime:content part="createSubjectsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createSubjectsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createSubjectGroups">
+			<http:operation location="PolicyService/createSubjectGroups"/>
+			<wsdl:input>
+				<mime:content part="createSubjectGroupsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createSubjectGroupsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findSubjects">
+			<http:operation location="PolicyService/findSubjects"/>
+			<wsdl:input>
+				<mime:content part="findSubjectsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="findSubjectsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findExternalSubjects">
+			<http:operation location="PolicyService/findExternalSubjects"/>
+			<wsdl:input>
+				<mime:content part="findExternalSubjectsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="findExternalSubjectsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findSubjectGroups">
+			<http:operation location="PolicyService/findSubjectGroups"/>
+			<wsdl:input>
+				<mime:content part="findSubjectGroupsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="findSubjectGroupsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateSubjectGroup">
+			<http:operation location="PolicyService/updateSubjectGroup"/>
+			<wsdl:input>
+				<mime:content part="updateSubjectGroupRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateSubjectGroupResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createExternalSubjectReferences">
+			<http:operation location="PolicyService/createExternalSubjectReferences"/>
+			<wsdl:input>
+				<mime:content part="createExternalSubjectReferencesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createExternalSubjectReferencesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findPolicies">
+			<http:operation location="PolicyService/findPolicies"/>
+			<wsdl:input>
+				<mime:content part="findPoliciesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="findPoliciesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="PolicyServiceSOAPBinding" type="ns0:PolicyServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getAuthenticationPolicy">
+			<soap:operation soapAction="urn:getAuthenticationPolicy" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAuthorizationPolicy">
+			<soap:operation soapAction="urn:getAuthorizationPolicy" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRateLimitingPolicy">
+			<soap:operation soapAction="urn:getRateLimitingPolicy" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPolicy">
+			<soap:operation soapAction="urn:getPolicy" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createPolicy">
+			<soap:operation soapAction="urn:createPolicy" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updatePolicy">
+			<soap:operation soapAction="urn:updatePolicy" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deletePolicy">
+			<soap:operation soapAction="urn:deletePolicy" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getResources">
+			<soap:operation soapAction="urn:getResources" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOperations">
+			<soap:operation soapAction="urn:getOperations" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createSubjects">
+			<soap:operation soapAction="urn:createSubjects" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createSubjectGroups">
+			<soap:operation soapAction="urn:createSubjectGroups" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findSubjects">
+			<soap:operation soapAction="urn:findSubjects" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findExternalSubjects">
+			<soap:operation soapAction="urn:findExternalSubjects" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findSubjectGroups">
+			<soap:operation soapAction="urn:findSubjectGroups" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateSubjectGroup">
+			<soap:operation soapAction="urn:updateSubjectGroup" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createExternalSubjectReferences">
+			<soap:operation soapAction="urn:createExternalSubjectReferences" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findPolicies">
+			<soap:operation soapAction="urn:findPolicies" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PolicyService">
+		<wsdl:port binding="ns0:PolicyServiceHttpBinding" name="PolicyServiceHttp">
+			<http:address location="http://localhost:8080/PolicyService"/>
+		</wsdl:port>
+		<wsdl:port binding="ns0:PolicyServiceSOAPBinding" name="PolicyServiceSOAP">
+			<soap:address location="http://localhost:8080/PolicyService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

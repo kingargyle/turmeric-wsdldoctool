@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns:Q1="http://www.ebay.com/marketplace/services" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/personalization/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="TrackingGeoLocationService" targetNamespace="http://www.ebay.com/marketplace/personalization/v1/services">
+  <types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/personalization/v1/services">
+			<xs:import namespace="http://www.ebay.com/marketplace/services"/>
+			
+			<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+			<xs:element name="getLocationByIpRequest" nillable="true" type="tns:GetLocationByIpRequest"/>
+			<xs:element name="getLocationByIpResponse" nillable="true" type="tns:GetLocationByIpResponse"/>
+			<!-- GCS: Geographic Coordinate System: latitude & longitude -->
+			<xs:element name="getLocationByGCSRequest" nillable="true" type="tns:GetLocationByGCSRequest"/>
+			<xs:element name="getLocationByGCSResponse" nillable="true" type="tns:GetLocationByGCSResponse"/>
+			
+			<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation/>
+
+					<xs:appinfo/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="Q1:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="version" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetLocationByIpRequest">
+                <xs:annotation>
+                	<xs:documentation>
+                		The client IP address in the readable format
+                		(string format)
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+               		<xs:extension base="Q1:BaseServiceRequest">
+						<xs:sequence>
+
+							<xs:element maxOccurs="1" minOccurs="1" name="ipAddress" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetLocationByIpResponse">
+                <xs:annotation>
+                    <xs:documentation>
+                    	Defines the getLocationByIp response object.
+                    	It contains a single location information
+                    	that matches the user's IP address.
+                    </xs:documentation>
+                 </xs:annotation>
+                 <xs:complexContent>
+                    <xs:extension base="Q1:BaseServiceResponse">
+                    	<xs:sequence>
+
+							<xs:element maxOccurs="1" minOccurs="0" name="location" type="tns:LocationType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+		
+            <xs:complexType name="LocationType">
+ 				<xs:annotation>
+					<xs:documentation>This defines a user's geo location information</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="country" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The ISO standard two-letter country code</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="region" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>This is a generic field that stores country's specific region information. For example, it's the State for US, the Province for Canada, etc. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="city" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The name of the city. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="zipCode" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>This field contains country-specific postal code</xs:documentation>
+						</xs:annotation>					
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="latitude" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>The latitude of the city in decimail degrees format.</xs:documentation>
+						</xs:annotation>					
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="longitude" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>The longitude of the city in decimal degrees format.</xs:documentation>
+						</xs:annotation>	
+					</xs:element>
+					<xs:element minOccurs="0" name="metroCode" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The metro code that the city belongs to.</xs:documentation>
+						</xs:annotation>	
+					</xs:element>
+					<xs:element minOccurs="0" name="areaCode" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The phone area code of the city.</xs:documentation>
+						</xs:annotation>	
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>           
+            </xs:complexType>
+            
+            <xs:complexType name="GetLocationByGCSRequest">
+                <xs:annotation>
+                	<xs:documentation>
+                		Defines the getLocationByGCS request object. GCS
+                		stands for Geographic Coordinate Systems. It has
+                		three required fields: the latitude, longitude
+                		of current user's device location and the radius
+                		that defines a circular area centered at the
+                		user's device location.
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                	<xs:extension base="Q1:BaseServiceRequest">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="gcsInfo" type="tns:GCSInfo">
+            					<xs:annotation>
+            						<xs:documentation>
+            							It specifies the GCS information:
+            							latitude and longitude of a user's
+            							device, the radius and its unit.
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            
+            <xs:complexType name="GetLocationByGCSResponse">
+            	<xs:complexContent>
+            		<xs:extension base="Q1:BaseServiceResponse">
+            			<xs:sequence>
+
+            				<xs:element maxOccurs="unbounded" minOccurs="0" name="location" type="tns:LocationType">
+            					<xs:annotation>
+            						<xs:documentation>
+            							A list of locations that are
+            							within the circular searching
+            							area if any is found.
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            
+            <xs:complexType name="GCSInfo">
+            	<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="latitude" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>The geo latitude of a user's device.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="longitude" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>The geo longitude of a user's device.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="radius" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>The radius that defines a circular searching area that is centered at the user's device.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="radiusUnit" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the unit of radius as one of these options: mile or km (kilometer). If this element is missing, the default is mile.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+            </xs:complexType>
+            
+        </xs:schema>
+    <xs:schema targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="Q1:AckValue">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="Q1:ErrorMessage">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element name="severity" type="Q1:ErrorSeverity"/>
+					<xs:element name="category" type="Q1:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="Q1:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="Q1:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+  </types>
+  <message name="getLocationByGCSResponse">
+    <part element="tns:getLocationByGCSResponse" name="parameters">
+    </part>
+  </message>
+  <message name="getLocationByIpRequest">
+    <part element="tns:getLocationByIpRequest" name="parameters">
+    </part>
+  </message>
+  <message name="getVersionResponse">
+    <part element="tns:getVersionResponse" name="parameters">
+    </part>
+  </message>
+  <message name="getLocationByGCSRequest">
+    <part element="tns:getLocationByGCSRequest" name="parameters">
+    </part>
+  </message>
+  <message name="getLocationByIpResponse">
+    <part element="tns:getLocationByIpResponse" name="parameters">
+    </part>
+  </message>
+  <portType name="TrackingGeoLocationServicePort">
+    <operation name="getVersion">
+      <output message="tns:getVersionResponse">
+    </output>
+    </operation>
+    <operation name="getLocationByIp">
+      <input message="tns:getLocationByIpRequest">
+    </input>
+      <output message="tns:getLocationByIpResponse">
+    </output>
+    </operation>
+    <operation name="getLocationByGCS">
+      <input message="tns:getLocationByGCSRequest">
+    </input>
+      <output message="tns:getLocationByGCSResponse">
+    </output>
+    </operation>
+  </portType>
+  <binding name="TrackingGeoLocationServiceSOAPBinding" type="tns:TrackingGeoLocationServicePort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getVersion">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/personalization/v1/services/getVersion"/>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getLocationByIp">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/personalization/v1/services/getLocationByIp"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getLocationByGCS">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/personalization/v1/services/getLocationByGCS"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="TrackingGeoLocationServiceHttpBinding" type="tns:TrackingGeoLocationServicePort">
+    <http:binding verb="POST"/>
+    <operation name="getVersion">
+      <http:operation location="/getVersion"/>
+      <output>
+        <mime:content part="parameters" type="text/xml"/>
+      </output>
+    </operation>
+    <operation name="getLocationByIp">
+      <http:operation location="/getLocationByIp"/>
+      <input>
+        <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+      </input>
+      <output>
+        <mime:content part="parameters" type="text/xml"/>
+      </output>
+    </operation>
+    <operation name="getLocationByGCS">
+      <http:operation location="/getLocationByGCS"/>
+      <input>
+        <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+      </input>
+      <output>
+        <mime:content part="parameters" type="text/xml"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="TrackingGeoLocationService">
+    <port binding="tns:TrackingGeoLocationServiceSOAPBinding" name="TrackingGeoLocationServiceSOAP">
+      <soap12:address location="http://svcs.ebay.com/TrackingGeoLocationService"/>
+    </port>
+    <port binding="tns:TrackingGeoLocationServiceHttpBinding" name="TrackingGeoLocationServiceHttp">
+      <http:address location="http://svcs.ebay.com/TrackingGeoLocationService"/>
+    </port>
+  </service>
+</definitions>

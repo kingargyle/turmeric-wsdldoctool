@@ -1,0 +1,949 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="TranslationService" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+<xs:element name="syncTranslateRequest" nillable="true" type="tns:SyncTranslateRequest"/>
+<xs:element name="syncTranslateResponse" nillable="true" type="tns:SyncTranslateResponse"/>
+<xs:element name="getGenericProfileRequest" nillable="true" type="tns:GetGenericProfileRequest"/>
+<xs:element name="getGenericProfileResponse" nillable="true" type="tns:GetGenericProfileResponse"/>
+<xs:element name="getCustomProfileRequest" nillable="true" type="tns:GetCustomProfileRequest"/>
+<xs:element name="getCustomProfileResponse" nillable="true" type="tns:GetCustomProfileResponse"/>
+<!-- Type definitions -->   
+    <xs:complexType name="GetCustomProfileRequest">
+	<xs:annotation>
+		<xs:documentation>
+			Request object to get a profile by language pair, category
+			(eBay market place), and other options. The call returns a
+			profile ID to the translation engine. ProfileID returned by
+			this operation is used in subsequest calls to translate
+		</xs:documentation>
+		<xs:appinfo/>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceRequest">
+			<xs:sequence>
+				<xs:element minOccurs="1" name="sourceLanguage" type="tns:LanguageEnum">
+					<xs:annotation>
+						<xs:documentation>
+							TThe language of the source text.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName/>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="1" name="targetLanguage" type="tns:LanguageEnum">
+					<xs:annotation>
+						<xs:documentation>
+							The language to translate to.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName/>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="1" name="customProfileOptions" type="tns:CustomProfileOption">
+					<xs:annotation>
+						<xs:documentation>
+							Custom profile options.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName/>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+
+    <xs:complexType name="GetGenericProfileRequest">
+	<xs:annotation>
+		<xs:documentation>
+			Request object to get a profile by language pair. The
+			call returns a profile ID to the translation engine. ProfileID
+			returned by this operation is used in subsequest calls to
+			translate
+		</xs:documentation>
+		<xs:appinfo/>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceRequest">
+			<xs:sequence>
+				<xs:element minOccurs="1" name="sourceLanguage" type="tns:LanguageEnum">
+					<xs:annotation>
+						<xs:documentation>
+							TThe language of the source text.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName/>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="1" name="targetLanguage" type="tns:LanguageEnum">
+					<xs:annotation>
+						<xs:documentation>
+							TThe language to translate to.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName/>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+
+    <xs:complexType name="SyncTranslateRequest">
+	<xs:annotation>
+		<xs:documentation>Translation request type</xs:documentation>
+		<xs:appinfo>
+			<Summary>Translation request</Summary>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceRequest">
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="1" name="translationUnit" type="tns:TranslationUnit">
+					<xs:annotation>
+						<xs:documentation>
+							The content to be translated along with the
+							profile and other options.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName/>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+    <xs:complexType name="GetCustomProfileResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Get profile response.
+		</xs:documentation>
+		<xs:appinfo/>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceResponse">
+			<xs:sequence>
+				<xs:element minOccurs="0" name="profileID" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The translation engine profile Identifier.
+						</xs:documentation>
+						<xs:appinfo/>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+    <xs:complexType name="GetGenericProfileResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Get profile response.
+		</xs:documentation>
+		<xs:appinfo/>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceResponse">
+			<xs:sequence>
+				<xs:element minOccurs="0" name="profileID" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The translation engine profile Identifier.
+						</xs:documentation>
+						<xs:appinfo/>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+    <xs:complexType name="SyncTranslateResponse">
+	<xs:annotation>
+		<xs:documentation>Translation response type</xs:documentation>
+		<xs:appinfo>
+			<Summary>Translation response</Summary>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceResponse">
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" name="translatedUnit" type="tns:TranslatedUnit">
+					<xs:annotation>
+						<xs:documentation>
+							The translated result - translated text
+							along with optional annotated source
+						</xs:documentation>
+						<xs:appinfo/>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+    <xs:complexType name="CategoryOption">
+	<xs:annotation>
+		<xs:documentation>
+			Desired options for selecting category.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element minOccurs="1" name="categoryDomain" type="xs:token">
+			<xs:annotation>
+				<xs:documentation>
+					Allowed values are 
+					1. Listings
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="category" type="xs:token">
+			<xs:annotation>
+				<xs:documentation>
+					AllCategories  
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+    <xs:complexType name="CustomProfileOption">
+	<xs:annotation>
+		<xs:documentation>
+			Desired options for the returned profile. The service will
+			return a profile that closely matches the options.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element minOccurs="0" name="categoryOptions" type="tns:CategoryOption">
+			<xs:annotation>
+				<xs:documentation>
+					eBay category options
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="parseNonStrictHTML" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>
+					If set to true, the HTML will be parsed with a
+					non-strict parser
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="terminologyTranslation" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>
+					If set to true, a matching profile that will treat
+					the source as a collection of terms rather than a
+					sentence will be returned. This is suitable to
+					translate a listing title for example. Defaults to
+					false
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="annotateTranslation" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>
+					If set to true, the source and translated content
+					will be returned with additional mark up around
+					sentence (segment) boundaries. Defaults to false.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+    <xs:simpleType name="LanguageEnum">
+	<xs:annotation>
+		<xs:documentation>
+			The supported translation language
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="es">
+			<xs:annotation>
+				<xs:documentation>Spanish</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="en">
+			<xs:annotation>
+				<xs:documentation>English</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+    <xs:simpleType name="SourceFormatEnum">
+	<xs:annotation>
+		<xs:documentation>
+			The format of the source to be translated
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="HTML">
+			<xs:annotation>
+				<xs:documentation>Input is in HTML</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="PlainText">
+			<xs:annotation>
+				<xs:documentation>Input is plain text</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+    <xs:complexType name="TranslatedUnit">
+	<xs:annotation>
+		<xs:documentation>
+			Translation result - the translated text (annotated or not)
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element minOccurs="1" name="translation" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The translated content
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="1" name="annotatedSource" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The original source with extra annotation around
+					segmentation boundaries
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="1" name="referenceID" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					An id that uniquely identify a translation unit
+					that corresponds to this translation
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+    <xs:complexType name="TranslationUnit">
+	<xs:annotation>
+		<xs:documentation>
+			A unit of work for translation engine.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element minOccurs="1" name="source" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The content (text) to be translated
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="1" name="profileID" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The server side translation engine profile ID. The
+					profile is obtained by calling getProfile operation
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="1" name="sourceFormat" type="tns:SourceFormatEnum">
+			<xs:annotation>
+				<xs:documentation>
+					The format of the source to be translated - plain
+					text, HTML
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="1" name="referenceID" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					An id that uniquely identify a translation unit
+					within the scope of the request
+				</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType abstract="true" name="BaseServiceRequest">
+	<xs:annotation>
+		<xs:documentation>
+		This is the base class for request container for all service operations.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+<xs:complexType abstract="true" name="BaseServiceResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Base response container for all service operations. Contains error information
+			associated with the request.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="ack" type="tns:AckValue">
+			<xs:annotation>
+				<xs:documentation>
+				   Returns the acknowledgement of the call success or failure.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+			<xs:annotation>
+				<xs:documentation>
+					Information for an error or warning that occurred when eBay processed the
+					request.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="version" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+				  The version of the schema that your WSDL is based on.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+			<xs:annotation>
+				<xs:documentation>
+				  The data and time of the response.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="AckValue">
+	<xs:annotation>
+		<xs:documentation>
+		Indicates whether the error is a severe error (causing the request to fail)
+		or an informational error (a warning) that should be communicated to the
+		user.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Success">
+			<xs:annotation>
+				<xs:documentation>
+				The request was processed successfully, but something occurred that may
+				affect your application or the user.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Failure">
+			<xs:annotation>
+				<xs:documentation>
+				The request that triggered the error was not processed successfully.
+				When a serious application-level error occurs, the error is returned
+				instead of the business data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Warning">
+			<xs:annotation>
+				<xs:documentation>
+				The request that triggered the error was processed successfully but with some warnings.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="PartialFailure">
+			<xs:annotation>
+				<xs:documentation>
+				The request that triggered the error was processed successfully but with some warnings.				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="ErrorMessage">
+	<xs:annotation>
+		<xs:documentation>
+		ErrorMessage to indicate any Error/Warning occured as part of service call.
+		Any run time error will not be reported here, but will be reported aspart of
+		soap fault.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+			<xs:annotation>
+				<xs:documentation>
+				Details about a single error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="ErrorData">
+	<xs:annotation>
+		<xs:documentation>
+		This represents error details.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="errorId" type="xs:long">
+			<xs:annotation>
+				<xs:documentation>
+				A unique code that identifies the particular error condition that occurred.
+				Your application can use error codes as identifiers in your customized
+				error-handling algorithms.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="domain" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the domain upon which the error occurred.
+					&lt;dl&gt;
+					&lt;lh&gt;Domains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Marketplace
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						A business or validation error occurred for the Bulk Data Exchange service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						SOA
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						An exception occurred in the Service Oriented Architecture (SOA) framework.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="severity" type="tns:ErrorSeverity">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the error caused the request to fail (Error) or not
+					(Warning).
+					&lt;br&gt;&lt;br&gt;
+					If the request fails and the source of the problem is within the application
+					(such as a missing required element), please change the application before you
+					retry the request. If the problem is due to end-user input data, please alert
+					the end-user to the problem and provide the means for them to correct the data.
+					Once the problem in the application or data is resolved, you can attempt to re-
+					send the request to eBay.
+					&lt;br&gt;&lt;br&gt;
+					If the source of the problem is on eBay's side, you can retry the request as-is
+					a reasonable number of times (eBay recommends twice). If the error persists,
+					contact Developer Technical Support. Once the problem has been resolved, the
+					request may be resent in its original form.
+					&lt;br&gt;&lt;br&gt;
+					When a warning occurs, the error is returned in addition to the business data.
+					In this case, you do not need to retry the request (as the original request was
+					successful). However, depending on the cause or nature of the warning, you
+					might need to contact either the end user or eBay to effect a long term
+					solution to the problem to prevent it from reoccurring in the future.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="category" type="tns:ErrorCategory">
+			<xs:annotation>
+				<xs:documentation>
+				There are three categories of errors: request errors, application errors, and
+				system errors.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="message" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+				A detailed description of the condition that resulted in the error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="subdomain" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the subdomain upon which the error occurred.
+					&lt;dl&gt;
+					&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						TranslationService
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is specific to the TranslationService service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						MarketplaceCommon
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is common to all Marketplace services.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+			<xs:annotation>
+				<xs:documentation>
+				   Unique identifier for an exception associated with an error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+			<xs:annotation>
+				<xs:documentation>
+				Some warning and error messages return one or more variables that contain
+				contextual information about the error. This is often the field or value that
+				triggered the error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="ErrorParameter">
+	<xs:annotation>
+		<xs:documentation>
+		Contextual information associated with an error.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+					The name of the parameter in the get of parameter types returned
+					within the error type.
+					</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<AllCalls/>
+								<Returned>Conditionally</Returned>
+							</CallInfo>
+						</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+
+
+<xs:simpleType name="ErrorSeverity">
+	<xs:annotation>
+		<xs:documentation>
+		Indicates whether the error is a severe error (causing the request to fail)
+		or an informational error (a warning) that should be communicated to the
+		user.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Error">
+			<xs:annotation>
+				<xs:documentation>
+				The request that triggered the error was not processed successfully.
+				When a serious application-level error occurs, the error is returned
+				instead of the business data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Warning">
+			<xs:annotation>
+				<xs:documentation>
+				The request was processed successfully, but something occurred that may
+				affect your application or the user. For example, eBay may have changed a
+				value the user sent in. In this case, eBay returns a normal, successful
+				response and also returns the warning.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ErrorCategory">
+	<xs:annotation>
+		<xs:documentation>
+		There are three categories of error: request errors, application errors,
+		and system errors. Request and application errors are caused primarily by
+		invalid data passed in the request. System errors are caused primarily by
+		application failures and cannot be corrected by changing request values.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="System">
+			<xs:annotation>
+				<xs:documentation>
+				Indicates that an error has occurred on the eBay system side, such as a
+				database or server down. An application can retry the request as-is a
+				reasonable number of times (eBay recommends twice). If the error
+				persists, contact Developer Technical Support. Once the problem has been
+				resolved, the request may be resent in its original form.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Application">
+			<xs:annotation>
+				<xs:documentation>
+				An error occurred due to a problem with the request, such as missing or
+				invalid fields. The problem must be corrected before the request can be
+				made again. If the problem is due to something in the application (such
+				as a missing required field), the application must be changed. Once the
+				problem in the application or data is resolved, resend the corrected
+				request to eBay.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Request">
+			<xs:annotation>
+				<xs:documentation>
+				An error occurred due to a problem with the request, such as invalid or
+				missing data. The problem must be corrected before the request can be
+				made again. If the problem is a result of end-user data, the application
+				must alert the end-user to the problem and provide the means for the
+				end-user to correct the data. Once the problem in the data is resolved,
+				resend the request to eBay with the corrected data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+</wsdl:types>
+
+  <wsdl:message name="syncTranslateRequest">
+    <wsdl:part element="ns0:syncTranslateRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncTranslateResponse">
+    <wsdl:part element="ns0:syncTranslateResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGenericProfileRequest">
+    <wsdl:part element="ns0:getGenericProfileRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGenericProfileResponse">
+    <wsdl:part element="ns0:getGenericProfileResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomProfileRequest">
+    <wsdl:part element="ns0:getCustomProfileRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomProfileResponse">
+    <wsdl:part element="ns0:getCustomProfileResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  
+  <wsdl:portType name="TranslationServicePort">
+    <wsdl:operation name="syncTranslate">
+	<wsdl:documentation>
+		Translate a document syncronously using machine translation. 
+	</wsdl:documentation>
+      <wsdl:input message="ns0:syncTranslateRequest">
+    </wsdl:input>
+      <wsdl:output message="ns0:syncTranslateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGenericProfile">
+	<wsdl:documentation>
+		Return a generic translation profile ID. A profile ID is used in subsequent calls to translation
+	</wsdl:documentation>
+      <wsdl:input message="ns0:getGenericProfileRequest">
+    </wsdl:input>
+      <wsdl:output message="ns0:getGenericProfileResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomProfile">
+	<wsdl:documentation>
+		Return a custom translation profile ID. A profile ID is used in subsequent calls to translation
+	</wsdl:documentation>
+      <wsdl:input message="ns0:getCustomProfileRequest">
+    </wsdl:input>
+      <wsdl:output message="ns0:getCustomProfileResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="TranslationServiceHttpBinding" type="ns0:TranslationServicePort">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="syncTranslate">
+      <http:operation location="TranslationService/syncTranslate"/>
+      <wsdl:input>
+        <mime:content part="syncTranslate" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="syncTranslate" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGenericProfile">
+      <http:operation location="TranslationService/getGenericProfile"/>
+      <wsdl:input>
+        <mime:content part="getGenericProfile" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getGenericProfile" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomProfile">
+      <http:operation location="TranslationService/getCustomProfile"/>
+      <wsdl:input>
+        <mime:content part="getCustomProfile" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getCustomProfile" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TranslationServiceSOAPBinding" type="ns0:TranslationServicePort">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="syncTranslate">
+      <soap12:operation soapAction="urn:syncTranslate" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGenericProfile">
+      <soap12:operation soapAction="urn:getGenericProfile" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomProfile">
+      <soap12:operation soapAction="urn:getCustomProfile" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TranslationService">
+	<wsdl:documentation>
+		This interface provides operations to translate a document from one of the supported
+languages to another. The current implementation uses machine translation (MT).
+	</wsdl:documentation>
+    <wsdl:port binding="ns0:TranslationServiceHttpBinding" name="TranslationServiceHttp">
+      <http:address location="http://webservices.ebay.com/TranslationService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:TranslationServiceSOAPBinding" name="TranslationServiceSOAP">
+      <soap12:address location="http://webservices.ebay.com/TranslationService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

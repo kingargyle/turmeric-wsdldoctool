@@ -1,0 +1,97 @@
+Usage:
+
+This tool is used for Annotation parsing and Documentation Generation.
+
+The Parameters to the tool can be passed in 3 ways,
+
+1. Through System Environment variables
+2. Through Configuration xml
+3. Through Command line arguments.
+
+
+1. Through System Envronment Variables
+         The Names of system variables are,
+         ANNOPARSER_OUTPUT_DIR = <Complete Output Directory Path>
+         ANNOPARSER_CONFIG= <Configuration file Path>
+         ANNOPARSER_CSS= <CSS file Path>
+
+
+2. The Command line Arguments should be passed as follows,
+         output_dir=<Complete Output Directory Path>
+         config=<Configuration file Path>
+         css=<CSS file Path>
+
+
+The precedence of input methodology is taken in
+low to high precedence of below order.
+ 1. System Environment variables
+ 2. Configuration xml
+ 3. Command line arguments
+
+PreRequisites: 
+
+1. Make sure the TURMERIC-721-1.0.jar, wsdl4j.jar and ebayAnnotationParser.jar are in classpath
+ 
+ or 
+  
+2. Provide all the jars as "java -classpath <path to TURMERIC_JAR>;<path to wsdl4j.jar>;<path to ebayAnnotationParser.jar>
+
+Example Invocation:
+
+
+java -classpath TURMERIC-721-1.0.jar org.ebayopensource.turmeric.tools.annopars
+r.Main documents=c:\wsdls\sample.wsdl output_dir=c:\temp\ config=c:\annoparser\
+onfig.xml
+
+
+Sample Config File:
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+        <defaultparser>
+    		<class>org.ebayopensource.turmeric.tools.annoparser.parser.impl.DefaultAnnotationParser</class>
+    	</defaultparser>
+        <annoparsers>
+                <parser>
+                        <tagname>TestAnno</tagname>
+                        <parserclass>org.TestAnnoParserClass</parserclass>
+                </parser>
+                <parser>
+                        <tagname>TestAnno</tagname>
+                        <parserclass>org.TestAnnoParserClass</parserclass>
+                </parser>
+        </annoparsers>
+        <outputgenerators>
+               <outputgenerator name="Output">
+                        <class>org.TestOpGenClass</class>
+                        <outputdir>C:\AnnoParser\outputGen\</outputdir>
+                        <parameters>
+						     <parameter>
+						          <name>stopOnError</name>
+						          <value>true</value>
+						     </parameter>
+						     <parameter>
+						          <name>outputMode</name>
+						          <value>debug</value>
+						     </parameter>
+						</parameters>
+                </outputgenerator>
+                <outputgenerator name="Output1">
+                        <class>org.TestOpGenClass1</class>
+                        <outputdir>C:\AnnoParser\outputGen1\</outputdir>
+                        <parameters>
+						     <parameter>
+						          <name>outputMode</name>
+						          <value>normal</value>
+						     </parameter>
+						</parameters>
+                </outputgenerator>
+        </outputgenerators>
+        <!-- This Output Dir will be the Default Output Directory to which Javadoc output is written-->
+        <outputdir>C:\temp\wsdlDoc\</outputdir>
+        <documents>
+                <document>C:\Samples\Service1.wsdl</document>
+                <document>C:\Samples\Service2.wsdl</document>
+        </documents>
+</config>

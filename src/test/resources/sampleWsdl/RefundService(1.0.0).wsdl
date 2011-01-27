@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://PitneyBowes.com/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:s1="http://localhost/IBDS/Types/Refund" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s2="http://localhost/IBDS/Types/Dispense" targetNamespace="http://PitneyBowes.com/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://PitneyBowes.com/">
+      <s:import namespace="http://localhost/IBDS/Types/Refund"/>
+      <s:import namespace="http://localhost/IBDS/Types/Dispense"/>
+      <s:element name="RefundPostage">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="refundRequestType" type="s1:RefundPostageRequestType"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RefundPostageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="RefundPostageResult" type="s1:RefundPostageResponseType_V0201"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CommonTxResponse" type="tns:CommonTxResponse_V0201"/>
+      <s:complexType name="CommonTxResponse_V0201">
+        <s:sequence>
+          <s:element maxOccurs="1" minOccurs="0" name="WSVersionNumber" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="RequestID" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="1" name="PartnerID" type="s:int"/>
+          <s:element maxOccurs="1" minOccurs="0" name="PartnerTransactionID" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="PartnerTransactionTime" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="PartnerUserID" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="1" name="Domain" type="s2:enumDomain"/>
+          <s:element maxOccurs="1" minOccurs="1" name="SiteID" type="s:int"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BnBRoutingControlHeader" type="tns:BnBRoutingControlHeader"/>
+      <s:complexType name="BnBRoutingControlHeader">
+        <s:sequence>
+          <s:element maxOccurs="1" minOccurs="1" name="RoutingAction" type="tns:RoutingActionEnm"/>
+          <s:element maxOccurs="1" minOccurs="0" name="ProcessedSites" type="tns:ArrayOfString"/>
+        </s:sequence>
+        <s:anyAttribute/>
+      </s:complexType>
+      <s:simpleType name="RoutingActionEnm">
+        <s:restriction base="s:string">
+          <s:enumeration value="RoutingActionNone"/>
+          <s:enumeration value="RoutingActionRaiseException"/>
+          <s:enumeration value="RoutingActionReturnDummy"/>
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" minOccurs="0" name="string" nillable="true" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SecuritySoapHeader" type="tns:SecuritySoapHeader"/>
+      <s:complexType name="SecuritySoapHeader">
+        <s:sequence>
+          <s:element maxOccurs="1" minOccurs="0" name="WSVersionNumber" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="Signature" type="s:base64Binary"/>
+          <s:element maxOccurs="1" minOccurs="1" name="PartnerID" type="s:int"/>
+          <s:element maxOccurs="1" minOccurs="0" name="PartnerUserID" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="1" name="SiteID" type="s:int"/>
+        </s:sequence>
+        <s:anyAttribute/>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://localhost/IBDS/Types/Refund">
+      <s:import namespace="http://PitneyBowes.com/"/>
+      <s:complexType name="RefundPostageRequestType">
+        <s:sequence>
+          <s:element maxOccurs="1" minOccurs="1" name="RefundPostageInitiator" type="s1:RefundPostageInitiatorType"/>
+          <s:element maxOccurs="1" minOccurs="1" name="PartnerID" type="s:int"/>
+          <s:element maxOccurs="1" minOccurs="0" name="PartnerUserID" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="PackageID" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="DispensePartnerTransactionID" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="DispensePartnerDateTime" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RefundPostageInitiatorType">
+        <s:restriction base="s:string">
+          <s:enumeration value="User"/>
+          <s:enumeration value="Partner"/>
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="RefundPostageResponseType_V0201">
+        <s:sequence>
+          <s:element maxOccurs="1" minOccurs="0" ref="tns:CommonTxResponse"/>
+          <s:element maxOccurs="1" minOccurs="1" name="RefundPostageAmount" type="s:decimal"/>
+          <s:element maxOccurs="1" minOccurs="1" name="Status" type="s:boolean"/>
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://localhost/IBDS/Types/Dispense">
+      <s:simpleType name="enumDomain">
+        <s:restriction base="s:string">
+          <s:enumeration value="USPS"/>
+          <s:enumeration value="CPC"/>
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RefundPostageBnBRoutingControlHeader">
+    <wsdl:part element="tns:BnBRoutingControlHeader" name="BnBRoutingControlHeader"/>
+  </wsdl:message>
+  <wsdl:message name="RefundPostageSoapIn">
+    <wsdl:part element="tns:RefundPostage" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="RefundPostageSecuritySoapHeader">
+    <wsdl:part element="tns:SecuritySoapHeader" name="SecuritySoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="RefundPostageSoapOut">
+    <wsdl:part element="tns:RefundPostageResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="RefundServiceSoap">
+    <wsdl:operation name="RefundPostage">
+      <wsdl:input message="tns:RefundPostageSoapIn"/>
+      <wsdl:output message="tns:RefundPostageSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RefundServiceSoap" type="tns:RefundServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="RefundPostage">
+      <soap:operation soapAction="http://PitneyBowes.com/RefundPostage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:RefundPostageBnBRoutingControlHeader" part="BnBRoutingControlHeader" use="literal">
+        </soap:header>
+        <soap:header message="tns:RefundPostageSecuritySoapHeader" part="SecuritySoapHeader" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RefundServiceSoap12" type="tns:RefundServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="RefundPostage">
+    <soap12:operation soapAction="http://PitneyBowes.com/RefundPostage" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+    <soap12:header message="tns:RefundPostageBnBRoutingControlHeader" part="BnBRoutingControlHeader" use="literal"/>
+    <soap12:header message="tns:RefundPostageSecuritySoapHeader" part="SecuritySoapHeader" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RefundService">
+    <wsdl:port binding="tns:RefundServiceSoap12" name="RefundServiceSoap12">
+    <soap12:address location="http://bnbuspro4web-re.test.pb.com:81/WebService/RefundService.asmx"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:RefundServiceSoap" name="RefundServiceSoap">
+      <soap:address location="http://bnbuspro4web-re.test.pb.com:81/WebService/RefundService.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

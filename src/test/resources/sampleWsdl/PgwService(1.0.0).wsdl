@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/payment/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="PgwService" targetNamespace="http://www.ebay.com/marketplace/payment/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/payment/v1/services">
+
+			<xs:element name="createAccountRequest" type="tns:CreateAccountRequest"/>
+			<xs:element name="createAccountResponse" type="tns:CreateAccountResponse"/>
+			<xs:element name="updateAccountRequest" type="tns:UpdateAccountRequest"/>
+			<xs:element name="updateAccountResponse" type="tns:UpdateAccountResponse"/>
+			<xs:element name="getVersionRequest" type="tns:GetVersionRequest"/> 
+			<xs:element name="getVersionResponse" type="tns:GetVersionResponse"/> 
+
+			<xs:complexType name="CreateAccountRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+							<xs:element name="accountOwner" type="tns:AccountType"/>
+							<xs:element minOccurs="0" name="merchantAccountRefID" type="tns:MerchantAccountReferenceIDType"/>
+							<xs:element minOccurs="0" name="residenceCountry" type="tns:ISOCountryCodeType"/>
+							<xs:element minOccurs="0" name="SSN" type="xs:int"/>
+							<xs:element minOccurs="0" name="taxID" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="CreateAccountResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="responseHeader" type="tns:ResponseHeaderType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAccountRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+							<xs:element name="accountOwner" type="tns:AccountType"/>
+							<xs:element minOccurs="0" name="merchantAccountRefID" type="tns:MerchantAccountReferenceIDType"/>
+							<xs:element minOccurs="0" name="residenceCountry" type="tns:ISOCountryCodeType"/>
+							<xs:element minOccurs="0" name="SSN" type="xs:int"/>
+							<xs:element minOccurs="0" name="taxID" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAccountResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="responseHeader" type="tns:ResponseHeaderType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetVersionRequest">
+				<xs:complexContent>
+  					<xs:extension base="tns:BaseServiceRequest"/> 
+  				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetVersionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/> 
+				</xs:complexContent>
+			</xs:complexType>
+			
+
+
+			<!-- ******************************************************************* -->
+			<!-- Payment Domain Type Library -->
+
+
+			<xs:complexType name="AccountType">
+				<xs:annotation>
+					<xs:documentation>User identifier</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="PaymentDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/payment/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="AccountID" type="xs:string"/>
+					<xs:element name="AccountSuffixID" type="xs:string"/>
+					<xs:element name="ClientID" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="RequestHeaderType">
+				<xs:annotation>
+					<xs:documentation>
+						Base request header
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="PaymentDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/payment/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="RequestID" type="xs:string"/>
+					<xs:element name="RequestDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="CorrelationID" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ResponseHeaderType">
+				<xs:annotation>
+					<xs:documentation>
+						Base header for all responses.
+						
+						RequestID contains a value that was passed in the RequestHeader.
+						ResponseID contains a value generated uniquely for each instance of
+						invocation by PGW. 
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="PaymentDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/payment/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="RequestID" type="xs:string"/>
+					<xs:element name="ResponseTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="ResponseID" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="ISOCountryCodeType">
+				<xs:annotation>
+					<xs:documentation>
+						Two-letter country code, according to ISO 3166-1 alpha-2 standard.
+						
+						ISO 3166 standard defines three sets of country codes:
+						1) ISO 3166-1 alpha-2 — two-letter country codes 
+						2) ISO 3166-1 alpha-3 — three-letter country codes 
+						3) ISO 3166-1 numeric — three-digit country codes
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="PaymentDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/payment/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[a-zA-Z][a-zA-Z]"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="MerchantAccountReferenceIDType">
+				<xs:annotation>
+					<xs:documentation>
+						ID that is used to determine a merchant account to be
+						used for money transfer in/out. Values are controlled by
+						PGW clients and transparent to PGW logic. Some examples:
+						values of site_id for eBay marketplace (could be a site
+						of registration or site site of the transaction, etc);
+						values of country_id (could be country of residence or
+						country of financial instrument, etc);
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="PaymentDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/payment/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:int">
+					<xs:minInclusive value="0"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>		
+			</xs:simpleType>
+
+			<!-- ******************************************************************* -->
+			<!-- eBay Core types. -->
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+		</xs:schema>
+	</wsdl:types>
+
+	<!-- ***************************************************************************** -->
+	<!-- wsdl messages *************************** -->
+
+	<wsdl:message name="createAccountRequest">
+		<wsdl:part element="tns:createAccountRequest" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="createAccountResponse">
+		<wsdl:part element="tns:createAccountResponse" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="updateAccountRequest">
+		<wsdl:part element="tns:updateAccountRequest" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="updateAccountResponse">
+		<wsdl:part element="tns:updateAccountResponse" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part element="tns:getVersionRequest" name="params"/> 
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="tns:getVersionResponse" name="params"/> 
+	</wsdl:message>
+
+
+	<!-- ***************************************************************************** -->
+	<!-- wsdl operations ******************************* -->
+
+
+	<wsdl:portType name="PgwServicePort">
+
+		<wsdl:operation name="createAccount">
+			<wsdl:input message="tns:createAccountRequest"/>
+			<wsdl:output message="tns:createAccountResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateAccount">
+			<wsdl:input message="tns:updateAccountRequest"/>
+			<wsdl:output message="tns:updateAccountResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="tns:getVersionRequest"/> 
+			<wsdl:output message="tns:getVersionResponse"/> 
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- ***************************************************************************** -->
+	<!-- wsdl binding ******************************* -->
+
+	<wsdl:binding name="PgwServiceHttpBinding" type="tns:PgwServicePort">
+
+
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getVersion">
+
+			<http:operation location="/getVersion"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createAccount">
+			<http:operation location="/createAccount"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAccount">
+			<http:operation location="/updateAccount"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="PgwServiceSOAPBinding" type="tns:PgwServicePort">
+
+
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getVersion">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/payment/v1/services/getVersion"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createAccount">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/payment/v1/services/createAccount"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAccount">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/payment/v1/services/updateAccount"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="PgwService">
+		<wsdl:port binding="tns:PgwServiceHttpBinding" name="PgwServiceHttpPort">
+			<http:address location="https://svcs.ebay.com/services/payment/PgwService/v1"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:PgwServiceSOAPBinding" name="PgwServiceSOAPPort">
+			<soap12:address location="https://svcs.ebay.com/services/payment/PgwService/v1"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

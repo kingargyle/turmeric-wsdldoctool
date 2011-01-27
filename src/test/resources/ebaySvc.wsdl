@@ -1,0 +1,3971 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BestMatchItemDetailsInternalService"
+	targetNamespace="http://www.ebay.com/marketplace/search/v1/services"
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://www.ebay.com/marketplace/search/v1/services"
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:ns1="http://www.ebay.com/marketplace/services"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified"
+			elementFormDefault="qualified"
+			targetNamespace="http://www.ebay.com/marketplace/search/v1/services"
+			xmlns:tns="http://www.ebay.com/marketplace/search/v1/services"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:Q1="ns1">
+
+			<xs:import
+				namespace="http://www.ebay.com/marketplace/services">
+			</xs:import>
+
+			<xs:element
+				name="findBestMatchItemDetailsByKeywordsInternalRequest"
+				type="tns:FindBestMatchItemDetailsByKeywordsInternalRequest">
+
+			</xs:element>
+			<xs:element
+				name="findBestMatchItemDetailsByKeywordsInternalResponse"
+				type="tns:FindBestMatchItemDetailsByKeywordsInternalResponse">
+
+			</xs:element>
+			<xs:complexType
+				name="FindBestMatchItemDetailsByKeywordsInternalRequest">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsRequestInternal">
+						<xs:sequence>
+							<xs:element name="keywords" type="xs:string"
+								maxOccurs="1" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										One or more words to use as a
+										search query for finding items
+										on eBay. By default, the query
+										searches item titles only. If
+										you are using a URL request and
+										your keyword query consists of
+										multiple words, use
+										&amp;quot;%20&amp;quot; separate
+										the words. For example, use
+										Harry%20Potter to search for
+										items containing those words in
+										any order. You can incorporate
+										wildcards into a multi-word
+										search, as in
+										&amp;quot;ap*%20ip*&amp;quot;,
+										which will return results for
+										&amp;quot;apple ipod&amp;quot;
+										among other matches. The words
+										&amp;quot;and&amp;quot; and
+										&amp;quot;or&amp;quot; are
+										treated like any other word.
+										Only use
+										&amp;quot;and&amp;quot;,
+										&amp;quot;or&amp;quot;, or
+										&amp;quot;the&amp;quot; if you
+										are searching for listings
+										containing these words.
+										findItemsAdvanced requires that
+										you specify either keywords or
+										categoryId.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType
+				name="FindBestMatchItemDetailsByKeywordsInternalResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Contains summary for items appearing on the
+						first page
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsResponseInternal">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="firstPageSummary" type="tns:FirstPageSummaryInternal">
+								<xs:annotation>
+									<xs:documentation>
+										Return the summary of First Page
+										items as defined by
+										siteResultsPerPage split by Item
+										Listing Format. AuctionWithBIN
+										items are considered as Auction
+										and StoreInventory items are
+										considered as FixedPrice for
+										this analysis and StoreInventory
+										items are considered as
+										FixedPrice for this analysis
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType
+				name="BaseBestMatchItemDetailsResponseInternal">
+				<xs:complexContent>
+					<xs:extension base="ns1:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="searchResult" type="tns:BestMatchSearchResultInternal">
+								<xs:annotation>
+									<xs:documentation>
+										Contains the list of items group
+										according to placement(where the
+										items appear on search page:
+										featured or search
+										result(BestMatch) group) or
+										Condition.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="BestMatchSearchResultInternal">
+				<xs:annotation>
+					<xs:documentation>
+						Contains the returned item group listing along
+						with total count.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="totalEntries" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Total number of items matching the query
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="searchItemGroup" type="tns:SearchItemGroupInternal">
+						<xs:annotation>
+							<xs:documentation>
+								List of items grouped by Condition or
+								Placement
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="bestMatchProfile" type="tns:BestMatchProfile">
+						<xs:annotation>
+							<xs:documentation>
+								Details about the best match profile and
+								formula that was run to fetch the items
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="formatMixData" type="tns:FormatMixData">
+						<xs:annotation>
+							<xs:documentation>
+								Contains the differents inputs that are
+								used to determine the Format mix data
+								used for intermingling different
+								formats.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+
+				</xs:sequence>
+				<xs:attribute name="count" type="xs:int">
+					<xs:annotation>
+						<xs:documentation>
+							Total number of items returned.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+
+			</xs:complexType>
+
+
+
+			<xs:complexType name="SearchItemGroupInternal">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="item" type="tns:BestMatchSearchItemInternal">
+						<xs:annotation>
+							<xs:documentation>
+								Details about the item for the best
+								match item search
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+
+				<xs:attribute name="itemGroup" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							Criteria according to which items are
+							grouped
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+
+
+				<xs:attribute name="itemGroupName" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							Display name of the group.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+
+
+				<xs:attribute name="itemGroupCount" type="xs:int">
+					<xs:annotation>
+						<xs:documentation>
+							Number of items in the group.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+
+			<xs:complexType name="BestMatchSearchItemInternal">
+				<xs:annotation>
+					<xs:documentation>
+						Container which is an extension from Search Item
+						which is used to send the BM formula and factors
+						in addition to the item information.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BestMatchSearchItem">
+						<xs:sequence>
+
+							<xs:element maxOccurs="unbounded"
+								minOccurs="0" name="bestMatchFactor"
+								type="tns:BestMatchFactor">
+								<xs:annotation>
+									<xs:documentation>
+										Container for the name and value
+										of each Best Match factor.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+							<xs:element name="rawImpressionCount"
+								type="xs:long" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Actual impression count.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="rawSalesPerImpression"
+								type="xs:double" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Ratio of sales to impression
+										count
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="rawViewItemPerImpression"
+								type="xs:double" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Ratio of unique view item count
+										to impression count
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="BestMatchFactor">
+				<xs:annotation>
+					<xs:documentation>
+						Container for the name and value of each Best
+						Match factor.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="name"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the factor used for Best Match
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="value" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								List of values for the BestMatch factor
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element
+				name="findBestMatchItemDetailsByCategoryInternalRequest"
+				type="tns:FindBestMatchItemDetailsByCategoryInternalRequest">
+
+			</xs:element>
+			<xs:element
+				name="findBestMatchItemDetailsByCategoryInternalResponse"
+				type="tns:FindBestMatchItemDetailsByCategoryInternalResponse">
+
+			</xs:element>
+			<xs:complexType
+				name="FindBestMatchItemDetailsByCategoryInternalRequest">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsRequestInternal">
+						<xs:sequence>
+							<xs:element name="categoryId"
+								type="xs:string" maxOccurs="1" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										Specifies the category for which
+										to retrieve item listings.
+										&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+										If the specified category ID
+										doesn't match an existing
+										category for the site, an
+										invalid-category error message
+										is returned.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="FirstPageSummaryInternal">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="itemGroupSummary" type="tns:ItemGroupSummaryInternal">
+						<xs:annotation>
+							<xs:documentation>
+								Contains the analysis data like price
+								etc for each format.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ItemGroupSummaryInternal">
+				<xs:complexContent>
+					<xs:extension base="tns:ItemGroupSummary">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="salesPerImpressionRange" type="tns:DoubleRange">
+								<xs:annotation>
+									<xs:documentation>
+										Min-Max values for
+										salesPerImpression of items
+										appearing on the first page
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="viewItemPerImpressionRange" type="tns:DoubleRange">
+								<xs:annotation>
+									<xs:documentation>
+										Min-Max values for
+										viewItemPerImpression of items
+										appearing on the first page
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType
+				name="FindBestMatchItemDetailsByCategoryInternalResponse">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsResponseInternal">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="firstPageSummary" type="tns:FirstPageSummaryInternal">
+								<xs:annotation>
+									<xs:documentation>
+										Return the summary of First Page
+										items as defined by
+										siteResultsPerPage split by Item
+										Listing Format. AuctionWithBIN
+										items are considered as Auction
+										and StoreInventory items are
+										considered as FixedPrice for
+										this analysis
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element
+				name="findBestMatchItemDetailsAdvancedInternalRequest"
+				type="tns:FindBestMatchItemDetailsAdvancedInternalRequest">
+
+			</xs:element>
+			<xs:element
+				name="findBestMatchItemDetailsAdvancedInternalResponse"
+				type="tns:FindBestMatchItemDetailsAdvancedInternalResponse">
+
+			</xs:element>
+			<xs:complexType
+				name="FindBestMatchItemDetailsAdvancedInternalRequest">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsRequestInternal">
+						<xs:sequence>
+							<xs:element name="keywords" type="xs:string"
+								maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										One or more words to use as a
+										search query for finding items
+										on eBay. By default, the query
+										searches item titles only. If
+										you are using a URL request and
+										your keyword query consists of
+										multiple words, use
+										&amp;amp;quot;%20&amp;amp;quot;
+										separate the words. For example,
+										use Harry%20Potter to search for
+										items containing those words in
+										any order. You can incorporate
+										wildcards into a multi-word
+										search, as in
+										&amp;amp;quot;ap*%20ip*&amp;amp;quot;,
+										which will return results for
+										&amp;amp;quot;apple
+										ipod&amp;amp;quot; among other
+										matches. The words
+										&amp;amp;quot;and&amp;amp;quot;
+										and
+										&amp;amp;quot;or&amp;amp;quot;
+										are treated like any other word.
+										Only use
+										&amp;amp;quot;and&amp;amp;quot;,
+										&amp;amp;quot;or&amp;amp;quot;,
+										or
+										&amp;amp;quot;the&amp;amp;quot;
+										if you are searching for
+										listings containing these words.
+										findItemsAdvanced requires that
+										you specify either keywords or
+										categoryId.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="categoryId"
+								type="xs:string" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Specifies the category for which
+										to retrieve item listings.
+										&amp;amp;lt;br&amp;amp;gt;
+										&amp;amp;lt;br&amp;amp;gt; If
+										the specified category ID
+										doesn't match an existing
+										category for the site, an
+										invalid-category error message
+										is returned.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+
+
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType
+				name="FindBestMatchItemDetailsAdvancedInternalResponse">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsResponseInternal">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="firstPageSummary" type="tns:FirstPageSummaryInternal">
+								<xs:annotation>
+									<xs:documentation>
+										Return the summary of First Page
+										items as defined by
+										siteResultsPerPage split by Item
+										Listing Format. AuctionWithBIN
+										items are considered as Auction
+										and StoreInventory items are
+										considered as FixedPrice for
+										this analysis
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element
+				name="findBestMatchItemDetailsByProductInternalRequest"
+				type="tns:FindBestMatchItemDetailsByProductInternalRequest">
+
+			</xs:element>
+			<xs:element
+				name="findBestMatchItemDetailsByProductInternalResponse"
+				type="tns:FindBestMatchItemDetailsByProductInternalResponse">
+
+			</xs:element>
+			<xs:complexType
+				name="FindBestMatchItemDetailsByProductInternalRequest">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsRequestInternal">
+						<xs:sequence>
+
+							<xs:element name="productId"
+								type="tns:ProductId" maxOccurs="1" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										Product id based on which we
+										need to find the listing.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType
+				name="FindBestMatchItemDetailsByProductInternalResponse">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsResponseInternal">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="firstPageSummary" type="tns:FirstPageSummaryInternal">
+								<xs:annotation>
+									<xs:documentation>
+										Currently not used for this
+										operation
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element
+				name="findBestMatchItemDetailsAcrossStoresInternalRequest"
+				type="tns:FindBestMatchItemDetailsAcrossStoresInternalRequest">
+
+			</xs:element>
+			<xs:element
+				name="findBestMatchItemDetailsAcrossStoresInternalResponse"
+				type="tns:FindBestMatchItemDetailsAcrossStoresInternalResponse">
+
+			</xs:element>
+			<xs:complexType
+				name="FindBestMatchItemDetailsAcrossStoresInternalRequest">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsRequestInternal">
+						<xs:sequence>
+
+							<xs:element name="keywords" type="xs:string"
+								maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										One or more words to use as a
+										search query for finding items
+										on eBay. By default, the query
+										searches item titles only. If
+										you are using a URL request and
+										your keyword query consists of
+										multiple words, use
+										&amp;amp;quot;%20&amp;amp;quot;
+										separate the words. For example,
+										use Harry%20Potter to search for
+										items containing those words in
+										any order. You can incorporate
+										wildcards into a multi-word
+										search, as in
+										&amp;amp;quot;ap*%20ip*&amp;amp;quot;,
+										which will return results for
+										&amp;amp;quot;apple
+										ipod&amp;amp;quot; among other
+										matches. The words
+										&amp;amp;quot;and&amp;amp;quot;
+										and
+										&amp;amp;quot;or&amp;amp;quot;
+										are treated like any other word.
+										Only use
+										&amp;amp;quot;and&amp;amp;quot;,
+										&amp;amp;quot;or&amp;amp;quot;,
+										or
+										&amp;amp;quot;the&amp;amp;quot;
+										if you are searching for
+										listings containing these words.
+										findItemsAdvanced requires that
+										you specify either keywords or
+										categoryId.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="categoryId"
+								type="xs:string" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Specifies the category for which
+										to retrieve item listings.
+										&amp;amp;lt;br&amp;amp;gt;
+										&amp;amp;lt;br&amp;amp;gt; If
+										the specified category ID
+										doesn't match an existing
+										category for the site, an
+										invalid-category error message
+										is returned.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType
+				name="FindBestMatchItemDetailsAcrossStoresInternalResponse">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsResponseInternal">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="firstPageSummary" type="tns:FirstPageSummaryInternal">
+								<xs:annotation>
+									<xs:documentation>
+										Return the summary of First Page
+										items as defined by
+										siteResultsPerPage split by Item
+										Listing Format. AuctionWithBIN
+										items are considered as Auction
+										and StoreInventory items are
+										considered as FixedPrice for
+										this analysis
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+
+			<xs:complexType name="BestMatchProfile">
+				<xs:annotation>
+					<xs:documentation>
+						Container to specify the best match profile
+						related data like formula, id and business
+						rules.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="bestMatchProfileId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Profile id for the best match profile.
+								As part of output it specifies which
+								profile was run for the given inputs. As
+								part of inputs it specifies which
+								profile should be run to fetch items.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="bestMatchProfileFormula" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies The best match formula. As
+								part of output specifies the best match
+								formula that was run for th query and as
+								part of input indicates that this
+								formula should be used to fetch items
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bestMatchBusinessRules"
+						type="xs:string" maxOccurs="1" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								Currently unused.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="bestMatchEvenSelection" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the best match Even Selection. 
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="bestMatchIntermingler" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the best match Intermingler. 
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>										
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+
+				</xs:sequence>
+			</xs:complexType>
+
+
+
+			<xs:complexType
+				name="BaseBestMatchItemDetailsRequestInternal">
+				<xs:complexContent>
+					<xs:extension base="ns1:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1"
+								name="siteResultsPerPage" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>
+										Total number of entries per page
+										for the result set.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="entriesPerPage" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>
+										Total number of items to be
+										returned as part of the result.
+										Maximum value is 1000.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="ignoreFeatured" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										Boolean value which indicates if
+										the result set should not
+										include features items. By
+										default it is false.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="0" name="itemFilter" type="tns:ItemFilter">
+								<xs:annotation>
+									<xs:documentation>
+										Use item filters to narrow
+										searches. Some filters
+										&amp;lt;dl&amp;gt;
+										&amp;lt;dt&amp;gt;
+										&amp;lt;strong&amp;gt;Applicable
+										Values&amp;lt;/strong&amp;gt;
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dt&amp;gt; AvailableTo
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Limits the
+										result set to just those items
+										available to the specified
+										country. &amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; Condition
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; Currency
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; EndTimeFrom
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; EndTimeTo
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt;
+										ExcludeAutoPay
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; ExcludeSeller
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; FeaturedOnly
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt;
+										FeedbackScoreMax
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt;
+										FeedbackScoreMin
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt;
+										FreeShippingOnly
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; GetItFastOnly
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt;
+										HideDuplicateItems
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; ListingType
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt;
+										LocalPickupOnly
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt;
+										LocalSearchOnly
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; LocatedIn
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; LotsOnly
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; MaxBids
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; MaxDistance
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; MaxPrice
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; MaxQuantity
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; MinBids
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; MinPrice
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; MinQuantity
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; PaymentMethod
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt; Seller
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;dt&amp;gt;
+										WorldOfGoodOnly
+										&amp;lt;/dt&amp;gt;
+										&amp;lt;dd&amp;gt; Description
+										&amp;lt;/dd&amp;gt;
+										&amp;lt;/dl&amp;gt;
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded"
+								minOccurs="0" name="outputSelector"
+								type="tns:BestMatchOutputSelectorType">
+								<xs:annotation>
+									<xs:documentation>
+										Defines the output fields that
+										need to be send in addition to
+										the normal output data. &lt;br
+										/&gt; &lt;br /&gt;
+										&lt;b&gt;Applicable
+										values:&lt;/b&gt; &lt;dl&gt;
+										&lt;dt&gt; FirstPageSummary
+										&lt;/dt&gt; &lt;dd&gt; Include
+										information about the FirstPage
+										Analysis Data. &lt;/dd&gt;
+										&lt;/dl&gt;&lt;/dd&gt;
+										&lt;/dl&gt;
+										SellerInfo&lt;/dt&gt; &lt;dd&gt;
+										Includes the seller details.
+										&lt;/dd&gt; &lt;/dl&gt;
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="postSearchItemFilter" type="tns:PostSearchItemFilter">
+								<xs:annotation>
+									<xs:documentation>
+										Used to post process the result
+										set and return items specified
+										from the result set if present
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0"
+								name="postSearchSellerFilter"
+								type="tns:PostSearchSellerFilter">
+								<xs:annotation>
+									<xs:documentation>
+										Used to post process the result
+										set and return items belonging
+										to the sellers from the result
+										set if present
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="bestMatchProfile"
+								type="tns:BestMatchProfile" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Used to run simulation based on
+										give best match formula, profile
+										id or business rule.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="FormatMixData">
+				<xs:annotation>
+					<xs:documentation>
+						Contains data about the format mixing used to
+						return the result set
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="formatBucket" type="tns:FormatBucket">
+						<xs:annotation>
+							<xs:documentation>
+								Contains data for the individual format
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="FormatBucket">
+				<xs:sequence>
+					<xs:element name="formatBucketParam"
+						type="tns:FormatBucketParam" maxOccurs="unbounded"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								Contains the name value pair which
+								specifies the inputs and their values
+								used to calculate the format mix ratios.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+
+
+
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+
+				</xs:sequence>
+				<xs:attribute name="bucket" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							Name of the format
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+
+
+			<xs:simpleType name="BestMatchOutputSelectorType">
+				<xs:annotation>
+					<xs:documentation />
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SellerInfo"></xs:enumeration>
+					<xs:enumeration value="FirstPageSummary" />
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="ProductId">
+				<xs:annotation>
+					<xs:appinfo>
+						<Summary>
+							Finds items by a specific Product ID.
+							Filters can be used to further restrict and
+							refine results.
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+					<xs:documentation>
+						Use this findItemsByProduct input field to
+						search by ISBN, UPC, EAN, or eBay Product
+						Reference ID, as in the following examples:
+						&lt;ul&gt; &lt;li&gt;To search using an ISBN,
+						specify productID.type=ISBN and set
+						productID.value to an ISBN value. &lt;/li&gt;
+						&lt;li&gt; To search using an eBay Product
+						Reference ID, specify productID.type=ReferenceID
+						and set productID.value to an eBay Product
+						Reference ID value. If you do not know the eBay
+						Product Reference ID of a product, use
+						FindProducts to retrieve the desired eBay
+						Product Reference ID. &lt;br&gt;
+						[??]findItemsAdvanced requires that you specify
+						at least one of the following: queryKeywords,
+						categoryID, productID, or sellerID. If you use
+						the productID field, do not use queryKeywords,
+						categoryID, or SellerID. Not supported when
+						categoryID is specified in the request, and
+						queryKeywords is not included in the
+						request.&lt;/li&gt; &lt;/ul&gt;
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute use="required" name="type"
+							type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The nature of the identifier being
+									used. For findItemsByProduct, search
+									by a single type. Supported types
+									are: ReferenceID, ISBN, UPC, and
+									EAN.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+
+
+			<xs:element
+				name="findBestMatchItemDetailsBySellerInternalRequest"
+				type="tns:FindBestMatchItemDetailsBySellerInternalRequest">
+
+			</xs:element>
+			<xs:element
+				name="findBestMatchItemDetailsBySellerInternalResponse"
+				type="tns:FindBestMatchItemDetailsBySellerInternalResponse">
+
+			</xs:element>
+
+			<xs:complexType
+				name="FindBestMatchItemDetailsBySellerInternalRequest">
+				<xs:complexContent>
+					<xs:extension base="ns1:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="sellerUserName"
+								type="xs:string" maxOccurs="1" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										Seller from who the listing need
+										to be found.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="categoryId"
+								type="xs:string" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Specifies the category for which
+										to retrieve item listings.
+										&amp;amp;lt;br&amp;amp;gt;
+										&amp;amp;lt;br&amp;amp;gt; If
+										the specified category ID
+										doesn't match an existing
+										category for the site, an
+										invalid-category error message
+										is returned.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+
+							<xs:element name="paginationInput"
+								type="ns1:PaginationInput" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Controls the pagination of the
+										result set. Child elements
+										specify the maximum number of
+										item listings to return per call
+										and the page of data to return.
+										Controls the number of listings
+										returned in the response, but
+										does not specify the details to
+										return for each listing.
+										&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+										&amp;lt;span
+										class=&quot;tablenote&quot;&amp;gt;&amp;lt;strong&amp;gt;Note:&amp;lt;/strong&amp;gt;
+										No more than 10,000 items can be
+										retrieved for a given search,
+										regardless of how many matches
+										are found. This limit is
+										enforced by the maximum page
+										number allowed (100) and the
+										maximum entries per page allowed
+										(100). &amp;lt;/span&amp;gt;
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="itemFilter"
+								type="tns:ItemFilter" maxOccurs="unbounded" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Reduces the number of items
+										returned in the response
+										according to the filters you
+										specify.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="bestMatchProfile"
+								type="tns:BestMatchProfile" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Used to run simulation based on
+										give best match formula, profile
+										id or business rule.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ignoreFeatured"
+								type="xs:boolean" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Boolean value which indicates if
+										the result set should not
+										include features items. By
+										default it is false.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType
+				name="FindBestMatchItemDetailsBySellerInternalResponse">
+				<xs:complexContent>
+					<xs:extension
+						base="tns:BaseBestMatchItemDetailsResponseInternal">
+
+						<xs:sequence>
+							<xs:element name="paginationOutput"
+								type="ns1:PaginationOutput" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										Indicates the pagination of the
+										result set. Child elements
+										indicate the page number that is
+										returned, the maximum number of
+										item listings to return per
+										page, total number of pages that
+										can be returned, and the total
+										number of listings that match
+										the search criteria.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+			<xs:complexType name="FormatBucketParam">
+				<xs:annotation>
+					<xs:documentation>
+						Contains the name-value for the param that is
+						used to calculate the FME data
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"
+						maxOccurs="1" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the param used to indicate what
+								the param is
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="value" type="xs:string"
+						maxOccurs="1" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								Value of the param used to calculate the
+								FME data
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:element name="getBestMatchItemDetailsInternalRequest"
+				type="tns:GetBestMatchItemDetailsInternalRequest">
+
+			</xs:element>
+			<xs:element name="getBestMatchItemDetailsInternalResponse"
+				type="tns:GetBestMatchItemDetailsInternalResponse">
+
+			</xs:element>
+			<xs:complexType
+				name="GetBestMatchItemDetailsInternalRequest">
+				<xs:complexContent>
+					<xs:extension base="ns1:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="itemId" type="xs:string"
+								maxOccurs="unbounded" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										List of items whose best match
+										details need to be found.
+										Incorrect and/or duplicate item
+										ids will be ignored
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="bestMatchProfile"
+								type="tns:BestMatchProfile" maxOccurs="1" minOccurs="0">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType
+				name="GetBestMatchItemDetailsInternalResponse">
+				<xs:complexContent>
+					<xs:extension base="ns1:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="item"
+								type="tns:BestMatchSearchItemInternal" maxOccurs="unbounded"
+								minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										List of items found in search
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="AmountRange">
+				<xs:annotation>
+					<xs:documentation>
+						A min-max range type for Amount used to specify
+						range value like Current Prices etc
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="min"
+						type="ns1:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								Mininum amount value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" maxOccurs="1" name="max"
+						type="ns1:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								Maximum amount value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="BestMatchData">
+				<xs:annotation>
+					<xs:documentation>
+						Contains the BM data for the item.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="freeShipping" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Is item considered a free shipping item
+								by BestMatch
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="impressionCountRange" type="tns:LongRange">
+						<xs:annotation>
+							<xs:documentation>
+								Number of times item surfaces in search
+								results
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="salesCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of sales
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="viewItemCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of unique view items
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="watchCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of watches for the item
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="salesPerImpression" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Ratio of sale to mid point of impression
+								range
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="salesPerViewItem" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Ratio of sales to unique view items
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="viewItemPerImpression" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Ratio of unique view items to mid point
+								of impression range
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="BestMatchSearchItem">
+				<xs:annotation>
+					<xs:documentation>
+						Contains data for an item listing.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:SearchItem">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1"
+								name="itemRank" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>
+										Rank of the item within the
+										group
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" maxOccurs="1"
+								name="itemRankWithinGroup" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>
+										Rank of the item across the
+										groups
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" maxOccurs="1"
+								name="quantityAvailable" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>
+										Quantlity available for this
+										item
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" maxOccurs="1"
+								name="quantitySold" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>
+										Quantity sold for the item
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" maxOccurs="1"
+								name="bestMatchData" type="tns:BestMatchData">
+								<xs:annotation>
+									<xs:documentation>
+										Container for the best match
+										data for the item. This data is
+										only returned for items
+										belonging to the caller. For
+										items not belonging to the
+										caller we do not get this data
+										back.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="Category">
+				<xs:annotation>
+					<xs:documentation>
+						Contains details about a category.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="categoryId"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The unique ID of a category on the
+								specified eBay site.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="categoryName"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Display name of a category as it appears
+								on the eBay Web site.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Distance">
+				<xs:annotation>
+					<xs:documentation>
+						Distance, used for a proximity search.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="unit" type="xs:string">
+							<xs:annotation></xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:complexType name="DoubleRange">
+				<xs:annotation>
+					<xs:documentation>
+						A min-max range type for Duration used to
+						specify range value like salesPerImpressionRange
+						etc
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="min"
+						type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Minimum duration value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" maxOccurs="1" name="max"
+						type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Maximum duration value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DurationRange">
+				<xs:annotation>
+					<xs:documentation>
+						A min-max range type for Duration used for
+						specifying ranges like EndTimes etc
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="min"
+						type="xs:duration">
+						<xs:annotation>
+							<xs:documentation>
+								Minimum duration value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" maxOccurs="1" name="max"
+						type="xs:duration">
+						<xs:annotation>
+							<xs:documentation>
+								Maximum duration value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ItemFilter">
+				<xs:annotation>
+					<xs:documentation>
+						Reduce the items returned using itemFilter
+						Name/Value pairs. In addition, some itemFilters
+						also make use of parameter Name/Value pairs,
+						most notably the filters that use currency
+						values. For example, if you use a MaxPrice
+						itemFilter, you will need to specify a parameter
+						Name of Currency with a value that specifies the
+						type of currency desired. &lt;br /&gt;&lt;br
+						/&gt; For a list of possible currency
+						enumeration values, see &lt;a
+						href=&quot;Enums/currencyIdList.html&quot;&gt;currencyId
+						Values&lt;/a&gt;.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="paramName"
+						type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								In addition to filter Name/Value pairs,
+								some itemFilters use an additional
+								parameter Name/Value pair. Specifically,
+								filters that use currency values
+								(MaxPrice and MinPrice) make use of
+								addition parameters. When you use these
+								itemFilters, set paramName to Currency
+								and provide the currency ID in
+								paramValue. &amp;lt;br
+								/&amp;gt;&amp;lt;br /&amp;gt; For
+								example, if you use the MaxPrice
+								itemFilter, you will need to specify a
+								parameter Name of Currency with a
+								parameter Value that specifies the type
+								of currency desired. &amp;lt;br
+								/&amp;gt;&amp;lt;br /&amp;gt; Note that
+								for MaxPrice and MinPrice itemFilters,
+								the default value for paramName is
+								Currency.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="paramValue"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+
+								The currency value associated with the
+								respective itemFilter parameter Name.
+								&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;
+								Usually paramName is set to Currency and
+								paramValue is set to the currency type
+								in which the monetary transaction
+								occurs. For a list of possible currency
+								enumeration values, see &amp;lt;a
+								href=&quot;Enums/currencyIdList.html&quot;&amp;gt;currencyId
+								Values&amp;lt;/a&amp;gt;. &amp;lt;br
+								/&amp;gt;&amp;lt;br /&amp;gt; Note that
+								for MaxPrice and MinPrice itemFilters,
+								the default value for paramValue is USD.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" maxOccurs="1" name="name"
+						type="tns:ItemFilterType">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the item filter. &lt;dl&gt;
+								&lt;dt&gt; &lt;strong&gt;ItemFilter Name
+								values:&lt;/strong&gt; &lt;/dt&gt;
+								&lt;dt&gt; AvailableTo &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; Condition &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; Currency &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; EndTimeFrom &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; EndTimeTo &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; ExcludeAutoPay &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; ExcludeSeller &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; FeaturedOnly &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; FeedbackScoreMax &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; FeedbackScoreMin &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; FreeShippingOnly &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; GetItFastOnly &lt;/dt&gt;
+								&lt;dd&gt; Description &lt;/dd&gt;
+								&lt;dt&gt; HideDuplicateItems
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; ListingType
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; LocalPickupOnly
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; LocalSearchOnly
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; LocatedIn
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; LotsOnly
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; MaxBids
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; MaxDistance
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; MaxPrice
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; MaxQuantity
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; MinBids
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; MinPrice
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; MinQuantity
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; PaymentMethod
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; Seller
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;dt&gt; WorldOfGoodOnly
+								&lt;/dt&gt; &lt;dd&gt; Description
+								&lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="value"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Value on which to filter the returned
+								items with regards to the associated
+								itemFilter Name value.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ItemGroupSummary">
+				<xs:annotation>
+					<xs:documentation>
+						Container to hold data about each format.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="searchResultSampleSize" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of items for which we are running
+								this analysis.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="priceRange" type="tns:AmountRange">
+						<xs:annotation>
+							<xs:documentation>
+								Min and max current price for the items
+								on first page.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="shippingCostRange" type="tns:AmountRange">
+						<xs:annotation>
+							<xs:documentation>
+								Min and max shipping price for the items
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="endTimeRange" type="tns:DurationRange">
+						<xs:annotation>
+							<xs:documentation>
+								Min and max end times of the items
+								appearing on the first page.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="productDetailsItemsCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of items on the current page that
+								are cataloged items.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="topRatedSellerItemsCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of items belonging to Top rated
+								seller
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="freeShippingItemsCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of free shipping items for the
+								current format.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+				<xs:attribute name="itemGroup" type="xs:string">
+					<xs:annotation></xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="itemGroupName" type="xs:string">
+					<xs:annotation></xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="itemGroupCount" type="xs:int">
+					<xs:annotation></xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+			<xs:complexType name="ListingInfo">
+				<xs:annotation>
+					<xs:documentation>
+						Contains information specific to the item
+						listing.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="bestOfferEnabled"
+						type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Shows whether or not the seller will
+								accept a best offer for the associated
+								item. Best Offer allows a buyer to make
+								a lower-priced binding offer on a fixed
+								price item. Buyers cannot see how many
+								offers have been made (only the seller
+								can see this information). To make a
+								best offer on a listing, use the eBay
+								Web site.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="buyItNowAvailable"
+						type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Used with competitive-bid auctions, the
+								associated item includes a Buy It Now
+								option if this value returns true. Buy
+								It Now lets a user purchase the item at
+								a fixed price, effectively ending the
+								auction. On most sites, the Buy It Now
+								option is removed (and this value
+								returns false) once a valid bid is made
+								on the associated item (a valid bid
+								could be a bid above the reserve price).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="buyItNowPrice"
+						type="ns1:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								The Buy It Now Price of the item (if
+								any), in the currency of the site on
+								which the item was listed. You can use
+								this field to determine if the item was
+								originally listed with Buy It Now, even
+								if the Buy It Now option is no longer
+								available for the item. &amp;lt;br
+								/&amp;gt;&amp;lt;br /&amp;gt; For Basic
+								Fixed-Price (FixedPrice), Store
+								Inventory (StoreInventory), and Ad
+								Format (AdFormat) listings, currentPrice
+								is the current fixed price. &amp;lt;br
+								/&amp;gt;&amp;lt;br /&amp;gt; Only
+								returned if an item was listed with Buy
+								It Now.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0"
+						name="convertedBuyItNowPrice" type="ns1:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								The listing's Buy It Now Price (if any),
+								converted into the currency of the site
+								to which you sent your search request.
+								For active items, refresh this value
+								every 24 hours to pick up changes in
+								conversion rates (if this value has been
+								converted). &amp;lt;br
+								/&amp;gt;&amp;lt;br /&amp;gt; Price
+								fields are returned as doubles, not
+								necessarily in the traditional monetary
+								format of the site's country. For
+								example, a US Dollar value might be
+								returned as 3.880001 instead of 3.88.
+								&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;
+								Only returned if an item was listed with
+								Buy It Now.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="startTime"
+						type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								Time stamp that eBay recorded as the
+								moment the listing was made available.
+								This value is returned in GMT, the ISO
+								8601 date and time format (YYYY-MM-
+								DDTHH:MM:SS.SSSZ). See the
+								&quot;dateTime&quot; type for
+								information about the time format, and
+								for details on converting to and from
+								the GMT time zone. Note that it is
+								possible for startTime to be different
+								from the value returned by
+								GetSingleItem.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="endTime"
+						type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								Time stamp specifying when the listing
+								is scheduled to end, or the actual end
+								time if the item listing has ended. This
+								value is returned in GMT, the ISO 8601
+								date and time format (YYYY-MM-
+								DDTHH:MM:SS.SSSZ). See the
+								&quot;dateTime&quot; type for
+								information about the time format, and
+								for details on converting to and from
+								the GMT time zone. &amp;lt;br
+								/&amp;gt;&amp;lt;br /&amp;gt;
+								&amp;lt;span
+								class=&quot;tablenote&quot;&amp;gt;&amp;lt;strong&amp;gt;Note:&amp;lt;/strong&amp;gt;
+								For items that are &quot;Good Till
+								Canceled,&quot; this value is 5 minutes
+								later than the actual end time of the
+								item. This difference in time is
+								intended to facilitate the renewal of
+								these items' end times (which occurs
+								every 30 days). &amp;lt;/span&amp;gt;
+								&amp;lt;br /&amp;gt;
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="listingType"
+						type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The format of the listing, such as
+								online auction, fixed price, or
+								advertisement. &lt;dl&gt; &lt;dt&gt;
+								&lt;strong&gt;listingType
+								values:&lt;/strong&gt; &lt;/dt&gt;
+								&lt;dt&gt; AdFormat &lt;/dt&gt;
+								&lt;dd&gt; Advertisement to solicit
+								inquiries on listings such as real
+								estate. Permits no bidding on that item,
+								service, or property. To express
+								interest, a buyer fills out a contact
+								form that eBay forwards to the seller as
+								a lead. This format does not enable
+								buyers and sellers to transact online
+								through eBay and eBay Feedback is not
+								available for ad format listings.
+								&lt;/dd&gt; &lt;dt&gt; Auction
+								&lt;/dt&gt; &lt;dd&gt; Competitive-bid
+								online auction format. Buyers engage in
+								competitive bidding, although Buy It Now
+								may be offered as long as no valid bids
+								have been placed. Online auctions are
+								listed on eBay.com; they can also be
+								listed in a seller's eBay Store if the
+								seller is a Store owner. &lt;/dd&gt;
+								&lt;dt&gt; AuctionWithBIN &lt;/dt&gt;
+								&lt;dd&gt; Same as Auction format, but
+								Buy It Now is enabled. AuctionWithBIN
+								changes to Auction if a valid bid has
+								been placed on the item. Valid bids
+								include bids that are equal to or above
+								any specified reserve price. &lt;/dd&gt;
+								&lt;dt&gt; Classified &lt;/dt&gt;
+								&lt;dd&gt; Classified Ads connect buyers
+								and sellers, who then complete the sale
+								outside of eBay. This format does not
+								enable buyers and sellers to transact
+								online through eBay and eBay Feedback is
+								not available for these listing types.
+								&lt;/dd&gt; &lt;dt&gt; FixedPrice
+								&lt;/dt&gt; &lt;dd&gt; A fixed-price On
+								some sites, this auction format is also
+								known as &quot;Buy It Now Only&quot;
+								(not to be confused with the Buy It Now
+								option available with competitive-
+								bidding auctions). Fixed-price listings
+								appear on eBay.com; they can also be
+								listed in a seller's eBay Store if the
+								seller is a Store owner. &lt;/dd&gt;
+								&lt;dt&gt; StoreInventory &lt;/dt&gt;
+								&lt;dd&gt; A fixed-price format for eBay
+								Store sellers. Store Inventory listings
+								appear after other listings in regular
+								browse and search item listings on eBay.
+								Store items have a lower Insertion Fee
+								and longer listing durations. This
+								selling type can only be specified by
+								sellers who have an eBay Store. Store
+								Inventory listings are listed on
+								eBay.com as well as in the seller's eBay
+								Store. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="gift"
+						type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								If true, a generic gift icon displays
+								next the listing's title in search and
+								browse pages.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LongRange">
+				<xs:annotation>
+					<xs:documentation>
+						A min-max range value used to specify Long value
+						range like impression count
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="min"
+						type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								Minimum long value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1" name="max"
+						type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								Maximum long value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PostSearchItemFilter">
+				<xs:annotation>
+					<xs:documentation>
+						Post process the search results to fetch only
+						the specified item id
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="unbounded"
+						name="itemId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								List of items ids whose best match data
+								is to be found.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PostSearchSellerFilter">
+				<xs:annotation>
+					<xs:documentation>
+						Post process the search results to fetch only
+						the items from the specific seller
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="unbounded"
+						name="sellerUserName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								List of sellers whose best match data is
+								to be found.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SearchItem">
+				<xs:annotation>
+					<xs:documentation>
+						Contains data for an item listing.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="itemId" type="xs:string" maxOccurs="1" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>
+								The ID that uniquely identifies the item
+								listing. eBay generates this ID when an
+								item is listed. This ID is unique across
+								all eBay sites.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="title" type="xs:string" maxOccurs="1" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the item as it appears in the
+								listing or in search and browse results.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="globalId"
+						type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The token that represents the eBay site
+								on which the item was originally listed.
+								For example, if the item is listed on
+								the eBay US site, the value is US. If
+								item is listed on the eBay Germany site,
+								the value would be DE. For a list of all
+								valid eBay site ID, see [??] &lt;br
+								/&gt;&lt;br /&gt; The listing's original
+								site can affect the values of converted
+								(localized) prices (when your request
+								specifies a site that is different from
+								the listing's site).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subtitle"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Subtitle of the item. Only returned if
+								the seller included a subtitle for the
+								listing.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="primaryCategory"
+						type="tns:Category">
+						<xs:annotation>
+							<xs:documentation>
+								Numeric ID of the first (or only)
+								category in which the item is listed.
+								This is a fully qualified category
+								breadcrumb (e.g., Computers &amp;
+								Networking:Laptops, Notebooks). Note
+								that listings can appear in more than a
+								single category.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="secondaryCategory"
+						type="tns:Category">
+						<xs:annotation>
+							<xs:documentation>
+								Numeric ID of the second category in
+								which the item is listed.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="galleryURL"
+						type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+								URL for a picture used as the Gallery
+								thumbnail, if any. The image uses one of
+								the following graphics formats: JPEG,
+								BMP, TIF, or GIF. Only returned if the
+								seller chose to show a gallery image.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="viewItemURL"
+						type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+								The URL to view this listing on eBay.
+								This URL is optimized to support natural
+								search. That is, this URL is designed to
+								make items on eBay easier to find via
+								popular Internet search engines. For
+								example, this URL specifies the item
+								title, and it is optimized for natural
+								search: &quot;_W0QQ&quot; is like
+								&quot;?&quot; (question mark),
+								&quot;QQ&quot; is like &quot;&amp;&quot;
+								(ampersand), and &quot;Z&quot; is like
+								&quot;=&quot; (equals sign). You
+								shouldn't modify the query syntax in
+								your application. For example, eBay
+								won't recognize the URL if you change QQ
+								to ?. In the Sandbox environment and on
+								the Hong Kong site (site ID 201), the
+								data returned in this field is a
+								standard ViewItem URL, rather than the
+								ViewItem URL for natural search that
+								generally is returned in the Production
+								environment.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="charityId"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A unique identification number assigned
+								by eBay to registered nonprofit charity
+								organizations.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="productId"
+						type="tns:ProductId">
+						<xs:annotation>
+							<xs:documentation>
+								Reflects the product ID type and product
+								ID code used in the search request. eBay
+								supports the following types of product
+								ID types: ISBN, UPC, EAN, or ReferenceID
+								(ePID, also known as an eBay Product
+								Reference ID).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="unbounded"
+						name="paymentMethod" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Identifies the payment method (such as
+								PayPal) the seller will accept when the
+								buyer pays for the item. &lt;br /&gt;
+								&lt;br /&gt;
+								&lt;strong&gt;Note:&lt;/strong&gt; If
+								the seller only accepts PayPal, the
+								buyer can still pay with a credit card.
+								PayPal supports major credit cards.
+								&lt;br /&gt; &lt;br /&gt; Payment
+								methods are not applicable to eBay Real
+								Estate advertisement listings, or other
+								Classified Ad format listings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="autoPay"
+						type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								If true, the seller requests immediate
+								payment for the item. If false or not
+								specified, immediate payment is not
+								requested. (In responses, does not
+								indicate whether the item is actually
+								still a candidate for purchase via
+								immediate payment.) &lt;br /&gt;&lt;br
+								/&gt; Only applicable to items listed on
+								PayPal-enabled sites in categories that
+								support immediate payment (see
+								AutoPayEnabled in GetCategories), when
+								seller has a Premier or Business PayPal
+								account (see PayPalAccountType in
+								Getuser). If true, the seller must also
+								accept PayPal as a payment method for
+								the item (see item.paymentMethod).
+								&lt;br /&gt;&lt;br /&gt; See the eBay
+								Web Services guide section on Immediate
+								Payment for additional requirements and
+								dependencies. Also see the section on
+								working with the eBay Motors site for
+								additional rules. Not applicable to
+								Half.com.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="postalCode"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The postal code where an item is
+								located. The search behavior depends on
+								the combination of maxDistance and
+								postalCode values.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="location"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Physical location of the item, as
+								specified by the seller. (This gives a
+								general indication of where the item
+								will be shipped or delivered from.)
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="country"
+						type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Two-letter ISO 3166 country code to
+								indicate the country where the item is
+								located. &lt;br /&gt;&lt;br /&gt;
+								&lt;strong&gt;Applicable
+								values:&lt;/strong&gt; See Country.
+								&lt;a
+								href=&quot;http://developer.ebay.com/DevZone/shopping/docs/CallRef/extra/FndItmsAdvncdRspns.SrchRslt.ItmArry.Itm.Cntry.html&quot;&gt;Country.&lt;/a&gt;
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="storeInfo"
+						type="tns:Storefront">
+						<xs:annotation>
+							<xs:documentation>
+								storeInfo Description.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="sellerInfo"
+						type="tns:SellerInfo">
+						<xs:annotation>
+							<xs:documentation>
+								Container for information about a
+								listing's seller.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingInfo"
+						type="tns:ShippingInfo">
+						<xs:annotation>
+							<xs:documentation>
+								Container for information about a
+								listing's shipping details.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="sellingStatus"
+						type="tns:SellingStatus">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies a listing's selling status in
+								eBay's processing workflow.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="listingInfo"
+						type="tns:ListingInfo">
+						<xs:annotation>
+							<xs:documentation>
+								The format of the listing, such as
+								online auction, fixed price, or
+								advertisement format.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="returnsAccepted" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+			        <xs:element name="galleryPlusPictureURL" type="xs:anyURI" maxOccurs="unbounded" minOccurs="0">
+			            <xs:annotation>
+			                  <xs:documentation>
+			                        Large Image URL, if any. The image uses
+			                        one of the following graphics formats:
+			                        JPEG, BMP, TIF, or GIF.
+			                  </xs:documentation>
+			            </xs:annotation>
+			        </xs:element>
+					<xs:element name="compatibility" type="xs:string" maxOccurs="1" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								Fitment information related to the item
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="distance"
+						type="tns:Distance">
+						<xs:annotation>
+							<xs:documentation>
+								The distance of the item from the buyer.
+								The Distance unit (miles or kilometers)
+								varies by site. If the country whose
+								site you are searching, e.g. India, uses
+								kilometers, then the Distance unit is
+								kilometers. Otherwise, e.g. if the
+								country is US or UK, then the Distance
+								unit is miles.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="condition"
+						type="tns:Condition" maxOccurs="1" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								If the item has new global condition, 
+								condition ID and condition display name
+								will be shown here.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="SellingStatus">
+				<xs:annotation>
+					<xs:documentation>
+						Information about the current item conditions
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="currentPrice"
+						type="ns1:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								The current price of the item given in
+								the currency of the site on which the
+								item is listed. That is, currentPrice is
+								returned in the original listing
+								currency. &amp;lt;br /&amp;gt;&amp;lt;br
+								/&amp;gt; For competitive-bid item
+								listings, currentPrice is the current
+								minimum bid price if the listing has no
+								bids, or the current high bid if the
+								listing has bids. A Buy It Now price has
+								no effect on currentPrice. &amp;lt;br
+								/&amp;gt;&amp;lt;br /&amp;gt; For Basic
+								Fixed-Price (FixedPrice), Store
+								Inventory (StoreInventory), and Ad
+								Format (AdFormat) listings, currentPrice
+								is the current fixed price.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0"
+						name="convertedCurrentPrice" type="ns1:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								The listing's current price converted to
+								the currency of the site specified in
+								the find request (globalId).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="bidCount"
+						type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								The number of bids that have been placed
+								on the item.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="sellingState"
+						type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the listing's status in eBay's
+								processing workflow. If an item's
+								EndTime is in the past, but there are no
+								details about the buyer or high bidder
+								(and the user is not anonymous), you can
+								use sellingState information to
+								determine whether eBay has finished
+								processing the listing.
+								&amp;lt;dl&amp;gt; &amp;lt;dt&amp;gt;
+								&amp;lt;strong&amp;gt;sellingState
+								values:&amp;lt;/strong&amp;gt;
+								&amp;lt;/dt&amp;gt; &amp;lt;dt&amp;gt;
+								Active &amp;lt;/dt&amp;gt;
+								&amp;lt;dd&amp;gt; The listing is still
+								live. It is also possible that the
+								auction has recently ended, but eBay has
+								not completed the final processing
+								(e.g., the high bidder is still being
+								determined). &amp;lt;/dd&amp;gt;
+								&amp;lt;dt&amp;gt; Canceled
+								&amp;lt;/dt&amp;gt; &amp;lt;dd&amp;gt;
+								The listing has been canceled by either
+								the seller or eBay. &amp;lt;/dd&amp;gt;
+								&amp;lt;dt&amp;gt; Ended
+								&amp;lt;/dt&amp;gt; &amp;lt;dd&amp;gt;
+								The listing has ended and eBay has
+								completed the processing of the sale (if
+								any). &amp;lt;/dd&amp;gt;
+								&amp;lt;/dl&amp;gt;
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timeLeft"
+						type="xs:duration">
+						<xs:annotation>
+							<xs:documentation>
+								Time left before the listing ends. The
+								duration is represented in the ISO 8601
+								duration format (PnYnMnDTnHnMnS). For
+								listings that have ended, the time left
+								is PT0S (zero seconds). See the
+								&quot;duration&quot; type for
+								information about this time format.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ShippingInfo">
+				<xs:annotation>
+					<xs:documentation>
+						Container for Shipping Info for Search item
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="shippingServiceCost"
+						type="ns1:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								The basic shipping cost of the item.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingType"
+						type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The shipping method that was used for
+								determining the cost of shipping. For
+								example: flat rate, calculated, or free.
+								The seller specifies the available
+								shipping services when they list the
+								item. &lt;dl&gt; &lt;dt&gt;
+								&lt;strong&gt;shippingType
+								values:&lt;/strong&gt; &lt;/dt&gt;
+								&lt;dt&gt; Calculated &lt;/dt&gt;
+								&lt;dd&gt; The calculated shipping
+								model: The posted cost of shipping is
+								based on the buyer-selected shipping
+								service, chosen by the buyer from the
+								different shipping services offered by
+								the seller. The shipping costs are
+								calculated by eBay and the shipping
+								carrier, based on the buyer's address.
+								Any packaging and handling costs
+								established by the seller are
+								automatically rolled into the total.
+								&lt;/dd&gt; &lt;dt&gt;
+								CalculatedDomesticFlatInternational
+								&lt;/dt&gt; &lt;dd&gt; The seller
+								specified one or more calculated
+								domestic shipping services and one or
+								more flat international shipping
+								services. &lt;/dd&gt; &lt;dt&gt; Flat
+								&lt;/dt&gt; &lt;dd&gt; The flat-rate
+								shipping model: The seller establishes
+								the cost of shipping and any shipping
+								insurance, regardless of what any
+								buyer-selected shipping service might
+								charge the seller. &lt;/dd&gt;
+								&lt;dt&gt;
+								FlatDomesticCalculatedInternational
+								&lt;/dt&gt; &lt;dd&gt; The seller
+								specified one or more flat domestic
+								shipping services and one or more
+								calculated international shipping
+								services. &lt;/dd&gt; &lt;dt&gt; Free
+								&lt;/dt&gt; &lt;dd&gt; Free is used when
+								the seller has declared that shipping is
+								free for the buyer. &lt;/dd&gt;
+								&lt;dt&gt; FreePickup &lt;/dt&gt;
+								&lt;dd&gt; No shipping available, the
+								buyer must pick up the item from the
+								seller. &lt;/dd&gt; &lt;dt&gt; Freight
+								&lt;/dt&gt; &lt;dd&gt; The freight
+								shipping model: the cost of shipping is
+								determined by a third party,
+								FreightQuote.com, based on the buyer's
+								address (postal code). &lt;/dd&gt;
+								&lt;dt&gt; FreightFlat &lt;/dt&gt;
+								&lt;dd&gt; The flat rate shipping model:
+								the seller establishes the cost of
+								freight shipping and freight insurance,
+								regardless of what any buyer-selected
+								shipping service might charge the
+								seller. &lt;/dd&gt; &lt;dt&gt;
+								NotSpecified &lt;/dt&gt; &lt;dd&gt; The
+								seller did not specify the shipping
+								type. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="unbounded"
+						name="shipToLocations" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								An international location or region to
+								which the seller is willing to ship the
+								item. Returned only for items that have
+								shipToLocations specified. For a
+								complete list of shipping locations, see
+								&amp;lt;a
+								href=&quot;Enums/shipToLocationList.html&quot;&amp;gt;shipToLocations&amp;lt;/a&amp;gt;.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="expeditedShipping" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="oneDayShippingAvailable" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="handlingTime" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>					
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Storefront">
+				<xs:annotation>
+					<xs:documentation>
+						Denotes whether the item is a storefront
+						listing.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="storeName"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The name of the seller's eBay Store.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="storeURL"
+						type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+								The URL of the seller's eBay Store page.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:element name="getVersionResponse"
+				type="tns:GetVersionResponse">
+
+			</xs:element>
+			<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Returns the version of the Best Match Services.
+						You can also use this call as a ping to ensure
+						you have a connection to the server.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="ns1:BaseServiceResponse"></xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:simpleType name="ItemFilterType">
+				<xs:annotation></xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Condition"/>
+					<xs:enumeration value="Currency"/>
+					<xs:enumeration value="EndTimeFrom"/>
+					<xs:enumeration value="EndTimeTo"/>
+					<xs:enumeration value="ExcludeAutoPay"/>
+					<xs:enumeration value="FeaturedOnly"/>
+					<xs:enumeration value="FeedbackScoreMax"/>
+					<xs:enumeration value="FeedbackScoreMin"/>
+					<xs:enumeration value="FreeShippingOnly"/>
+					<xs:enumeration value="GetItFastOnly"/>
+					<xs:enumeration value="HideDuplicateItems"/>
+					<xs:enumeration value="AvailableTo"/>
+					<xs:enumeration value="LocatedIn"/>
+					<xs:enumeration value="LocalPickupOnly"/>
+					<xs:enumeration value="LocalSearchOnly"/>
+					<xs:enumeration value="ListingType"/>
+					<xs:enumeration value="LotsOnly"/>
+					<xs:enumeration value="MaxBids"/>
+					<xs:enumeration value="MinBids"/>
+					<xs:enumeration value="MaxPrice"/>
+					<xs:enumeration value="MinPrice"/>
+					<xs:enumeration value="PaymentMethod"/>
+					<xs:enumeration value="MaxQuantity"/>
+					<xs:enumeration value="MinQuantity"/>
+					<xs:enumeration value="Seller"/>
+					<xs:enumeration value="ExcludeSeller"/>
+					<xs:enumeration value="WorldOfGoodOnly"/>
+					<xs:enumeration value="MaxDistance"/>
+					<xs:enumeration value="SellerBusinessType"/>
+					<xs:enumeration value="TopRatedSellerOnly"/>
+					<xs:enumeration value="SoldItemsOnly"/>
+					<xs:enumeration value="ModTimeFrom"/>		
+					<xs:enumeration value="BestOfferOnly"/>
+					<xs:enumeration value="ExcludeCategory"/>
+					<xs:enumeration value="CharityOnly"/>
+					<xs:enumeration value="ListedIn">
+						<xs:annotation>
+							<xs:documentation>
+								The site that items were listed from
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ExpeditedShippingType">
+						<xs:annotation>
+							<xs:documentation>
+								Expedited, OneDayShipping, or ExpeditedAndOneDayShipping. Specify both
+								Expedited and OneDayShipping for OR logic
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="MaxHandlingTime">
+						<xs:annotation>
+							<xs:documentation>
+								Max handling days by seller
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ReturnsAcceptedOnly">
+					</xs:enumeration>					
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="SellerInfo">
+				<xs:annotation>
+					<xs:documentation>
+						Container for information about this listing's
+						seller.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="sellerUserName"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The seller's eBay user name; a unique
+								value.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="feedbackScore"
+						type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								The aggregate feedback score of the
+								seller. A seller's feedback score is
+								their net positive feedback minus their
+								net negative feedback. Feedback scores
+								are a quantitative expression of the
+								desirability of dealing with a seller in
+								a transaction.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0"
+						name="positiveFeedbackPercent" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								The percentage value of a user's
+								positive feedback (their positive
+								feedbackScore divided by their total
+								positive plus negative feedback).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="feedbackRatingStar" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Visual indicator of user's feedback
+								score. &lt;dl&gt; &lt;dt&gt;
+								&lt;strong&gt;feedbackRatingStar
+								values:&lt;/strong&gt; &lt;/dt&gt;
+								&lt;dt&gt; None &lt;/dt&gt; &lt;dd&gt;
+								No graphic displayed, feedback score
+								0-9. &lt;/dd&gt; &lt;dt&gt; Yellow
+								&lt;/dt&gt; &lt;dd&gt; Yellow Star,
+								feedback score 10-49. &lt;/dd&gt;
+								&lt;dt&gt; Blue &lt;/dt&gt; &lt;dd&gt;
+								Blue Star, feedback score 50-99.
+								&lt;/dd&gt; &lt;dt&gt; Turquoise
+								&lt;/dt&gt; &lt;dd&gt; Turquoise Star,
+								feedback score 100-499. &lt;/dd&gt;
+								&lt;dt&gt; Purple &lt;/dt&gt; &lt;dd&gt;
+								Purple Star, feedback score 500-999.
+								&lt;/dd&gt; &lt;dt&gt; Red &lt;/dt&gt;
+								&lt;dd&gt; Red Star, feedback score
+								1,000-4,999. &lt;/dd&gt; &lt;dt&gt;
+								Green &lt;/dt&gt; &lt;dd&gt; Green Star,
+								feedback score 5,000-9,999. &lt;/dd&gt;
+								&lt;dt&gt; YellowShooting &lt;/dt&gt;
+								&lt;dd&gt; Yellow Shooting Star,
+								feedback score 10,000-24,999.
+								&lt;/dd&gt; &lt;dt&gt; TurquoiseShooting
+								&lt;/dt&gt; &lt;dd&gt; Turquoise
+								Shooting Star, feedback score
+								25,000-49,999. &lt;/dd&gt; &lt;dt&gt;
+								PurpleShooting &lt;/dt&gt; &lt;dd&gt;
+								Purple Shooting Star, feedback score
+								50,000-99,999. &lt;/dd&gt; &lt;dt&gt;
+								RedShooting &lt;/dt&gt; &lt;dd&gt; Red
+								Shooting Star, feedback score
+								100,000-499,000 and above. &lt;/dd&gt;
+								&lt;dt&gt; GreenShooting &lt;/dt&gt;
+								&lt;dd&gt; Green Shooting Star, feedback
+								score 500,000-999,000 and above.
+								&lt;/dd&gt; &lt;dt&gt; SilverShooting
+								&lt;/dt&gt; &lt;dd&gt; Silver Shooting
+								Star, feedback score 1,000,000 or more.
+								&lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1"
+						name="topRatedSeller" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates if the seller is Top Rated
+								Seller or not.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Condition">
+				<xs:annotation>
+					<xs:documentation>
+						Contains information of new global condition;
+						1.Condition ID 2. Display Name
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls />
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0"
+						name="conditionId" type="xs:int">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1"
+						name="conditionDisplayName" type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://www.ebay.com/marketplace/services"
+			xmlns:ns1="http://www.ebay.com/marketplace/services">
+			<xsd:complexType abstract="true"
+				name="BaseServiceRequest">
+				<xsd:annotation />
+				<xsd:sequence>
+					<xsd:any maxOccurs="unbounded" minOccurs="0"
+						processContents="lax">
+					</xsd:any>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="BaseServiceResponse"
+				abstract="true">
+				<xsd:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="ack" type="ns1:AckValue">
+						<xsd:annotation>
+							<xs:documentation>
+								Indicates whether or not errors or
+								warnings were generated during the
+								processing of the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="errorMessage"
+						type="ns1:ErrorMessage">
+						<xsd:annotation>
+							<xs:documentation>
+								Description of an error or warning that
+								occurred when eBay processed the
+								request. Not returned if the ack value
+								is Success.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="version"
+						type="xsd:string">
+						<xsd:annotation>
+							<xs:documentation>
+								The release version that eBay used to
+								process the request. Developer Technical
+								Support may ask you for the version
+								value if you work with them to
+								troubleshoot issues. &lt;br /&gt;&lt;br
+								/&gt; &lt;span
+								class="tablenote"&gt;&lt;strong&gt;Note:&lt;/strong&gt;
+								The version in use is normally the
+								latest release version, as specified in
+								the release notes. Note that eBay
+								releases the API to international sites
+								about a week after the API version is
+								released to the US site. &lt;/span&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="timestamp"
+						type="xsd:dateTime">
+						<xsd:annotation>
+							<xs:documentation>
+								This value represents the date and time
+								when eBay processed the request. This
+								value is returned in GMT, the ISO 8601
+								date and time format (YYYY- MM-
+								DDTHH:MM:SS.SSSZ). See the "dateTime"
+								type for information about the time
+								format, and for details on converting to
+								and from the GMT time zone.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<xsd:simpleType name="AckValue">
+				<xsd:annotation>
+					<xs:documentation>
+						Indicates whether the error is a fatal error
+						(causing the request to fail) or a less severe
+						error (a warning) that should be communicated to
+						the user.
+					</xs:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Success">
+						<xsd:annotation>
+							<xs:documentation>
+								eBay successfully processed the request
+								and the business data is returned in the
+								response. Note that it is possible for a
+								response to return Success, but still
+								not contain the expected data in the
+								result.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Failure">
+						<xsd:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during
+								the processing of the request, causing
+								the request to fail. When a serious
+								application-level error occurs, the
+								error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Warning">
+						<xsd:annotation>
+							<xs:documentation>
+								The request was successfully processed,
+								but eBay encountered a non-fatal error
+								during the processing. For best results,
+								requests should return without warnings.
+								Inspect the warning details and resolve
+								the problem before resubmitting the
+								request.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="PartialFailure">
+						<xsd:annotation>
+							<xs:documentation>
+								eBay successfully processed the request,
+								but one or more non-fatal errors
+								occurred during the processing. For best
+								results, requests should return without
+								warning messages. Inspect the message
+								details and resolve any problems before
+								resubmitting the request.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+
+
+			<xsd:complexType name="ErrorMessage">
+				<xsd:annotation>
+					<xs:documentation>
+						Information regarding an error or warning that
+						occurred when eBay processed the request. Not
+						returned when the ack value is Success. Run-time
+						errors are not reported here, but are instead
+						reported as part of a SOAP fault.
+					</xs:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded"
+						name="error" type="ns1:ErrorData">
+						<xsd:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<xsd:complexType name="ErrorData">
+				<xsd:annotation>
+					<xs:documentation>
+						A container for error details.
+					</xs:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="errorId" type="xsd:long">
+						<xsd:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="domain" type="xsd:string">
+						<xsd:annotation>
+							<xs:documentation>
+								Name of the domain in which the error
+								occurred. &lt;dl&gt; &lt;dt&gt;
+								&lt;strong&gt;domain
+								values:&lt;/strong&gt; &lt;/dt&gt;
+								&lt;dt&gt; Marketplace &lt;/dt&gt;
+								&lt;dd&gt; A business or validation
+								error occurred in the Merchandising
+								Service. &lt;/dd&gt; &lt;dt&gt; SOA
+								&lt;/dt&gt; &lt;dd&gt; An exception
+								occurred in the Service Oriented
+								Architecture (SOA) framework.
+								&lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="subdomain"
+						type="xsd:string">
+						<xsd:annotation>
+							<xs:documentation>
+								Name of the subdomain in which the error
+								occurred. &lt;dl&gt; &lt;dt&gt;
+								&lt;strong&gt;subdomain
+								values:&lt;/strong&gt; &lt;/dt&gt;
+								&lt;dt&gt; Finding &lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								Finding service. &lt;/dd&gt; &lt;dt&gt;
+								MarketplaceCommon &lt;/dt&gt; &lt;dd&gt;
+								The error is common to all Marketplace
+								services. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="severity"
+						type="ns1:ErrorSeverity">
+						<xsd:annotation>
+							<xs:documentation>
+								Indicates whether the reported problem
+								is fatal (an error) or is less- severe
+								(a warning). Review the error message
+								details for information on the cause.
+								&lt;br /&gt; &lt;br /&gt; If the request
+								fails and the application is the source
+								of the error (for example, a required
+								element is missing), update the
+								application before you retry the
+								request. If the problem is due to
+								incorrect user data, alert the end-user
+								to the problem and provide the means for
+								them to correct the data. Once the
+								problem in the application or data is
+								resolved, re-send the request to eBay.
+								&lt;br /&gt; &lt;br /&gt; If the source
+								of the problem is on eBay's side, you
+								can retry the request a reasonable
+								number of times (eBay recommends you try
+								the request twice). If the error
+								persists, contact Developer Technical
+								Support. Once the problem has been
+								resolved, you can resend the request in
+								its original form. &lt;br /&gt; &lt;br
+								/&gt; If a warning occurs, warning
+								information is returned in addition to
+								the business data. Normally, you do not
+								need to resend the request (as the
+								original request was successful).
+								However, depending on the cause of the
+								warning, you might need to contact the
+								end user, or eBay, to effect a long term
+								solution to the problem.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="category"
+						type="ns1:ErrorCategory">
+						<xsd:annotation>
+							<xs:documentation>
+								There are three categories of errors:
+								request errors, application errors, and
+								system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="message" type="xsd:string">
+						<xsd:annotation>
+							<xs:documentation>
+								A detailed description of the condition
+								that caused in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="exceptionId"
+						type="xsd:token">
+						<xsd:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" maxOccurs="unbounded"
+						name="parameter" type="ns1:ErrorParameter">
+						<xsd:annotation>
+							<xs:documentation>
+								Various warning and error messages
+								return one or more variables that
+								contain contextual information about the
+								error. This is often the field or value
+								that triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls />
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<xsd:complexType name="ErrorParameter">
+				<xsd:annotation>
+					<xs:documentation>
+						Contextual data associated with an error.
+					</xs:documentation>
+				</xsd:annotation>
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute use="optional" name="name"
+							type="xsd:string">
+							<xsd:annotation>
+								<xs:documentation>
+									The name of the input parameter
+									returned with the error. Inspecting
+									the parameter (or its input value)
+									will often aid in understanding the
+									cause of the error. Not all error
+									messages contain this value.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls />
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xsd:annotation>
+						</xsd:attribute>
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+
+
+			<xsd:simpleType name="ErrorSeverity">
+				<xsd:annotation>
+					<xs:documentation>
+						Indicates whether the error is a fatal error
+						(causing the request to fail) or a less severe
+						error (a warning) that should be communicated to
+						the user.
+					</xs:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="Error">
+						<xsd:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during
+								the processing of the request, causing
+								the request to fail. When eBay
+								encounters an error, it returns error
+								data instead of the requested business
+								data. Inspect the error details and
+								resolve the problem before resubmitting
+								the request.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Warning">
+						<xsd:annotation>
+							<xs:documentation>
+								The request was successfully processed,
+								but eBay encountered a non-fatal error
+								during the processing that could affect
+								the data returned. For example, eBay
+								might have changed the value of an input
+								field. In this case, eBay returns a
+								successful response, but it also returns
+								a warning. For best results, requests
+								should return without warnings. Inspect
+								the warning details and resolve the
+								problem before resubmitting the request.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+
+
+			<xsd:simpleType name="ErrorCategory">
+				<xsd:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are often caused
+						by passing invalid data in the request. System
+						errors are primarily caused by application
+						failures and cannot be corrected by changing
+						request values.
+					</xs:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="System">
+						<xsd:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side. For example, a
+								database or server could be down.
+								Inspect the error message to find the
+								cause of the problem. If the problem is
+								on the eBay side, an application can
+								retry the request as-is a reasonable
+								number of times (eBay recommends twice).
+								If the error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Application">
+						<xsd:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, with the most likely source
+								being the application sending the
+								request. For example, the request is
+								missing a required data element or it
+								contains an invalid field. The problem
+								must be corrected before the request can
+								be resent. Inspect the error message to
+								find the cause of the problem. If the
+								problem is due to an application error,
+								modify the application and resend the
+								request. If the error is due to invalid
+								data, the source of the data must be
+								corrected before you resend the resend
+								request to eBay.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Request">
+						<xsd:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, with the most likely source
+								being missing or invalid data in the
+								request. The problem must be corrected
+								before the request can be retried.
+								Inspect the error message to find the
+								cause of the problem. If the problem is
+								a result of end-user data, alert the
+								end-user to the problem and provide the
+								means for them to correct the problem.
+								Once the problem is resolved, resend the
+								request to eBay.
+							</xs:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="Amount">
+				<xs:annotation>
+					<xs:documentation>
+						Monetary amount of the transaction.
+					</xs:documentation>
+				</xs:annotation>
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:double">
+						<xsd:attribute use="required" name="currencyId"
+							type="xsd:string">
+							<xs:annotation>
+								<xs:documentation>
+									Currency in which the monetary
+									amount is specified. &lt;br
+									/&gt;&lt;br /&gt; For a list of
+									currencyId enumeration values, see
+									&lt;a
+									href="Enums/currencyIdList.html"&gt;currencyId
+									Values&lt;/a&gt;.
+								</xs:documentation>
+							</xs:annotation>
+						</xsd:attribute>
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+
+
+			<xsd:complexType name="PaginationInput">
+				<xs:annotation>
+					<xs:documentation>
+						Controls the pagination of the result set. Child
+						elements specify the maximum number of item
+						listings to return per call and which page of
+						data to return. Controls which listings are
+						returned in the response, but does not control
+						the details associated with the returned items.
+					</xs:documentation>
+				</xs:annotation>
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="pageNumber"
+						type="xsd:int">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies which subset of data (or
+								"page") to return in the call response.
+								The number of data pages is determined
+								by the total number of items matching
+								the request search criteria (returned in
+								paginationOutput.totalEntries) divided
+								by the number of entries to display in
+								each response (entriesPerPage). You can
+								return up to the first 100 pages of the
+								result set by issuing multiple requests
+								and specifying, in sequence, the pages
+								to return.
+							</xs:documentation>
+						</xs:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="entriesPerPage"
+						type="xsd:int">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the maximum number of entries
+								to return in a single call. If the
+								number of entries found on the specified
+								pageNumber is less than the value
+								specified here, the number of items
+								returned will be less than the value of
+								entriesPerPage. This indicates the end
+								of the result set. &lt;br&gt;&lt;br&gt;
+								If entriesPerPage is set to a number
+								greater than 100, the default value,
+								100, will be used.
+							</xs:documentation>
+						</xs:annotation>
+					</xsd:element>
+					<xsd:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<xsd:complexType name="PaginationOutput">
+				<xs:annotation>
+					<xs:documentation>
+						Shows the pagination data for the item search.
+						Child elements include the page number returned,
+						the maximum entries returned per page, the total
+						number of pages that can be returned, and the
+						total number of items that match the search
+						criteria.
+					</xs:documentation>
+				</xs:annotation>
+				<xsd:sequence>
+                    <xsd:element minOccurs="0" name="pageNumber" type="xsd:int">
+						<xs:annotation>
+							<xs:documentation>
+								The subset of item data returned in the
+								current response. Search results are
+								divided into sets, or "pages," of item
+								data. The number of pages is equal to
+								the total number of items matching the
+								search criteria divided by the value
+								specified for entriesPerPage in the
+								request. The response for a request
+								contains one "page" of item data. &lt;br
+								/&gt; &lt;br /&gt; This returned value
+								indicates the page number of item data
+								returned (a subset of the complete
+								result set). If this field contains 1,
+								the response contains the first page of
+								item data (the default). If the value
+								returned in totalEntries is less than
+								the value for entriesPerPage, pageNumber
+								returns 1 and the response contains the
+								entire result set. &lt;br /&gt; &lt;br
+								/&gt; The value of pageNumber is
+								normally equal to the value input for
+								paginationInput.pageNumber. However, if
+								the number input for pageNumber is
+								greater than the total possible pages of
+								output, eBay returns the last page of
+								item data in the result set, and the
+								value for pageNumber is set to the
+								respective (last) page number.
+							</xs:documentation>
+						</xs:annotation>
+					</xsd:element>
+                    <xsd:element minOccurs="0" name="entriesPerPage" type="xsd:int">
+						<xs:annotation>
+							<xs:documentation>
+								The maximum number of items that can be
+								returned in the response. This number is
+								always equal to the value input for
+								paginationInput.entriesPerPage. &lt;br
+								/&gt; &lt;br /&gt; The end of the result
+								set has been reached if the number
+								specified for entriesPerPage is greater
+								than the number of items found on the
+								specified pageNumber. In this case,
+								there will be fewer items returned than
+								the number specified in entriesPerPage.
+								This can be determined by comparing the
+								entriesPerPage value with the value
+								returned in the count attribute for the
+								searchResult field.
+							</xs:documentation>
+						</xs:annotation>
+					</xsd:element>
+                    <xsd:element minOccurs="0" name="totalPages"
+						type="xsd:int">
+						<xs:annotation>
+							<xs:documentation>
+								The total number of pages of data that
+								could be returned by repeated search
+								requests. Note that if you modify the
+								value of inputPagination.entriesPerPage
+								in a request, the value output for
+								totalPages will change. A value of "0"
+								is returned if eBay does not find any
+								items that match the search criteria.
+							</xs:documentation>
+						</xs:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="totalEntries"
+						type="xsd:int">
+						<xs:annotation>
+							<xs:documentation>
+								The total number of items found that
+								match the search criteria in your
+								request. Depending on the input value
+								for entriesPerPage, the response might
+								include only a portion (a page) of the
+								entire result set. A value of "0" is
+								returned if eBay does not find any items
+								that match the search criteria.
+							</xs:documentation>
+						</xs:annotation>
+					</xsd:element>
+
+
+					<xsd:any minOccurs="0" maxOccurs="unbounded"
+						processContents="lax" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message
+		name="findBestMatchItemDetailsAcrossStoresInternalResponse">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsAcrossStoresInternalResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message
+		name="findBestMatchItemDetailsByCategoryInternalResponse">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsByCategoryInternalResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message
+		name="findBestMatchItemDetailsByKeywordsInternalResponse">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsByKeywordsInternalResponse">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message
+		name="findBestMatchItemDetailsAcrossStoresInternalRequest">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsAcrossStoresInternalRequest">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message
+		name="findBestMatchItemDetailsByCategoryInternalRequest">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsByCategoryInternalRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message
+		name="findBestMatchItemDetailsByProductInternalRequest">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsByProductInternalRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message
+		name="findBestMatchItemDetailsByProductInternalResponse">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsByProductInternalResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message
+		name="findBestMatchItemDetailsByKeywordsInternalRequest">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsByKeywordsInternalRequest">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message
+		name="findBestMatchItemDetailsAdvancedInternalResponse">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsAdvancedInternalResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message
+		name="findBestMatchItemDetailsAdvancedInternalRequest">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsAdvancedInternalRequest">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message
+		name="findBestMatchItemDetailsBySellerInternalRequest">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsBySellerInternalRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message
+		name="findBestMatchItemDetailsBySellerInternalResponse">
+		<wsdl:part name="messageParameters"
+			element="tns:findBestMatchItemDetailsBySellerInternalResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getBestMatchItemDetailsInternalRequest">
+		<wsdl:part name="messageParameters"
+			element="tns:getBestMatchItemDetailsInternalRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getBestMatchItemDetailsInternalResponse">
+		<wsdl:part name="messageParameters"
+			element="tns:getBestMatchItemDetailsInternalResponse">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part name="messageParameters"
+			element="tns:getVersionResponse">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:portType name="BestMatchItemDetailsInternalServicePort">
+
+		<wsdl:operation
+			name="findBestMatchItemDetailsByKeywordsInternal">
+			<wsdl:documentation>
+				Operation used to find items by Keywords only. The
+				output will be a items grouped into two groups: Featured
+				and BestMatch. BestMatchGroup represents the items
+				sorted by BestMatch and will contain a maximum of 1000
+				items along with BestMatch data like profile and FME
+				data.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:findBestMatchItemDetailsByKeywordsInternalRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:findBestMatchItemDetailsByKeywordsInternalResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsByCategoryInternal">
+			<wsdl:documentation>
+				Operation used to find items by CategoryI only. The
+				output will be a items grouped into two groups: Featured
+				and BestMatch. BestMatchGroup represents the items
+				sorted by BestMatch and will contain a maximum of 1000
+				items along with BestMatch data like profile and FME
+				data.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:findBestMatchItemDetailsByCategoryInternalRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:findBestMatchItemDetailsByCategoryInternalResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsAdvancedInternal">
+			<wsdl:documentation>
+				Operation used to find items by Keywords and/or
+				CategoryId. The output will be a items grouped into two
+				groups: Featured and BestMatch. BestMatchGroup
+				represents the items sorted by BestMatch and will
+				contain a maximum of 1000 items along with BestMatch
+				data like profile and FME data.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:findBestMatchItemDetailsAdvancedInternalRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:findBestMatchItemDetailsAdvancedInternalResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsByProductInternal">
+			<wsdl:documentation>
+				Operation used to find items by ProductId only. The
+				current Product Id types supported are ISBN, UPC, EAN
+				and ReferenceID. The output for media PDP pages will be
+				grouped according to condition and for non media PDP it
+				will be same as search pages. Also the media PDP output
+				will return a maximum of 10 items per groups and will
+				not consider the entriesPerPage input.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:findBestMatchItemDetailsByProductInternalRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:findBestMatchItemDetailsByProductInternalResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsAcrossStoresInternal">
+			<wsdl:documentation>
+				Used to find items across stores based on keyword and/or
+				category. Output is grouped similar to advanced
+				operation
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:findBestMatchItemDetailsAcrossStoresInternalRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:findBestMatchItemDetailsAcrossStoresInternalResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsBySellerInternal">
+			<wsdl:documentation>
+				This operation is used to return items for a seller for
+				a particular category.
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:findBestMatchItemDetailsBySellerInternalRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:findBestMatchItemDetailsBySellerInternalResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBestMatchItemDetailsInternal">
+			<wsdl:documentation>
+				Used to return Best Match details for the input item
+				ids. The output will contain the list of item details.
+				Invalid item ids are ignore
+			</wsdl:documentation>
+			<wsdl:input
+				message="tns:getBestMatchItemDetailsInternalRequest">
+			</wsdl:input>
+			<wsdl:output
+				message="tns:getBestMatchItemDetailsInternalResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:documentation>
+				Used to get the version of service
+			</wsdl:documentation>
+
+			<wsdl:output message="tns:getVersionResponse"></wsdl:output>
+		</wsdl:operation>
+
+
+	</wsdl:portType>
+	<wsdl:binding name="BestMatchItemDetailsInternalServiceSoapBinding"
+		type="tns:BestMatchItemDetailsInternalServicePort">
+		<soap12:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+
+
+		<wsdl:operation
+			name="findBestMatchItemDetailsByKeywordsInternal">
+			<soap12:operation
+				soapAction="urn:findBestMatchItemDetailsByKeywordsInternal"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsByCategoryInternal">
+			<soap12:operation
+				soapAction="urn:findBestMatchItemDetailsByCategoryInternal"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsAdvancedInternal">
+			<soap12:operation
+				soapAction="urn:findBestMatchItemDetailsAdvancedInternal"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsByProductInternal">
+			<soap12:operation
+				soapAction="urn:findBestMatchItemDetailsByProductInternal"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsAcrossStoresInternal">
+			<soap12:operation
+				soapAction="urn:findBestMatchItemDetailsAcrossStoresInternal"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation
+			name="findBestMatchItemDetailsBySellerInternal">
+			<soap12:operation
+				soapAction="urn:findBestMatchItemBySellerStoresInternal"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBestMatchItemDetailsInternal">
+			<soap12:operation
+				soapAction="urn:getBestMatchItemDetailsInternal" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<soap12:operation soapAction="urn:getVersion"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="BestMatchItemDetailsInternalService">
+		<wsdl:documentation>
+			This service is used to retrieve BM information about the
+			items for various Search flows.
+			<Version>1.5.0</Version>
+		</wsdl:documentation>
+		<wsdl:port name="BestMatchItemDetailsInternalServiceSOAP"
+			binding="tns:BestMatchItemDetailsInternalServiceSoapBinding">
+			<soap12:address
+				location="http://bmintsvcs.vip/services/search/BestMatchItemDetailsInternalService/v1" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

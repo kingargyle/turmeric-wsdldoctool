@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/shipping/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="CommonShippingService" targetNamespace="http://www.ebay.com/marketplace/shipping/v1/services">
+  <types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/shipping/v1/services">
+            <xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Categories for the error.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<!-- 
+					<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+					processContents="lax" />
+					</xs:sequence>
+				-->
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<!--  Imported Types -->
+			<xs:simpleType name="OrderId">
+				<xs:annotation>
+					<xs:documentation>A unique eBay orderId.</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="ShippingDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:long"/>
+			</xs:simpleType>
+			<xs:simpleType name="TrackingNumber">
+				<xs:annotation>
+					<xs:documentation>
+						Tracking Number.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="ShippingDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:simpleType name="TransactionId">
+				<xs:annotation>
+					<xs:documentation>
+						eBay TransactionId.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="ShippingDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:long"/>
+			</xs:simpleType>
+			<xs:simpleType name="ShippingCarrier">
+				<xs:annotation>
+					<xs:documentation>
+						Name of the Shipping Carrier. Supported Types
+						are (UPS, USPS, Deutsche Post, DHL, Hermes, CPC,
+						Royal Mail, Parcelforce, FedEx)
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="ShippingDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token"/>
+			</xs:simpleType>
+			<xs:simpleType name="ItemId">
+				<xs:annotation>
+					<xs:documentation>
+						Describes the eBay Item id.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="ShippingDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/shipping/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:long"/>
+			</xs:simpleType>
+			<!--  End Imported Types -->
+			<!-- Basic complex types -->
+			<xs:complexType name="TransactionInformation">
+				<xs:annotation>
+					<xs:documentation>
+						Identifies an eBay Transaction information. 
+						Should include both eBay Item id and eBay Transaction Id. 
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="transactionId" type="tns:TransactionId">
+						<xs:annotation>
+							<xs:documentation>
+							The transaction id associated with an eBay purchase.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="itemId" type="tns:ItemId">
+						<xs:annotation>
+							<xs:documentation>
+							The eBay item id.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+				
+				<xs:complexType name="ShipmentTrackingResponseInfo">
+				<xs:annotation>
+					<xs:documentation>
+						A single response object.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="shipmentTrackingDetail" type="tns:ShipmentTrackingDetail">
+						<xs:annotation>
+							<xs:documentation>
+							Provides the tracking details.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="shipmentTrackingTransactionalInfo" type="tns:ShipmentTrackingTransactionalInfo">
+						<xs:annotation>
+							<xs:documentation>
+							Transactional info for the shipment tracking.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="correlationId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							A unique id identifying the particular request.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+							Error Information.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ShipmentTrackingRequestInfo">
+				<xs:annotation>
+					<xs:documentation>
+						A single request object.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="shipmentTracking" type="tns:ShipmentTracking">
+						<xs:annotation>
+							<xs:documentation>
+							The shipping carrier of the tracking number.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="correlationId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							A unique id identifying the particular request.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="shipmentTrackingTransactionalInfo" type="tns:ShipmentTrackingTransactionalInfo">
+						<xs:annotation>
+							<xs:documentation>
+							A unique id identifying the particular request.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ShipmentTrackingRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="shipmentTrackingRequestInfo" type="tns:ShipmentTrackingRequestInfo">
+								<xs:annotation>
+									<xs:documentation>
+										Request for the shipment tracking operations.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="sellerId" type="xs:long">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>			
+			<xs:complexType name="ShipmentTrackingResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="shipmentTrackingResponseInfo" type="tns:ShipmentTrackingResponseInfo">
+								<xs:annotation>
+									<xs:documentation>
+										Response for the shipment tracking operations.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			
+			
+			<!--  Elements for Request / Response -->
+			<xs:element name="getVersionRequest" nillable="true" type="tns:GetVersionRequest"/>
+			<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+			<xs:element name="shipmentTrackingRequest" type="tns:ShipmentTrackingRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request for the shipment tracking operations. A request having one or more ShipmentTrackingSingleRequest objects.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shipmentTrackingResponse" type="tns:ShipmentTrackingResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response for the shipment tracking operations. A response can have one or more ShipmentTrackingSingleResponse objects.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!--  End Elements -->
+			<!-- Types for Add Tracking -->
+			<xs:complexType name="GetVersionRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetVersionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			
+			<xs:complexType name="ShipmentTracking">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="shippingCarrier" type="tns:ShippingCarrier">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the Carrier for which tracking
+								number is being Added (UPS,USPS, FedEx etc)
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="notes" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Custom Notes that seller can add to tracking number. (for eBay internal use only)
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="trackingNumber" type="tns:TrackingNumber">
+						<xs:annotation>
+							<xs:documentation>
+								Shipment Tracking Number.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="shipmentId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ShipmentTrackingDetail">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="tracking" type="tns:ShipmentTracking">
+						<xs:annotation>
+							<xs:documentation>
+								Details of the Shipment Tracking.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="trackingStatus" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The current status of the tracking
+								number. Valid values are
+								SHIPMENT_CREATED, DROPPED_OFF,
+								IN_TRANSIT, DELIVERED, RETURNED,
+								CANCELLED, LABEL_PRINTED, ERROR,
+								UNCONFIRMED, PICKUP_FAILED,
+								DELIVERY_DELAYED, DELIVERY_SCHEDULED,
+								DELIVERY_FAILED, INRETURN.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="history" type="tns:ShipmentTrackingHistory">
+						<xs:annotation>
+							<xs:documentation>
+								Shipment Tracking History.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="eBayPrintedLabel" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ShipmentTrackingHistory">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="history" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							the tracking history associated with a tracking number.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		
+			<xs:complexType name="ShipmentTrackingTransactionalInfo">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="orderId" type="tns:OrderId">
+					<xs:annotation>
+							<xs:documentation>
+							eBay OrderId.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionInformation" type="tns:TransactionInformation">
+					<xs:annotation>
+							<xs:documentation>
+							the eBay tracking Info.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="getVersionResponse">
+    <part element="tns:getVersionResponse" name="params">
+    </part>
+  </message>
+  <message name="shipmentTrackingResponse">
+    <part element="tns:shipmentTrackingResponse" name="params">
+    </part>
+  </message>
+  <message name="shipmentTrackingRequest">
+    <part element="tns:shipmentTrackingRequest" name="params">
+    </part>
+  </message>
+  <message name="getVersionRequest">
+    <part element="tns:getVersionRequest" name="params">
+    </part>
+  </message>
+  <portType name="CoreShippingServiceSOAPPort">
+    <operation name="getVersion">
+      <input message="tns:getVersionRequest" name="getVersionRequest">
+    </input>
+      <output message="tns:getVersionResponse" name="getVersionResponse">
+    </output>
+    </operation>
+    <operation name="addShipmentTracking">
+<wsdl:documentation>		
+						Add shipment tracking information to eBay transactions.
+		</wsdl:documentation>
+      <input message="tns:shipmentTrackingRequest">
+    </input>
+      <output message="tns:shipmentTrackingResponse">
+    </output>
+    </operation>
+    <operation name="removeShipmentTracking">
+<wsdl:documentation>		
+				Remove shipment tracking information from eBay transactions.
+		</wsdl:documentation>
+      <input message="tns:shipmentTrackingRequest">
+    </input>
+      <output message="tns:shipmentTrackingResponse">
+    </output>
+    </operation>
+    <operation name="getShipmentTracking">
+<wsdl:documentation>			
+					Get shipment tracking information associated with eBay transactions.		
+				</wsdl:documentation>
+      <input message="tns:shipmentTrackingRequest">
+    </input>
+      <output message="tns:shipmentTrackingResponse">
+    </output>
+    </operation>
+  </portType>
+
+ 
+  <wsdl:portType name="CoreShippingServiceHttpPort">
+		<wsdl:operation name="addShipmentTracking">
+		<wsdl:documentation>		
+						Add shipment tracking information to eBay transactions.
+		</wsdl:documentation>
+			<wsdl:input message="tns:shipmentTrackingRequest"/>
+			<wsdl:output message="tns:shipmentTrackingResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeShipmentTracking">
+		<wsdl:documentation>		
+				Remove shipment tracking information from eBay transactions.
+		</wsdl:documentation>
+			<wsdl:input message="tns:shipmentTrackingRequest"/>
+			<wsdl:output message="tns:shipmentTrackingResponse"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getShipmentTracking">
+			<wsdl:documentation>			
+					Get shipment tracking information associated with eBay transactions.		
+				</wsdl:documentation>
+			<wsdl:input message="tns:shipmentTrackingRequest"/>
+			<wsdl:output message="tns:shipmentTrackingResponse"/>
+		</wsdl:operation>
+		
+		<!--<wsdl:operation name="getVersion">
+			<wsdl:documentation>			
+					Get shipment tracking information associated with eBay transactions.		
+				</wsdl:documentation>
+			<wsdl:input message="tns:getVersionRequest"></wsdl:input>
+			<wsdl:output message="tns:getVersionResponse"></wsdl:output>
+		</wsdl:operation>	
+		-->
+	</wsdl:portType>
+	
+
+  <binding name="CoreShippingServiceHttpBinding" type="tns:CoreShippingServiceHttpPort">
+
+		<http:binding verb="POST"/>
+		
+		
+		<wsdl:operation name="addShipmentTracking">
+
+			<http:operation location="/addShipmentTracking"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getVersion">
+   			<http:operation location="/getVersion"/>
+   			<wsdl:input>
+     	    	<mime:content part="params" type="application/x-www-form-urlencoded"/>
+   			</wsdl:input>
+   			<wsdl:output>
+     		  	 <mime:content part="params" type="text/xml"/>
+   			</wsdl:output>
+  		</wsdl:operation>
+	
+		<wsdl:operation name="removeShipmentTracking">
+			<http:operation location="/removeShipmentTracking"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getShipmentTracking">
+
+			<http:operation location="/getShipmentTracking"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+			</wsdl:output>
+		</wsdl:operation>
+	</binding>
+  
+  <binding name="CoreShippingServiceSOAPBinding" type="tns:CoreShippingServiceSOAPPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getVersion">
+      <soap:operation soapAction="urn:getVersion" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="addShipmentTracking">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/shipping/v1/services/addShipmentTracking"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="removeShipmentTracking">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/shipping/v1/services/removeShipmentTracking"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getShipmentTracking">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/shipping/v1/services/getShipmentTracking"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="CoreShippingService">
+    <port binding="tns:CoreShippingServiceSOAPBinding" name="CoreShippingServiceSOAPPort">
+      <soap12:address location="https://svcs.ebay.com/services/shipping/v1/CoreShippingService"/>
+      <soap:address location="https://svcs.ebay.com/services/shipping/v1/CoreShippingService"/>
+    </port>
+    
+   <port binding="tns:CoreShippingServiceHttpBinding" name="CoreShippingServiceHttpPort">
+				<http:address location="https://svcs.ebay.com/services/shipping/v1/CoreShippingService"/>
+	</port>
+  
+  </service>
+</definitions>

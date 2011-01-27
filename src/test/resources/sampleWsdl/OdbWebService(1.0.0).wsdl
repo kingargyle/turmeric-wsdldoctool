@@ -1,0 +1,1142 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.odb.ebay.com" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns:ns1="http://api.odb.ebay.com" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://ws.odb.ebay.com">
+  <wsdl:types>
+<xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ws.odb.ebay.com">
+<xsd:element name="getClassNames">
+<xsd:complexType/>
+</xsd:element>
+<xsd:complexType name="ArrayOfString">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="string" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="getClassNamesResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfString"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getClass">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="name" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:complexType name="OdbSoapClass">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="attributes" nillable="true" type="tns:ArrayOfString"/>
+<xsd:element minOccurs="0" name="name" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="parent" nillable="true" type="tns:OdbSoapClass"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="getClassResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:OdbSoapClass"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:complexType name="OdbSoapObject">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="attributes" nillable="true" type="tns:ArrayOfOdbSoapAttribute"/>
+<xsd:element minOccurs="0" name="clazz" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="comments" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="created" type="xsd:dateTime"/>
+<xsd:element minOccurs="0" name="name" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="updated" type="xsd:dateTime"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="ArrayOfOdbSoapAttribute">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="OdbSoapAttribute" nillable="true" type="tns:OdbSoapAttribute"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="OdbSoapAttribute">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="comments" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="created" type="xsd:dateTime"/>
+<xsd:element minOccurs="0" name="name" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="updated" type="xsd:dateTime"/>
+<xsd:element minOccurs="0" name="value" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="addObject">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="o" nillable="true" type="tns:OdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="addObjectResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="advanceSearch">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="className" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="objectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="sc" nillable="true" type="ns1:ArrayOfCondition"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:complexType name="ArrayOfOdbSoapObject">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="OdbSoapObject" nillable="true" type="tns:OdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="advanceSearchResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getAttributeValue">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="name" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="attribute" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getAttributeValueResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="deleteRelationship">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="fromObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="toObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="deleteRelationshipResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:complexType name="ArrayOfOdbSoapNewRelationship">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="OdbSoapNewRelationship" nillable="true" type="tns:OdbSoapNewRelationship"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="OdbSoapNewRelationship">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="fromObjectName" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="relationObject" nillable="true" type="tns:OdbSoapObject"/>
+<xsd:element minOccurs="0" name="toObjectName" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="batchNewRelationship">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="newRelationships" nillable="true" type="tns:ArrayOfOdbSoapNewRelationship"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="batchNewRelationshipResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="getCollectionByXml">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="xml" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="attrs" nillable="true" type="tns:ArrayOfString"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getCollectionByXmlResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="hasRelationship">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="fromObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="toObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="hasRelationshipResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" type="xsd:boolean"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="addRelationship">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="fromObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="toObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="comments" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="addRelationshipResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="getAttributeLog">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="objectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="attributeName" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:complexType name="ArrayOfOdbSoapAttributeLog">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="OdbSoapAttributeLog" nillable="true" type="tns:OdbSoapAttributeLog"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="OdbSoapAttributeLog">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="created" type="xsd:dateTime"/>
+<xsd:element minOccurs="0" name="newValue" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="oldValue" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="getAttributeLogResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapAttributeLog"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getRelationship">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="fromObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="toObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:complexType name="OdbSoapObjectRelationship">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="created" type="xsd:dateTime"/>
+<xsd:element minOccurs="0" name="from" nillable="true" type="tns:OdbSoapObject"/>
+<xsd:element minOccurs="0" name="relation" nillable="true" type="tns:OdbSoapObject"/>
+<xsd:element minOccurs="0" name="to" nillable="true" type="tns:OdbSoapObject"/>
+<xsd:element minOccurs="0" name="updated" type="xsd:dateTime"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="getRelationshipResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:OdbSoapObjectRelationship"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="updateAttributes">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="objectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="attrs" nillable="true" type="tns:ArrayOfOdbSoapAttribute"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="updateAttributesResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="hasObject">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="objectName" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="hasObjectResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" type="xsd:boolean"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="newRelationship">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="fromObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="toObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationObject" nillable="true" type="tns:OdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="newRelationshipResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="search">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="keyword" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="className" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="searchAttribute" type="xsd:boolean"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="searchResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getToObjects">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="name" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="typeClass" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getToObjectsResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getToRelationships">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="objectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="targetClass" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getToRelationshipsResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getClassAttributeEnums">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="clazz" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="attribute" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:complexType name="OdbSoapAttributeEnum">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="attribute" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="clazz" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="values" nillable="true" type="tns:ArrayOfString"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="getClassAttributeEnumsResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:OdbSoapAttributeEnum"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getRelationshipObject">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="fromObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="toObjectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getRelationshipObjectResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:OdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getCollection">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="name" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="attrs" nillable="true" type="tns:ArrayOfString"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getCollectionResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="updateAttribute">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="objectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="attributeName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="attributeValue" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="comments" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="updateAttributeResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="getObject">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="name" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getObjectResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:OdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getFromObjects">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="name" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="typeClass" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getFromObjectsResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getFromRelationships">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="objectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipClass" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="targetClass" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getFromRelationshipsResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:ArrayOfOdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="deleteObject">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="objectName" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="className" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="deleteObjectResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="batchDeleteRelationship">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="relationshipNames" nillable="true" type="tns:ArrayOfString"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="batchDeleteRelationshipResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="addOrUpdateObject">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="o" nillable="true" type="tns:OdbSoapObject"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="addOrUpdateObjectResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" type="xsd:boolean"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+<xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://api.odb.ebay.com">
+<xsd:complexType name="ArrayOfCondition">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="Condition" nillable="true" type="ns1:Condition"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="Condition">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="name" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="oper" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="value" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="addRelationshipResponse">
+    <wsdl:part element="tns:addRelationshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAttributeValueRequest">
+    <wsdl:part element="tns:getAttributeValue" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateAttributesResponse">
+    <wsdl:part element="tns:updateAttributesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getToObjectsRequest">
+    <wsdl:part element="tns:getToObjects" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClassResponse">
+    <wsdl:part element="tns:getClassResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="batchNewRelationshipRequest">
+    <wsdl:part element="tns:batchNewRelationship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="batchNewRelationshipResponse">
+    <wsdl:part element="tns:batchNewRelationshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="hasObjectRequest">
+    <wsdl:part element="tns:hasObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRelationshipResponse">
+    <wsdl:part element="tns:getRelationshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteRelationshipResponse">
+    <wsdl:part element="tns:deleteRelationshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addOrUpdateObjectRequest">
+    <wsdl:part element="tns:addOrUpdateObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAttributeValueResponse">
+    <wsdl:part element="tns:getAttributeValueResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFromRelationshipsRequest">
+    <wsdl:part element="tns:getFromRelationships" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateAttributeResponse">
+    <wsdl:part element="tns:updateAttributeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObjectRequest">
+    <wsdl:part element="tns:getObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCollectionByXmlResponse">
+    <wsdl:part element="tns:getCollectionByXmlResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAttributeLogResponse">
+    <wsdl:part element="tns:getAttributeLogResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="newRelationshipResponse">
+    <wsdl:part element="tns:newRelationshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFromObjectsResponse">
+    <wsdl:part element="tns:getFromObjectsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addRelationshipRequest">
+    <wsdl:part element="tns:addRelationship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="batchDeleteRelationshipResponse">
+    <wsdl:part element="tns:batchDeleteRelationshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="advanceSearchResponse">
+    <wsdl:part element="tns:advanceSearchResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="advanceSearchRequest">
+    <wsdl:part element="tns:advanceSearch" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateAttributeRequest">
+    <wsdl:part element="tns:updateAttribute" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRelationshipRequest">
+    <wsdl:part element="tns:getRelationship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteObjectResponse">
+    <wsdl:part element="tns:deleteObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getToRelationshipsResponse">
+    <wsdl:part element="tns:getToRelationshipsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRelationshipObjectResponse">
+    <wsdl:part element="tns:getRelationshipObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObjectResponse">
+    <wsdl:part element="tns:getObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClassAttributeEnumsResponse">
+    <wsdl:part element="tns:getClassAttributeEnumsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="newRelationshipRequest">
+    <wsdl:part element="tns:newRelationship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFromRelationshipsResponse">
+    <wsdl:part element="tns:getFromRelationshipsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClassNamesResponse">
+    <wsdl:part element="tns:getClassNamesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAttributeLogRequest">
+    <wsdl:part element="tns:getAttributeLog" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCollectionByXmlRequest">
+    <wsdl:part element="tns:getCollectionByXml" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteRelationshipRequest">
+    <wsdl:part element="tns:deleteRelationship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClassRequest">
+    <wsdl:part element="tns:getClass" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addObjectRequest">
+    <wsdl:part element="tns:addObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="hasRelationshipRequest">
+    <wsdl:part element="tns:hasRelationship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="batchDeleteRelationshipRequest">
+    <wsdl:part element="tns:batchDeleteRelationship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addOrUpdateObjectResponse">
+    <wsdl:part element="tns:addOrUpdateObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRelationshipObjectRequest">
+    <wsdl:part element="tns:getRelationshipObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClassAttributeEnumsRequest">
+    <wsdl:part element="tns:getClassAttributeEnums" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchRequest">
+    <wsdl:part element="tns:search" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCollectionRequest">
+    <wsdl:part element="tns:getCollection" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteObjectRequest">
+    <wsdl:part element="tns:deleteObject" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="hasObjectResponse">
+    <wsdl:part element="tns:hasObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addObjectResponse">
+    <wsdl:part element="tns:addObjectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchResponse">
+    <wsdl:part element="tns:searchResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFromObjectsRequest">
+    <wsdl:part element="tns:getFromObjects" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateAttributesRequest">
+    <wsdl:part element="tns:updateAttributes" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClassNamesRequest">
+    <wsdl:part element="tns:getClassNames" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="hasRelationshipResponse">
+    <wsdl:part element="tns:hasRelationshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getToObjectsResponse">
+    <wsdl:part element="tns:getToObjectsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getToRelationshipsRequest">
+    <wsdl:part element="tns:getToRelationships" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCollectionResponse">
+    <wsdl:part element="tns:getCollectionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="OdbWebServicePortType">
+    <wsdl:operation name="getClassNames">
+      <wsdl:input message="tns:getClassNamesRequest" name="getClassNamesRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getClassNamesResponse" name="getClassNamesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClass">
+      <wsdl:input message="tns:getClassRequest" name="getClassRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getClassResponse" name="getClassResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addObject">
+      <wsdl:input message="tns:addObjectRequest" name="addObjectRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:addObjectResponse" name="addObjectResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="advanceSearch">
+      <wsdl:input message="tns:advanceSearchRequest" name="advanceSearchRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:advanceSearchResponse" name="advanceSearchResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAttributeValue">
+      <wsdl:input message="tns:getAttributeValueRequest" name="getAttributeValueRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getAttributeValueResponse" name="getAttributeValueResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRelationship">
+      <wsdl:input message="tns:deleteRelationshipRequest" name="deleteRelationshipRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteRelationshipResponse" name="deleteRelationshipResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batchNewRelationship">
+      <wsdl:input message="tns:batchNewRelationshipRequest" name="batchNewRelationshipRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:batchNewRelationshipResponse" name="batchNewRelationshipResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCollectionByXml">
+      <wsdl:input message="tns:getCollectionByXmlRequest" name="getCollectionByXmlRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getCollectionByXmlResponse" name="getCollectionByXmlResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="hasRelationship">
+      <wsdl:input message="tns:hasRelationshipRequest" name="hasRelationshipRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:hasRelationshipResponse" name="hasRelationshipResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addRelationship">
+      <wsdl:input message="tns:addRelationshipRequest" name="addRelationshipRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:addRelationshipResponse" name="addRelationshipResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAttributeLog">
+      <wsdl:input message="tns:getAttributeLogRequest" name="getAttributeLogRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getAttributeLogResponse" name="getAttributeLogResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRelationship">
+      <wsdl:input message="tns:getRelationshipRequest" name="getRelationshipRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getRelationshipResponse" name="getRelationshipResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateAttributes">
+      <wsdl:input message="tns:updateAttributesRequest" name="updateAttributesRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:updateAttributesResponse" name="updateAttributesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="hasObject">
+      <wsdl:input message="tns:hasObjectRequest" name="hasObjectRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:hasObjectResponse" name="hasObjectResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="newRelationship">
+      <wsdl:input message="tns:newRelationshipRequest" name="newRelationshipRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:newRelationshipResponse" name="newRelationshipResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="search">
+      <wsdl:input message="tns:searchRequest" name="searchRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:searchResponse" name="searchResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getToObjects">
+      <wsdl:input message="tns:getToObjectsRequest" name="getToObjectsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getToObjectsResponse" name="getToObjectsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getToRelationships">
+      <wsdl:input message="tns:getToRelationshipsRequest" name="getToRelationshipsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getToRelationshipsResponse" name="getToRelationshipsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClassAttributeEnums">
+      <wsdl:input message="tns:getClassAttributeEnumsRequest" name="getClassAttributeEnumsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getClassAttributeEnumsResponse" name="getClassAttributeEnumsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRelationshipObject">
+      <wsdl:input message="tns:getRelationshipObjectRequest" name="getRelationshipObjectRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getRelationshipObjectResponse" name="getRelationshipObjectResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCollection">
+      <wsdl:input message="tns:getCollectionRequest" name="getCollectionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getCollectionResponse" name="getCollectionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateAttribute">
+      <wsdl:input message="tns:updateAttributeRequest" name="updateAttributeRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:updateAttributeResponse" name="updateAttributeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getObject">
+      <wsdl:input message="tns:getObjectRequest" name="getObjectRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getObjectResponse" name="getObjectResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFromObjects">
+      <wsdl:input message="tns:getFromObjectsRequest" name="getFromObjectsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getFromObjectsResponse" name="getFromObjectsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFromRelationships">
+      <wsdl:input message="tns:getFromRelationshipsRequest" name="getFromRelationshipsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getFromRelationshipsResponse" name="getFromRelationshipsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteObject">
+      <wsdl:input message="tns:deleteObjectRequest" name="deleteObjectRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteObjectResponse" name="deleteObjectResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batchDeleteRelationship">
+      <wsdl:input message="tns:batchDeleteRelationshipRequest" name="batchDeleteRelationshipRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:batchDeleteRelationshipResponse" name="batchDeleteRelationshipResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addOrUpdateObject">
+      <wsdl:input message="tns:addOrUpdateObjectRequest" name="addOrUpdateObjectRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:addOrUpdateObjectResponse" name="addOrUpdateObjectResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OdbWebServiceHttpBinding" type="tns:OdbWebServicePortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getClassNames">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getClassNamesRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getClassNamesResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClass">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getClassRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getClassResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addObject">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addObjectRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addObjectResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="advanceSearch">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="advanceSearchRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="advanceSearchResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAttributeValue">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getAttributeValueRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAttributeValueResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRelationship">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="deleteRelationshipRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteRelationshipResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batchNewRelationship">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="batchNewRelationshipRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="batchNewRelationshipResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCollectionByXml">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCollectionByXmlRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCollectionByXmlResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="hasRelationship">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="hasRelationshipRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="hasRelationshipResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addRelationship">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addRelationshipRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addRelationshipResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAttributeLog">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getAttributeLogRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAttributeLogResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRelationship">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getRelationshipRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRelationshipResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateAttributes">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="updateAttributesRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateAttributesResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="hasObject">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="hasObjectRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="hasObjectResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="newRelationship">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="newRelationshipRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="newRelationshipResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="search">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="searchRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getToObjects">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getToObjectsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getToObjectsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getToRelationships">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getToRelationshipsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getToRelationshipsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClassAttributeEnums">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getClassAttributeEnumsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getClassAttributeEnumsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRelationshipObject">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getRelationshipObjectRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRelationshipObjectResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCollection">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCollectionRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCollectionResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateAttribute">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="updateAttributeRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateAttributeResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getObject">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getObjectRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getObjectResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFromObjects">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getFromObjectsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getFromObjectsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFromRelationships">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getFromRelationshipsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getFromRelationshipsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteObject">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="deleteObjectRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteObjectResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batchDeleteRelationship">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="batchDeleteRelationshipRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="batchDeleteRelationshipResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addOrUpdateObject">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addOrUpdateObjectRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addOrUpdateObjectResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OdbWebService">
+    <wsdl:port binding="tns:OdbWebServiceHttpBinding" name="OdbWebServiceHttpPort">
+      <wsdlsoap:address location="http://odb.vip.ebay.com:8080/jodbweb/services/OdbWebService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

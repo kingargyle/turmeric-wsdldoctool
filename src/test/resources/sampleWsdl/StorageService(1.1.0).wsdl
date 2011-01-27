@@ -1,0 +1,2008 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+				This is the base class for the request container for all service operations.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+					Base response container for all service operations. Contains error information
+					associated with the request.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="ns0:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+							
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="ns0:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+							Information for an error or warning that occurred when eBay processed the
+							request.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Extent">
+				<xs:sequence>
+					<xs:element name="size" type="xs:long"/>
+					<xs:element name="offset" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MetadataEntry">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MetadataList">
+				<xs:annotation>
+					<xs:documentation>
+			Maximum occurrence for the meta data in the  list is 128. 
+			</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="metadata" type="ns0:MetadataEntry"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="TagEntry">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MetadataTags">
+				<xs:annotation>
+					<xs:documentation>
+						Maximum occurrence for the meta data  tags is 128. 
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="tag" type="ns0:TagEntry"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="STAASReservedTags">
+				<xs:annotation>
+					<xs:documentation>
+						This Enum is defined for StorageService reserved tags.
+						user.staas.expirationEnd -&gt; Client need to use this tag whenever an object expiry date need to be set. 
+						How to set it : This tag need to be set in usermetadata tagname and the tag value should be
+						and tag value should have valid date in the format : "yyyy-MM-dd'T'HH:mm:ssZ".   
+					</xs:documentation>
+				</xs:annotation>			
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="user.staas.expirationEnd"/>
+				</xs:restriction>
+			</xs:simpleType>			
+			<xs:simpleType name="Permission">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="READ"/>
+					<xs:enumeration value="WRITE"/>
+					<xs:enumeration value="FULL_CONTROL"/>
+					<xs:enumeration value="NONE"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Grantee">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="ACLType" type="ns0:ACLType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ACLType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="USER"/>
+					<xs:enumeration value="GROUP"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Grant">
+				<xs:sequence>
+					<xs:element name="grantee" type="ns0:Grantee"/>
+					<xs:element name="permission" type="ns0:Permission"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ACL">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="grant" type="ns0:Grant"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getVersion" type="ns0:GetVersionRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			This operation is used to get the current version of the StorageService.
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="GetVersionRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getVersionResponse" type="ns0:GetVersionResponse"/>
+			<xs:complexType name="GetVersionResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="createObject" type="ns0:CreateObjectRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters:
+				 Object value should be passed as a ByteArray.
+			Optional Parameters:
+				 ObjectName, meta data List and ACL List. Refer to the individual object definitions for structure and details.
+			Description:
+				This operation is used to create an object in the storage system.
+				ACL and user meta data parameters are optional. Once created, the object can be increased to any size see 'UpdateObject.' 
+				No validation is done on the meta data. Appropriate system meta data is generated automatically
+				The request may include custom headers to specify meta data that assigns a tag name to the object and
+				creates a list able tag with a name-value pair for indexing purposes.
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application Name in the Header. 
+				STORAGE_USER_NOT_FOUND - This error would be returned if the corresponding MAUI account for the given APP Name is not found. 
+														Action : Check with the SOA Service Team.
+				INVALID_OBJECT_ERROR - This error would occur when the input object passed is null or empty. 
+														Action : Input object should be passed as byte array. 
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="CreateObjectRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="objectName" type="ns0:ObjectName"/>
+							<xs:element minOccurs="0" name="metadataList" type="ns0:MetadataList"/>
+							<xs:element minOccurs="0" name="object" type="xs:base64Binary"/>
+							<xs:element minOccurs="0" name="ACL" type="ns0:ACL"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="createObjectWithAttachment" type="ns0:CreateObjectWithAttachmentRequest"/>
+			<xs:complexType name="CreateObjectWithAttachmentRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="objectName" type="ns0:ObjectName"/>
+							<xs:element minOccurs="0" name="metadataList" type="ns0:MetadataList"/>
+							<xs:element minOccurs="0" name="object" type="xs:base64Binary" xmime:expectedContentTypes="application/any"/>
+							<xs:element minOccurs="0" name="ACL" type="ns0:ACL"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="createObjectResponse" type="ns0:CreateObjectResponse"/>
+			<xs:complexType name="CreateObjectResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="result" type="ns0:ObjectMutationSucessResponse"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="createDirectory" type="ns0:CreateDirectoryRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectName parameter is mandatory and it should have the name of the directory. It can optionally have a forward slash indicating it is a directory object. 
+				If a slash is not added, the it would be internally assumed. .	 
+			Optional Parameters :
+				  Meta data List and ACL List. Refer to the individual object definitions for structure and details.
+			Description : 
+				This operation is used to create a directory object  in the storage system.
+				ACL and user meta data parameters are optional.  
+				No validation is done on the meta data. Appropriate system meta data is generated automatically.
+				The request may include custom headers to specify meta data that assigns a tag name to the directory object and
+				creates a list able tag with a name-value pair for indexing purposes.
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.
+				INVALID_DIRECTORY_NAME - This error would be returned when the object name parameter is null or empty.
+														Action : Pass the directory name in the object name parameter.														
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="CreateDirectoryRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="objectName" type="ns0:ObjectName"/>
+							<xs:element minOccurs="0" name="metadataList" type="ns0:MetadataList"/>
+							<xs:element minOccurs="0" name="ACL" type="ns0:ACL"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="createDirectoryResponse" type="ns0:CreateDirectoryResponse"/>
+			<xs:complexType name="CreateDirectoryResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="result" type="ns0:ObjectMutationSucessResponse"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="readObject" type="ns0:ReadObjectRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Either Object Id or ObjectName of the object to be read should be passed.  	 
+			Optional Parameters:
+				Extent - This parameter object is optional. When only part of the object needs to be read, then set the Extent parameter. Pass the Offset and size values in the Extent. 
+							  Offset is the location from where you want to read the object and the size is the chunk size that you want to read. 
+							  By default offset and size values are 0 in which case, entire object is returned.  						
+			Description: 
+				This operation returns the contents of the specified object. 
+				An optional Range header can be used to read only part of the object rather than the entire object.
+				If the Range header is specified, data from offset until offsetsize is read and returned to the user. The default value of size=0 and a
+				nondefault value of offset returns the data from offset until size.			
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Appname passed is invalid.
+														 Action : Pass the correct App Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both objectid and objectname passed is null or empty. 
+														Action : Pass objectid or objectname of the object to be read. 													
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="ReadObjectRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+							<xs:element minOccurs="0" name="extent" type="ns0:Extent"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="readObjectResponse" type="ns0:ReadObjectResponse"/>
+			<xs:complexType name="ReadObjectResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="object" type="xs:base64Binary"/>
+							<xs:element name="digest" type="ns0:ObjectDigest"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="readObjectWithAttachmentResponse" type="ns0:ReadObjectWithAttachmentResponse"/>
+			<xs:complexType name="ReadObjectWithAttachmentResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="object" type="xs:base64Binary" xmime:expectedContentTypes="application/any"/>
+							<xs:element name="digest" type="ns0:ObjectDigest"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="updateObject" type="ns0:UpdateObjectRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+					ObjectKey - Either Object Id or ObjectName of the object to be update  should be passed.
+					Object - Object file data should be passed in the form of ByteArray.  	 
+			Optional Parameters :
+					offset - Need to be passed only when part of the object need to be replaced. 
+								Object would be replaced from the offset given to the size of the object chunk that is passed.  
+					 MetadataList - Pass the list of metadata tag values that need to be replaced or new metadata that need to be added can be passed. 
+					 ACL - Pass the list of access control list values with the Grant information. Please refer to Grant definition for the structure and details on how to populate it.    
+			Description : 
+								UpdateObject can be used for updating the contents of an object, including its metadata and ACLs.
+								You can update just part of the object or the complete object. To update part of the object, use the Range
+								header  to specify the offset and size. UpdateObject also can be used to
+								add or modify existing metadata or ACLs for example, You can change the metadata value for a metadata tag or add a new metadata.
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Appname passed is invalid.
+														 Action : Pass the correct App Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both objectid and objectname passed is null or empty. 
+														Action : Pass objectid or objectname of the object to be read.
+				INVALID_OBJECT_ERROR - This error would occur when the input object passed is null or empty. 
+														Action : Input object should be passed as bytearray. 														 													
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="UpdateObjectRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="metadataList" type="ns0:MetadataList"/>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+							<xs:element name="object" type="xs:base64Binary"/>
+							<xs:element minOccurs="0" name="offset" type="xs:long"/>
+							<xs:element minOccurs="0" name="ACL" type="ns0:ACL"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="updateObjectWithAttachment" type="ns0:UpdateObjectWithAttachmentRequest"/>
+			<xs:complexType name="UpdateObjectWithAttachmentRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="metadataList" type="ns0:MetadataList"/>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+							<xs:element name="object" type="xs:base64Binary" xmime:expectedContentTypes="application/any"/>
+							<xs:element minOccurs="0" name="offset" type="xs:long"/>
+							<xs:element minOccurs="0" name="ACL" type="ns0:ACL"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="updateObjectResponse" type="ns0:UpdateObjectResponse"/>
+			<xs:complexType name="UpdateObjectResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="result" type="ns0:ObjectMutationSucessResponse"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="deleteObject" type="ns0:DeleteObjectRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Either Object Id or ObjectName of the object to be read should be passed.  	 
+			Optional Parameters :
+							NONE
+			Description : 
+							This operation helps to delete the object with metadata for the object name object id passed..			
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Appname passed is invalid.
+														 Action : Pass the correct App Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both objectid and objectname passed is null or empty. 
+														Action : Pass objectid or objectname of the object to be read. 													
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="DeleteObjectRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="deleteObjectResponse" type="ns0:DeleteObjectResponse"/>
+			<xs:complexType name="DeleteObjectResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="result" type="ns0:ObjectMutationSucessResponse"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getUserMetadata" type="ns0:GetUserMetadataRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Either Object Id or ObjectName of the object for which metadata need to be read.  	 
+			Optional Parameters :
+				MetadataTags - Pass the list of metadata tag names for which you want to read the value. If you want to get all the metadata tags, then pass the MetadataTags list empty.
+			Description : 
+							This operation helps to retrieve the metadata tags and values for the specified object. 
+							Optionally pass the list of metadata tags for which you want to retrieve the metadata values. When the metadata tags list is passed empty, then you would retrieve
+							all the metadata tags and its values.			
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Appname passed is invalid.
+														 Action : Pass the correct App Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both objectid and objectname passed is null or empty. 
+														Action : Pass objectid or objectname of the object to be read. 	
+				METADATA_NOT_FOUND_ERROR - User Metadata not found for the requested object.			
+														Action : None. 																							
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="GetUserMetadataRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+							<xs:element minOccurs="0" name="metadataTags" type="ns0:MetadataTags"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getUserMetadataResponse" type="ns0:GetUserMetadataResponse"/>
+			<xs:complexType name="GetUserMetadataResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="metadataList" type="ns0:MetadataList"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setUserMetadata" type="ns0:SetUserMetadataRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Either Object Id or ObjectName of the object for which metadata values need to be changed added.
+				MetadataTags - Pass the list of metadata tag name and the corresponding value  for which you want to change the value.
+										  Also add the new metadata tag and value to add new metadata keyvalue pair. 
+			Optional Parameters :
+				NONE
+			Description : 
+							The operation writes the metadata into the object. Existing Metadata values can be changed and new metadata values can be added.			
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Appname passed is invalid.
+														 Action : Pass the correct App Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both objectid and objectname passed is null or empty. 
+														Action : Pass objectid or objectname of the object. 													
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="SetUserMetadataRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="metadataList" type="ns0:MetadataList"/>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setUserMetadataResponse" type="ns0:SetUserMetadataResponse"/>
+			<xs:complexType name="SetUserMetadataResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="result" type="ns0:ObjectMutationSucessResponse"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="deleteUserMetadata" type="ns0:DeleteUserMetadataRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Either Object Id or ObjectName of the object for which metadata values need to be changed / added.
+				MetadataTags - Pass the list of metadata tag names that need to be deleted. 
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation deletes all user metadata with matching tags from the specified object. Specify the tags
+							of the pairs to be deleted. System metadata can be neither deleted nor modified directly.		
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Appname passed is invalid.
+														 Action : Pass the correct App Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both objectid and objectname passed is null or empty. 
+														Action : Pass objectid or objectname of the object. 													
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="DeleteUserMetadataRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+							<xs:element name="metadataTags" type="ns0:MetadataTags"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="deleteUserMetadataResponse" type="ns0:DeleteUserMetadataResponse"/>
+			<xs:complexType name="DeleteUserMetadataResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="result" type="ns0:ObjectMutationSucessResponse"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getACL" type="ns0:GetACLRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Pass either Object Id or ObjectName of the object for which ACL needs to be retrieved. 
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation returns the ACL details associated with the specified object ID.	
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Appname passed is invalid.
+														 Action : Pass the correct App Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both objectid and objectname passed is null or empty. 
+														Action : Pass objectid or objectname of the object. 						
+				ACL_NOT_FOUND_ERROR - This error would be returned if there is no ACL found for the object requested.																					
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="GetACLRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getACLResponse" type="ns0:GetACLResponse"/>
+			<xs:complexType name="GetACLResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="ACL" type="ns0:ACL"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setACL" type="ns0:SetACLRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Pass either Object Id or ObjectName of the object for which ACL needs to be set. 
+			Optional Parameters :
+				NONE
+			Description : 
+							Use this operation to set the access control for this object. SetACL can be used for setting or resetting permissions.	
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Appname passed is invalid.
+														 Action : Pass the correct App Name in the Header. 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both objectid and objectname passed is null or empty. 
+														Action : Pass objectid or objectname of the object. 																												
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="SetACLRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+							<xs:element name="ACL" type="ns0:ACL"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setACLResponse" type="ns0:SetACLResponse"/>
+			<xs:complexType name="SetACLResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="code" type="xs:string"/>
+							<xs:element name="description" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getSystemMetadata" type="ns0:GetSystemMetadataRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Pass either Object Id or ObjectName of the object for which ACL needs to be set. 
+				MetadataTags - pass the list of system meta data tag names for which meta data value need to be retrieved. Pass empty list to get all the system meta data values. 
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation returns the system meta data for the object. The tags that would be returned are : 	
+							Tag Name Description 
+							atime	     Last access time
+							mtime		 Last modified time
+							ctime		Change time
+							uid			User id (the owner)
+							gid			Group ID
+							size	 	    Object size in bytes
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application Name in the Header. 														 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both object id and object name passed is null or empty. 
+														Action : Pass object id or object name of the object. 				
+				METADATA_NOT_FOUND_ERROR - User Meta data not found for the requested object.			
+														Action : None. 																																																												
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="GetSystemMetadataRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+							<xs:element minOccurs="0" name="metadataTags" type="ns0:MetadataTags"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getSystemMetadataResponse" type="ns0:GetSystemMetadataResponse"/>
+			<xs:complexType name="GetSystemMetadataResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="metadataList" type="ns0:MetadataList"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="listUserMetadataTags" type="ns0:ListUserMetadataTagsRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				ObjectKey - Pass either Object Id or ObjectName of the object for which Meta data tags need to be listed.  
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation returns the user-defined meta data tags assigned to the object. 	
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application Name in the Header.
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both object id and object name passed is null or empty. 
+														Action : Pass object id or object name of the object. 				
+				METADATA_NOT_FOUND_ERROR - User Meta data not found for the requested object.			
+														Action : None. 																																																												
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="ListUserMetadataTagsRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="listUserMetadataTagsResponse" type="ns0:ListUserMetadataTagsResponse"/>
+			<xs:complexType name="ListUserMetadataTagsResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="metadataTags" type="ns0:MetadataTags"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="listObjects" type="ns0:ListObjectsRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				MetadataTags - Pass the list of meta data tags for which you want to get the list of objects.   
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation retrieves all object IDs indexed by a given tag. As mentioned earlier, list able tags are created in a user's own name space hence, they are private to that user. Only objects belonging to the requesting UID are returned. 	
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application Name in the Header. 														 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both object id and object name passed is null or empty. 
+														Action : Pass object id or object name of the object. 				
+				INVALID_METADATA_TAG_ERROR  - Meta data tag passed in request is empty or not valid.			
+														Action : None. 																																																												
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="ListObjectsRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="metadataTags" type="ns0:MetadataTags"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="listObjectsResponse" type="ns0:ListObjectsResponse"/>
+			<xs:complexType name="ListObjectsResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="objectKey" type="ns0:ObjectKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="queryObjects" type="ns0:QueryObjectsRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+				xQuery - Pass the x query string to search for objects.   
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation retrieves all object IDs of the objects  that matches the condition passed in the query string.   	
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application  Name in the Header. 														 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both object id and object name passed is null or empty. 
+														Action : Pass object id or object name of the object. 				
+				OBJECT_NOT_FOUND  - No storage objects matching the given x query string.			
+														Action : Refine the query string to retrieve  the required objects. 																																																												
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="QueryObjectsRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="xQuery" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="queryObjectsResponse" type="ns0:QueryObjectsResponse"/>
+			<xs:complexType name="QueryObjectsResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="objectKey" type="ns0:ObjectKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ObjectKey">
+				<xs:choice>
+					<xs:element minOccurs="0" name="objectId" type="ns0:ObjectId"/>
+					<xs:element minOccurs="0" name="objectName" type="ns0:ObjectName"/>
+					<xs:element minOccurs="0" name="objectType" type="ns0:ObjectTypeEnum"/>
+				</xs:choice>
+			</xs:complexType>
+			<xs:simpleType name="ObjectId">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:simpleType name="ObjectName">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:simpleType name="ObjectTypeEnum">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="FILE"/>
+					<xs:enumeration value="DIRECTORY"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ObjectMutationSucessResponse">
+				<xs:annotation>
+					<xs:documentation>
+				This is the response that would be set in the response object whenever an ovject mutation operation is successful.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="digest" type="ns0:ObjectDigest"/>
+					<xs:element name="objectId" type="ns0:ObjectId"/>
+					<xs:element name="objectName" type="ns0:ObjectName"/>
+					<xs:element name="objectType" type="ns0:ObjectTypeEnum"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ObjectKeyEnum">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="NAME"/>
+					<xs:enumeration value="GENERATED_OBJECT_ID"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ObjectDigest">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+   				ObjectKey - Pass either Object Id or ObjectName of the object that need to be cloned.
+   				resultObjectName - Specify the name of the new cloned object. 
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation creates a clone of the existing object in the storage system. The name of the new object would be the string passed in the resultObjectName parameter.    	
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application Name in the Header. 														 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both object id and object name passed is null or empty. 
+														Action : Pass object id or object name of the object. 				
+				OBJECT_NOT_FOUND  - No storage objects matching the given x query string.			
+														Action : Refine the query string to retrieve  the required objects. 																																																												
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:element name="cloneObject" type="ns0:CloneObjectRequest"/>
+			<xs:complexType name="CloneObjectRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="objectKey" type="ns0:ObjectKey"/>
+							<xs:element name="resultObjectName" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="cloneObjectResponse" type="ns0:CloneObjectResponse"/>
+			<xs:complexType name="CloneObjectResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="result" type="ns0:ObjectMutationSucessResponse"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="copyObject" type="ns0:CopyObjectRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+   				SourceObjectKey  - Pass either Object Id or ObjectName of the object that need to be copied.
+   				dstObjectKey  - Pass either Object Id or ObjectName of the destination object that need to be modified.   				
+   				copyData - Specify  whether the data need to be copied from the source object to the destination object.  
+   				copyMetadata - Specify  whether meta data  need to be copied from the source object to the destination object.
+   				copyACL - Specify  whether the ACL information  need to be copied from the source object to the destination object.   				   				
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation creates a clone of the existing object in the storage system. The name of the new object would be the string passed in the resultObjectName parameter.    	
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application Name in the Header. 														 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both object id and object name passed is null or empty for either source or destination object. 
+														Action : Pass object id or object name of the object. 				
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="CopyObjectRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="srcObjectKey" type="ns0:ObjectKey"/>
+							<xs:element name="dstObjectKey" type="ns0:ObjectKey"/>
+							<xs:element name="copyData" type="xs:boolean"/>
+							<xs:element name="copyMetadata" type="xs:boolean"/>
+							<xs:element name="copyACL" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="copyObjectResponse" type="ns0:CopyObjectResponse"/>
+			<xs:complexType name="CopyObjectResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="result" type="ns0:ObjectMutationSucessResponse"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="listDirectory" type="ns0:ListDirectoryRequest"/>
+			<xs:annotation>
+				<xs:documentation>
+			Mandatory Parameters :
+   				directoryName  - Pass directory name whose content need to be listed.
+			Optional Parameters :
+				NONE
+			Description : 
+							This operation lists the contents of the directory. Also tells whether the listed object is a file or directory.      	
+			Error Conditions :
+				INVALID_CREDENTIALS - You would get this error message when the Application name passed is invalid.
+														 Action : Pass the correct Application Name in the Header. 														 
+				STORAGE_USER_NOT_FOUND -  This error would be returned if the corresponding MAUI account for the given APP Name is not found.
+														Action : Check with the Storage Service Team.				 
+				INVALID_OBJECT_IDENTITY - This error means that both object id and object name passed is null or empty for either source or destination object. 
+														Action : Pass object id or object name of the object. 				
+				SYSTEM.ERROR  -  This error would be returned if there is any internal error in the underlying storage system. 
+														Action : Check with the Storage Service Team.					 																			 					 
+		</xs:documentation>
+			</xs:annotation>
+			<xs:complexType name="ListDirectoryRequest">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="directoryName" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="listDirectoryResponse" type="ns0:ListDirectoryResponse"/>
+			<xs:complexType name="ListDirectoryResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="objectKey" type="ns0:ObjectKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+					Indicates whether the error is a severe error (causing the request to fail)
+					or an informational error (a warning) that should be communicated to the
+					user.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+						The request was processed successfully, but something occurred that may
+						affect your application or the user.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+						The request that triggered the error was not processed successfully.
+						When a serious application-level error occurs, the error is returned
+						instead of the business data.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+						The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+						The request that triggered the error was processed successfully but there is some error
+						in the application or data.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+				ErrorMessage to indicate any Error/Warning that occured as part of the service call.
+				Runtime errors will not be reported here, but will be reported as SOAP errors.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="ns0:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+						Details about a single error.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+				Error details.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+						A unique code that identifies the particular error condition that occurred.
+						Your application can use error codes as identifiers in your customized
+						error-handling algorithms.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							Name of the domain upon which the error occurred.
+							&lt;dl&gt;
+							&lt;lh&gt;Domains include:&lt;/lh&gt;
+							&lt;dt&gt;
+								Marketplace
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								A business or validation error occurred for the Merchandising Service.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								SOA
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								An exception occurred in the Service Oriented Architecture (SOA) framework.
+							&lt;/dd&gt;
+							&lt;/dl&gt;
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="ns0:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+							Indicates whether the error caused the request to fail (Error) or not
+							(Warning).
+							&lt;br&gt;&lt;br&gt;
+							If the request fails and the source of the problem is within the application
+							(such as a missing required element), please change the application before you
+							retry the request. If the problem is due to end-user input data, please alert
+							the end-user to the problem and provide the means for them to correct the data.
+							Once the problem in the application or data is resolved, you can attempt to re-
+							send the request to eBay.
+							&lt;br&gt;&lt;br&gt;
+							If the source of the problem is on eBay's side, you can retry the request as-is
+							a reasonable number of times (eBay recommends twice). If the error persists,
+							contact Developer Technical Support. Once the problem has been resolved, the
+							request may be resent in its original form.
+							&lt;br&gt;&lt;br&gt;
+							When a warning occurs, the error is returned in addition to the business data.
+							In this case, you do not need to retry the request (as the original request was
+							successful). However, depending on the cause or nature of the warning, you
+							might need to contact either the end user or eBay to effect a long term
+							solution to the problem to prevent it from reoccurring in the future.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="ns0:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+						There are three categories of errors: request errors, application errors, and
+						system errors.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+						A detailed description of the condition that resulted in the error.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+						Name of the subdomain upon which the error occurred.
+							&lt;dl&gt;
+							&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+							&lt;dt&gt;
+								Merchandising
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								The error is specific to the Merchandising service.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								MarketplaceCommon
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								The error is common to all Marketplace services.
+							&lt;/dd&gt;
+							&lt;/dl&gt;
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+						Unique identifier for an exception associated with an error.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="ns0:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+						Some warning and error messages return one or more variables that contain
+						contextual information about the error. This is often the field or value that
+						triggered the error.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+				Contextual information associated with an error.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+							The name of the parameter in the list of parameter types returned
+							within the error type.
+							</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>Conditionally</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+				Indicates whether the error is a severe error (causing the request to fail)
+				or an informational error (a warning) that should be communicated to the
+				user.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+						The request that triggered the error was not processed successfully.
+						When a serious application-level error occurs, the error is returned
+						instead of the business data.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+						The request was processed successfully, but something occurred that may
+						affect your application or the user. For example, eBay may have changed a
+						value the user sent in. In this case, eBay returns a normal, successful
+						response and also returns the warning.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+				There are three categories of error: request errors, application errors,
+				and system errors. Request and application errors are caused primarily by
+				invalid data passed in the request. System errors are caused by
+				application failures and cannot be corrected by changing request values.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+						Indicates that an error has occurred on the eBay system side, such as a
+						database or server outage. An application can retry the request a
+						reasonable number of times (eBay recommends twice). If the error
+						persists, contact Developer Technical Support. Once the problem has been
+						resolved, the request may be resent in its original form.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+						An error occurred due to a problem with the request, such as missing or
+						invalid fields. The problem must be corrected before the request can be
+						made again. If the problem is due to something in the application (such
+						as a missing required field), the application must be changed. Once the
+						problem in the application or data is resolved, resend the corrected
+						request to eBay.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+						An error occurred due to a problem with the request, such as invalid or
+						missing data. The problem must be corrected before the request can be
+						made again. If the problem is a result of end-user data, the application
+						must alert the end-user to the problem and provide the means for the
+						end-user to correct the data. Once the problem in the data is resolved,
+						resend the request to eBay with the corrected data.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="copyObjectRequest">
+		<wsdl:part element="ns0:copyObject" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="listDirectoryRequest">
+		<wsdl:part element="ns0:listDirectory" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part element="ns0:getVersion" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createObjectRequest">
+		<wsdl:part element="ns0:createObject" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createDirectoryRequest">
+		<wsdl:part element="ns0:createDirectory" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createObjectWithAttachmentRequest">
+		<wsdl:part element="ns0:createObjectWithAttachment" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setUserMetadataResponse">
+		<wsdl:part element="ns0:setUserMetadataResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setACLRequest">
+		<wsdl:part element="ns0:setACL" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteObjectRequest">
+		<wsdl:part element="ns0:deleteObject" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="readObjectResponse">
+		<wsdl:part element="ns0:readObjectResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="readObjectWithAttachmentResponse">
+		<wsdl:part element="ns0:readObjectWithAttachmentResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="listObjectsResponse">
+		<wsdl:part element="ns0:listObjectsResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="cloneObject_faultMsg">
+  </wsdl:message>
+	<wsdl:message name="listUserMetadataTagsRequest">
+		<wsdl:part element="ns0:listUserMetadataTags" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getACLResponse">
+		<wsdl:part element="ns0:getACLResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="listObjectsRequest">
+		<wsdl:part element="ns0:listObjects" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteObjectResponse">
+		<wsdl:part element="ns0:deleteObjectResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setUserMetadataRequest">
+		<wsdl:part element="ns0:setUserMetadata" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateObjectRequest">
+		<wsdl:part element="ns0:updateObject" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateObjectWithAttachmentRequest">
+		<wsdl:part element="ns0:updateObjectWithAttachment" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setACLResponse">
+		<wsdl:part element="ns0:setACLResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="readObjectRequest">
+		<wsdl:part element="ns0:readObject" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="queryObjectsResponse">
+		<wsdl:part element="ns0:queryObjectsResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSystemMetadataRequest">
+		<wsdl:part element="ns0:getSystemMetadata" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteUserMetadataResponse">
+		<wsdl:part element="ns0:deleteUserMetadataResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="listUserMetadataTagsResponse">
+		<wsdl:part element="ns0:listUserMetadataTagsResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateObjectResponse">
+		<wsdl:part element="ns0:updateObjectResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="copyObjectResponse">
+		<wsdl:part element="ns0:copyObjectResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="listDirectoryResponse">
+		<wsdl:part element="ns0:listDirectoryResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="ns0:getVersionResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createObjectResponse">
+		<wsdl:part element="ns0:createObjectResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createDirectoryResponse">
+		<wsdl:part element="ns0:createDirectoryResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="cloneObjectRequest">
+		<wsdl:part element="ns0:cloneObject" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getUserMetadataResponse">
+		<wsdl:part element="ns0:getUserMetadataResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="cloneObjectResponse">
+		<wsdl:part element="ns0:cloneObjectResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteUserMetadataRequest">
+		<wsdl:part element="ns0:deleteUserMetadata" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSystemMetadataResponse">
+		<wsdl:part element="ns0:getSystemMetadataResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="queryObjectsRequest">
+		<wsdl:part element="ns0:queryObjects" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getUserMetadataRequest">
+		<wsdl:part element="ns0:getUserMetadata" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getACLRequest">
+		<wsdl:part element="ns0:getACL" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="StorageServicePort">
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="ns0:getVersionRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:getVersionResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createObject">
+			<wsdl:input message="ns0:createObjectRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:createObjectResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createDirectory">
+			<wsdl:input message="ns0:createDirectoryRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:createDirectoryResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createObjectWithAttachment">
+			<wsdl:input message="ns0:createObjectWithAttachmentRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:createObjectResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="readObject">
+			<wsdl:input message="ns0:readObjectRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:readObjectResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="readObjectWithAttachment">
+			<wsdl:input message="ns0:readObjectRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:readObjectWithAttachmentResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateObject">
+			<wsdl:input message="ns0:updateObjectRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:updateObjectResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateObjectWithAttachment">
+			<wsdl:input message="ns0:updateObjectWithAttachmentRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:updateObjectResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteObject">
+			<wsdl:input message="ns0:deleteObjectRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:deleteObjectResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getUserMetadata">
+			<wsdl:input message="ns0:getUserMetadataRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:getUserMetadataResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setUserMetadata">
+			<wsdl:input message="ns0:setUserMetadataRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:setUserMetadataResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteUserMetadata">
+			<wsdl:input message="ns0:deleteUserMetadataRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:deleteUserMetadataResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getACL">
+			<wsdl:input message="ns0:getACLRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:getACLResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setACL">
+			<wsdl:input message="ns0:setACLRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:setACLResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSystemMetadata">
+			<wsdl:input message="ns0:getSystemMetadataRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:getSystemMetadataResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listUserMetadataTags">
+			<wsdl:input message="ns0:listUserMetadataTagsRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:listUserMetadataTagsResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listObjects">
+			<wsdl:input message="ns0:listObjectsRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:listObjectsResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="queryObjects">
+			<wsdl:input message="ns0:queryObjectsRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:queryObjectsResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="cloneObject">
+			<wsdl:input message="ns0:cloneObjectRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:cloneObjectResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="copyObject">
+			<wsdl:input message="ns0:copyObjectRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:copyObjectResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listDirectory">
+			<wsdl:input message="ns0:listDirectoryRequest">
+    </wsdl:input>
+			<wsdl:output message="ns0:listDirectoryResponse">
+    </wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="StorageServiceSOAPBinding" type="ns0:StorageServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getVersion">
+			<soap12:operation soapAction="urn:getVersiont" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createObject">
+			<soap12:operation soapAction="urn:createObject" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createDirectory">
+			<soap12:operation soapAction="urn:createDirectory" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createObjectWithAttachment">
+			<soap12:operation soapAction="urn:createObjectWithAttachment" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="readObject">
+			<soap12:operation soapAction="urn:readObject" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="readObjectWithAttachment">
+			<soap12:operation soapAction="urn:readObjectWithAttachment" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateObject">
+			<soap12:operation soapAction="urn:updateObject" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateObjectWithAttachment">
+			<soap12:operation soapAction="urn:updateObjectWithAttachment" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteObject">
+			<soap12:operation soapAction="urn:deleteObject" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getUserMetadata">
+			<soap12:operation soapAction="urn:getUserMetadata" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setUserMetadata">
+			<soap12:operation soapAction="urn:setUserMetadata" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteUserMetadata">
+			<soap12:operation soapAction="urn:deleteUserMetadata" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getACL">
+			<soap12:operation soapAction="urn:getACL" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setACL">
+			<soap12:operation soapAction="urn:setACL" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSystemMetadata">
+			<soap12:operation soapAction="urn:getSystemMetadata" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listUserMetadataTags">
+			<soap12:operation soapAction="urn:listUserMetadataTags" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listObjects">
+			<soap12:operation soapAction="urn:listObjects" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="queryObjects">
+			<soap12:operation soapAction="urn:queryObjects" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="cloneObject">
+			<soap12:operation soapAction="urn:cloneObject" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="copyObject">
+			<soap12:operation soapAction="urn:copyObject" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listDirectory">
+			<soap12:operation soapAction="urn:listDirectory" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="StorageServiceHttpBinding" type="ns0:StorageServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getVersion">
+			<http:operation location="/getVersion"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createObject">
+			<http:operation location="/createObject"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createDirectory">
+			<http:operation location="/createDirectory"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createObjectWithAttachment">
+			<http:operation location="/createObjectWithAttachment"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="readObject">
+			<http:operation location="/readObject"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="readObjectWithAttachment">
+			<http:operation location="/readObjectWithAttachment"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateObject">
+			<http:operation location="/updateObject"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateObjectWithAttachment">
+			<http:operation location="/updateObjectWithAttachment"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteObject">
+			<http:operation location="/deleteObject"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getUserMetadata">
+			<http:operation location="/getUserMetadata"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setUserMetadata">
+			<http:operation location="/setUserMetadata"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteUserMetadata">
+			<http:operation location="/deleteUserMetadata"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getACL">
+			<http:operation location="/getACL"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setACL">
+			<http:operation location="/setACL"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSystemMetadata">
+			<http:operation location="/getSystemMetadata"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listUserMetadataTags">
+			<http:operation location="/listUserMetadataTags"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listObjects">
+			<http:operation location="/listObjects"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="queryObjects">
+			<http:operation location="/queryObjects"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="cloneObject">
+			<http:operation location="/cloneObject"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="copyObject">
+			<http:operation location="/copyObject"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listDirectory">
+			<http:operation location="/listDirectory"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="StorageService">
+		<wsdl:port binding="ns0:StorageServiceSOAPBinding" name="StorageServiceSOAP">
+			<soap12:address location="http://svcs.ebay.com/StorageService"/>
+		</wsdl:port>
+		<wsdl:port binding="ns0:StorageServiceHttpBinding" name="StorageServiceHttp">
+			<http:address location="http://svcs.ebay.com/StorageService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

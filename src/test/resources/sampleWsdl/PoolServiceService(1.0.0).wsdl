@@ -1,0 +1,851 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:impl="urn:tr2services.turboroller.ebay.com" xmlns:intf="urn:tr2services.turboroller.ebay.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="urn:tr2services.turboroller.ebay.com">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="urn:tr2services.turboroller.ebay.com">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="Result">
+    <sequence>
+     <element name="errorMessage" nillable="true" type="xsd:string"/>
+     <element name="success" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
+   <complexType name="ResultOfPoolServiceGetPoolMetaData">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="poolMetaData" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolData">
+    <sequence>
+     <element name="deliverableName" nillable="true" type="xsd:string"/>
+     <element name="gbpEnabled" type="xsd:boolean"/>
+     <element name="inTurboRoller" type="xsd:boolean"/>
+     <element name="poolCalName" nillable="true" type="xsd:string"/>
+     <element name="poolOdbName" nillable="true" type="xsd:string"/>
+     <element name="poolState" nillable="true" type="xsd:string"/>
+     <element name="poolTypeName" nillable="true" type="xsd:string"/>
+     <element name="securePool" type="xsd:boolean"/>
+     <element name="tivoliEnabled" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfPoolData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:PoolData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListPools">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="poolData" nillable="true" type="impl:ArrayOfPoolData"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="MachineData">
+    <sequence>
+     <element name="adminNotes" nillable="true" type="xsd:string"/>
+     <element name="adminStatus" nillable="true" type="xsd:string"/>
+     <element name="codeBuildName" nillable="true" type="xsd:string"/>
+     <element name="f5Name" nillable="true" type="xsd:string"/>
+     <element name="f5Status" nillable="true" type="xsd:string"/>
+     <element name="machineName" nillable="true" type="xsd:string"/>
+     <element name="validationUrl" nillable="true" type="xsd:string"/>
+     <element name="xslBuildName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfMachineData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:MachineData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListMachines">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="machineData" nillable="true" type="impl:ArrayOfMachineData"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="MachineDataV2">
+    <sequence>
+     <element name="adminNotes" nillable="true" type="xsd:string"/>
+     <element name="adminStatus" nillable="true" type="xsd:string"/>
+     <element name="codeBuildName" nillable="true" type="xsd:string"/>
+     <element name="f5Name" nillable="true" type="xsd:string"/>
+     <element name="f5Status" nillable="true" type="xsd:string"/>
+     <element name="machineName" nillable="true" type="xsd:string"/>
+     <element name="validationUrl" nillable="true" type="xsd:string"/>
+     <element name="wisbCodeTag" nillable="true" type="xsd:string"/>
+     <element name="wisbUpdateLog" nillable="true" type="xsd:string"/>
+     <element name="wisbXslTag" nillable="true" type="xsd:string"/>
+     <element name="xslBuildName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfMachineDataV2">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:MachineDataV2[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListMachinesV2">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="machineData" nillable="true" type="impl:ArrayOfMachineDataV2"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="MachineDataV3">
+    <sequence>
+     <element name="LSAssetStatus" nillable="true" type="xsd:string"/>
+     <element name="adminNotes" nillable="true" type="xsd:string"/>
+     <element name="adminStatus" nillable="true" type="xsd:string"/>
+     <element name="codeBuildName" nillable="true" type="xsd:string"/>
+     <element name="f5Name" nillable="true" type="xsd:string"/>
+     <element name="f5Status" nillable="true" type="xsd:string"/>
+     <element name="machineName" nillable="true" type="xsd:string"/>
+     <element name="validationUrl" nillable="true" type="xsd:string"/>
+     <element name="wisbCodeTag" nillable="true" type="xsd:string"/>
+     <element name="wisbUpdateLog" nillable="true" type="xsd:string"/>
+     <element name="wisbXslTag" nillable="true" type="xsd:string"/>
+     <element name="xslBuildName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfMachineDataV3">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:MachineDataV3[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListMachinesV3">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="machineData" nillable="true" type="impl:ArrayOfMachineDataV3"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolTypeData">
+    <sequence>
+     <element name="lastModifiedDate" nillable="true" type="xsd:dateTime"/>
+     <element name="poolTypeId" nillable="true" type="xsd:string"/>
+     <element name="poolTypeName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfPoolTypeData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:PoolTypeData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListPoolTypes">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="poolTypeData" nillable="true" type="impl:ArrayOfPoolTypeData"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolDataV2">
+    <sequence>
+     <element name="architectureId" nillable="true" type="xsd:string"/>
+     <element name="comments" nillable="true" type="xsd:string"/>
+     <element name="creationDate" nillable="true" type="xsd:dateTime"/>
+     <element name="deliverableName" nillable="true" type="xsd:string"/>
+     <element name="effectiveDate" nillable="true" type="xsd:string"/>
+     <element name="functionalDesc" nillable="true" type="xsd:string"/>
+     <element name="gbpEnabled" type="xsd:boolean"/>
+     <element name="ilogEngineReq" type="xsd:boolean"/>
+     <element name="inTurboRoller" type="xsd:boolean"/>
+     <element name="internalVipOnly" type="xsd:boolean"/>
+     <element name="lastModifiedDate" nillable="true" type="xsd:dateTime"/>
+     <element name="multiRolloutAllowed" type="xsd:boolean"/>
+     <element name="planId" nillable="true" type="xsd:string"/>
+     <element name="poolCalName" nillable="true" type="xsd:string"/>
+     <element name="poolId" nillable="true" type="xsd:string"/>
+     <element name="poolLocale" nillable="true" type="xsd:string"/>
+     <element name="poolNuggetName" nillable="true" type="xsd:string"/>
+     <element name="poolOdbName" nillable="true" type="xsd:string"/>
+     <element name="poolOperSystemId" nillable="true" type="xsd:string"/>
+     <element name="poolResponsibleOrgId" nillable="true" type="xsd:string"/>
+     <element name="poolState" nillable="true" type="xsd:string"/>
+     <element name="poolStateId" nillable="true" type="xsd:string"/>
+     <element name="poolTypeId" nillable="true" type="xsd:string"/>
+     <element name="poolTypeName" nillable="true" type="xsd:string"/>
+     <element name="projectId" nillable="true" type="xsd:string"/>
+     <element name="protocolSupportId" nillable="true" type="xsd:string"/>
+     <element name="qaApprovalReq" type="xsd:boolean"/>
+     <element name="rollMechanismId" nillable="true" type="xsd:string"/>
+     <element name="runTaskTimeOut" type="xsd:int"/>
+     <element name="secInfoId" nillable="true" type="xsd:string"/>
+     <element name="securePool" type="xsd:boolean"/>
+     <element name="stagingTimeOut" type="xsd:int"/>
+     <element name="tivoliEnabled" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfPoolDataV2">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:PoolDataV2[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListPoolsV2">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="poolData" nillable="true" type="impl:ArrayOfPoolDataV2"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolDataV3">
+    <sequence>
+     <element name="architectureId" nillable="true" type="xsd:string"/>
+     <element name="archtier" nillable="true" type="xsd:string"/>
+     <element name="assetStatus" nillable="true" type="xsd:string"/>
+     <element name="comments" nillable="true" type="xsd:string"/>
+     <element name="contact" nillable="true" type="xsd:string"/>
+     <element name="creationDate" nillable="true" type="xsd:dateTime"/>
+     <element name="defaultCodeReRollTemplate" nillable="true" type="xsd:string"/>
+     <element name="defaultCodeRolloutTemplate" nillable="true" type="xsd:string"/>
+     <element name="defaultWireOnTemplate" nillable="true" type="xsd:string"/>
+     <element name="deliverableName" nillable="true" type="xsd:string"/>
+     <element name="effectiveDate" nillable="true" type="xsd:string"/>
+     <element name="functionalDesc" nillable="true" type="xsd:string"/>
+     <element name="gbpEnabled" type="xsd:boolean"/>
+     <element name="ilogEngineReq" type="xsd:boolean"/>
+     <element name="inTurboRoller" type="xsd:boolean"/>
+     <element name="internalVipOnly" type="xsd:boolean"/>
+     <element name="lastModifiedDate" nillable="true" type="xsd:dateTime"/>
+     <element name="multiRolloutAllowed" type="xsd:boolean"/>
+     <element name="plaform" nillable="true" type="xsd:string"/>
+     <element name="planId" nillable="true" type="xsd:string"/>
+     <element name="platsTicketId" nillable="true" type="xsd:string"/>
+     <element name="poolCalName" nillable="true" type="xsd:string"/>
+     <element name="poolId" nillable="true" type="xsd:string"/>
+     <element name="poolLocale" nillable="true" type="xsd:string"/>
+     <element name="poolNuggetName" nillable="true" type="xsd:string"/>
+     <element name="poolOdbName" nillable="true" type="xsd:string"/>
+     <element name="poolOperSystemId" nillable="true" type="xsd:string"/>
+     <element name="poolResponsibleOrgId" nillable="true" type="xsd:string"/>
+     <element name="poolState" nillable="true" type="xsd:string"/>
+     <element name="poolStateId" nillable="true" type="xsd:string"/>
+     <element name="poolTypeId" nillable="true" type="xsd:string"/>
+     <element name="poolTypeName" nillable="true" type="xsd:string"/>
+     <element name="projectId" nillable="true" type="xsd:string"/>
+     <element name="protocolSupportId" nillable="true" type="xsd:string"/>
+     <element name="qaApprovalReq" type="xsd:boolean"/>
+     <element name="rollMechanismId" nillable="true" type="xsd:string"/>
+     <element name="runTaskTimeOut" type="xsd:int"/>
+     <element name="secInfoId" nillable="true" type="xsd:string"/>
+     <element name="securePool" type="xsd:boolean"/>
+     <element name="stagingTimeOut" type="xsd:int"/>
+     <element name="tierId" type="xsd:int"/>
+     <element name="tivoliEnabled" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfPoolDataV3">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:PoolDataV3[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListPoolsV3">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="poolData" nillable="true" type="impl:ArrayOfPoolDataV3"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolArchitectureData">
+    <sequence>
+     <element name="architectureId" nillable="true" type="xsd:string"/>
+     <element name="architectureName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfPoolArchitectureData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:PoolArchitectureData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListPoolArchitectures">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="poolArchitectureData" nillable="true" type="impl:ArrayOfPoolArchitectureData"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolStateData">
+    <sequence>
+     <element name="poolStateId" nillable="true" type="xsd:string"/>
+     <element name="poolStateName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfPoolStateData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:PoolStateData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListPoolStates">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="poolStateData" nillable="true" type="impl:ArrayOfPoolStateData"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolAssetStatusData">
+    <sequence>
+     <element name="assetStatusId" nillable="true" type="xsd:string"/>
+     <element name="assetStatusName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfPoolAssetStatusData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:PoolAssetStatusData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ResultOfPoolServiceListPoolAssetStatuses">
+    <complexContent>
+     <extension base="impl:Result">
+      <sequence>
+       <element name="poolAssetStatusData" nillable="true" type="impl:ArrayOfPoolAssetStatusData"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="listPoolsRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsV3Request">
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolTypesRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsResponse">
+
+      <wsdl:part name="listPoolsReturn" type="impl:ResultOfPoolServiceListPools"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsV2ByDateRequest">
+
+      <wsdl:part name="lastModifiedDate" type="xsd:dateTime"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolArchitecturesResponse">
+
+      <wsdl:part name="listPoolArchitecturesReturn" type="impl:ResultOfPoolServiceListPoolArchitectures"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolStatesResponse">
+
+      <wsdl:part name="listPoolStatesReturn" type="impl:ResultOfPoolServiceListPoolStates"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolAssetStatusesRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsV2Response">
+
+      <wsdl:part name="listPoolsV2Return" type="impl:ResultOfPoolServiceListPoolsV2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listMachinesV3Request">
+
+      <wsdl:part name="poolCalName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listMachinesResponse">
+
+      <wsdl:part name="listMachinesReturn" type="impl:ResultOfPoolServiceListMachines"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolStatesRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="listMachinesV2Request">
+
+      <wsdl:part name="poolCalName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listMachinesRequest">
+
+      <wsdl:part name="poolCalName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolArchitecturesRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolMetaDataRequest">
+
+      <wsdl:part name="poolCalName" type="xsd:string"/>
+
+      <wsdl:part name="metaDataType" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsV2ByDateResponse">
+
+      <wsdl:part name="listPoolsV2ByDateReturn" type="impl:ResultOfPoolServiceListPoolsV2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsV3Response">
+
+      <wsdl:part name="listPoolsV3Return" type="impl:ResultOfPoolServiceListPoolsV3"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolTypesResponse">
+
+      <wsdl:part name="listPoolTypesReturn" type="impl:ResultOfPoolServiceListPoolTypes"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listMachinesV2Response">
+
+      <wsdl:part name="listMachinesV2Return" type="impl:ResultOfPoolServiceListMachinesV2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolMetaDataResponse">
+
+      <wsdl:part name="getPoolMetaDataReturn" type="impl:ResultOfPoolServiceGetPoolMetaData"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolAssetStatusesResponse">
+
+      <wsdl:part name="listPoolAssetStatusesReturn" type="impl:ResultOfPoolServiceListPoolAssetStatuses"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsV2Request">
+
+   </wsdl:message>
+
+   <wsdl:message name="listMachinesV3Response">
+
+      <wsdl:part name="listMachinesV3Return" type="impl:ResultOfPoolServiceListMachinesV3"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsV3ByDateResponse">
+
+      <wsdl:part name="listPoolsV3ByDateReturn" type="impl:ResultOfPoolServiceListPoolsV3"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listPoolsV3ByDateRequest">
+
+      <wsdl:part name="lastModifiedDate" type="xsd:dateTime"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="PoolService">
+
+      <wsdl:operation name="getPoolMetaData" parameterOrder="poolCalName metaDataType">
+
+         <wsdl:input message="impl:getPoolMetaDataRequest" name="getPoolMetaDataRequest"/>
+
+         <wsdl:output message="impl:getPoolMetaDataResponse" name="getPoolMetaDataResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPools">
+
+         <wsdl:input message="impl:listPoolsRequest" name="listPoolsRequest"/>
+
+         <wsdl:output message="impl:listPoolsResponse" name="listPoolsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listMachines" parameterOrder="poolCalName">
+
+         <wsdl:input message="impl:listMachinesRequest" name="listMachinesRequest"/>
+
+         <wsdl:output message="impl:listMachinesResponse" name="listMachinesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listMachinesV2" parameterOrder="poolCalName">
+
+         <wsdl:input message="impl:listMachinesV2Request" name="listMachinesV2Request"/>
+
+         <wsdl:output message="impl:listMachinesV2Response" name="listMachinesV2Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listMachinesV3" parameterOrder="poolCalName">
+
+         <wsdl:input message="impl:listMachinesV3Request" name="listMachinesV3Request"/>
+
+         <wsdl:output message="impl:listMachinesV3Response" name="listMachinesV3Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolTypes">
+
+         <wsdl:input message="impl:listPoolTypesRequest" name="listPoolTypesRequest"/>
+
+         <wsdl:output message="impl:listPoolTypesResponse" name="listPoolTypesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolsV2">
+
+         <wsdl:input message="impl:listPoolsV2Request" name="listPoolsV2Request"/>
+
+         <wsdl:output message="impl:listPoolsV2Response" name="listPoolsV2Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolsV2ByDate" parameterOrder="lastModifiedDate">
+
+         <wsdl:input message="impl:listPoolsV2ByDateRequest" name="listPoolsV2ByDateRequest"/>
+
+         <wsdl:output message="impl:listPoolsV2ByDateResponse" name="listPoolsV2ByDateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolsV3">
+
+         <wsdl:input message="impl:listPoolsV3Request" name="listPoolsV3Request"/>
+
+         <wsdl:output message="impl:listPoolsV3Response" name="listPoolsV3Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolsV3ByDate" parameterOrder="lastModifiedDate">
+
+         <wsdl:input message="impl:listPoolsV3ByDateRequest" name="listPoolsV3ByDateRequest"/>
+
+         <wsdl:output message="impl:listPoolsV3ByDateResponse" name="listPoolsV3ByDateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolArchitectures">
+
+         <wsdl:input message="impl:listPoolArchitecturesRequest" name="listPoolArchitecturesRequest"/>
+
+         <wsdl:output message="impl:listPoolArchitecturesResponse" name="listPoolArchitecturesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolStates">
+
+         <wsdl:input message="impl:listPoolStatesRequest" name="listPoolStatesRequest"/>
+
+         <wsdl:output message="impl:listPoolStatesResponse" name="listPoolStatesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolAssetStatuses">
+
+         <wsdl:input message="impl:listPoolAssetStatusesRequest" name="listPoolAssetStatusesRequest"/>
+
+         <wsdl:output message="impl:listPoolAssetStatusesResponse" name="listPoolAssetStatusesResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="PoolServiceSoapBinding" type="impl:PoolService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPoolMetaData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPoolMetaDataRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPoolMetaDataResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPools">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listMachines">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listMachinesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listMachinesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listMachinesV2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listMachinesV2Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listMachinesV2Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listMachinesV3">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listMachinesV3Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listMachinesV3Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolTypes">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolTypesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolTypesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolsV2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolsV2Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolsV2Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolsV2ByDate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolsV2ByDateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolsV2ByDateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolsV3">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolsV3Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolsV3Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolsV3ByDate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolsV3ByDateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolsV3ByDateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolArchitectures">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolArchitecturesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolArchitecturesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolStates">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolStatesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolStatesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listPoolAssetStatuses">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listPoolAssetStatusesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listPoolAssetStatusesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="PoolServiceService">
+
+      <wsdl:port binding="impl:PoolServiceSoapBinding" name="PoolService">
+
+         <wsdlsoap:address location="http://tr2api.vip.ebay.com/TurboRoller/services/PoolService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

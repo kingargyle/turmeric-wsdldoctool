@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/merchandising/v1/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/merchandising/v1/services">
+
+<wsdl:types>
+<xs:schema xmlns:tns="http://www.ebay.com/marketplace/merchandising/v1/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/merchandising/v1/services">
+
+<xs:element name="getVersionRequest" nillable="true" type="tns:GetVersionRequest"/>
+<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+<xs:element name="getPseudoProductRequest" nillable="true" type="tns:GetPseudoProductRequest"/>
+<xs:element name="getPseudoProductResponse" nillable="true" type="tns:GetPseudoProductResponse"/>
+
+<xs:complexType abstract="true" name="BaseServiceRequest">
+	<xs:annotation>
+		<xs:documentation>
+			This is the base class for request container for all service operations.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+
+</xs:complexType>
+
+<xs:complexType abstract="true" name="BaseServiceResponse">
+	<xs:annotation>
+		<xs:documentation>
+			This is the base class for response container for all service operations. It contains
+			error information associated with the request.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="ack" type="tns:AckValue">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether there are any errors or warnings associated with the
+					processing of the request.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+			<xs:annotation>
+
+				<xs:documentation>
+					Information for an error or warning that occurred when eBay processed the
+					request. Not returned when responseStatus is Success. See &lt;a 
+					href="http://developer.ebay.com/DevZone/merchandising/docs/CallRef/Errors/ErrorMessages.html" 
+					title="All error messages by code number"&gt;Errors by Number&lt;/a&gt; 
+					for a list of errors and warnings.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="version" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The version of the response payload schema. Indicates the version of the
+					schema that eBay used to process the request. Developer Technical Support 
+					may ask you for the version value when you work with them to troubleshoot 
+					issues.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+			<xs:annotation>
+				<xs:documentation>
+					This value represents the date and time when eBay processed the request.
+					The time zone of this value is &lt;a 
+					href="types/simpleTypes.html#dateTime"&gt;GMT&lt;/a&gt;
+					and the format is the ISO 8601 date and time format (YYYY-MM-DDTHH:MM:SS.SSSZ).
+					See the "dateTime" type for information about this time format and converting
+					to and from the GMT time zone.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>		
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVersionRequest">
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceRequest"/>
+	</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="GetVersionResponse">
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceResponse"/>
+	</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="GetPseudoProductRequest">
+	<xs:annotation>
+		<xs:documentation>
+			The request to assign a pseudo product ID to an item and determine which version of the pseudo product
+			ID to use.  This is accomplished by retrieving the probability scores from the training model based on
+			the input values and computing the pseudo product ID from the scores.  The keywords from the item title
+			and category name are looked up in the training model.  Each keyword is mapped to a centroid consisting
+			of pairs of pseudo product ID and probability of the keyword belonging in the pseudo product cluster. 
+		</xs:documentation>
+		<xs:appinfo>
+			<Summary>
+				Assign a pseudo product ID to an item. 
+			</Summary>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceRequest">	
+			<xs:sequence>
+				<xs:element minOccurs="1" name="siteId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The site ID of an active item listing. 
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName>getPseudoProduct</CallName>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>		
+				<xs:element minOccurs="1" name="itemId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The ID of an active item listing. 
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName>getPseudoProduct</CallName>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="1" name="itemTitle" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The title of an active item listing. 
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName>getPseudoProduct</CallName>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>			
+				<xs:element minOccurs="1" name="categoryId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The meta category ID of an active item listing. 
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName>getPseudoProduct</CallName>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="1" name="categoryName" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The leaf category name of an active item listing. 
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName>getPseudoProduct</CallName>
+								<RequiredInput>Yes</RequiredInput>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="sellerTag" nillable="true" type="tns:SellerTag">
+					<xs:annotation>
+						<xs:documentation>
+							The seller tags (Merch namespaces) of the item.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<AllCalls/>
+								<Returned>Conditionally</Returned>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:extension>	
+	</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="GetPseudoProductResponse">
+	<xs:annotation>
+		<xs:documentation>
+			The response container for the pseudo product ID, relevancy score, and pseudo product version.
+			It includes error information associated with the request.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceResponse">
+			<xs:sequence>
+				<xs:element minOccurs="1" name="pseudoProduct" type="tns:PseudoProduct">
+					<xs:annotation>
+						<xs:documentation>
+							The pseudo product ID, relevancy score, and pseudo product version.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<AllCalls/>
+								<Returned>Always</Returned>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>	
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+<xs:simplerType name="SellerTag">
+	<xs:annotation>
+		<xs:documentation>
+			Contains the (name,value) pair of a seller tag.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="sellerTagName" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The name of the seller tag.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="sellerTagValue" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The value of the seller tag.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:simplerType>
+
+<xs:simplerType name="PseudoProduct">
+	<xs:annotation>
+		<xs:documentation>
+			Contains the pseudo product ID, relevancy score, and pseudo product version.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="pseudoProductId" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The ID that is computed based on the probability scores from the training model.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="relevancyScore" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The relevancy score of the pseudo product cluster.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="pseudoProductVersion" type="tns:string">
+			<xs:annotation>
+				<xs:documentation>
+					The version of the pseudo product to use.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:simplerType>
+
+<xs:simpleType name="AckValue">
+	<xs:annotation>
+		<xs:documentation>
+			Indicates the status of the call.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Success">
+			<xs:annotation>
+				<xs:documentation>
+					The request was processed successfully without errors or warnings.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Failure">
+			<xs:annotation>
+				<xs:documentation>
+
+					Errors occurred that prevented the request from being processed successfully.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Warning">
+			<xs:annotation>
+				<xs:documentation>
+					The request was processed successfully, but some warnings were returned.
+				</xs:documentation>
+			</xs:annotation>
+
+		</xs:enumeration>
+		<xs:enumeration value="PartialFailure">
+			<xs:annotation>
+				<xs:documentation>
+					Reserved for future use.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="ErrorMessage">
+	<xs:annotation>
+		<xs:documentation>
+			The error message to indicate any error/warning that occurred as part of service call. Any run time error
+			will not be reported here, but will be reported as part of a SOAP fault.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+			<xs:annotation>
+				<xs:documentation>
+					Details about a single error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ErrorData">
+	<xs:annotation>
+		<xs:documentation>
+			The details of the error.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="errorId" type="xs:long">
+			<xs:annotation>
+				<xs:documentation>
+					The unique code that identifies the particular error condition that occurred.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="domain" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the domain upon which the error occurred.
+					&lt;dl&gt;
+					&lt;lh&gt;Domains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Marketplace
+					&lt;/dt&gt;
+
+					&lt;dd&gt;
+						A business or validation error occurred for the Pseudo Product Assignment Service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						SOA
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						An exception occurred in the Service Oriented Architecture (SOA) framework.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="severity" type="tns:ErrorSeverity">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the error caused the request to fail (Error) or not
+					(Warning).
+					&lt;br&gt;&lt;br&gt;
+
+					If the request fails and the source of the problem is within the application
+					(such as a missing required element), please change the application before you
+					retry the request. If the problem is due to end-user input data, please alert
+					the end-user to the problem and provide the means for them to correct the data.
+					Once the problem in the application or data is resolved, you can attempt to re-
+					send the request to eBay.
+					&lt;br&gt;&lt;br&gt;
+					If the source of the problem is on eBay's side, you can retry the request as-is
+					a reasonable number of times (eBay recommends twice). If the error persists,
+					contact Developer Technical Support. Once the problem has been resolved, the
+					request may be resent in its original form.
+					&lt;br&gt;&lt;br&gt;
+					When a warning occurs, the error is returned in addition to the business data.
+					In this case, you do not need to retry the request (as the original request was
+					successful). However, depending on the cause or nature of the warning, you
+					might need to contact either the end user or eBay to effect a long term
+					solution to the problem to prevent it from reoccurring in the future.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="category" type="tns:ErrorCategory">
+			<xs:annotation>
+				<xs:documentation>
+					There are three categories of errors: request errors, application errors, and
+					system errors.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="message" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					A detailed description of the condition that resulted in the error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="subdomain" type="xs:string">
+			<xs:annotation>
+
+				<xs:documentation>
+					Name of the subdomain upon which the error occurred.
+					&lt;dl&gt;
+					&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Merchandising
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is specific to the Pseudo Product Assignment Service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						MarketplaceCommon
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is common to all Marketplace services.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+			<xs:annotation>
+				<xs:documentation>
+					Unique identifier for an exception associated with an error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+			<xs:annotation>
+				<xs:documentation>
+					Some warning and error messages return one or more variables that contain
+					contextual information about the error. This is often the field or value that
+					triggered the error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="ErrorSeverity">
+	<xs:annotation>
+		<xs:documentation>
+			Indicates whether the error is a severe error (causing the request to fail) or an
+			informational error (a warning) that should be communicated to the user.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Error">
+			<xs:annotation>
+				<xs:documentation>
+					The request that triggered the error was not processed successfully.
+					When a serious application-level error occurs, the error is returned
+					instead of the business data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Warning">
+			<xs:annotation>
+				<xs:documentation>
+					The request was processed successfully, but something occurred that may
+					affect your application or the user. For example, eBay may have changed a
+					value the user sent in. In this case, eBay returns a normal, successful
+					response and also returns the warning.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="ErrorParameter">
+	<xs:annotation>
+		<xs:documentation>
+			Contextual information associated with an error.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						The name of the parameter in the list of parameter types returned within
+						the error type.
+					</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<AllCalls/>
+								<Returned>Conditionally</Returned>
+							</CallInfo>
+						</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part element="ns0:getVersionRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="ns0:getVersionResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getPseudoProductRequest">
+		<wsdl:part element="ns0:getPseudoProductRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getPseudoProductResponse">
+		<wsdl:part element="ns0:getPseudoProductResponse" name="parameters"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="PseudoProductAssignmentServicePort">	
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="ns0:getVersionRequest" name="getVersionRequest"/>
+			<wsdl:output message="ns0:getVersionResponse" name="getVersionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPseudoProduct">
+			<wsdl:input message="ns0:getPseudoProductRequest"/>
+			<wsdl:output message="ns0:getPseudoProductResponse"/>
+		</wsdl:operation>		
+	</wsdl:portType>
+
+	
+	<wsdl:binding name="PseudoProductAssignmentServiceHttpBinding" type="ns0:PseudoProductAssignmentServicePort">
+			<http:binding verb="POST"/>		
+		<wsdl:operation name="getVersion">
+			<http:operation location="PseudoProductAssignmentService/getVersion"/>
+			<wsdl:input>
+				<mime:content part="getVersion" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+		   <wsdl:output>
+				<mime:content part="getVersion" type="text/xml"/>
+		   </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPseudoProduct">
+			<http:operation location="PseudoProductAssignmentService/getPseudoProduct"/>
+			<wsdl:input>
+				<mime:content part="getPseudoProduct" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getPseudoProduct" type="text/xml"/>
+
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="PseudoProductAssignmentServiceSOAPBinding" type="ns0:PseudoProductAssignmentServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="getVersion">
+		  <soap12:operation soapAction="urn:getVersion" style="document"/>
+			<wsdl:input>
+			  <soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+			  <soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPseudoProduct">
+			<soap12:operation soapAction="urn:getPseudoProduct" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="PseudoProductAssignmentService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+		</wsdl:documentation>
+		<wsdl:port binding="ns0:PseudoProductAssignmentServiceHttpBinding" name="PseudoProductAssignmentServiceHttp">
+			<http:address location="https://svcs.ebay.com/services/merchandising/v1/PseudoProductAssignmentService"/>
+		</wsdl:port>
+		<wsdl:port binding="ns0:PseudoProductAssignmentServiceSOAPBinding" name="PseudoProductAssignmentServiceSOAP">
+			<soap12:address location="https://svcs.ebay.com/services/merchandising/v1/PseudoProductAssignmentService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

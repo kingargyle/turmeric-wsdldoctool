@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/mobile/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="ApplicationLoggingService" targetNamespace="http://www.ebay.com/marketplace/mobile/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/mobile/v1/services">
+			<xs:element name="logMessageResponse" type="tns:LogMessageResponse"/>
+			<xs:element name="beginTransactionResponse" type="tns:BeginTransactionResponse"/>
+			<xs:element name="endTransactionResponse" type="tns:EndTransactionResponse"/>
+			<xs:element name="logStatisticsResponse" type="tns:LogStatisticsResponse"/>
+			<xs:element name="logMessageRequest" type="tns:LogMessageRequest">
+
+			</xs:element>
+			<xs:element name="beginTransactionRequest" type="tns:BeginTransactionRequest">
+
+			</xs:element>
+			<xs:element name="endTransactionRequest" type="tns:EndTransactionRequest"/>
+
+			
+			<xs:element name="logStatisticsRequest" type="tns:LogStatisticsRequest">
+
+			</xs:element>
+			<xs:complexType name="LogMessageRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request for a message to be logged. Contains the
+						name of the request, level to be logged,
+						information about the client which is making
+						this log request (clientInfo), id used for
+						correlating this log message request with
+						respect to other log messages
+						(parentCorrelationId), actual data to be logged
+						(data), complete message information to be
+						logged(message), start timestamp (starttime),
+						duration for this log
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="name" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Denotes a particular transaction
+										name.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="level" type="tns:LogLevel">
+								<xs:annotation>
+									<xs:documentation>
+										Log level which is associated
+										with this log message.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="clientInfo" type="tns:ClientInfo">
+								<xs:annotation>
+									<xs:documentation>
+										Information of the client which
+										is making this log request.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="parentCorrelationId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The correlation id of the
+										transaction inside which this
+										log message request is raised.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="data" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Data for the request.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="message" type="tns:MessageType">
+								<xs:annotation>
+									<xs:documentation>
+										This is the message which is
+										logged.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="startTime" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation>
+										Start time of the log message.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="duration" type="xs:float">
+								<xs:annotation>
+									<xs:documentation>
+										It is the time taken to complete
+										the Event or the Transaction.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="LogMessageResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="BeginTransactionRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request for beginning a transaction. Contains
+						the type of transaction, name, information about
+						the client which is starting this transaction
+						request (clientInfo), id used for correlating
+						this transaction request with respect to other
+						transactions (parentCorrelationId), actual data
+						to be logged (data)
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="type" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+										Denotes the type of application
+										which has been accessed through
+										this transaction.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="name" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Denotes a particular transaction
+										name.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="clientInfo" type="tns:ClientInfo">
+								<xs:annotation>
+									<xs:documentation>
+										Client information including
+										client details, and client
+										location.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="parentCorrelationId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The correlation id of the
+										transaction to which this
+										transaction is a child.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="data" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Data of the transaction.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="BeginTransactionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="correlationId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										correlationId is an identifier
+										for the transaction that was
+										begun - this id can be later
+										used to access this transaction.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="EndTransactionRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request for ending a transaction. id used for
+						identifying the transaction (correlationId),
+						actual data to be logged (data), duration for
+						this transaction, the status of this transaction
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="correlationId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The correlation id of the
+										transaction which needs to be
+										ended.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="data" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Data of the transaction.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="duration" type="xs:float">
+								<xs:annotation>
+									<xs:documentation>
+										It is the time taken to complete
+										the Event or the Transaction.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="status" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Case-sensitive character string
+										which represents the status,
+										first non-"0" is used.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="EndTransactionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="LogStatisticsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="clientId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										ClientId will be the
+										categorization that we would
+										provide for the client - like
+										Mobile, appserver etc
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="statisticsDetail" type="tns:StatisticsDetail">
+								<xs:annotation>
+									<xs:documentation>
+										Name would be the Statistics
+										Name (ex) CPUMetrics.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="StatisticsDetail">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name would be the Statistics Name (ex)
+								CPUMetrics.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="data" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Data (statistics) that needs to be
+								logged.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LogStatisticsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="EnvironmentType">
+				<xs:annotation>
+					<xs:documentation>
+						Client environment
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="DEV">
+						<xs:annotation>
+							<xs:documentation>
+								development environment
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TEST">
+						<xs:annotation>
+							<xs:documentation>
+								QA environment
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="STAGING">
+						<xs:annotation>
+							<xs:documentation>
+								pre-release environemnt
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SANDBOX">
+						<xs:annotation>
+							<xs:documentation>
+								sandbox environment
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PRODUCTION">
+						<xs:annotation>
+							<xs:documentation>
+								production environment
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Acknowledgement for the logging- whether
+								the logging was a Success or a Failure.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Version will be the service version used
+								for logging.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Timestamp is the time when the response
+								is returned from the service.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the error category of an error.
+						Typical values are "System","Application", and
+						"Request"
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Represents the error message contents.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								Represents the ID which is associated
+								with an error message.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Denotes the domain to which this error
+								message is to be associated.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Denotes the sub-domain to which this
+								error message is to be associated.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Denotes the severity of this error.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								Denotes the category to which this error
+								belongs.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								the error message which needs to be
+								returned.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								In case of exceptions, this denotes the
+								exception id and the same will be used
+								for tracking this error.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Denotes a list of string values which
+								will be appended to the error message.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Represents the error message obtained during
+						logging.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						The payload information or data that is similar
+						that will give information on the set of data
+						that caused the exception.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Represents the Severity of an error message
+						obtained during logging.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="MessageType">
+				<xs:annotation>
+					<xs:documentation>
+						Message Type contains the complete information
+						about the message which is being logged.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="parentId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Represents the Id of the parent thread
+								of this log message thread.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="id" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The id of the thread which is logging a
+								message.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="level" type="tns:LogLevel">
+						<xs:annotation>
+							<xs:documentation>
+								Log level which is associated with this
+								log message.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								String value which is denoted by client
+								during log a message.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="duration" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>
+								It is the time taken to complete the
+								Event or the Transaction.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="startTime" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								Start time of the log operation for this
+								message.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="data" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The log message to be logged.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AppDetails">
+				<xs:annotation>
+					<xs:documentation>
+						Metadata - Application specific data Basically
+						it is the application used by a client during
+						which client requests for logging are obtained.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="environment" type="tns:EnvironmentType">
+						<xs:annotation>
+							<xs:documentation>
+								Details of the environment in which
+								client is operating and making this log
+								request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the application that the
+								client is using.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="appName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the application used by the
+								client.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ClientInfo">
+				<xs:annotation>
+					<xs:documentation>
+						Metadata - Captures client/caller specific
+						information. Contains specific information about
+						client. client application details -&gt; contains
+						client application specific information client
+						type -&gt; indicates the type of client used for
+						accessing this service like mobile, web client
+						details -&gt; Covers any additional properties that
+						might be needed down the line.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="location" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Location details of the client.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="clientDetails" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Extra client related details is put
+								here.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="appDetails" type="tns:AppDetails">
+						<xs:annotation>
+							<xs:documentation>
+								All information about the application
+								used by the client.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="clientType" type="tns:ClientType">
+						<xs:annotation>
+							<xs:documentation>
+								Type of device used by the client using
+								which client is invoking this service.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ClientType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Mobile">
+						<xs:annotation>
+							<xs:documentation>
+								Clients accessing this service using
+								Mobile devices.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Web">
+						<xs:annotation>
+							<xs:documentation>
+								Clients accessing this service using Web
+								(HTTP/HTTPS). appservers and the like
+								that cannot log directly to cal.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="WAP">
+						<xs:annotation>
+							<xs:documentation>
+								Clients accessing this service using WAP
+								devices - other than Mobiles.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="LogLevel">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="INFO">
+						<xs:annotation>
+							<xs:documentation>
+								info level
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="WARN">
+						<xs:annotation>
+							<xs:documentation>
+								warning message
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DEBUG">
+						<xs:annotation>
+							<xs:documentation>
+								debug message
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ERROR">
+						<xs:annotation>
+							<xs:documentation>
+								error message
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="EXCEPTION">
+						<xs:annotation>
+							<xs:documentation>
+								exception message/stacktrace
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FATAL">
+						<xs:annotation>
+							<xs:documentation>
+								fatal error message
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="getVersionRequest" type="tns:GetVersionRequest"/>
+            <xs:element name="getVersionResponse" type="tns:GetVersionResponse"/>
+        
+            <xs:complexType name="GetVersionRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseServiceRequest"/>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="GetVersionResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseServiceResponse">
+            			<xs:sequence>
+            				<xs:element name="version" type="xs:string">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="logMessageResponse">
+		<wsdl:part element="tns:logMessageResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="beginTransactionResponse">
+		<wsdl:part element="tns:beginTransactionResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="endTransactionResponse">
+		<wsdl:part element="tns:endTransactionResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="logStatisticsResponse">
+		<wsdl:part element="tns:logStatisticsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="logMessageRequest">
+		<wsdl:part element="tns:logMessageRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="beginTransactionRequest">
+	
+		<wsdl:part element="tns:beginTransactionRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="endTransactionRequest">
+	
+		<wsdl:part element="tns:endTransactionRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="logStatisticsRequest">
+		<wsdl:part element="tns:logStatisticsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part element="tns:getVersionRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="tns:getVersionResponse" name="getVersionResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ApplicationLoggingServicePort">
+		<wsdl:documentation>
+			Almost every large application includes its own logging or
+			tracing API. In conformance with this rule, over the years,
+			eBay has developed the realtime logging infrastructure for
+			its internal usage.
+
+			This is an attempt to expose the feature rich ebay logging
+			infrastructure and reporting capabilities into a SOA
+			service. This service doesn't directly expose the ebay
+			logging interface into a service but tries to keep it
+			generic and complete enough for logging in real time.
+		</wsdl:documentation>
+		<wsdl:operation name="logMessage">
+			<wsdl:documentation>
+				This operation lets the client applications log messages
+				(optionally nested)
+			</wsdl:documentation>
+			<wsdl:input message="tns:logMessageRequest"/>
+			<wsdl:output message="tns:logMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="beginTransaction">
+			<wsdl:documentation>
+				This operation lets the client application log
+				transactions in real time. This operation callstarts the
+				transaction. One can call as many logMessage calls
+				(events) as they want between beginTransaction and
+				endTransaction operations calls to wrap the important
+				events withina transaction.
+			</wsdl:documentation>
+			<wsdl:input message="tns:beginTransactionRequest"/>
+			<wsdl:output message="tns:beginTransactionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="endTransaction">
+			<wsdl:documentation>
+				This operation call marks the end of the transaction.
+			</wsdl:documentation>
+			<wsdl:input message="tns:endTransactionRequest"/>
+			<wsdl:output message="tns:endTransactionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="logStatistics">
+			<wsdl:documentation>
+				logStatics is used for application statistics that are
+				computed internally and logged at regular intervals,
+				such as CPU%, MEM%, etc.
+			</wsdl:documentation>
+			<wsdl:input message="tns:logStatisticsRequest"/>
+			<wsdl:output message="tns:logStatisticsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="tns:getVersionRequest"/>
+			<wsdl:output message="tns:getVersionResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ApplicationLoggingServiceHttpBinding" type="tns:ApplicationLoggingServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="logMessage">
+			<http:operation location="/logMessage"/>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="beginTransaction">
+			<http:operation location="/beginTransaction"/>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="endTransaction">
+			<http:operation location="/endTransaction"/>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="logStatistics">
+			<http:operation location="/logStatistics"/>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ApplicationLoggingServiceSOAPBinding" type="tns:ApplicationLoggingServicePort">
+		<wsdl:documentation/>
+
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="logMessage">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/mobile/v1/services/logMessage"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="beginTransaction">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/mobile/v1/services/beginTransaction"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="endTransaction">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/mobile/v1/services/endTransaction"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="logStatistics">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/mobile/v1/services/logStatistics"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/mobile/v1/services/getVersion"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ApplicationLoggingService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+			This is the real time logging service for devices/machines
+			that cannot log to cal directly.
+		</wsdl:documentation>
+		<wsdl:port binding="tns:ApplicationLoggingServiceHttpBinding" name="ApplicationLoggingServiceHttpPort">
+			<http:address location="https://svcs.ebay.com/services/mobile/ApplicationLoggingService/v1"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:ApplicationLoggingServiceSOAPBinding" name="ApplicationLoggingServiceSOAPPort">
+			<soap12:address location="https://svcs.ebay.com/services/mobile/ApplicationLoggingService/v1"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

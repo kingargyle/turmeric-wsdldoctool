@@ -1,0 +1,5897 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/buying/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="BuyingService" targetNamespace="http://www.ebay.com/marketplace/buying/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/buying/v1/services">
+			<xs:element name="createCheckoutCartRequest" type="tns:CreateCheckoutCartRequest"/>
+			<xs:element name="createCheckoutCartResponse" type="tns:CreateCheckoutCartResponse"/>
+			<xs:element name="purchaseCheckoutCartRequest" type="tns:PurchaseCheckoutCartRequest"/>
+			<xs:element name="purchaseCheckoutCartResponse" type="tns:PurchaseCheckoutCartResponse"/>
+			<xs:element name="getCheckoutCartRequest" type="tns:GetCheckoutCartRequest"/>
+			<xs:element name="getCheckoutCartResponse" type="tns:GetCheckoutCartResponse"/>
+			<xs:element name="getVersionRequest" nillable="true" type="tns:GetVersionRequest"/>
+			<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+			<xs:complexType name="CreateCheckoutCartRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Creates a checkout cart containing the specified
+						items.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="cartId" type="xs:long">
+								<xs:annotation>
+									<xs:documentation>
+										The ID of the cart to be
+										created. Should be Unique for
+										each cart.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												createCheckoutCart
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="lineItem" type="tns:LineItem">
+								<xs:annotation>
+									<xs:documentation>
+										The Items to be purchased.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												createCheckoutCart
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="platform" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+					The platform to which the request is sent.
+				</xs:documentation>
+									<xs:appinfo>
+										<ListBasedOn>PlatformTypeList</ListBasedOn>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateCheckoutCartResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response to createCheckout.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="checkoutCart" type="tns:CheckoutCart">
+								<xs:annotation>
+									<xs:documentation>
+										The eBay checkout cart
+										containing items being
+										purchased.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												getCheckoutCart
+											</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="platform" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+					The platform to which the request is sent.
+				</xs:documentation>
+									<xs:appinfo>
+										<ListBasedOn>PlatformTypeList</ListBasedOn>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PurchaseCheckoutCartRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Purchase the cart with the specified cart Id.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="cartId" type="xs:long">
+								<xs:annotation>
+									<xs:documentation>
+										The ID of the cart.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												purchaseCheckoutCart
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="platform" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+					The platform to which the request is sent.
+				</xs:documentation>
+									<xs:appinfo>
+										<ListBasedOn>PlatformTypeList</ListBasedOn>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PurchaseCheckoutCartResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response to purchaseCheckoutCart.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="purchaseStatus" type="xs:token">
+							</xs:element>
+							<xs:element minOccurs="0" name="platform" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+					The platform to which the request is sent.
+				</xs:documentation>
+									<xs:appinfo>
+										<ListBasedOn>PlatformTypeList</ListBasedOn>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetCheckoutCartRequest">
+				<xs:annotation>
+					<xs:documentation>
+			Retrieves an existing checkout cart from eBay.  Use the buyer's token
+			when calling getCheckoutCart.
+		</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+				Retrieves an existing checkout cart from eBay.
+			</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="cartId" type="xs:long">
+								<xs:annotation>
+									<xs:documentation>
+							The ID of the cart.
+						</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>getCheckoutCart</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="platform" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+					The platform to which the request is sent.
+				</xs:documentation>
+									<xs:appinfo>
+										<ListBasedOn>PlatformTypeList</ListBasedOn>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetCheckoutCartResponse">
+				<xs:annotation>
+					<xs:documentation>
+			Get checkout cart response
+		</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="checkoutCart" type="tns:CheckoutCart">
+								<xs:annotation>
+									<xs:documentation>
+							The eBay checkout cart containing items being purchased.
+						</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>getCheckoutCart</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="siteCheckoutEntryURL" type="xs:anyURI">
+								<xs:annotation>
+									<xs:documentation>
+							The eBay or PayPal URL to which the buyer is to be directed to
+							begin checkout. Returned only if applicable to third party.
+						</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>getCheckoutCart</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="platform" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+					The platform to which the request is sent.
+				</xs:documentation>
+									<xs:appinfo>
+										<ListBasedOn>PlatformTypeList</ListBasedOn>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetVersionRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetVersionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="PlatformTypeList">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			The platform to which this request is called.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="eBay">
+						<xs:annotation>
+							<xs:documentation>
+					Request to eBay.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Half">
+						<xs:annotation>
+							<xs:documentation>
+					Request to Half.com
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="CountryCodeList">
+				<xs:annotation>
+					<xs:documentation>
+			Defines the standard 2-letter ISO 3166 country code set, plus some additional
+			country codes that eBay uses. (The additional codes appear at the end of this code
+			list and are noted as non-ISO.) For English names that correspond to each code
+			(e.g., KY="Cayman Islands"), see the ISO site:
+			http://www.iso.ch/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="AF"/>
+					<xs:enumeration value="AL"/>
+					<xs:enumeration value="DZ"/>
+					<xs:enumeration value="AS"/>
+					<xs:enumeration value="AD"/>
+					<xs:enumeration value="AO"/>
+					<xs:enumeration value="AI"/>
+					<xs:enumeration value="AQ"/>
+					<xs:enumeration value="AG"/>
+					<xs:enumeration value="AR"/>
+					<xs:enumeration value="AM"/>
+					<xs:enumeration value="AW"/>
+					<xs:enumeration value="AU"/>
+					<xs:enumeration value="AT"/>
+					<xs:enumeration value="AZ"/>
+					<xs:enumeration value="BS"/>
+					<xs:enumeration value="BH"/>
+					<xs:enumeration value="BD"/>
+					<xs:enumeration value="BB"/>
+					<xs:enumeration value="BY"/>
+					<xs:enumeration value="BE"/>
+					<xs:enumeration value="BZ"/>
+					<xs:enumeration value="BJ"/>
+					<xs:enumeration value="BM"/>
+					<xs:enumeration value="BT"/>
+					<xs:enumeration value="BO"/>
+					<xs:enumeration value="BA"/>
+					<xs:enumeration value="BW"/>
+					<xs:enumeration value="BV"/>
+					<xs:enumeration value="BR"/>
+					<xs:enumeration value="IO"/>
+					<xs:enumeration value="BN"/>
+					<xs:enumeration value="BG"/>
+					<xs:enumeration value="BF"/>
+					<xs:enumeration value="BI"/>
+					<xs:enumeration value="KH"/>
+					<xs:enumeration value="CM"/>
+					<xs:enumeration value="CA"/>
+					<xs:enumeration value="CV"/>
+					<xs:enumeration value="KY"/>
+					<xs:enumeration value="CF"/>
+					<xs:enumeration value="TD"/>
+					<xs:enumeration value="CL"/>
+					<xs:enumeration value="CN"/>
+					<xs:enumeration value="CX"/>
+					<xs:enumeration value="CC"/>
+					<xs:enumeration value="CO"/>
+					<xs:enumeration value="KM"/>
+					<xs:enumeration value="CG"/>
+					<xs:enumeration value="CD"/>
+					<xs:enumeration value="CK"/>
+					<xs:enumeration value="CR"/>
+					<xs:enumeration value="CI"/>
+					<xs:enumeration value="HR"/>
+					<xs:enumeration value="CU"/>
+					<xs:enumeration value="CY"/>
+					<xs:enumeration value="CZ"/>
+					<xs:enumeration value="DK"/>
+					<xs:enumeration value="DJ"/>
+					<xs:enumeration value="DM"/>
+					<xs:enumeration value="DO"/>
+					<xs:enumeration value="TP"/>
+					<xs:enumeration value="EC"/>
+					<xs:enumeration value="EG"/>
+					<xs:enumeration value="SV"/>
+					<xs:enumeration value="GQ"/>
+					<xs:enumeration value="ER"/>
+					<xs:enumeration value="EE"/>
+					<xs:enumeration value="ET"/>
+					<xs:enumeration value="FK"/>
+					<xs:enumeration value="FO"/>
+					<xs:enumeration value="FJ"/>
+					<xs:enumeration value="FI"/>
+					<xs:enumeration value="FR"/>
+					<xs:enumeration value="GF"/>
+					<xs:enumeration value="PF">
+						<xs:annotation>
+							<xs:documentation>
+					French Polynesia. Includes Tahiti.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TF"/>
+					<xs:enumeration value="GA"/>
+					<xs:enumeration value="GM"/>
+					<xs:enumeration value="GE"/>
+					<xs:enumeration value="DE"/>
+					<xs:enumeration value="GH"/>
+					<xs:enumeration value="GI"/>
+					<xs:enumeration value="GR"/>
+					<xs:enumeration value="GL"/>
+					<xs:enumeration value="GD"/>
+					<xs:enumeration value="GP"/>
+					<xs:enumeration value="GU"/>
+					<xs:enumeration value="GT"/>
+					<xs:enumeration value="GN"/>
+					<xs:enumeration value="GW"/>
+					<xs:enumeration value="GY"/>
+					<xs:enumeration value="HT"/>
+					<xs:enumeration value="HM"/>
+					<xs:enumeration value="VA"/>
+					<xs:enumeration value="HN"/>
+					<xs:enumeration value="HK"/>
+					<xs:enumeration value="HU"/>
+					<xs:enumeration value="IS"/>
+					<xs:enumeration value="IN"/>
+					<xs:enumeration value="ID"/>
+					<xs:enumeration value="IR"/>
+					<xs:enumeration value="IQ"/>
+					<xs:enumeration value="IE"/>
+					<xs:enumeration value="IL"/>
+					<xs:enumeration value="IT"/>
+					<xs:enumeration value="JM"/>
+					<xs:enumeration value="JP"/>
+					<xs:enumeration value="JO"/>
+					<xs:enumeration value="KZ"/>
+					<xs:enumeration value="KE"/>
+					<xs:enumeration value="KI"/>
+					<xs:enumeration value="KP"/>
+					<xs:enumeration value="KR"/>
+					<xs:enumeration value="KW"/>
+					<xs:enumeration value="KG"/>
+					<xs:enumeration value="LA"/>
+					<xs:enumeration value="LV"/>
+					<xs:enumeration value="LB"/>
+					<xs:enumeration value="LS"/>
+					<xs:enumeration value="LR"/>
+					<xs:enumeration value="LY"/>
+					<xs:enumeration value="LI"/>
+					<xs:enumeration value="LT"/>
+					<xs:enumeration value="LU"/>
+					<xs:enumeration value="MO"/>
+					<xs:enumeration value="MK"/>
+					<xs:enumeration value="MG"/>
+					<xs:enumeration value="MW"/>
+					<xs:enumeration value="MY"/>
+					<xs:enumeration value="MV"/>
+					<xs:enumeration value="ML"/>
+					<xs:enumeration value="MT"/>
+					<xs:enumeration value="MH"/>
+					<xs:enumeration value="MQ"/>
+					<xs:enumeration value="MR"/>
+					<xs:enumeration value="MU"/>
+					<xs:enumeration value="YT"/>
+					<xs:enumeration value="MX"/>
+					<xs:enumeration value="FM"/>
+					<xs:enumeration value="MD"/>
+					<xs:enumeration value="MC"/>
+					<xs:enumeration value="MN"/>
+					<xs:enumeration value="MS"/>
+					<xs:enumeration value="MA"/>
+					<xs:enumeration value="MZ"/>
+					<xs:enumeration value="MM"/>
+					<xs:enumeration value="NA"/>
+					<xs:enumeration value="NR"/>
+					<xs:enumeration value="NP"/>
+					<xs:enumeration value="NL"/>
+					<xs:enumeration value="AN"/>
+					<xs:enumeration value="NC"/>
+					<xs:enumeration value="NZ"/>
+					<xs:enumeration value="NI"/>
+					<xs:enumeration value="NE"/>
+					<xs:enumeration value="NG"/>
+					<xs:enumeration value="NU"/>
+					<xs:enumeration value="NF"/>
+					<xs:enumeration value="MP"/>
+					<xs:enumeration value="NO"/>
+					<xs:enumeration value="OM"/>
+					<xs:enumeration value="PK"/>
+					<xs:enumeration value="PW"/>
+					<xs:enumeration value="PS"/>
+					<xs:enumeration value="PA"/>
+					<xs:enumeration value="PG"/>
+					<xs:enumeration value="PY"/>
+					<xs:enumeration value="PE"/>
+					<xs:enumeration value="PH"/>
+					<xs:enumeration value="PN"/>
+					<xs:enumeration value="PL"/>
+					<xs:enumeration value="PT"/>
+					<xs:enumeration value="PR"/>
+					<xs:enumeration value="QA"/>
+					<xs:enumeration value="RE"/>
+					<xs:enumeration value="RO"/>
+					<xs:enumeration value="RU"/>
+					<xs:enumeration value="RW"/>
+					<xs:enumeration value="SH"/>
+					<xs:enumeration value="KN"/>
+					<xs:enumeration value="LC"/>
+					<xs:enumeration value="PM"/>
+					<xs:enumeration value="VC"/>
+					<xs:enumeration value="WS"/>
+					<xs:enumeration value="SM"/>
+					<xs:enumeration value="ST"/>
+					<xs:enumeration value="SA"/>
+					<xs:enumeration value="SN"/>
+					<xs:enumeration value="SC"/>
+					<xs:enumeration value="SL"/>
+					<xs:enumeration value="SG"/>
+					<xs:enumeration value="SK"/>
+					<xs:enumeration value="SI"/>
+					<xs:enumeration value="SB"/>
+					<xs:enumeration value="SO"/>
+					<xs:enumeration value="ZA"/>
+					<xs:enumeration value="GS"/>
+					<xs:enumeration value="ES"/>
+					<xs:enumeration value="LK"/>
+					<xs:enumeration value="SD"/>
+					<xs:enumeration value="SR"/>
+					<xs:enumeration value="SJ"/>
+					<xs:enumeration value="SZ"/>
+					<xs:enumeration value="SE"/>
+					<xs:enumeration value="CH"/>
+					<xs:enumeration value="SY"/>
+					<xs:enumeration value="TW"/>
+					<xs:enumeration value="TJ"/>
+					<xs:enumeration value="TZ"/>
+					<xs:enumeration value="TH"/>
+					<xs:enumeration value="TG"/>
+					<xs:enumeration value="TK"/>
+					<xs:enumeration value="TO"/>
+					<xs:enumeration value="TT"/>
+					<xs:enumeration value="TN"/>
+					<xs:enumeration value="TR"/>
+					<xs:enumeration value="TM"/>
+					<xs:enumeration value="TC"/>
+					<xs:enumeration value="TV"/>
+					<xs:enumeration value="UG"/>
+					<xs:enumeration value="UA"/>
+					<xs:enumeration value="AE"/>
+					<xs:enumeration value="GB"/>
+					<xs:enumeration value="US"/>
+					<xs:enumeration value="UM"/>
+					<xs:enumeration value="UY"/>
+					<xs:enumeration value="UZ"/>
+					<xs:enumeration value="VU"/>
+					<xs:enumeration value="VE"/>
+					<xs:enumeration value="VN"/>
+					<xs:enumeration value="VG"/>
+					<xs:enumeration value="VI"/>
+					<xs:enumeration value="WF"/>
+					<xs:enumeration value="EH"/>
+					<xs:enumeration value="YE"/>
+					<xs:enumeration value="YU"/>
+					<xs:enumeration value="ZM"/>
+					<xs:enumeration value="ZW"/>
+					<xs:enumeration value="AA">
+						<xs:annotation>
+							<xs:documentation>
+					NOTE: APO/FPO was defined in eBay list previously but they are not defined in
+					ISO 3166. This country will remain on eBay country code list for backward
+					compatibility.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="QM">
+						<xs:annotation>
+							<xs:documentation>
+					NOTE: Guernsey was defined in eBay list previously but they are not defined in
+					ISO 3166. This country will remain on eBay country list for backward
+					compatibility.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="QN">
+						<xs:annotation>
+							<xs:documentation>
+					NOTE: Jan Mayen was defined in eBay list previously but they are not defined in
+					ISO 3166. This country will remain on eBay country list for backward
+					compatibility.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="QO">
+						<xs:annotation>
+							<xs:documentation>
+					NOTE: Jersey was defined in eBay list previously but they are not defined in ISO
+					3166. This country will remain on eBay country list for backward compatibility.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="QP">
+						<xs:annotation>
+							<xs:documentation>
+					NOTE: Tahiti was defined in eBay list previously but they are not defined in ISO
+					3166. This country will remain on eBay country list for backward compatibility.
+					This Code is currently deprecated
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CustomCode"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ShippingServiceList">
+				<xs:annotation>
+					<xs:documentation>
+			A shipping service used to ship an Item. Applications should not depend on the
+			completeness of ShippingServiceCodeType. GeteBayDetails (from the Trading API)
+			returns the complete list of shipping services. To check whether a shipping service
+			is domestic or international, call GeteBayDetails with a DetailName of
+			ShippingServiceDetails, specifying a site in the header. Shipping services with a
+			ShippingServiceID of 50000 or higher are international, and the other services are
+			domestic, for that site.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="UPSGround">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Ground
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPS3rdDay">
+						<xs:annotation>
+							<xs:documentation>
+					UPS 3rd Day
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPS2ndDay">
+						<xs:annotation>
+							<xs:documentation>
+					UPS 2nd Day
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSNextDay">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Next Day
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriority">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSParcel">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Parcel
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSMedia">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Media
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSFirstClass">
+						<xs:annotation>
+							<xs:documentation>
+					USPS First Class
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ShippingMethodStandard">
+						<xs:annotation>
+							<xs:documentation>
+					Standard shipping method
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ShippingMethodExpress">
+						<xs:annotation>
+							<xs:documentation>
+					Reserved for internal or future use
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSExpressMail">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Express Mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSNextDayAir">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Next Day Air
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPS2DayAirAM">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Next Day Air
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSExpressMailFlatRateEnvelope">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Express Mail Flat Rate Envelope. To use this service, a seller must specify
+					the package weight so that eBay can validate the weight against the maximum
+					weight limit for the service. The seller must also specify a package size of
+					Package/Thick Envelope when using a calculated shipping service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailFlatRateEnvelope">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail Flat Rate Envelope. To use this service, a seller must
+					specify the package weight so that eBay can validate the weight against the
+					maximum weight limit for the service. The seller must also specify a package
+					size of Package/Thick Envelope when using a calculated shipping service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailSmallFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail Small Flat Rate Box. To use this service, a seller must
+					specify the package weight so that eBay can validate the weight against
+					the maximum weight limit for the service. The seller must also specify a
+					package size of Package/Thick Envelope when using a calculated shipping
+					service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail Flat Rate Box. To use this service, a seller must
+					specify the package weight so that eBay can validate the weight against
+					the maximum weight limit for the service. The seller must also specify a
+					package size of Package/Thick Envelope when using a calculated shipping
+					service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailLargeFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail Large Flat Rate Box. To use this service, a seller must
+					specify the package weight so that eBay can validate the weight against
+					the maximum weight limit for the service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Other">
+						<xs:annotation>
+							<xs:documentation>
+					Other (see description)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="LocalDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Local Delivery/Pickup
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NotSelected">
+						<xs:annotation>
+							<xs:documentation>
+					Not Selected
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="InternationalNotSelected">
+						<xs:annotation>
+							<xs:documentation>
+					International Not Selected
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Standard International Flat Rate Shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expedited International Flat Rate Shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSGlobalExpress">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Global Express Mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSGlobalPriority">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Global Priority Mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSEconomyParcel">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Economy Parcel Post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSEconomyLetter">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Economy Letter Post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSAirmailLetter">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Airmail Letter Post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSAirmailParcel">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Airmail Parcel Post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSWorldWideExpressPlus">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express Plus
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSWorldWideExpress">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSWorldWideExpedited">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Expedited
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSStandardToCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Standard To Canada
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSExpressMailInternationalFlatRateEnvelope">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Express Mail International Flat Rate Envelope To use this service, a
+					seller must specify the package weight so that eBay can validate the
+					weight against the maximum weight limit for the service. The seller must
+					also specify a package size of Package/Thick Envelope when using a
+					calculated shipping service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailInternationalFlatRateEnvelope">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail International Flat Rate Envelope To use this service, a
+					seller must specify the package weight so that eBay can validate the
+					weight against the maximum weight limit for the service. The seller must
+					also specify a package size of Package/Thick Envelope when using a
+					calculated shipping service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailInternationalSmallFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail International Small Flat Rate Box. To use this service,
+					a seller must specify the package weight so that eBay can validate the
+					weight against the maximum weight limit for the service. The seller must
+					also specify a package size of Package/Thick Envelope when using a
+					calculated shipping service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailInternationalFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail International Flat Rate Box. To use this service, a
+					seller must specify the package weight so that eBay can validate the
+					weight against the maximum weight limit for the service. The seller must
+					also specify a package size of Package/Thick Envelope when using a
+					calculated shipping service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailInternationalLargeFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail International Large Flat Rate Box. To use this service,
+					a seller must specify the package weight so that eBay can validate the
+					weight against the maximum weight limit for the service.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Other International Shipping (see description)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_StandardDispatch">
+						<xs:annotation>
+							<xs:documentation>
+					Standardversand (unversichert)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_InsuredDispatch">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_Writing"/>
+					<xs:enumeration value="AT_COD"/>
+					<xs:enumeration value="AT_ExpressOrCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_InsuredExpressOrCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_SpecialDispatch"/>
+					<xs:enumeration value="AT_InsuredSpecialDispatch"/>
+					<xs:enumeration value="AT_Sonstige">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstige (Siehe Artikelbeschreibung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_UnversicherterVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Unversicherter Versand International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_VersicherterVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Versand International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_SonstigerVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstiger Versand International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_UnversicherterExpressVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Unversicherter Express Versand
+					International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_VersicherterExpressVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Express Versand
+					International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_Regular">
+						<xs:annotation>
+							<xs:documentation>
+					Regular
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_Express">
+						<xs:annotation>
+							<xs:documentation>
+					Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_Registered">
+						<xs:annotation>
+							<xs:documentation>
+					Registered
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_Courier">
+						<xs:annotation>
+							<xs:documentation>
+					Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_Other">
+						<xs:annotation>
+							<xs:documentation>
+					Other
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_EMSInternationalCourierParcels">
+						<xs:annotation>
+							<xs:documentation>
+					EMS International Courier - Parcels
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_EMSInternationalCourierDocuments">
+						<xs:annotation>
+							<xs:documentation>
+					EMS International Courier - Documents
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_ExpressPostInternationalDocuments">
+						<xs:annotation>
+							<xs:documentation>
+					Express Post International - Documents
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_AirMailInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Air Mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_EconomyAirInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Economy Air
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_SeaMailInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Sea Mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Standard International Flat Rate Postage
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expedited International Flat Rate
+					Postage
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Other International Postage
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_StandardDelivery">
+		</xs:enumeration>
+					<xs:enumeration value="BEFR_PriorityDelivery">
+		</xs:enumeration>
+					<xs:enumeration value="BEFR_ParcelPost">
+		</xs:enumeration>
+					<xs:enumeration value="BEFR_RegisteredMail">
+		</xs:enumeration>
+					<xs:enumeration value="BEFR_Other"/>
+					<xs:enumeration value="BEFR_DePostInternational">
+						<xs:annotation>
+							<xs:documentation>De Post</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_UPSInternational">
+						<xs:annotation>
+							<xs:documentation>UPS</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_FedExInternational">
+						<xs:annotation>
+							<xs:documentation>Fedex</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_DHLInternational">
+						<xs:annotation>
+							<xs:documentation>DHL</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_TPGPostTNTInternational">
+						<xs:annotation>
+							<xs:documentation>
+					TPG Post/TNT (Netherlands)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Frais de livraison internationale fixes
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Frais fixes pour livraison
+					internationale express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Autres livraisons internationales (voir
+					description)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteInternational">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste (France)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteStandardShipping">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - livraison standard (1 a 2
+					jours ouvrables)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteCertifiedShipping">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - envoi recommande (1 jour
+					ouvrable)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteTaxipostLLS">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - Taxipost LLS (2 jours
+					ouvrables)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteTaxipost24h">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - Taxipost 24h (1 jour ouvrable)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteTaxipostSecur">
+						<xs:annotation>
+							<xs:documentation>
+					Autres livraisons
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_PostInternationalStandard">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - livraison standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_PostInternationalRegistered">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - envoi recommande
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_TNTInternational">
+						<xs:annotation>
+							<xs:documentation>TNT</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_StandardDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Standard Delivery
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_PriorityDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Priority Delivery
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_ParcelPost">
+						<xs:annotation>
+							<xs:documentation>
+					Parcel Post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_RegisteredMail">
+						<xs:annotation>
+							<xs:documentation>
+					Registered Mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_Other">
+						<xs:annotation>
+							<xs:documentation>
+					Other Shipping Service
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostInternational">
+						<xs:annotation>
+							<xs:documentation>De Post</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_UPSInternational">
+						<xs:annotation>
+							<xs:documentation>UPS</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_FedExInternational">
+						<xs:annotation>
+							<xs:documentation>Fedex</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DHLInternational">
+						<xs:annotation>
+							<xs:documentation>DHL</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_TPGPostTNTInternational">
+						<xs:annotation>
+							<xs:documentation>
+					TPG Post/TNT (Netherlands)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Standard International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expedited International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Other International Shipping Services
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_LaPosteInternational">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste (France)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostStandardShipping">
+						<xs:annotation>
+							<xs:documentation>
+					De Post - standaardverzending (1 tot 2 werkdagen)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostCertifiedShipping">
+						<xs:annotation>
+							<xs:documentation>
+					De Post - aangetekende zending (1 werkdag)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostTaxipostLLS">
+						<xs:annotation>
+							<xs:documentation>
+					De Post - Taxipost LLS (2 werkdagen)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostTaxipost24h">
+						<xs:annotation>
+							<xs:documentation>
+					De Post - Taxipost 24u (1 werkdag)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostTaxipostSecur">
+						<xs:annotation>
+							<xs:documentation>
+					De Post - Taxipost Secur (1 werkdag)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_OtherShippingMethods">
+						<xs:annotation>
+							<xs:documentation>
+					Andere verzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_PostInternationalStandard">
+						<xs:annotation>
+							<xs:documentation>
+					De Post - standaardverzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_PostInternationalRegistered">
+						<xs:annotation>
+							<xs:documentation>
+					De Post - aangetekende zending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_TNTInternational">
+						<xs:annotation>
+							<xs:documentation>TNT</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_StandardDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Standard Delivery
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_ExpeditedDelivery"/>
+					<xs:enumeration value="CA_PostLettermail">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Lettermail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostRegularParcel">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Regular Parcel
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostExpeditedParcel">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Expedited Parcel
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostXpresspost">
+		</xs:enumeration>
+					<xs:enumeration value="CA_PostPriorityCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Priority Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CanadaPostExpeditedFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Expedited Flat Rate Box.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostExpeditedFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Expedited Flat Rate Box.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Standard International Flat Rate Shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expedited International Flat Rate Shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Other International Shipping (see description)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostExpeditedParcelUSA">
+		</xs:enumeration>
+					<xs:enumeration value="CA_PostSmallPacketsUSA">
+		</xs:enumeration>
+					<xs:enumeration value="CA_PostXpresspostUSA">
+		</xs:enumeration>
+					<xs:enumeration value="CA_PostXpresspostInternational">
+		</xs:enumeration>
+					<xs:enumeration value="CA_PostInternationalParcelSurface">
+		</xs:enumeration>
+					<xs:enumeration value="CA_PostInternationalParcelAir">
+		</xs:enumeration>
+					<xs:enumeration value="CA_SmallPacketsInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Small Packets - International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PurolatorInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Purolator International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostSmallPacketsUSAGround">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Small Packets - USA - Ground
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostSmallPacketsUSAAir">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Small Packets - USA - Air
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_SmallPacketsInternationalGround">
+						<xs:annotation>
+							<xs:documentation>
+					Small Packets - International - Ground
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_SmallPacketsInternationalAir">
+						<xs:annotation>
+							<xs:documentation>
+					Small Packets - International - Air
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostUSALetterPost">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post USA Letter-post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostInternationalLetterPost">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post International Letter-post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostExpeditedFlatRateBoxUSA">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Expedited Flat Rate Box USA.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSExpressCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Express Canada
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSExpressSaverCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Express Saver Canada
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSExpeditedCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Expedited Canada
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSStandardCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Standard Canada
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSExpressUnitedStates">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Express United States
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSExpeditedUnitedStates">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Expedited United States
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPS3DaySelectUnitedStates">
+						<xs:annotation>
+							<xs:documentation>
+					UPS 3 Day Select United States
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSStandardUnitedStates">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Standard United States
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSWorldWideExpress">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_UPSWorldWideExpedited">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Expedited
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PriorityWorldwide">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Priority Worldwide
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CanadaPostExpeditedFlatRateBoxUSA">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Expedited Flat Rate Box USA
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_StandardDispatchAPost">
+						<xs:annotation>
+							<xs:documentation>
+					Standardversand (A-Post/Priority)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_StandardDispatchBPost">
+						<xs:annotation>
+							<xs:documentation>
+					Standardversand (B-Post/Economy)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_InsuredDispatch">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Versand (z.B. Assurance/Fragile)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_Writing"/>
+					<xs:enumeration value="CH_COD"/>
+					<xs:enumeration value="CH_ExpressOrCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_InsuredExpressOrCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_SpecialDispatch"/>
+					<xs:enumeration value="CH_InsuredSpecialDispatch"/>
+					<xs:enumeration value="CH_Sonstige">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstige (Siehe Artikelbeschreibung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_SonstigerVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstiger Versand (Siehe Artikelbeschreibung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_EconomySendungenInternational">
+						<xs:annotation>
+							<xs:documentation>
+					ECONOMY Sendungen
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_PrioritySendungenInternational">
+						<xs:annotation>
+							<xs:documentation>
+					PRIORITY Sendungen
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_UrgentSendungenInternational">
+						<xs:annotation>
+							<xs:documentation>
+					URGENT Sendungen
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CN_PersonalDelivery"/>
+					<xs:enumeration value="CN_RegularPackage"/>
+					<xs:enumeration value="CN_DeliveryCompanyExpress"/>
+					<xs:enumeration value="CN_PostOfficeExpress"/>
+					<xs:enumeration value="CN_Others"/>
+					<xs:enumeration value="CN_FastPostOffice"/>
+					<xs:enumeration value="CN_ExpressDeliverySameCity"/>
+					<xs:enumeration value="CN_ExpressDeliveryOtherCities"/>
+					<xs:enumeration value="CN_StandardInternational"/>
+					<xs:enumeration value="CN_ExpeditedInternational"/>
+					<xs:enumeration value="CN_OtherInternational"/>
+					<xs:enumeration value="CN_CODInternational">
+		</xs:enumeration>
+					<xs:enumeration value="CN_StandardMailingInternational">
+		</xs:enumeration>
+					<xs:enumeration value="CN_RegularLogisticsInternational">
+		</xs:enumeration>
+					<xs:enumeration value="CN_EMSInternational">
+		</xs:enumeration>
+					<xs:enumeration value="CN_OthersInternational">
+		</xs:enumeration>
+					<xs:enumeration value="DE_StandardDispatch">
+						<xs:annotation>
+							<xs:documentation>
+					Unversicherter Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_InsuredDispatch">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_Writing"/>
+					<xs:enumeration value="DE_COD"/>
+					<xs:enumeration value="DE_ExpressOrCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_InsuredExpressOrCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_SpecialDispatch"/>
+					<xs:enumeration value="DE_InsuredSpecialDispatch"/>
+					<xs:enumeration value="DE_UnversicherterVersand">
+						<xs:annotation>
+							<xs:documentation>
+					Unversicherter Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DeutschePostBrief">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Brief
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLPostpaket">
+						<xs:annotation>
+							<xs:documentation>
+					DHL Postpaket
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLPackchen"/>
+					<xs:enumeration value="DE_DeutschePostWarensendung">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Warensendung
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DeutschePostBuchersendung"/>
+					<xs:enumeration value="DE_HermesPaketUnversichert">
+						<xs:annotation>
+							<xs:documentation>
+					Hermes Paket (unversichert)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_HermesPaketVersichert">
+						<xs:annotation>
+							<xs:documentation>
+					Hermes Paket (versichert)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_IloxxTransportXXL">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx Transport XXL
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_IloxxUbernachtExpress"/>
+					<xs:enumeration value="DE_IloxxStandard">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx Standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_Sonstige">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstige (Siehe Artikelbeschreibung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_UnversicherterVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Unversicherter Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_VersicherterVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLPostpaketInternational">
+						<xs:annotation>
+							<xs:documentation>
+					DHL Postpaket International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLPackchenInternational"/>
+					<xs:enumeration value="DE_SonstigerVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstiger Versand (Siehe Artikelbeschreibung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_UnversicherterExpressVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Unversicherter Express - Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_VersicherterExpressVersandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Express - Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DeutschePostBriefLandInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Brief (Land)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DeutschePostBriefLuftInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Brief (Luft)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_IloxxEuropaInternational">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx Europa
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_IloxxWorldWideInternational">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx World Wide
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_Paket">
+						<xs:annotation>
+							<xs:documentation>
+					Paketversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_Express">
+						<xs:annotation>
+							<xs:documentation>
+					Expressversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLPaket">
+						<xs:annotation>
+							<xs:documentation>
+					DHL Paket
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DPBuecherWarensendung">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Buecher-/Warensendung
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_HermesPaket">
+						<xs:annotation>
+							<xs:documentation>
+					Hermes Paket
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_IloxxTransport">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx Transport
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_SonstigeDomestic">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstige
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_Einschreiben">
+						<xs:annotation>
+							<xs:documentation>
+					Einschreiben (inkl. aller Gebuehren)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_Nachname">
+						<xs:annotation>
+							<xs:documentation>
+					Nachnahme (inkl. aller Gebuehren)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_SpecialDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Sonderversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_UPS">
+						<xs:annotation>
+							<xs:documentation>UPS</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DPD">
+						<xs:annotation>
+							<xs:documentation>DPD</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_GLS">
+						<xs:annotation>
+							<xs:documentation>GLS</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_PaketInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Paketversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLPaketInternational">
+						<xs:annotation>
+							<xs:documentation>
+					DHL Paket International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_SonstigeInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstige
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_ExpressInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expressversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DPBriefInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Brief
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_IloxxTransportInternational">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx Transport International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_HermesPaketInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Hermes Paket International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_UPSInternational">
+						<xs:annotation>
+							<xs:documentation>
+					UPS International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DPDInternational">
+						<xs:annotation>
+							<xs:documentation>
+					DPD International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_GLSInternational">
+						<xs:annotation>
+							<xs:documentation>
+					GLS International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_eBayHermesPaketShop2ShopKaeufer">
+						<xs:annotation>
+							<xs:documentation>
+					eBay Hermes Paket Shop2Shop (Kaeufer erhaelt E-Mail von Hermes bei Zustellung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_HermesPaketShop2ShopKaeufer">
+						<xs:annotation>
+							<xs:documentation>
+					Hermes Paket Shop2Shop (Kaeufer erhaelt E-Mail von Hermes bei Zustellung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_eBayHermesPaketShop2Shop">
+						<xs:annotation>
+							<xs:documentation>
+					eBay Hermes Paket Shop2Shop
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_HermesPaketShop2Shop">
+						<xs:annotation>
+							<xs:documentation>
+					Hermes Paket Shop2Shop
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLPaeckchenPackstation">
+						<xs:annotation>
+							<xs:documentation>
+					DHL Paeckchen Packstation
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLPaketPackstation">
+						<xs:annotation>
+							<xs:documentation>
+					DHL Paket Packstation
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_eBayDHLPaeckchen">
+						<xs:annotation>
+							<xs:documentation>
+					eBay DHL Paeckchen
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DHLStarPaeckchen">
+						<xs:annotation>
+							<xs:documentation>
+					DHL Star-Paeckchen
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ES_CartasNacionalesHasta20">
+						<xs:annotation>
+							<xs:documentation>
+					Cartas nacionales hasta 20 gr
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ES_CartasNacionalesDeMas20"/>
+					<xs:enumeration value="ES_CartasInternacionalesHasta20">
+						<xs:annotation>
+							<xs:documentation>
+					Cartas internacionales hasta 20 gr
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ES_CartasInternacionalesDeMas20">
+						<xs:annotation>
+							<xs:documentation>
+					Cartas internacionales de mas de 20 gr
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ES_PaqueteAzulHasta2kg">
+						<xs:annotation>
+							<xs:documentation>
+					Paquete Azul (nacional) hasta 2 kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ES_PaqueteAzulDeMas2kg"/>
+					<xs:enumeration value="ES_PaqueteInternacionalEconomico"/>
+					<xs:enumeration value="ES_Urgente"/>
+					<xs:enumeration value="ES_Otros"/>
+					<xs:enumeration value="ES_StandardInternational"/>
+					<xs:enumeration value="ES_ExpeditedInternational"/>
+					<xs:enumeration value="ES_OtherInternational"/>
+					<xs:enumeration value="ES_CartasPostalInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Cartas y tarjetas postales internacionales
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ES_EmsPostalExpressInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Ems postal expres internacional
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ES_EconomyPacketInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Paquete internacional economico
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_ChronoposteInternationalClassic">
+						<xs:annotation>
+							<xs:documentation>
+					Chronoposte International Classic
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_ColiposteColissimoDirect">
+						<xs:annotation>
+							<xs:documentation>
+					Coliposte Colissimo Direct
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_DHLExpressEuropack">
+						<xs:annotation>
+							<xs:documentation>
+					DHL Express Europack
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_UPSStandard">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_PostOfficeLetter">
+						<xs:annotation>
+							<xs:documentation>Lettre</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_PostOfficeLetterFollowed">
+						<xs:annotation>
+							<xs:documentation>
+					Lettre avec suivi
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_PostOfficeLetterRecommended"/>
+					<xs:enumeration value="FR_ColiposteColissimo">
+						<xs:annotation>
+							<xs:documentation>
+					Colissimo
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_ColiposteColissimoRecommended"/>
+					<xs:enumeration value="FR_UPSStandardAgainstRefund">
+						<xs:annotation>
+							<xs:documentation>
+					Contre remboursement
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_Autre">
+						<xs:annotation>
+							<xs:documentation>
+					Autre mode d'envoi de courrier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_Ecopli">
+						<xs:annotation>
+							<xs:documentation>Ecopli</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_Colieco"/>
+					<xs:enumeration value="FR_AuteModeDenvoiDeColis">
+						<xs:annotation>
+							<xs:documentation>
+					Autre mode d'envoi de colis
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_RemiseEnMainPropre">
+						<xs:annotation>
+							<xs:documentation>
+					Remise en main propre
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_StandardInternational"/>
+					<xs:enumeration value="FR_ExpeditedInternational"/>
+					<xs:enumeration value="FR_OtherInternational"/>
+					<xs:enumeration value="FR_LaPosteInternationalPriorityCourier">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - Courrier International Prioritaire
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_LaPosteInternationalEconomyCourier">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - Courrier International
+					Economique
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_LaPosteColissimoInternational">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - Colissimo International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_LaPosteColisEconomiqueInternational">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - Colis Economique
+					International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_LaPosteColissimoEmballageInternational">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste - Colissimo Emballage
+					International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_ChronopostClassicInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Chronopost Classic International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_ChronopostPremiumInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Chronopost Premium International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_UPSStandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_UPSExpressInternational">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_DHLInternational">
+						<xs:annotation>
+							<xs:documentation>DHL</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_LaPosteLetterMax">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste Lettre Max
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_Regular">
+						<xs:annotation>
+							<xs:documentation>
+					National - Regular
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_Express">
+						<xs:annotation>
+							<xs:documentation>
+					National - Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_NationalCOD">
+						<xs:annotation>
+							<xs:documentation>
+					National - COD
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_Courier">
+						<xs:annotation>
+							<xs:documentation>
+					Local - Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_LocalCOD">
+						<xs:annotation>
+							<xs:documentation>
+					Local - COD
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					International - Standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					International - Expedited
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					International - other
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_FlatRateCOD">
+						<xs:annotation>
+							<xs:documentation>
+					Flat Rate COD
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IN_BuyerPicksUpAndPays">
+						<xs:annotation>
+							<xs:documentation>
+					Buyer picks up and pays
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_RegularMail">
+						<xs:annotation>
+							<xs:documentation>
+					Posta ordinaria
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_PriorityMail">
+						<xs:annotation>
+							<xs:documentation>
+					Posta prioritaria
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_MailRegisteredLetter">
+						<xs:annotation>
+							<xs:documentation>
+					Posta raccomandata
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_MailRegisteredLetterWithMark">
+						<xs:annotation>
+							<xs:documentation>
+					Posta raccomandata con contrassegno
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_InsuredMail">
+						<xs:annotation>
+							<xs:documentation>
+					Posta assicurata
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_QuickMail">
+						<xs:annotation>
+							<xs:documentation>
+					Posta celere
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_RegularPackage">
+						<xs:annotation>
+							<xs:documentation>
+					Pacco ordinario
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_QuickPackage1">
+						<xs:annotation>
+							<xs:documentation>
+					Pacco celere 1
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_QuickPackage3">
+						<xs:annotation>
+							<xs:documentation>
+					Pacco celere 3
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_ExpressCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Corriere espresso
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_ExpressPackageMaxi">
+						<xs:annotation>
+							<xs:documentation>
+					Paccocelere Maxi
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Spedizione internazionale standard a
+					prezzo fisso
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Spedizione internazionale celere a
+					prezzo fisso
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Altre spedizioni internazionali (vedi descrizione)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_StandardDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Standaardverzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_ParcelPost">
+						<xs:annotation>
+							<xs:documentation>
+					Pakketpost
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_RegisteredMail">
+						<xs:annotation>
+							<xs:documentation>
+					Verzending met ontvangstbevestiging
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_Other">
+						<xs:annotation>
+							<xs:documentation>
+					Andere verzendservice
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_TPGPostTNTInternational">
+						<xs:annotation>
+							<xs:documentation>
+					TPG Post/TNT
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_UPSInternational">
+						<xs:annotation>
+							<xs:documentation>UPS</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_FedExInternational">
+						<xs:annotation>
+							<xs:documentation>Fedex</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_DHLInternational">
+						<xs:annotation>
+							<xs:documentation>DHL</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_DPDGBRInternational">
+						<xs:annotation>
+							<xs:documentation>
+					DPD (Germany)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_GLSBusinessInternational">
+						<xs:annotation>
+							<xs:documentation>
+					GLS (Business only)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Vaste kosten standaard internationale verzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Vaste kosten versnelde internationale verzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Andere internationale verzending (zie beschrijving)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TW_RegisteredMail"/>
+					<xs:enumeration value="TW_UnregisteredMail"/>
+					<xs:enumeration value="TW_COD"/>
+					<xs:enumeration value="TW_DwellingMatchPost"/>
+					<xs:enumeration value="TW_DwellingMatchCOD"/>
+					<xs:enumeration value="TW_SelfPickup"/>
+					<xs:enumeration value="TW_ParcelPost"/>
+					<xs:enumeration value="TW_ExpressMail"/>
+					<xs:enumeration value="TW_Other"/>
+					<xs:enumeration value="TW_CPInternationalLetterPost"/>
+					<xs:enumeration value="TW_CPInternationalParcelPost"/>
+					<xs:enumeration value="TW_CPInternationalRegisteredLetterPost"/>
+					<xs:enumeration value="TW_CPInternationalRegisteredParcelPost"/>
+					<xs:enumeration value="TW_CPInternationalEMS"/>
+					<xs:enumeration value="TW_CPInternationalOceanShippingParcel"/>
+					<xs:enumeration value="TW_FedExInternationalPriority">
+						<xs:annotation>
+							<xs:documentation>
+					Fedex International Priority
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TW_FedExInternationalEconomy">
+						<xs:annotation>
+							<xs:documentation>
+					Fedex International Economy
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TW_UPSWorldwideExpedited">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Expedited
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TW_UPSWorldwideExpress">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TW_UPSWorldwideExpressPlus">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express Plus
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TW_OtherInternational"/>
+					<xs:enumeration value="UK_RoyalMailFirstClassStandard">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail 1st Class Standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailSecondClassStandard">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail 2nd Class Standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailFirstClassRecorded">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail 1st Class Recorded
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailSecondClassRecorded">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail 2nd Class Recorded
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailSpecialDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail Special Delivery
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailStandardParcel">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail Standard Parcels
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_Parcelforce24">
+						<xs:annotation>
+							<xs:documentation>
+					Parcelforce 24
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_Parcelforce48">
+						<xs:annotation>
+							<xs:documentation>
+					Parcelforce 48
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_OtherCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Other Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_SellersStandardRate">
+						<xs:annotation>
+							<xs:documentation>
+					Seller's Standard Rate
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_CollectInPerson">
+						<xs:annotation>
+							<xs:documentation>
+					Collection in Person
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_SellersStandardInternationalRate">
+						<xs:annotation>
+							<xs:documentation>
+					Sellers Standard International Rate
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailAirmailInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail Airmail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailAirsureInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail Airsure
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailSurfaceMailInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail Surface Mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailInternationalSignedFor">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail International Signed-for
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailHMForcesMailInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail HM Forces Mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_ParcelForceInternationalDatapost">
+						<xs:annotation>
+							<xs:documentation>
+					Parcelforce International Datapost
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_ParcelForceIreland24International">
+						<xs:annotation>
+							<xs:documentation>
+					Parcelforce Ireland 24
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_ParcelForceEuro48International">
+						<xs:annotation>
+							<xs:documentation>
+					Parcelforce Euro 48
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_ParcelForceInternationalScheduled">
+						<xs:annotation>
+							<xs:documentation>
+					Parcelforce International Scheduled
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_OtherCourierOrDeliveryInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Other courier or delivery service
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_CollectInPersonInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Collect in person
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_SellersStandardRate">
+						<xs:annotation>
+							<xs:documentation>
+					Seller's standard rate
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_FirstClassLetterService">
+						<xs:annotation>
+							<xs:documentation>
+					First Class Letter Service
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_SwiftPostNational">
+						<xs:annotation>
+							<xs:documentation>
+					SwiftPost National
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_RegisteredPost">
+						<xs:annotation>
+							<xs:documentation>
+					Registered Post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_EMSSDSCourier">
+						<xs:annotation>
+							<xs:documentation>
+					EMS SDS Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_EconomySDSCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Economy SDS Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_OtherCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Other courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_CollectionInPerson">
+						<xs:annotation>
+							<xs:documentation>
+					Collection in person
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_SellersStandardRateInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Seller's Standard International Rate
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_InternationalEconomyService">
+						<xs:annotation>
+							<xs:documentation>
+					International Economy Service
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_InternationalPriorityService">
+						<xs:annotation>
+							<xs:documentation>
+					International Priority Service
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_SwiftPostExpressInternational">
+						<xs:annotation>
+							<xs:documentation>
+					SwiftPost Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_SwiftPostInternational">
+						<xs:annotation>
+							<xs:documentation>
+					SwiftPost International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_EMSSDSCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					EMS SDS Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_EconomySDSCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Economy SDS Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_OtherCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Other courier or delivery service
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_CollectionInPersonInternational">
+						<xs:annotation>
+							<xs:documentation>
+					International collection in person
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PL_DomesticRegular">
+						<xs:annotation>
+							<xs:documentation>
+					Domestic Regular shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PL_DomesticSpecial">
+						<xs:annotation>
+							<xs:documentation>
+					Domestic Special shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FreightShipping">
+						<xs:annotation>
+							<xs:documentation>
+					Service associated with FreightQuote.com
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FreightOtherShipping">
+						<xs:annotation>
+							<xs:documentation>
+					Freight Other Shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Freight">
+						<xs:annotation>
+							<xs:documentation>
+					Service associated with any freight
+					service other than FreightQuote.com
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FreightShippingInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Freight Shipping International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSGround"/>
+					<xs:enumeration value="ShippingMethodOvernight">
+						<xs:annotation>
+							<xs:documentation>
+					Overnight flat rate shipping service (domestic only)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CustomCode">
+						<xs:annotation>
+							<xs:documentation>
+					Reserved for internal or future use
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityFlatRateEnvelope">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Flat Rate Envelope
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityFlatRateBox">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Flat Rate Box
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSGlobalPrioritySmallEnvelope">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Global Priority Mail Small Envelope
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSGlobalPriorityLargeEnvelope">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Global Priority Mail Large Envelope
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSExpressFlatRateEnvelope">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Express Mail Flat Rate Envelope
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSWorldWideExpressBox10kg">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express Box 10 Kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSWorldWideExpressBox25kg">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express Box 25 Kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSWorldWideExpressPlusBox10kg">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express Plus Box 10 Kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UPSWorldWideExpressPlusBox25kg">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worldwide Express Plus box 25 Kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="HK_LocalPickUpOnly">
+						<xs:annotation>
+							<xs:documentation>
+					Local pick up only
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="HK_LocalCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Local courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="HK_DomesticRegularShipping">
+						<xs:annotation>
+							<xs:documentation>
+					Domestic regular shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="HK_DomesticSpecialShipping">
+						<xs:annotation>
+							<xs:documentation>
+					Domestic special shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="HK_InternationalRegularShipping">
+						<xs:annotation>
+							<xs:documentation>
+					International regular shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="HK_InternationalSpecialShipping">
+						<xs:annotation>
+							<xs:documentation>
+					International special shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_LocalPickUpOnly">
+						<xs:annotation>
+							<xs:documentation>
+					Local pick up only
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_LocalCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Local courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_DomesticStandardMail">
+						<xs:annotation>
+							<xs:documentation>
+					Domestic standard mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_DomesticNonStandardMail">
+						<xs:annotation>
+							<xs:documentation>
+					Domestic non standard mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_DomesticSpeedpostIslandwide">
+						<xs:annotation>
+							<xs:documentation>
+					Domestic Speedpost Islandwide
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_InternationalStandardMail">
+						<xs:annotation>
+							<xs:documentation>
+					International standard mail
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_InternationalExpressMailService">
+						<xs:annotation>
+							<xs:documentation>
+					International Express Mail Service (EMS)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_InternationalCourier">
+						<xs:annotation>
+							<xs:documentation>
+					International courier (DHL, FedEx, UPS)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostZendingNONPRIOR">
+						<xs:annotation>
+							<xs:documentation>
+					De Post zending - NON PRIOR (2 werkdagen)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostZendingPRIOR">
+						<xs:annotation>
+							<xs:documentation>
+					De Post zending - PRIOR (1 werkdag)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostZendingAangetekend">
+						<xs:annotation>
+							<xs:documentation>
+					De Post zending - aangetekend (1
+					werkdag)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_KilopostPakje">
+						<xs:annotation>
+							<xs:documentation>
+					Kilopost pakje (2 werkdagen)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_Taxipost">
+						<xs:annotation>
+							<xs:documentation>
+					Taxipost (express)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_KialaAfhaalpunt">
+						<xs:annotation>
+							<xs:documentation>
+					Kiala afhaalpunt (1 tot 4 werkdagen)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_VasteKostenStandaardVerzending">
+						<xs:annotation>
+							<xs:documentation>
+					Vaste kosten standaard verzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_VasteKostenVersneldeVerzending">
+						<xs:annotation>
+							<xs:documentation>
+					Vaste kosten versnelde verzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_VerzekerdeVerzending">
+						<xs:annotation>
+							<xs:documentation>
+					Verzekerde verzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteEnvoiNONPRIOR">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste envoi NON PRIOR (2 jours ouvrables)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteEnvoiPRIOR">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste envoi PRIOR (1 jour ouvrable)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteEnvoiRecommande">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste envoi recommande (1 jour ouvrable)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_PaquetKilopost">
+						<xs:annotation>
+							<xs:documentation>
+					Paquet Kilopost (2 jours ouvrables)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_Taxipost">
+						<xs:annotation>
+							<xs:documentation>
+					Taxipost (express)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_PointRetraitKiala">
+						<xs:annotation>
+							<xs:documentation>
+					Point retrait Kiala (1 a 4 jours
+					ouvrables)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LivraisonStandardPrixforFaitaire">
+						<xs:annotation>
+							<xs:documentation>
+					Livraison standard - prix forfaitaire
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LivraisonExpressPrixforFaitaire">
+						<xs:annotation>
+							<xs:documentation>
+					Livraison express - prix forfaitaire
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LivraisonSecurise">
+						<xs:annotation>
+							<xs:documentation>
+					Livraison securisee
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostZendingPRIORInternational">
+						<xs:annotation>
+							<xs:documentation>
+					De Post zending - PRIOR
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostZendingNONPRIORInternational">
+						<xs:annotation>
+							<xs:documentation>
+					De Post zending - NON PRIOR
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_DePostZendingAangetekendInternational">
+						<xs:annotation>
+							<xs:documentation>
+					De Post zending - aangetekend
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_KilopostPakjeInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Kilopost pakje Internationaal
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_TaxipostExpressverzending">
+						<xs:annotation>
+							<xs:documentation>
+					Taxipost expressverzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_VerzekerdeVerzendingInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Verzekerde verzending
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteenvoiePRIOR">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste envoie PRIOR
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteenvoieNONPRIOR">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste envoie NON PRIOR
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LaPosteenvoieRecommande">
+						<xs:annotation>
+							<xs:documentation>
+					La Poste envoie recommande
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_PaquetKilopostInternationale">
+						<xs:annotation>
+							<xs:documentation>
+					Paquet Kilopost Internationale
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_ExpressTaxipost">
+						<xs:annotation>
+							<xs:documentation>
+					BEFR_Express Taxipost
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LivraisonStandardInternationalePrixforFaitaire">
+						<xs:annotation>
+							<xs:documentation>
+					Livraison standard internationale - prix forfaitaire
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LivraisonExpressInternationalePrixforFaitaire">
+						<xs:annotation>
+							<xs:documentation>
+					Livraison express internationale - prix forfaitaire
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_LivraisonSecuriseInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Livraison securisee
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_Chronopost">
+						<xs:annotation>
+							<xs:documentation>
+					Chronopost
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailSpecialDeliveryNextDay">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail Special Delivery Next Day
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostLightPacketInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Light Packet International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_PostLightPacketUSA">
+						<xs:annotation>
+							<xs:documentation>
+					Canada Post Light Packet USA
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PL_DHLInternational">
+						<xs:annotation>
+							<xs:documentation>DHL</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PL_InternationalRegular">
+						<xs:annotation>
+							<xs:documentation>
+					Przesylka zagraniczna - zwykla
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PL_InternationalSpecial">
+						<xs:annotation>
+							<xs:documentation>
+					Przesylka zagraniczna - priorytetowa
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PL_UPSInternational">
+						<xs:annotation>
+							<xs:documentation>UPS</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_StandardDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Normes de livraison postale
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_ExpeditedDelivery">
+						<xs:annotation>
+							<xs:documentation>
+					Expedition acceleree
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostLettermail">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Poste-lettres
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostRegularParcel">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Colis standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostExpeditedParcel">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Colis acceleres
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostXpresspost">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Xpresspost
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostPriorityCourier">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Messageries prioritaires
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expedition standard - International, tarif fixe
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expedition acceleree - International, tarif fixe
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_OtherInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Autres services d'expedition internationale (voir description)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostExpeditedParcelUSA">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Colis acceleres - E.U.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostSmallPacketsUSA">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Petits paquets - E.U.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostXpresspostUSA">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Xpresspost - E.U.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostXpresspostInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Xpresspost - International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostInternationalParcelSurface">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Colis international de surface
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostInternationalParcelAir">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Colis-avion - International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_SmallPacketsInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Petits paquets - International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PurolatorInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Purolator International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostSmallPacketsUSAGround">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Petits paquets - E.U. service de surface
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostSmallPacketsUSAAir">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Petits paquets - E.U. par
+					avion
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_SmallPacketsInternationalGround">
+						<xs:annotation>
+							<xs:documentation>
+					Petits paquets - International, courrier-surface
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_SmallPacketsInternationalAir">
+						<xs:annotation>
+							<xs:documentation>
+					Petits paquets - International, courrier-avion
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostUSALetterPost">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Poste aux lettres - E.U.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_PostInternationalLetterPost">
+						<xs:annotation>
+							<xs:documentation>
+					Postes Canada, Poste aux lettres - International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSExpressCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Express Saver
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSExpressSaverCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Express Saver Canada
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSExpeditedCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Expedited Canada
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSStandardCanada">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Standard au Canada
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSExpressUnitedStates">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Express Etats-Unis
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSExpeditedUnitedStates">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Expedited Etats-Unis
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPS3DaySelectUnitedStates">
+						<xs:annotation>
+							<xs:documentation>
+					3Day Select aux Etats-Unis
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSStandardUnitedStates">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Standard aux Etats-Unis
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSWorldWideExpress">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worlwide Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CAFR_UPSWorldWideExpedited">
+						<xs:annotation>
+							<xs:documentation>
+					UPS Worlwide Expedited
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_RoyalMailSpecialDelivery9am">
+						<xs:annotation>
+							<xs:documentation>
+					Royal Mail Special Delivery 9:00 am
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSFirstClassMailInternational">
+						<xs:annotation>
+							<xs:documentation>
+					USPS First Class Mail International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSPriorityMailInternational">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Priority Mail International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSExpressMailInternational">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Express Mail International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Standardpauschale fur internationalen Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expresspauschale fur internationalen Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_SonstigerVersandSieheArtikelbeschreibung">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstiger Versand (Siehe Artikelbeschreibung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TW_StandardInternationalFixedRate">
+						<xs:annotation>
+							<xs:documentation>
+					International Standard FixedRate for Taiwan
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="TW_ExpeditedInternationalFixedRate">
+						<xs:annotation>
+							<xs:documentation>
+					International Express FixedRate for Taiwan
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="USPSGlobalExpressGuaranteed">
+						<xs:annotation>
+							<xs:documentation>
+					USPS Global Express Guaranteed
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_RegularWithInsurance">
+						<xs:annotation>
+							<xs:documentation>
+					Regular with Insurance
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_ExpressWithInsurance">
+						<xs:annotation>
+							<xs:documentation>
+					Express with Insurance
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DeutschePostWarensendungInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Warensendung
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DeutschePostByendung">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Byendung
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_HermesPaketUnversichertInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Hermes Paket (unversichert)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_HermesPaketVersichertInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Hermes Paket (versichert)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_iLoxxTransportXXLInternational">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx Transport XXL
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_iLoxxUbernachtExpressInternational">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx Ubernacht Express
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_iLoxxStandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					iloxx Standard
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Standardpauschale fur internationalen Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expresspauschale fur internationalen Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_BitteTreffenSieEineAuswahl">
+						<xs:annotation>
+							<xs:documentation>
+					AT_BITTE_TREFFEN_SIE_EINE_AUSWAHL
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_EinschreibenVersandInklEinschreibengebuhr">
+						<xs:annotation>
+							<xs:documentation>
+					Einschreiben (Versand inkl. Einschreibengebuhr)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_NachnahmeVersandInklNachnahmegebuhr">
+						<xs:annotation>
+							<xs:documentation>
+					Nachnahme (Versand inkl. Nachnahmegebuhr)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_ExpressOrCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_InsuredExpressOrCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_SpecialDispatchInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Sonderversand (z.B. Sperrgut, KFZ)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_InsuredSpecialDispatchInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Sonderversand (z.B. Sperrgut, KFZ)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_StandardInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Standardpauschale fur internationalen Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_ExpeditedInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Expresspauschale fur internationalen Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_OtherInternationalShipping">
+						<xs:annotation>
+							<xs:documentation>
+					Sonstiger Versand (Siehe Artikelbeschreibung)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_BitteTreffenSieEineAuswahl">
+						<xs:annotation>
+							<xs:documentation>
+					CH_BITTE_TREFFEN_SIE_EINE_AUSWAHL
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_UnversicherterVersand">
+						<xs:annotation>
+							<xs:documentation>
+					Unversicherter Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_VersicherterVersand">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Versand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_EinschreibenVersandInklEinschreibengebuhr">
+						<xs:annotation>
+							<xs:documentation>
+					Einschreiben (Versand inkl. Einschreibengebuhr)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_NachnahmeVersandInklNachnahmegebuhr">
+						<xs:annotation>
+							<xs:documentation>
+					Nachnahme (Versand inkl. Nachnahmegebuhr)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_ExpressOrCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_InsuredExpressOrCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_SonderversandZBSperrgutKFZ">
+						<xs:annotation>
+							<xs:documentation>
+					Sonderversand (z.B. Sperrgut, KFZ)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_VersicherterSonderversandZBSperrgutKFZ">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Sonderversand (z.B. Sperrgut, KFZ)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_StandardversandAPostPriority">
+						<xs:annotation>
+							<xs:documentation>
+					Standardversand (A-Post/Priority)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_StandardversandBPostEconomy">
+						<xs:annotation>
+							<xs:documentation>
+					Standardversand (B-Post/Economy)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_BitteTreffenSieEineAuswahl">
+						<xs:annotation>
+							<xs:documentation>
+					DE_BITTE_TREFFEN_SIE_EINE_AUSWAHL
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_EinschreibenVersandInklEinschreibengebuhr">
+						<xs:annotation>
+							<xs:documentation>
+					Einschreiben (Versand inkl. Einschreibengebuhr)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_NachnahmeVersandInklNachnahmegebuhr">
+						<xs:annotation>
+							<xs:documentation>
+					Nachnahme (Versand inkl. Nachnahmegebuhr)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_ExpressOrCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_InsuredExpressOrCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Express- oder Kurierversand
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_SonderversandZBMobelKFZ">
+						<xs:annotation>
+							<xs:documentation>
+					Sonderversand (z.B. Mobel, KFZ)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_VersicherterSonderversandZBMobelKFZ">
+						<xs:annotation>
+							<xs:documentation>
+					Versicherter Sonderversand (z.B. Mobel, KFZ)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_DeutschePostBriefInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Deutsche Post Brief
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_StandardInternationalFlatRatePostage">
+						<xs:annotation>
+							<xs:documentation>
+					Standard Int'l Flat Rate Postage
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_ExpeditedInternationalFlatRatePostage">
+						<xs:annotation>
+							<xs:documentation>
+					Expedited Int'l Flat Rate Postage
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IE_OtherInternationalPostage">
+						<xs:annotation>
+							<xs:documentation>
+					Other Int'l Postage (see description)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_StandardInternationalFlatRatePostage">
+						<xs:annotation>
+							<xs:documentation>
+					Standard Int'l Flat Rate Postage
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_ExpeditedInternationalFlatRatePostage">
+						<xs:annotation>
+							<xs:documentation>
+					Expedited Int'l Flat Rate Postage
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_OtherInternationalPostage">
+						<xs:annotation>
+							<xs:documentation>
+					Other Int'l Postage (see description)
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_ChronopostChronoRelais">
+						<xs:annotation>
+							<xs:documentation>
+					Chronopost - Chrono Relais
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_Chrono10">
+						<xs:annotation>
+							<xs:documentation>
+					Chrono 10
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_Chrono13">
+						<xs:annotation>
+							<xs:documentation>
+					Chrono 13
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_Chrono18">
+						<xs:annotation>
+							<xs:documentation>
+					Chrono 18
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_ChronopostExpressInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Chronopost Express International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Pickup">
+						<xs:annotation>
+							<xs:documentation>
+					PickUp Only Service
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Delivery">
+						<xs:annotation>
+							<xs:documentation>
+					Delivery
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CA_Pickup">
+						<xs:annotation>
+							<xs:documentation>
+					Pickup Only Service
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DE_Pickup">
+						<xs:annotation>
+							<xs:documentation>
+					Abholung
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_Pickup">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_SmallParcels">
+						<xs:annotation>
+							<xs:documentation>
+					Small Parcels
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidParcelPostSatchels500g">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Parcel Post Satchels 500g
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidParcelPostSatchels3kg">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Parcel Post Satchels 3kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostSatchel500g">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post Satchel 500g
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostSatchel3kg">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post Satchel 3kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostPlatinum500g">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post Platinum 500g
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostPlatinum3kg">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post Platinum 3kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_ExpressCourierInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Express Courier International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_ExpressPostInternational">
+						<xs:annotation>
+							<xs:documentation>
+					Express Post International
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostInternationalEnvelopeC5">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post International Envelope C5
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostInternationalEnvelopeB4">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post International Envelope B4
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostInternationalSatchels2kg">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post International Satchels 2kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostInternationalSatchels3kg">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post International Satchels 3kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostInternationalBox5kg">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post International Box 5kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostInternationalBox10kg">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post International Box 10kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_PrePaidExpressPostInternationalBox20kg">
+						<xs:annotation>
+							<xs:documentation>
+					PrePaid Express Post International Box 20kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_RegisteredParcelPost">
+						<xs:annotation>
+							<xs:documentation>
+					Registered Parcel Post
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_RegisteredSmallParcel">
+						<xs:annotation>
+							<xs:documentation>
+					Registered Small Parcel
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_RegisteredParcelPostPrepaidSatchel500g">
+						<xs:annotation>
+							<xs:documentation>
+					Registered Parcel Post Prepaid Satchel 500g
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AU_RegisteredParcelPostPrepaidSatchel3kg">
+						<xs:annotation>
+							<xs:documentation>
+					Registered Parcel Post Prepaid Satchel 3kg
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FR_Pickup">
+						<xs:annotation>
+							<xs:documentation>
+					Enlevement
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="AT_Pickup">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BENL_Pickup">
+						<xs:annotation>
+							<xs:documentation>Afhalen</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BEFR_Pickup">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CH_Pickup">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="IT_Pickup">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NL_Pickup">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PL_Pickup">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ES_Pickup">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SG_Delivery">
+						<xs:annotation>
+							<xs:documentation>Pickup</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_OtherCourier24">
+						<xs:annotation>
+							<xs:documentation>
+					Other 24 Hour Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_OtherCourier48">
+						<xs:annotation>
+							<xs:documentation>
+					Other 48 Hour Courier
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_OtherCourier3Days">
+						<xs:annotation>
+							<xs:documentation>
+					Other Courier 3 days
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UK_OtherCourier5Days">
+						<xs:annotation>
+							<xs:documentation>
+					Other Courier 5 days
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Courier">
+						<xs:annotation>
+							<xs:documentation>
+					Courier Shipping
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			The base request container for all service operations.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			The base response container for all service operations.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+					Acknowledgement of the operation's success or failure.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+					An error or warning that occurred when eBay processed the request.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The version of the schema that your WSDL is based on.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+					The date and time of the response.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			The nature of the response.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+					eBay successfully processed the request and the business data is returned
+					in the response. Note that it is possible for a response to return
+					Success, but still not contain the expected data in the result.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+					eBay encountered a fatal error during the processing of the request,
+					causing the request to fail. When a serious application-level error
+					occurs, the error is returned instead of the business data.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+					The request was successfully processed, but eBay encountered a non-fatal
+					error during the processing. For best results, requests should return
+					without warnings. Inspect the warning details and resolve the problem
+					before resubmitting the request.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+					eBay successfully processed the request, but one or more non-fatal errors
+					occurred during the processing. For best results, requests should return
+					without warning messages. Inspect the message details and resolve any
+					problems before resubmitting the request.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			The source of the error.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+					System error
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+					Application error
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+					Problems in the request
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			Details of the error.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+					Details of the error.
+					Run time errors are not reported here but as part of SOAP fault.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			Details of the error.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+					A unique code that identifies the particular error condition that
+					occurred. Your application can use error codes as identifiers in your
+					customized error-handling algorithms.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Name of the domain in which the error occurred.
+					&lt;dl&gt;
+						&lt;lh&gt;Domains include:&lt;/lh&gt;
+								&lt;dt&gt;Marketplace&lt;/dt&gt;
+						&lt;dd&gt;A business or validation error occurred for the Bulk Data Exchange
+								service. &lt;/dd&gt;
+						&lt;dt&gt;SOA&lt;/dt&gt;
+						&lt;dd&gt;An exception occurred in the Service Oriented Architecture (SOA)
+						framework.&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+					Indicates whether the error caused the request to fail (an Error) or not (a
+					Warning).
+					&lt;br&gt;&lt;br&gt;
+					If the request fails and the source of the problem is within the application
+					(such as a missing required element), change the application before you retry
+					the request. If the problem is due to end-user input data, please alert the end-
+					user to the problem and provide the means for them to correct the data. Once the
+					problem in the application or data is resolved, you can attempt to re-send the
+					request to eBay.
+					&lt;br&gt;&lt;br&gt;
+					If the source of the problem is on eBay's side, you can retry the request as-is
+					a reasonable number of times (eBay recommends you try the request twice). If the
+					error persists, contact Developer Technical Support. Once the problem has been
+					resolved, you can resend the request in its original form.
+					&lt;br&gt;&lt;br&gt;
+					When a warning occurs, the warning is returned in addition to the business data.
+					In this case, you do not need to retry the request (as the original request was
+					successful). However, depending on the cause or nature of the warning, you might
+					need to contact either the end user or eBay to effect a long term solution to
+					the problem.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+					The category of error. There are three categories of errors: request errors,
+					application errors, and system errors.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The error message text.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Name of the subdomain upon which the error occurred.
+					&lt;dl&gt;
+							&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+							&lt;dt&gt;BuyingService&lt;/dt&gt;
+					&lt;dd&gt; The error is specific to the BuyingService
+					service. &lt;/dd&gt;
+							&lt;dt&gt;MarketplaceCommon&lt;/dt&gt;
+					&lt;dd&gt;The error is common to all Marketplace services.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+					Unique identifier for an exception associated with an error.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+					Some warning and error messages return one or more variables that contain
+					contextual information about the error. This is often the field or value that
+					triggered the error.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			Contextual information associated with an error.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+						The name of the parameter in the get of parameter types returned within the
+						error type.
+					</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>Conditionally</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			Indicates whether the error is a severe error (causing the request to fail) or an
+			informational error (a warning) that should be communicated to the user.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+					The request that triggered the error was not processed successfully. When a
+					serious application-level error occurs, the error is returned instead of the
+					business data.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+					The request was processed successfully, but something occurred that may affect
+					your application or the user. For example, eBay may have changed a value the
+					user sent in. In this case, eBay returns a normal, successful response and also
+					returns the warning.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="User">
+				<xs:annotation>
+					<xs:documentation>
+			Details of an eBay.com User
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="userId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The eBay login name of the user.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="immutableUserId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Unique identifier for the user that does not change when the eBay user name is
+					changed.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="feedbackScore" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The aggregate feedback score for a user. A user's feedback score is the net
+					positive feedback minus the net negative feedback left for the user.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+		</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SellerOrder">
+				<xs:annotation>
+					<xs:documentation>
+			A grouping of packages by seller.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="seller" type="tns:User">
+						<xs:annotation>
+							<xs:documentation>
+					Details to identify the seller.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="package" type="tns:Package">
+						<xs:annotation>
+							<xs:documentation>
+					A collection of items that are to be shipped together in one
+					package.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="paymentSummary" type="tns:PaymentSummary">
+						<xs:annotation>
+							<xs:documentation>
+					Payment details of the seller order.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Address">
+				<xs:annotation>
+					<xs:documentation>
+			Details of an address.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Name associated with address, if such exists.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="street1" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Street details, line 1
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="street2" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Street details, line 2, if any.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="city" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					City
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="county" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					County
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="stateOrProvince" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					State or province. Returned only if applicable.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="country" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+					Country
+				</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>CountryCodeList</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="postalCode" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Zip code or postal code.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="phone" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The phone number associated with the shipping address (if any).
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ShippingServiceDetails">
+				<xs:annotation>
+					<xs:documentation>
+			Details of an eBay shipping service.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="shippingService" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+					A shipping service offered for shipping the item (for example, UPS
+					Ground). For a list of valid values that you can cache for future use, call
+					GeteBayDetails with DetailName set to ShippingServiceDetails.
+				</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>ShippingServiceList</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="shippingServiceName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The name to be displayed for this shipping service.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingTimeMin" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+					The minimum guaranteed number of days in which the shipping carrier
+					can ship an item (not including the time it takes the seller to deliver
+					the item to the shipping carrier).
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingTimeMax" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+					The maximum guaranteed number of days the shipping carrier
+					will take to ship an item (not including the time it takes
+					the seller to deliver the item to the shipping carrier).
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingInsuranceCost" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+					The insurance cost associated with shipping a single item
+					with this shipping service. Exception: for GetItemShipping,
+					this is proportional to QuantitySold. If the item has not yet been sold,
+					insurance information cannot be calculated and the value is 0.00.
+					For calculated shipping only.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SalesTax">
+				<xs:annotation>
+					<xs:documentation>
+			(US only) The amount of sales tax, calculated for a transaction based on
+			the SalesTaxPercent and pricing information.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="salesTaxAmount" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+					The amount of sales tax, calculated for a transaction based on
+					the SalesTaxPercent and pricing information. (US only)
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="salesTaxPercent" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>
+					Percent of an item's price to be charged as the sales tax
+					for the transaction. The value passed in is stored with
+					a precision of 3 digits after the decimal point (##.###).
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="salesTaxState" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					State or jurisdiction for which the sales tax is being collected.
+					Only returned if the seller specified a value.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingIncludedInTax" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+					Whether shipping costs were part of the base amount that was taxed.
+					Flat or calculated shipping. (US only)
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LineItemIdentifier">
+				<xs:annotation>
+					<xs:documentation>
+			An identifier for an item or a transaction.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="itemId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The eBay or eBay Partner item ID.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SKU" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The SKU (Stock Keeping Unit) that the seller defined for the listing
+					associated with the item being retrieved.
+					&lt;div class="tablenote"&gt;&lt;b&gt;Note:&lt;/b&gt;
+					SKU is not validated by eBay. It is to be used only by
+					the seller. It is never to be exposed to the buyer.
+					&lt;/div&gt;&lt;br&gt;
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="variationDetails" type="tns:VariationDetails">
+						<xs:annotation>
+							<xs:documentation>
+					Details to identify a Variation of an item uniquely.
+					Only applicable to multi-variation listings.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="transactionId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The transaction ID of the item that was committed for purchase.
+					Not applicable to Immediate Payment listings.
+					Applications can call getCheckoutCart before and after checkout.
+					After checkout, the final "purchased" cart is returned with
+					transaction IDs for all purchased items.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="lineItemType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+					The type of line item in the cart (e.g. item versus transaction versus multi-
+					variation item).
+				</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>LineItemTypeList</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="LineItemTypeList">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+			The nature of the line item in the Review Your Purchase summary.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Item">
+						<xs:annotation>
+							<xs:documentation>
+					An item.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ItemVariation">
+						<xs:annotation>
+							<xs:documentation>
+					An item listed in Variation style.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Transaction">
+						<xs:annotation>
+							<xs:documentation>
+					A transaction.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="VariationDetails">
+				<xs:annotation>
+					<xs:documentation>
+			Container element for the Item Specifics for a Variation.
+			Applicable for multi-variation listings.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="SKU" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The SKU (Stock Keeping Unit) to uniquely identify this Variation.
+					Applicable for multi-variation listings.
+					&lt;div class="tablenote"&gt;&lt;b&gt;Note:&lt;/b&gt;
+					SKU is not validated by eBay. It is to be used only by
+					the seller. It is never to be exposed to the buyer.
+					&lt;/div&gt;&lt;br&gt;
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="variationSpecifics" type="tns:VariationSpecifics">
+						<xs:annotation>
+							<xs:documentation>
+					The Item Specifics for a Variation. Applicable for multi-variation listings.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="VariationSpecifics">
+				<xs:annotation>
+					<xs:documentation>
+			The Item Specifics for a Variation. Applicable for multi-variation listings.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="nameValueList" type="tns:NameValueList">
+						<xs:annotation>
+							<xs:documentation>
+					Name/value pair. On input, if nameValueList is provided, both name and value must
+					be provided. Only applicable for multi-variation listings.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="NameValueList">
+				<xs:annotation>
+					<xs:documentation>
+			Name/value pair. Applicable to multi-variation listings only.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The name in a name/value pair.
+					Sample Variation Specific name: Size, Color.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					The value in a name/value pair.
+					Sample Variation Specific value: Medium, Black.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PaymentSummary">
+				<xs:annotation>
+					<xs:documentation>
+			Payment details for the seller order.
+		</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="itemSubtotal" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+					Subtotal of all item prices in this seller order.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingAndHandlingSubtotal" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+					Subtotal of shipping and handling charges for this order.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="taxSubtotal" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+					Tax for this seller order.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subtotal" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+					Subtotal of itemSubtotal + shippingAndHandlingSubtotal +  taxSubtotal.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Package">
+				<xs:annotation>
+					<xs:documentation>
+				A collection of items. All items in a package
+				are from the same seller.
+			</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="lineItem" type="tns:LineItem">
+						<xs:annotation>
+							<xs:documentation>
+						An item in the package.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="selectedShippingService" type="tns:ShippingServiceDetails">
+						<xs:annotation>
+							<xs:documentation>
+						The shipping method selected by the
+						buyer on the eBay web site.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="shippingCost" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+						The cost to ship this package of items.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="tax" type="tns:SalesTax">
+						<xs:annotation>
+							<xs:documentation>
+						The tax on shipping this package.
+						Returned only if greater than 0.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="insuranceCost" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+						The cost of insurance for shipping this
+						package. Returned only if there was
+						insurance.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="otherChargesOrDiscounts" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+						Other charges or discounts not captured
+						in other fields. If positive, it is a
+						charge. If negative, it is a discount.
+						Returned only if not 0.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="total" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+						The total of (quantity * item price) +
+						shipping cost + tax + insuranceCost +
+						otherChargesOrDiscounts.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CheckoutCart">
+				<xs:annotation>
+					<xs:documentation>
+				An eBay or eBay Partner checkout cart.
+			</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="cartId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+						The ID of the cart.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="buyer" type="tns:User">
+						<xs:annotation>
+							<xs:documentation>
+						Details about the buyer.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="shippingAddress" type="tns:Address">
+						<xs:annotation>
+							<xs:documentation>
+						The registered shipping address of the
+						buyer.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="sellerOrder" type="tns:SellerOrder">
+						<xs:annotation>
+							<xs:documentation>
+						All of the packages from one seller.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="cartStatus" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+						The Status of the Cart in the eBay System.
+					</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>
+							CartStatusList
+						</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Amount">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="currencyId" type="xs:string" use="required"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:complexType name="LineItem">
+				<xs:annotation>
+					<xs:documentation>
+				A entity or line item from the Review Your
+				Purchase summary view. It may be a single
+				transaction, a seller-created order (where a
+				seller combines transactions), a donation to an
+				eBay Charity, or a coupon that results in a cart
+				discount.
+			</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="lineItemIdentifier" type="tns:LineItemIdentifier">
+						<xs:annotation>
+							<xs:documentation>
+						A transaction id, order id, donation id,
+						or coupon code.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="itemTitle" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+						The entity's title on the eBay or eBay Partner's web site.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="quantity" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+						Quantity
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="price" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+						The price of the item. For Immediate
+						Payment listings, this is the item at
+						the time it was added to the cart (it is
+						possible for the item price to change in
+						the time it takes for the user to move
+						from initiating a "buy" to
+						beginning and completing the checkout
+						process).
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="itemShippingService" type="tns:ShippingServiceDetails">
+						<xs:annotation>
+							<xs:documentation>
+						A shipping service offered on the eBay
+						web site by the seller for this item.
+					</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="lineItemStatus" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+						The Status of this Cart LineItem in the eBay System.
+					</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>
+							LineItemStatusList
+						</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="createCheckoutCartRequest">
+		<wsdl:part element="tns:createCheckoutCartRequest" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="createCheckoutCartResponse">
+		<wsdl:part element="tns:createCheckoutCartResponse" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="purchaseCheckoutCartRequest">
+		<wsdl:part element="tns:purchaseCheckoutCartRequest" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="purchaseCheckoutCartResponse">
+		<wsdl:part element="tns:purchaseCheckoutCartResponse" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="getCheckoutCartRequest">
+		<wsdl:part element="tns:getCheckoutCartRequest" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="getCheckoutCartResponse">
+		<wsdl:part element="tns:getCheckoutCartResponse" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part element="tns:getVersionRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="tns:getVersionResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:portType name="BuyingServicePort">
+		<wsdl:operation name="createCheckoutCart">
+			<wsdl:documentation>
+				Create a checkout cart
+			</wsdl:documentation>
+			<wsdl:input message="tns:createCheckoutCartRequest"/>
+			<wsdl:output message="tns:createCheckoutCartResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="purchaseCheckoutCart">
+			<wsdl:documentation>
+				Purchase the checkout cart
+			</wsdl:documentation>
+			<wsdl:input message="tns:purchaseCheckoutCartRequest"/>
+			<wsdl:output message="tns:purchaseCheckoutCartResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getCheckoutCart">
+			<wsdl:documentation>
+				Retrieve a checkout cart by cart id
+			</wsdl:documentation>
+			<wsdl:input message="tns:getCheckoutCartRequest"/>
+			<wsdl:output message="tns:getCheckoutCartResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="tns:getVersionRequest" name="getVersionRequest"/>
+			<wsdl:output message="tns:getVersionResponse" name="getVersionResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BuyingServiceSoapBinding" type="tns:BuyingServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="createCheckoutCart">
+			<soap12:operation soapAction="urn:createCheckoutCart" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="purchaseCheckoutCart">
+			<soap12:operation soapAction="urn:purchaseCheckoutCart" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCheckoutCart">
+			<soap12:operation soapAction="urn:getCheckoutCart" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<soap12:operation soapAction="urn:getVersion" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="BuyingServiceHttpBinding" type="tns:BuyingServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="createCheckoutCart">
+			<http:operation location="BuyingService/createCheckoutCart"/>
+			<wsdl:input>
+				<mime:content part="createCheckoutCart" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createCheckoutCart" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="purchaseCheckoutCart">
+			<http:operation location="BuyingService/purchaseCheckoutCart"/>
+			<wsdl:input>
+				<mime:content part="purchaseCheckoutCart" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="purchaseCheckoutCart" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCheckoutCart">
+			<http:operation location="BuyingService/getCheckoutCart"/>
+			<wsdl:input>
+				<mime:content part="getCheckoutCart" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getCheckoutCart" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<http:operation location="BuyingService/getVersion"/>
+			<wsdl:input>
+				<mime:content type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="BuyingService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+			Retrieves a checkout cart.
+		</wsdl:documentation>
+		<wsdl:port binding="tns:BuyingServiceHttpBinding" name="BuyingServiceHttp">
+			<http:address location="http://svcs.ebay.com/services/buying/v1/BuyingService"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:BuyingServiceSoapBinding" name="BuyingServiceSOAP">
+			<soap12:address location="http://svcs.ebay.com/services/buying/v1/BuyingService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

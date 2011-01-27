@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="urn:ebay:apis:eBLBaseComponents" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="urn:ebay:apis:eBLBaseComponents">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:ebay:apis:eBLBaseComponents">
+
+
+	<!-- ##### SHARED_TYPES ##### -->
+	<!--  
+##### from file ./../Shared/xsd/AbstractRequestType.xsd #####
+
+-->
+	<xs:complexType abstract="true" name="AbstractRequestType">
+		<xs:annotation>
+			<xs:documentation>
+				Base type definition of the request payload, which can carry any type
+				of payload content plus optional versioning information and detail level requirements.
+				All concrete request types are derived from the abstract request type.
+				The naming convention we use for the concrete type names is the name of the service
+				(the verb or call name) followed by "RequestType": VerbNameRequestType
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- PRIVATE -->
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="OutputSelector" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Another way of specifying the detail level.  Value of each OutputSelector is x-path.
+						It's additive - to see more than one detail level, specify all of them:
+						"User.PayPalInfo.* User.FeedbackInfo" etc.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- PRIVATE -->
+			<xs:element minOccurs="0" name="MessageID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						If you pass a value in MessageID in a request,
+						we'll return the same value in CorrelationID in the response.
+						If you're making a lot of calls, you can use this for tracking that a
+						response is returned for every request and to match
+						particular responses to particular requests. (In this case, specify
+						a different value for each request.) You can specify any value
+						that is useful to you.
+			<!-- PRIVATE -->
+						[DocInternal] The following text can be edited and then added for MessageID when an
+						applicable call is released:
+						Note that some calls are designed to retrieve large sets of
+						meta-data that only change once a day or less often.
+						To improve performance, these calls return cached responses when you request
+						all available data (with no filters). In these cases, the correlation ID is
+						not applicable. However, if you specify an input filter to reduce the amount
+						data returned, you can use MessageID and CorrelationID for these meta-data
+						calls. These are the meta-data calls that can return cached responses:
+						GetCategories, GetAttributesCS, GetCategory2CS, GetAttributesXsl,
+						GetProductFinder, GetProductFinderXsl, and GetProductSearchPage.
+			<!-- PRIVATE -->
+					</xs:documentation>
+					<xs:appinfo>
+						<MaxLength/>
+						<CallInfo>
+							<AllCalls/>
+							<RequiredInput>No</RequiredInput>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+
+		</xs:sequence>
+	</xs:complexType>
+<!--  
+##### from file ./../Shared/xsd/AbstractResponseType.xsd #####
+
+-->
+	<xs:complexType abstract="true" name="AbstractResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				Base type definition of a response payload that can carry any
+				type of payload content with following optional elements:&lt;br&gt;
+				- timestamp of response message&lt;br&gt;
+				- application-level acknowledgement&lt;br&gt;
+				- application-level (business-level) errors and warnings
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Timestamp" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>
+						This value represents the date and time when eBay processed the
+						request. The time zone of this value is &lt;a href="types/simpleTypes.html#dateTime"&gt;GMT&lt;/a&gt;
+						and the format is the
+						ISO 8601 date and time format (YYYY-MM-DDTHH:MM:SS.SSSZ).
+						See the "dateTime" type for information about this
+						time format and converting to and from the GMT time zone.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Ack" type="ns:AckCodeType">
+				<xs:annotation>
+					<xs:documentation>
+						Indiates whether the call was successfully processed by eBay.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Always</Returned>
+							<AllValuesExcept>PartialFailure</AllValuesExcept>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="Errors" type="ns:ErrorType">
+				<xs:annotation>
+					<xs:documentation>
+						A list of application-level errors or warnings (if any) that were raised
+						when eBay processed the request. &lt;br&gt;
+						&lt;br&gt;
+						Application-level errors occur due to
+						problems with business-level data on the client side or on the eBay
+						server side. For example, an error would occur if the request contains
+						an invalid combination of fields, or it is missing a required field,
+						or the value of the field is not recognized. An error could also occur
+						if eBay encountered a problem in our internal business logic while
+						processing the request.&lt;br&gt;
+						&lt;br&gt;
+						Only returned if there were warnings or errors.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Build" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						This refers to the particular software build that eBay used when
+						processing the request and generating the response. This includes the
+						version number plus additional information. eBay Developer Support may
+						request the build information when helping you resolve technical issues.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Version" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						The release version that eBay used to process the request.
+						&lt;br&gt;
+						&lt;br&gt;
+						&lt;span class="tablenote"&gt;&lt;b&gt;Note:&lt;/b&gt;
+						This is usually the latest release version, as specified in the
+						release notes. (eBay releases the API to international sites
+						about a week after we release it to the US site.) &lt;/span&gt;&lt;br&gt;
+						&lt;br&gt;
+						If a field in the response returns the token "CustomCode", it usually
+						means that the field is a code type (a token or enumeration),
+						and that in your request URL (or HTTP header) you specified a
+						version that is older than the version in which the token was added
+						to the call.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Always</Returned>
+						</CallInfo>
+						<SeeLink>
+							<Title>eBay Versioning Strategy</Title>
+							<URL>http://developer.ebay.com/DevZone/XML/docs/HowTo/eBayWS/eBaySchemaVersioning.html</URL>
+						</SeeLink>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="CorrelationID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						If you pass a value in MessageID in a request, we will return the same
+						value in CorrelationID in the response. You can use this for tracking
+						that a response is returned for every request and to match particular
+						responses to particular requests. Only returned if MessageID was used.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+
+		</xs:sequence>
+	</xs:complexType>
+<!--  
+##### from file ./../Shared/xsd/AckCodeList.xsd #####
+
+-->
+	<xs:simpleType name="AckCodeType">
+		<xs:annotation>
+			<xs:documentation>
+AckCodeType - Type declaration to be used by other schema.
+This code identifies the acknowledgement code types that 
+eBay could use to communicate the status of processing a 
+(request) message to an application. This code would be used 
+as part of a response message that contains an  
+application-level acknowledgement element.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Success">
+				<xs:annotation>
+					<xs:documentation>
+					   (out) Request processing succeeded
+				      </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Failure">
+				<xs:annotation>
+					<xs:documentation> 
+					   (out) Request processing failed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Warning">
+				<xs:annotation>
+					<xs:documentation>
+					   (out) Request processing completed with warning information
+					   being included in the response message
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PartialFailure">
+				<xs:annotation>
+					<xs:documentation>
+						(out) Request processing completed with some failures.
+						See the Errors data to determine which portions of the request failed.
+						<!-- PRIVATE -->
+						<!-- [DocInternal] Ron provided the list of applicable calls. [LT 2006-05-30] -->
+						<!-- PRIVATE -->
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomCode">
+				<xs:annotation>
+					<xs:documentation>
+					   (out) Reserved for internal or future use.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+<!--  
+##### from file ./../Shared/xsd/ErrorClassificationCodeList.xsd #####
+
+-->
+	<xs:simpleType name="ErrorClassificationCodeType">
+		<xs:annotation>
+			<xs:documentation>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="RequestError">
+				<xs:annotation>
+					<xs:documentation>
+					An error has occurred either as a result of a problem in the sending application or because 
+					the application's end-user has attempted to submit invalid data (or missing data). 
+					In these cases, do not retry the request. The problem must be corrected before the request 
+					can be made again. If the problem is due to something in the application (such as a missing 
+					required field), the application must be changed. If the problem is a result of end-user data, 
+					the application must alert the end-user to the problem and provide the means for the end-user 
+					to correct the data. Once the problem in the application or data is resolved, resend the request to eBay
+					with the corrected data. 
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SystemError">
+				<xs:annotation>
+					<xs:documentation>
+					Indicates that an error has occurred on the eBay system side, such as a database or server down. 
+					An application can retry the request as-is a reasonable number of times (eBay recommends twice). 
+					If the error persists, contact Developer Technical Support. Once the problem has been resolved, 
+					the request may be resent in its original form. 
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomCode">
+				<xs:annotation>
+					<xs:documentation>
+						(out) Reserved for internal or future use.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+<!-- PRIVATE -->
+<!--  
+##### from file ./../Shared/xsd/ErrorDisplayCodeList.xsd #####
+
+-->
+	<xs:simpleType name="ErrorDisplayCodeType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="UserFacing">
+				</xs:enumeration>
+			<xs:enumeration value="DevFacing">
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+<!-- PRIVATE -->
+<!--  
+##### from file ./../Shared/xsd/ErrorParameterType.xsd #####
+
+-->
+	<xs:complexType name="ErrorParameterType">
+		<xs:annotation>
+			<xs:documentation>
+				A variable that contains specific information about the context of this error.
+				For example, if you pass in an attribute set ID that does not match
+				the specified category, the attribute set ID might be returned as an error parameter.
+				Use error parameters to flag fields that users need to correct.
+				Also use error parameters to distinguish between errors when multiple
+				errors are returned.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Value" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						The value of the variable.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+		<xs:attribute name="ParamID" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+				The index of the parameter in the error.
+				</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+<!--  
+##### from file ./../Shared/xsd/ErrorType.xsd #####
+
+-->
+	<xs:complexType name="ErrorType">
+		<xs:annotation>
+			<xs:documentation>
+				These are request errors (as opposed to system errors) that occur due to problems
+				with business-level data (e.g., an invalid combination of arguments) that
+				the application passed in.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ShortMessage" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						A brief description of the condition that raised the error.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+						<SeeLink>
+							<Title>Errors by Number</Title>
+							<URL>Errors/ErrorMessages.html</URL>
+						</SeeLink>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="LongMessage" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						A more detailed description of the condition that raised the error.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+						<SeeLink>
+							<Title>Errors by Number</Title>
+							<URL>Errors/ErrorMessages.html</URL>
+						</SeeLink>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ErrorCode" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>
+						A unique code that identifies the particular error condition that occurred.
+						Your application can use error codes as identifiers
+						in your customized error-handling algorithms.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+						<SeeLink>
+							<Title>Errors by Number</Title>
+							<URL>Errors/ErrorMessages.html</URL>
+						</SeeLink>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="UserDisplayHint" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>
+						This field is not currently in use for eBay Shopping Web Services.
+						Indicates whether the error message text is intended to be displayed to
+						an end user or intended only to be parsed by the application.
+						If true or not present (the default), the message text is intended for the end user. If false, the message text is intended for
+						the application, and the application should translate the error into a more appropriate message.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<NoCalls/>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="SeverityCode" type="ns:SeverityCodeType">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error caused the request to fail.&lt;br&gt;
+						&lt;br&gt;
+						If the request fails and the source of the problem is within the
+						application (such as a missing required element), please change the
+						application before you  retry the request. If the problem is due to
+						end-user input data, please alert the end-user to the problem and
+						provide the means for them to correct the data. Once the problem in the
+						application or data is resolved, you can attempt to re-send the request
+						to eBay.&lt;br&gt;
+						&lt;br&gt;
+						If the source of the problem is on eBay's side, you can retry the
+						request as-is a reasonable number of times (eBay recommends twice).
+						If the error persists, contact Developer Technical Support. Once the
+						problem has been resolved, the request may be resent in its original
+						form.&lt;br&gt;
+						&lt;br&gt;
+						When a warning occurs, the error is returned in addition to the business
+						data. In this case, you do not need to retry the request (as the
+						original request was successful). However, depending on the cause or
+						nature of the warning, you might need to contact either the end user or
+						eBay to effect a long term solution to the problem to prevent it from
+						reoccurring in the future.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+						<SeeLink>
+							<Title>Errors by Number</Title>
+							<URL>Errors/ErrorMessages.html</URL>
+						</SeeLink>
+						<SeeLink>
+							<Title>ErrorHandlingGuidelines</Title>
+							<URL>UseTopicAlias</URL>
+							<For>more information (in the eBay Trading Web Services guide)</For>
+						</SeeLink>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="ErrorParameters" type="ns:ErrorParameterType">
+				<xs:annotation>
+					<xs:documentation>
+						Some warning and error messages return one or more variables that
+						contain contextual information about the error. This is often the
+						field or value that triggered the error.
+						You can usually predict where these will
+						occur by looking at the "replaceable_value" indicators in our
+						Errors by Number page.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+						<SeeLink>
+							<Title>Errors by Number</Title>
+							<URL>Errors/ErrorMessages.html</URL>
+						</SeeLink>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ErrorClassification" type="ns:ErrorClassificationCodeType">
+				<xs:annotation>
+					<xs:documentation>
+						API errors are divided between two classes: system errors and request errors.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+						<SeeLink>
+							<Title>Errors by Number</Title>
+							<URL>Errors/ErrorMessages.html</URL>
+						</SeeLink>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+<!--  
+##### from file ./../Shared/xsd/SeverityCodeList.xsd #####
+
+-->
+	<xs:simpleType name="SeverityCodeType">
+		<xs:annotation>
+			<xs:documentation>
+SeverityCodeType - Type declaration to be used by other schema.
+This code identifies the severity of an API error. A code indicates
+whether there is an API-level error or warning that needs to be
+communicated to the client.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Warning">
+				<xs:annotation>
+					<xs:documentation>
+						(out) The request was processed successfully, but something occurred
+						that may affect your application or the user. For example, eBay may have
+						changed a value the user sent in. In this case, eBay returns a normal,
+						successful response and also returns the warning.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Error">
+				<xs:annotation>
+					<xs:documentation>
+						(out) The request that triggered the error was not processed
+						successfully. When a serious application-level error occurs, the error
+						is returned instead of the business data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+<xs:enumeration value="CustomCode">
+				<xs:annotation>
+					<xs:documentation>
+						  (out) Reserved for internal or future use
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- ##### XSD_TYPES ##### -->
+	<!--  
+
+##### from file ../RemotePortlet/xsd/PortletParameters.xsd #####
+
+-->
+	<xs:complexType name="PortletParameters">
+	        <xs:sequence>
+					<xs:element name="ParameterName" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="ParameterValue" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/PortletRequest.xsd #####
+
+-->
+		<xs:element name="PortletRequest" type="ns:PortletRequestType"/>
+<xs:complexType name="PortletRequestType">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ns:AbstractRequestType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="WireRenderRequest" type="ns:WireRenderRequest"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="WireActionRequest" type="ns:WireActionRequest"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="WireCombinedRequest" type="ns:WireCombinedRequest"/>
+                                        <xs:element name="CalLogId" type="xs:string"/>
+                                        <xs:element name="secure" type="xs:boolean"/>
+                                        <xs:element name="langauge" type="xs:string"/>
+                                        <xs:element name="country" type="xs:string"/>
+                                        <xs:element name="variant" type="xs:string"/>
+                                        <xs:element name="target" type="xs:string"/>
+                                        <!-- This is wrong, two many lax in this complex type.
+					<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+					-->
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/PortletResponse.xsd #####
+
+-->
+		<xs:element name="PortletResponse" type="ns:PortletResponseType"/>
+<xs:complexType name="PortletResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+
+		<xs:complexContent>
+			<xs:extension base="ns:AbstractResponseType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="WireRenderResponse" type="ns:WireRenderResponse"/>
+					<xs:element name="ActionResponse" type="ns:WireActionResponse"/>
+                                        <xs:element name="CalLogId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/WireActionRequest.xsd #####
+
+-->
+	<xs:complexType name="WireActionRequest">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ns:WirePortletRequest">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/WireActionResponse.xsd #####
+
+-->
+	<xs:complexType name="WireActionResponse">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+                        <xs:extension base="ns:WirePortletResponse">
+	                      <xs:sequence>
+		                </xs:sequence>
+                        </xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/WireCombinedRequest.xsd #####
+
+-->
+	<xs:complexType name="WireCombinedRequest">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ns:WirePortletRequest">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/WirePortletRequest.xsd #####
+
+-->
+	<xs:complexType name="WirePortletRequest">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+	        <xs:sequence>
+					<xs:element name="PortletSpecName" type="xs:string"/>
+                                        <xs:element name="RequestName" type="xs:string"/>
+					<xs:element name="WindowState" type="xs:string"/>
+                                        <xs:element name="PortletId" type="xs:int"/>
+                                        <xs:element name="PortletName" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="PortletParameters" type="ns:PortletParameters"/>
+                                        <xs:element name="PortletUrl" type="ns:WirePortletUrl"/>
+                                        <xs:element name="PortalJsVersion" type="xs:string"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/WirePortletResponse.xsd #####
+
+-->
+	<xs:complexType name="WirePortletResponse">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+	        <xs:sequence>
+                                        <xs:element name="PortletId" type="xs:int"/>
+                                        <xs:element name="PortletName" type="xs:string"/>
+						    <xs:element name="RequestName" type="xs:string"/>
+                                        <xs:element name="WindowState" type="xs:string"/>
+                                        <xs:element name="RedirectURL" type="xs:string"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="RequestData" type="ns:PortletParameters"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="ResponseData" type="ns:PortletParameters"/>
+				        	    <xs:element name="Html" type="xs:string"/>
+                                        <xs:element name="PortletURL" type="ns:PortletURLType"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="LinkedRemoteCSS" type="ns:WireRemoteReferences"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="EmbeddedRemoteCSS" type="ns:WireRemoteReferences"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="LinkedRemoteJS" type="ns:WireRemoteReferences"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="EmbeddedRemoteJS" type="ns:WireRemoteReferences"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="SvcRequestHandlers" type="ns:WireRemoteReferences"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="SvcResponseHandlers" type="ns:WireRemoteReferences"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="EventHandlers" type="ns:WireEventHandlers"/>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0" name="CookieData" type="ns:PortletParameters"/>
+			<xs:element name="JsVersion" type="xs:string"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+<xs:complexType name="PortletURLType">
+	        <xs:sequence>
+					<xs:element name="PortalBaseURL" type="xs:string"/>
+					<xs:element name="PortletName" type="xs:string"/>
+					<xs:element name="BaseURL" type="xs:string"/>
+       					<xs:element maxOccurs="unbounded" minOccurs="0" name="PortletParameters" type="ns:PortletParameters"/>
+                 
+		</xs:sequence>
+	</xs:complexType>
+<xs:complexType name="WireRemoteReferences">
+	        <xs:sequence>
+					<xs:element name="Key" type="xs:string"/>
+       					<xs:element maxOccurs="unbounded" minOccurs="0" name="RemoteRef" type="ns:WireRemoteRef"/>
+		</xs:sequence>
+	</xs:complexType>
+<xs:complexType name="WireRemoteRef">
+	        <xs:sequence>
+					<xs:element name="Urn" type="xs:string"/>
+					<xs:element name="Text" type="xs:string"/>
+					<xs:element name="ResourceType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+<xs:complexType name="WireEventHandlers">
+	        <xs:sequence>
+       					<xs:element name="RemoteElem" type="ns:WireRemoteElem"/>
+       					<xs:element maxOccurs="unbounded" minOccurs="0" name="EventHandlerElem" type="ns:WireEventHandlerElem"/>
+		</xs:sequence>
+	</xs:complexType>
+<xs:complexType name="WireRemoteElem">
+	        <xs:sequence>
+       					<xs:element name="ClassName" type="xs:string"/>
+       					<xs:element name="HtmlId" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+<xs:complexType name="WireEventHandlerElem">
+	        <xs:sequence>
+       					<xs:element name="RemoteRef" type="ns:WireRemoteRef"/>
+       					<xs:element name="EventTypes" type="ns:WireEventType"/>
+		</xs:sequence>
+	</xs:complexType>
+<xs:complexType name="WireEventType">
+	        <xs:sequence>
+       					<xs:element name="EnumId" type="xs:int"/>
+       					<xs:element name="EnumName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/WirePortletUrl.xsd #####
+
+-->
+	<xs:complexType name="WirePortletUrl">
+	        <xs:sequence>
+                                        <xs:element name="DarwinBaseUrl" type="xs:string"/>
+                                        <xs:element name="PortletName" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="Parameters" type="ns:UrlParameters"/>
+		</xs:sequence>
+        </xs:complexType>
+<xs:complexType name="UrlParameters">
+	        <xs:sequence>
+					<xs:element name="ParameterName" type="xs:string"/>
+					<xs:element name="ParameterValue" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/WireRenderRequest.xsd #####
+
+-->
+	<xs:complexType name="WireRenderRequest">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ns:WirePortletRequest">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+<!--  
+
+##### from file ../RemotePortlet/xsd/WireRenderResponse.xsd #####
+
+-->
+	<xs:complexType name="WireRenderResponse">
+		<xs:annotation>
+			<xs:documentation>
+				[PD] TODO:  PLEASE INSERT YOUR COMMENT HERE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ns:WirePortletResponse">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+		</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="PortletResponse">
+    <wsdl:part element="ns:PortletResponse" name="PortletResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PortletRequest">
+    <wsdl:part element="ns:PortletRequest" name="PortletRequest"/>
+  </wsdl:message>
+  <wsdl:portType name="RemotePortletInterface">
+    <wsdl:operation name="portlet">
+      <wsdl:input message="ns:PortletRequest"/>
+      <wsdl:output message="ns:PortletResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RemotePortletBinding" type="ns:RemotePortletInterface">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="portlet">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RemotePortletSoa">
+    <wsdl:port binding="ns:RemotePortletBinding" name="RemotePortletSoa">
+      <wsdlsoap:address location="http://open.api.ebay.com/remoteportlet"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

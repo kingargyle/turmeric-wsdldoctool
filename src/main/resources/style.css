@@ -1,0 +1,107 @@
+hr {
+  height: 0.5px;
+  color:#000;
+}
+
+.JavadocHeading{
+	font-size: x-large;
+	font-weight: bold;
+}
+
+.JavadocHeader{
+	font-variant: normal;
+	font-size: small;
+}
+.JavadocHeaderTable{
+	width: 100%;
+}
+
+.JavadocDocumentationTxt{
+	font-family: monospace;
+}
+
+.JavadocTable{
+	border-style:solid;
+	border-width:1px;
+	padding:3px;
+	border-collapse:collapse;
+	width:100%
+}
+
+.JavadocOccurancesTable{
+	border-style:solid;
+	border-width:1px;
+	padding:1px;
+	border-collapse:collapse;
+	width:50%
+}
+.JavadocTableTr{
+	border-style:solid;
+	border-width:1px;
+	padding:3px;
+	border-collapse:collapse;
+}
+
+.JavadocTableTd{
+	border-style:solid;
+	border-width:1px;
+	padding:3px;
+	border-collapse:collapse;
+}
+.JavadocTableHeaders{
+	background-color: #CCCCFF;
+	border-style: solid;
+	border-width: 1px;
+	padding: 3px;
+	border-collapse: collapse;
+}
+
+.JavadocOccuranceTableTr{
+	border-style:solid;
+	border-width:1px;
+	padding:1px;
+	border-collapse:collapse;
+}
+
+.JavadocOccurancTableTd{
+	border-style:solid;
+	border-width:1px;
+	padding:1px;
+	border-collapse:collapse;
+}
+.JavadocOccurancTableHeaders{
+	background-color: #CCCCFF;
+	border-style: solid;
+	border-width: 1px;
+	padding: 1px;
+	border-collapse: collapse;
+}
+
+.javaDocInlineHeading{
+	font-size: large;
+	font-weight: bold;
+}
+
+.javaDocRelatedHeading{
+	font-size:medium;
+	font-weight: bold;
+}
+
+.javaDocOpName{
+	font-weight: bolder;
+}
+.pageHeading {
+	font-size: 24px;
+	text-align: center;
+}
+.javaDocMethodName{
+	font-family: monospace;
+	font-weight: bold;
+}
+
+.javaDocMethodTypes{
+	font-family: monospace;
+}
+.javaDocOpDetail{
+	font-family: serif;
+}

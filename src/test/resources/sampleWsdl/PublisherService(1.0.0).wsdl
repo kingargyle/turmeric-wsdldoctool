@@ -1,0 +1,1514 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:impl="urn:wsmanager.turboroller.ebay.com" xmlns:intf="urn:wsmanager.turboroller.ebay.com" xmlns:tns1="http://to.common.turboroller.ebay.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="urn:wsmanager.turboroller.ebay.com">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="urn:wsmanager.turboroller.ebay.com">
+   <import namespace="http://to.common.turboroller.ebay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="Authentication">
+    <sequence>
+     <element name="applicationName" nillable="true" type="xsd:string"/>
+     <element name="ip" nillable="true" type="xsd:string"/>
+     <element name="password" nillable="true" type="xsd:string"/>
+     <element name="userId" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_xsd_string">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_MachineTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:MachineTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_MachineToV2">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:MachineToV2[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_CommandTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:CommandTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_PartnerContingencyTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:PartnerContingencyTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://to.common.turboroller.ebay.com">
+   <import namespace="urn:wsmanager.turboroller.ebay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="PoolTo">
+    <sequence>
+     <element name="architectureId" nillable="true" type="xsd:string"/>
+     <element name="archtier" nillable="true" type="xsd:string"/>
+     <element name="assetStatusId" nillable="true" type="xsd:string"/>
+     <element name="buildType" nillable="true" type="xsd:string"/>
+     <element name="comments" nillable="true" type="xsd:string"/>
+     <element name="contact" nillable="true" type="xsd:string"/>
+     <element name="deliverableName" nillable="true" type="xsd:string"/>
+     <element name="effectiveDate" nillable="true" type="xsd:string"/>
+     <element name="functionalDesc" nillable="true" type="xsd:string"/>
+     <element name="gbpEnabled" type="xsd:boolean"/>
+     <element name="ilogEngineReq" type="xsd:boolean"/>
+     <element name="inTR" type="xsd:boolean"/>
+     <element name="internalVipOnly" type="xsd:boolean"/>
+     <element name="multiRolloutAllowed" type="xsd:boolean"/>
+     <element name="odbName" nillable="true" type="xsd:string"/>
+     <element name="packageName" nillable="true" type="xsd:string"/>
+     <element name="plaform" nillable="true" type="xsd:string"/>
+     <element name="planId" nillable="true" type="xsd:string"/>
+     <element name="platsTicketId" nillable="true" type="xsd:string"/>
+     <element name="poolId" nillable="true" type="xsd:string"/>
+     <element name="poolLocale" nillable="true" type="xsd:string"/>
+     <element name="poolName" nillable="true" type="xsd:string"/>
+     <element name="poolNuggetName" nillable="true" type="xsd:string"/>
+     <element name="poolOperSystemId" nillable="true" type="xsd:string"/>
+     <element name="poolResponsibleOrgId" nillable="true" type="xsd:string"/>
+     <element name="poolState" nillable="true" type="xsd:string"/>
+     <element name="poolStateId" nillable="true" type="xsd:string"/>
+     <element name="poolTypeId" nillable="true" type="xsd:string"/>
+     <element name="projectId" nillable="true" type="xsd:string"/>
+     <element name="protocolSupportId" nillable="true" type="xsd:string"/>
+     <element name="qaApprovalReq" type="xsd:boolean"/>
+     <element name="rollMechanismId" nillable="true" type="xsd:string"/>
+     <element name="rolloutCommand" nillable="true" type="xsd:string"/>
+     <element name="rolloutCommandType" nillable="true" type="xsd:string"/>
+     <element name="runTaskTimeOut" type="xsd:int"/>
+     <element name="secInfoId" nillable="true" type="xsd:string"/>
+     <element name="securePool" type="xsd:boolean"/>
+     <element name="stagingTimeOut" type="xsd:int"/>
+     <element name="tierId" type="xsd:int"/>
+     <element name="tivoliEnabled" type="xsd:boolean"/>
+     <element name="userLoginId" nillable="true" type="xsd:string"/>
+     <element name="validationName" nillable="true" type="xsd:string"/>
+     <element name="validationUrl" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="MachineTo">
+    <sequence>
+     <element name="actualRolloutTime" nillable="true" type="xsd:string"/>
+     <element name="adminNotes" nillable="true" type="xsd:string"/>
+     <element name="adminStatus" nillable="true" type="xsd:string"/>
+     <element name="agentStatus" nillable="true" type="xsd:string"/>
+     <element name="appServerVersion" nillable="true" type="xsd:string"/>
+     <element name="codeStagingStatus" nillable="true" type="xsd:string"/>
+     <element name="codeTag" nillable="true" type="xsd:string"/>
+     <element name="expectRolloutTime" nillable="true" type="xsd:string"/>
+     <element name="f5Name" nillable="true" type="xsd:string"/>
+     <element name="f5Status" type="xsd:int"/>
+     <element name="javaVmVersion" nillable="true" type="xsd:string"/>
+     <element name="machineId" nillable="true" type="xsd:string"/>
+     <element name="machineName" nillable="true" type="xsd:string"/>
+     <element name="pingStatus" type="xsd:int"/>
+     <element name="previousCodeTag" nillable="true" type="xsd:string"/>
+     <element name="previousXslTag" nillable="true" type="xsd:string"/>
+     <element name="rolloutDetail" nillable="true" type="xsd:string"/>
+     <element name="rolloutStatus" nillable="true" type="xsd:string"/>
+     <element name="stepNumber" nillable="true" type="xsd:int"/>
+     <element name="validatedCodeTag" nillable="true" type="xsd:string"/>
+     <element name="validatedXslTag" nillable="true" type="xsd:string"/>
+     <element name="xslStagingStatus" nillable="true" type="xsd:string"/>
+     <element name="xslTag" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="MachineToV2">
+    <sequence>
+     <element name="actualRolloutTime" nillable="true" type="xsd:string"/>
+     <element name="adminNotes" nillable="true" type="xsd:string"/>
+     <element name="adminStatus" nillable="true" type="xsd:string"/>
+     <element name="agentStatus" nillable="true" type="xsd:string"/>
+     <element name="appServerVersion" nillable="true" type="xsd:string"/>
+     <element name="assetStatus" nillable="true" type="xsd:string"/>
+     <element name="codeStagingStatus" nillable="true" type="xsd:string"/>
+     <element name="codeTag" nillable="true" type="xsd:string"/>
+     <element name="expectRolloutTime" nillable="true" type="xsd:string"/>
+     <element name="f5Name" nillable="true" type="xsd:string"/>
+     <element name="f5Status" type="xsd:int"/>
+     <element name="javaVmVersion" nillable="true" type="xsd:string"/>
+     <element name="machineId" nillable="true" type="xsd:string"/>
+     <element name="machineName" nillable="true" type="xsd:string"/>
+     <element name="pingStatus" type="xsd:int"/>
+     <element name="previousCodeTag" nillable="true" type="xsd:string"/>
+     <element name="previousXslTag" nillable="true" type="xsd:string"/>
+     <element name="rolloutDetail" nillable="true" type="xsd:string"/>
+     <element name="rolloutStatus" nillable="true" type="xsd:string"/>
+     <element name="stepNumber" nillable="true" type="xsd:int"/>
+     <element name="validatedCodeTag" nillable="true" type="xsd:string"/>
+     <element name="validatedXslTag" nillable="true" type="xsd:string"/>
+     <element name="xslStagingStatus" nillable="true" type="xsd:string"/>
+     <element name="xslTag" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="CommandTo">
+    <sequence>
+     <element name="command" nillable="true" type="xsd:string"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="successMatch" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="RolloutTo">
+    <sequence>
+     <element name="codeBuild" nillable="true" type="xsd:string"/>
+     <element name="conductorLoginId" nillable="true" type="xsd:string"/>
+     <element name="description" nillable="true" type="xsd:string"/>
+     <element name="excludeMachineList" nillable="true" type="xsd:string"/>
+     <element name="forceRollout" type="xsd:boolean"/>
+     <element name="includeMachineList" nillable="true" type="xsd:string"/>
+     <element name="machineRollTo" type="xsd:int"/>
+     <element name="parentId" nillable="true" type="xsd:string"/>
+     <element name="poolName" nillable="true" type="xsd:string"/>
+     <element name="releaseEngineerLoginId" nillable="true" type="xsd:string"/>
+     <element name="rollbackCommand" nillable="true" type="xsd:string"/>
+     <element name="rollbackFrom" nillable="true" type="xsd:string"/>
+     <element name="rollbackSuccessMatch" nillable="true" type="xsd:string"/>
+     <element name="rolloutCommand" nillable="true" type="xsd:string"/>
+     <element name="rolloutDateTime" nillable="true" type="xsd:dateTime"/>
+     <element name="rolloutId" nillable="true" type="xsd:string"/>
+     <element name="rolloutPlanId" nillable="true" type="xsd:string"/>
+     <element name="rolloutPlanTicket" nillable="true" type="xsd:string"/>
+     <element name="rolloutSuccessMatch" nillable="true" type="xsd:string"/>
+     <element name="rolloutType" nillable="true" type="xsd:string"/>
+     <element name="skipApproval" type="xsd:boolean"/>
+     <element name="skipQa" type="xsd:boolean"/>
+     <element name="skipStaging" type="xsd:boolean"/>
+     <element name="smokeTest" type="xsd:boolean"/>
+     <element name="trainNumber" nillable="true" type="xsd:string"/>
+     <element name="validationList" nillable="true" type="impl:ArrayOf_tns2_CommandTo"/>
+     <element name="xslBuild" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="PartnerContingencyTo">
+    <sequence>
+     <element name="partnerDescription" nillable="true" type="xsd:string"/>
+     <element name="partnerId" nillable="true" type="xsd:string"/>
+     <element name="serviceDescription" nillable="true" type="xsd:string"/>
+     <element name="serviceId" nillable="true" type="xsd:string"/>
+     <element name="siteId" nillable="true" type="xsd:string"/>
+     <element name="siteName" nillable="true" type="xsd:string"/>
+     <element name="statusDescription" nillable="true" type="xsd:string"/>
+     <element name="statusId" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getMachineToRollListV2Response">
+
+      <wsdl:part name="getMachineToRollListV2Return" type="impl:ArrayOf_tns2_MachineToV2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupCodeRolloutResponse">
+
+      <wsdl:part name="setupCodeRolloutReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMachinesLockedInRolloutRequest">
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+      <wsdl:part name="machineNameList" type="xsd:string"/>
+
+      <wsdl:part name="isExcludeMachines" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPartnerContingencyStatusResponse">
+
+      <wsdl:part name="getPartnerContingencyStatusReturn" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setBuildTypesAndPackageNamesToDefaultsResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPlatsTicketIdByPoolNameRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupDBWireOnRolloutRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutTo" type="tns1:RolloutTo"/>
+
+      <wsdl:part name="partnerContingencies" type="impl:ArrayOf_tns2_PartnerContingencyTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupDBWireOnRolloutResponse">
+
+      <wsdl:part name="setupDBWireOnRolloutReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPartnerContingencyStatusRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="calpoolName" type="xsd:string"/>
+
+      <wsdl:part name="serviceId" type="xsd:string"/>
+
+      <wsdl:part name="siteId" type="xsd:string"/>
+
+      <wsdl:part name="cobrandId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolListByPoolCategoryResponse">
+
+      <wsdl:part name="getPoolListByPoolCategoryReturn" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="tcApproveResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPlatsTicketIdByPoolNameResponse">
+
+      <wsdl:part name="getPlatsTicketIdByPoolNameReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getChildRolloutIdsRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDefaultTemplateByPoolNameAndRolloutTypeResponse">
+
+      <wsdl:part name="getDefaultTemplateByPoolNameAndRolloutTypeReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPlatsTicketIdByPoolIdResponse">
+
+      <wsdl:part name="getPlatsTicketIdByPoolIdReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupCodeRolloutRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutTo" type="tns1:RolloutTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupSmokeRolloutRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutTo" type="tns1:RolloutTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPartnerContingencyServiceIdListRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMachineToRollListV2Request">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolByPoolIdRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createPoolResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolIdByODBNameRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMachineToRollListResponse">
+
+      <wsdl:part name="getMachineToRollListReturn" type="impl:ArrayOf_tns2_MachineTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPlatsTicketIdByODBNameRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolIdByPoolNameResponse">
+
+      <wsdl:part name="getPoolIdByPoolNameReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updatePlatsTicketIdByPoolIdRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolId" type="xsd:string"/>
+
+      <wsdl:part name="platsTicketId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolListByPoolCategoryRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolTypeName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDefaultTemplateByPoolNameAndRolloutTypeRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+      <wsdl:part name="rolloutTypeName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRolloutStatusRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolIdByPoolNameRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRolloutStatusResponse">
+
+      <wsdl:part name="getRolloutStatusReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolByPoolNameRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupSmokeRolloutResponse">
+
+      <wsdl:part name="setupSmokeRolloutReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updatePoolRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolTo" type="tns1:PoolTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getChildRolloutIdsResponse">
+
+      <wsdl:part name="getChildRolloutIdsReturn" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolByPoolNameResponse">
+
+      <wsdl:part name="getPoolByPoolNameReturn" type="tns1:PoolTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolIdByODBNameResponse">
+
+      <wsdl:part name="getPoolIdByODBNameReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="tcApproveRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+      <wsdl:part name="in2" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelCodeRolloutResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPartnerContingencyFromServiceIdResponse">
+
+      <wsdl:part name="getPartnerContingencyFromServiceIdReturn" type="impl:ArrayOf_tns2_PartnerContingencyTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPartnerContingencyServiceIdListResponse">
+
+      <wsdl:part name="getPartnerContingencyServiceIdListReturn" type="impl:ArrayOf_tns2_PartnerContingencyTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPartnerContingencyFromServiceIdRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="serviceId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updatePlatsTicketIdByPoolIdResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="hasActiveRolloutResponse">
+
+      <wsdl:part name="hasActiveRolloutReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="hasActiveRolloutRequest">
+
+      <wsdl:part name="poolNames" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolByODBNameRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPlatsTicketIdByPoolIdRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolByODBNameResponse">
+
+      <wsdl:part name="getPoolByODBNameReturn" type="tns1:PoolTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setPoolTasksToDefaultsRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="targetPoolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPlatsTicketIdByODBNameResponse">
+
+      <wsdl:part name="getPlatsTicketIdByODBNameReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setBuildTypesAndPackageNamesToDefaultsRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="targetPoolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createPoolRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolTo" type="tns1:PoolTo"/>
+
+      <wsdl:part name="useDefaultPackages" type="xsd:boolean"/>
+
+      <wsdl:part name="useDefaultTasks" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelCodeRolloutRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+      <wsdl:part name="reason" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPartnerContingencyStatusIdListResponse">
+
+      <wsdl:part name="getPartnerContingencyStatusIdListReturn" type="impl:ArrayOf_tns2_PartnerContingencyTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="abortStagingRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+      <wsdl:part name="reason" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setPoolTasksToDefaultsResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getMachineToRollListRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updatePoolResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPartnerContingencyStatusIdListRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMachinesLockedInRolloutResponse">
+
+      <wsdl:part name="getMachinesLockedInRolloutReturn" type="impl:ArrayOf_tns2_MachineToV2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupWireOnRolloutRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutTo" type="tns1:RolloutTo"/>
+
+      <wsdl:part name="partnerContingencies" type="impl:ArrayOf_tns2_PartnerContingencyTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="abortStagingResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolByPoolIdResponse">
+
+      <wsdl:part name="getPoolByPoolIdReturn" type="tns1:PoolTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupWireOnRolloutResponse">
+
+      <wsdl:part name="setupWireOnRolloutReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Publisher">
+
+      <wsdl:operation name="getPoolListByPoolCategory" parameterOrder="auth poolTypeName">
+
+         <wsdl:input message="impl:getPoolListByPoolCategoryRequest" name="getPoolListByPoolCategoryRequest"/>
+
+         <wsdl:output message="impl:getPoolListByPoolCategoryResponse" name="getPoolListByPoolCategoryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolIdByPoolName" parameterOrder="auth poolName">
+
+         <wsdl:input message="impl:getPoolIdByPoolNameRequest" name="getPoolIdByPoolNameRequest"/>
+
+         <wsdl:output message="impl:getPoolIdByPoolNameResponse" name="getPoolIdByPoolNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolIdByODBName" parameterOrder="auth poolName">
+
+         <wsdl:input message="impl:getPoolIdByODBNameRequest" name="getPoolIdByODBNameRequest"/>
+
+         <wsdl:output message="impl:getPoolIdByODBNameResponse" name="getPoolIdByODBNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolByPoolName" parameterOrder="auth poolName">
+
+         <wsdl:input message="impl:getPoolByPoolNameRequest" name="getPoolByPoolNameRequest"/>
+
+         <wsdl:output message="impl:getPoolByPoolNameResponse" name="getPoolByPoolNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolByODBName" parameterOrder="auth poolName">
+
+         <wsdl:input message="impl:getPoolByODBNameRequest" name="getPoolByODBNameRequest"/>
+
+         <wsdl:output message="impl:getPoolByODBNameResponse" name="getPoolByODBNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolByPoolId" parameterOrder="auth poolId">
+
+         <wsdl:input message="impl:getPoolByPoolIdRequest" name="getPoolByPoolIdRequest"/>
+
+         <wsdl:output message="impl:getPoolByPoolIdResponse" name="getPoolByPoolIdResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createPool" parameterOrder="auth poolTo useDefaultPackages useDefaultTasks">
+
+         <wsdl:input message="impl:createPoolRequest" name="createPoolRequest"/>
+
+         <wsdl:output message="impl:createPoolResponse" name="createPoolResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updatePool" parameterOrder="auth poolTo">
+
+         <wsdl:input message="impl:updatePoolRequest" name="updatePoolRequest"/>
+
+         <wsdl:output message="impl:updatePoolResponse" name="updatePoolResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setBuildTypesAndPackageNamesToDefaults" parameterOrder="auth targetPoolName">
+
+         <wsdl:input message="impl:setBuildTypesAndPackageNamesToDefaultsRequest" name="setBuildTypesAndPackageNamesToDefaultsRequest"/>
+
+         <wsdl:output message="impl:setBuildTypesAndPackageNamesToDefaultsResponse" name="setBuildTypesAndPackageNamesToDefaultsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setPoolTasksToDefaults" parameterOrder="auth targetPoolName">
+
+         <wsdl:input message="impl:setPoolTasksToDefaultsRequest" name="setPoolTasksToDefaultsRequest"/>
+
+         <wsdl:output message="impl:setPoolTasksToDefaultsResponse" name="setPoolTasksToDefaultsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMachineToRollList" parameterOrder="auth rolloutId">
+
+         <wsdl:input message="impl:getMachineToRollListRequest" name="getMachineToRollListRequest"/>
+
+         <wsdl:output message="impl:getMachineToRollListResponse" name="getMachineToRollListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMachineToRollListV2" parameterOrder="auth rolloutId">
+
+         <wsdl:input message="impl:getMachineToRollListV2Request" name="getMachineToRollListV2Request"/>
+
+         <wsdl:output message="impl:getMachineToRollListV2Response" name="getMachineToRollListV2Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getChildRolloutIds" parameterOrder="auth rolloutId">
+
+         <wsdl:input message="impl:getChildRolloutIdsRequest" name="getChildRolloutIdsRequest"/>
+
+         <wsdl:output message="impl:getChildRolloutIdsResponse" name="getChildRolloutIdsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getRolloutStatus" parameterOrder="auth rolloutId">
+
+         <wsdl:input message="impl:getRolloutStatusRequest" name="getRolloutStatusRequest"/>
+
+         <wsdl:output message="impl:getRolloutStatusResponse" name="getRolloutStatusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="tcApprove" parameterOrder="auth rolloutId in2">
+
+         <wsdl:input message="impl:tcApproveRequest" name="tcApproveRequest"/>
+
+         <wsdl:output message="impl:tcApproveResponse" name="tcApproveResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupCodeRollout" parameterOrder="auth rolloutTo">
+
+         <wsdl:input message="impl:setupCodeRolloutRequest" name="setupCodeRolloutRequest"/>
+
+         <wsdl:output message="impl:setupCodeRolloutResponse" name="setupCodeRolloutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupSmokeRollout" parameterOrder="auth rolloutTo">
+
+         <wsdl:input message="impl:setupSmokeRolloutRequest" name="setupSmokeRolloutRequest"/>
+
+         <wsdl:output message="impl:setupSmokeRolloutResponse" name="setupSmokeRolloutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelCodeRollout" parameterOrder="auth rolloutId reason">
+
+         <wsdl:input message="impl:cancelCodeRolloutRequest" name="cancelCodeRolloutRequest"/>
+
+         <wsdl:output message="impl:cancelCodeRolloutResponse" name="cancelCodeRolloutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="abortStaging" parameterOrder="auth rolloutId reason">
+
+         <wsdl:input message="impl:abortStagingRequest" name="abortStagingRequest"/>
+
+         <wsdl:output message="impl:abortStagingResponse" name="abortStagingResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupWireOnRollout" parameterOrder="auth rolloutTo partnerContingencies">
+
+         <wsdl:input message="impl:setupWireOnRolloutRequest" name="setupWireOnRolloutRequest"/>
+
+         <wsdl:output message="impl:setupWireOnRolloutResponse" name="setupWireOnRolloutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupDBWireOnRollout" parameterOrder="auth rolloutTo partnerContingencies">
+
+         <wsdl:input message="impl:setupDBWireOnRolloutRequest" name="setupDBWireOnRolloutRequest"/>
+
+         <wsdl:output message="impl:setupDBWireOnRolloutResponse" name="setupDBWireOnRolloutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPartnerContingencyStatusIdList" parameterOrder="auth">
+
+         <wsdl:input message="impl:getPartnerContingencyStatusIdListRequest" name="getPartnerContingencyStatusIdListRequest"/>
+
+         <wsdl:output message="impl:getPartnerContingencyStatusIdListResponse" name="getPartnerContingencyStatusIdListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPartnerContingencyServiceIdList" parameterOrder="auth">
+
+         <wsdl:input message="impl:getPartnerContingencyServiceIdListRequest" name="getPartnerContingencyServiceIdListRequest"/>
+
+         <wsdl:output message="impl:getPartnerContingencyServiceIdListResponse" name="getPartnerContingencyServiceIdListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPartnerContingencyFromServiceId" parameterOrder="auth serviceId">
+
+         <wsdl:input message="impl:getPartnerContingencyFromServiceIdRequest" name="getPartnerContingencyFromServiceIdRequest"/>
+
+         <wsdl:output message="impl:getPartnerContingencyFromServiceIdResponse" name="getPartnerContingencyFromServiceIdResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPartnerContingencyStatus" parameterOrder="auth calpoolName serviceId siteId cobrandId">
+
+         <wsdl:input message="impl:getPartnerContingencyStatusRequest" name="getPartnerContingencyStatusRequest"/>
+
+         <wsdl:output message="impl:getPartnerContingencyStatusResponse" name="getPartnerContingencyStatusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="hasActiveRollout" parameterOrder="poolNames">
+
+         <wsdl:input message="impl:hasActiveRolloutRequest" name="hasActiveRolloutRequest"/>
+
+         <wsdl:output message="impl:hasActiveRolloutResponse" name="hasActiveRolloutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPlatsTicketIdByPoolName" parameterOrder="auth poolName">
+
+         <wsdl:input message="impl:getPlatsTicketIdByPoolNameRequest" name="getPlatsTicketIdByPoolNameRequest"/>
+
+         <wsdl:output message="impl:getPlatsTicketIdByPoolNameResponse" name="getPlatsTicketIdByPoolNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPlatsTicketIdByODBName" parameterOrder="auth poolName">
+
+         <wsdl:input message="impl:getPlatsTicketIdByODBNameRequest" name="getPlatsTicketIdByODBNameRequest"/>
+
+         <wsdl:output message="impl:getPlatsTicketIdByODBNameResponse" name="getPlatsTicketIdByODBNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPlatsTicketIdByPoolId" parameterOrder="auth poolId">
+
+         <wsdl:input message="impl:getPlatsTicketIdByPoolIdRequest" name="getPlatsTicketIdByPoolIdRequest"/>
+
+         <wsdl:output message="impl:getPlatsTicketIdByPoolIdResponse" name="getPlatsTicketIdByPoolIdResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updatePlatsTicketIdByPoolId" parameterOrder="auth poolId platsTicketId">
+
+         <wsdl:input message="impl:updatePlatsTicketIdByPoolIdRequest" name="updatePlatsTicketIdByPoolIdRequest"/>
+
+         <wsdl:output message="impl:updatePlatsTicketIdByPoolIdResponse" name="updatePlatsTicketIdByPoolIdResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDefaultTemplateByPoolNameAndRolloutType" parameterOrder="auth poolName rolloutTypeName">
+
+         <wsdl:input message="impl:getDefaultTemplateByPoolNameAndRolloutTypeRequest" name="getDefaultTemplateByPoolNameAndRolloutTypeRequest"/>
+
+         <wsdl:output message="impl:getDefaultTemplateByPoolNameAndRolloutTypeResponse" name="getDefaultTemplateByPoolNameAndRolloutTypeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMachinesLockedInRollout" parameterOrder="poolName machineNameList isExcludeMachines">
+
+         <wsdl:input message="impl:getMachinesLockedInRolloutRequest" name="getMachinesLockedInRolloutRequest"/>
+
+         <wsdl:output message="impl:getMachinesLockedInRolloutResponse" name="getMachinesLockedInRolloutResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="PublisherSoapBinding" type="impl:Publisher">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPoolListByPoolCategory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPoolListByPoolCategoryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPoolListByPoolCategoryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolIdByPoolName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPoolIdByPoolNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPoolIdByPoolNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolIdByODBName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPoolIdByODBNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPoolIdByODBNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolByPoolName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPoolByPoolNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPoolByPoolNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolByODBName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPoolByODBNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPoolByODBNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPoolByPoolId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPoolByPoolIdRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPoolByPoolIdResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createPool">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createPoolRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createPoolResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updatePool">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updatePoolRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updatePoolResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setBuildTypesAndPackageNamesToDefaults">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setBuildTypesAndPackageNamesToDefaultsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setBuildTypesAndPackageNamesToDefaultsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setPoolTasksToDefaults">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setPoolTasksToDefaultsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setPoolTasksToDefaultsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMachineToRollList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMachineToRollListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMachineToRollListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMachineToRollListV2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMachineToRollListV2Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMachineToRollListV2Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getChildRolloutIds">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getChildRolloutIdsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getChildRolloutIdsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getRolloutStatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getRolloutStatusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getRolloutStatusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="tcApprove">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="tcApproveRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="tcApproveResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupCodeRollout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setupCodeRolloutRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setupCodeRolloutResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupSmokeRollout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setupSmokeRolloutRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setupSmokeRolloutResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelCodeRollout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cancelCodeRolloutRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cancelCodeRolloutResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="abortStaging">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="abortStagingRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="abortStagingResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupWireOnRollout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setupWireOnRolloutRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setupWireOnRolloutResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupDBWireOnRollout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setupDBWireOnRolloutRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setupDBWireOnRolloutResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPartnerContingencyStatusIdList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPartnerContingencyStatusIdListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPartnerContingencyStatusIdListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPartnerContingencyServiceIdList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPartnerContingencyServiceIdListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPartnerContingencyServiceIdListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPartnerContingencyFromServiceId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPartnerContingencyFromServiceIdRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPartnerContingencyFromServiceIdResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPartnerContingencyStatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPartnerContingencyStatusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPartnerContingencyStatusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="hasActiveRollout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="hasActiveRolloutRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="hasActiveRolloutResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPlatsTicketIdByPoolName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPlatsTicketIdByPoolNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPlatsTicketIdByPoolNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPlatsTicketIdByODBName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPlatsTicketIdByODBNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPlatsTicketIdByODBNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPlatsTicketIdByPoolId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPlatsTicketIdByPoolIdRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPlatsTicketIdByPoolIdResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updatePlatsTicketIdByPoolId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updatePlatsTicketIdByPoolIdRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updatePlatsTicketIdByPoolIdResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDefaultTemplateByPoolNameAndRolloutType">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDefaultTemplateByPoolNameAndRolloutTypeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDefaultTemplateByPoolNameAndRolloutTypeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMachinesLockedInRollout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMachinesLockedInRolloutRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMachinesLockedInRolloutResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="PublisherService">
+
+      <wsdl:port binding="impl:PublisherSoapBinding" name="Publisher">
+
+         <wsdlsoap:address location="http://tr2api.vip.ebay.com/TurboRoller/services/Publisher"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

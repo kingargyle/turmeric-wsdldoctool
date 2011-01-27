@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<defaultparser>
+    	<class>org.ebayopensource.turmeric.tools.annoparser.parser.impl.DefaultAnnotationParser</class>
+    </defaultparser>
+    <outputgenerators>
+		<outputgenerator name="DefaultDocToolOutput">
+			<class>org.ebayopensource.turmeric.tools.annoparser.outputgenerator.impl.JavaDocOutputGenerator
+			</class>
+			<parameters>
+		    	<parameter>
+		    		<name>outputMode</name>
+		    		<value>normal</value>
+		    	</parameter>
+			</parameters>
+		</outputgenerator>	
+	</outputgenerators>	
+</config>

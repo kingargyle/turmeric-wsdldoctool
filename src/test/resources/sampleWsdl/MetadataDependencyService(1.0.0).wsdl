@@ -1,0 +1,1284 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ins="http://www.ebay.com/marketplace/services" name="MetadataService" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:documentation>Description: This API takes an input site, category id, and namespace, returns the version of the catalog metadata, which the category maps to in the namespace.</wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xsd:element name="getFields" type="ins:GetFieldsRequest">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:complexType abstract="true" name="BaseServiceResponse">
+				<xsd:annotation>
+					<xsd:documentation>
+			Base response container for all service operations. Contains error information
+			associated with the request.
+		</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="ack" type="ins:AckValue">
+						<xsd:annotation>
+							<xsd:documentation>
+								Indicates whether there are any errors
+								or warnings associated with the
+								processing of the request.
+
+							</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="errorMessage" type="ins:ErrorMessage">
+						<xsd:annotation>
+							<xsd:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request. Not returned when the ack value
+								is Success.
+							</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="version" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
+								The version of the response payload
+								schema. Indicates the version of the
+								schema that eBay used to process the
+								request. Developer Technical Support may
+								ask you for the version value when you
+								work with them to troubleshoot issues.
+							</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="timestamp" type="xsd:dateTime">
+						<xsd:annotation>
+							<xsd:documentation>
+								This value represents the date and time
+								when eBay processed the request. The
+								time zone of this value is &amp;lt;a
+								href="types/simpleTypes.html#dateTime"&amp;gt;GMT&amp;lt;/a&amp;gt;
+								and the format is the ISO 8601 date and
+								time format (YYYY-MM-DDTHH:MM:SS.SSSZ).
+								See the "dateTime" type for
+								information about this time format and
+								converting to and from the GMT time
+								zone.
+							</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ErrorMessage">
+				<xsd:annotation>
+					<xsd:documentation>
+			ErrorMessage to indicate any Error/Warning occured as part of service call.
+			Any run time error will not be reported here, but will be reported aspart of
+			soap fault.
+		</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="ins:ErrorData">
+						<xsd:annotation>
+							<xsd:documentation>
+					Details about a single error.
+				</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="BulkAPIErrorData">
+				<xsd:complexContent>
+					<xsd:extension base="ins:ErrorData">
+						<xsd:sequence>
+							<xsd:element name="invocationId" type="xsd:token">
+                                <xsd:annotation>
+                                	<xsd:documentation>
+                                		The unique identifier from the
+                                		specific request in a bulk API
+                                		call.
+                                	</xsd:documentation>
+                                </xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="ErrorData">
+				<xsd:annotation>
+					<xsd:documentation>
+			This represents error details.
+		</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="errorId" type="xsd:long">
+						<xsd:annotation>
+							<xsd:documentation>
+					A unique code that identifies the particular error condition that occurred.
+					Your application can use error codes as identifiers in your customized
+					error-handling algorithms.
+				</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="domain" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+							<xsd:documentation>
+								Name of the domain in which the error
+								occurred. Domain values: Marketplace - A
+								business or validation error occurred
+								for the Service. SOA - An exception
+								occurred in the Service Oriented
+								Architecture (SOA) framework.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="subdomain" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+							<xsd:documentation>
+								The value will be "mdds" if the error
+								reported by Metadata Dependency Service
+								methods.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="severity" type="ins:ErrorSeverity">
+						<xsd:annotation>
+							<xsd:documentation>
+					Indicates whether the error caused the request to fail (Error) or not
+					(Warning).
+					&lt;br&gt;&lt;br&gt;
+					If the request fails and the source of the problem is within the application
+					(such as a missing required element), please change the application before you
+					retry the request. If the problem is due to end-user input data, please alert
+					the end-user to the problem and provide the means for them to correct the data.
+					Once the problem in the application or data is resolved, you can attempt to re-
+					send the request to eBay.
+					&lt;br&gt;&lt;br&gt;
+					If the source of the problem is on eBay's side, you can retry the request as-is
+					a reasonable number of times (eBay recommends twice). If the error persists,
+					contact Developer Technical Support. Once the problem has been resolved, the
+					request may be resent in its original form.
+					&lt;br&gt;&lt;br&gt;
+					When a warning occurs, the error is returned in addition to the business data.
+					In this case, you do not need to retry the request (as the original request was
+					successful). However, depending on the cause or nature of the warning, you
+					might need to contact either the end user or eBay to effect a long term
+					solution to the problem to prevent it from reoccurring in the future.
+				</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="category" type="ins:ErrorCategory">
+						<xsd:annotation>
+							<xsd:documentation>
+					There are three categories of errors: request errors, application errors, and
+					system errors.
+				</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="message" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
+								A detailed description of the condition
+								that resulted in the error. Possible
+								error reasons from Metadata Dependency
+								Service are: 1. No catalog data found
+								for the given site and the category. 2.
+								Invalid global id. 3. Invalid namespace.
+								4. Maximum (25) input name value pairs
+								exceeded.
+							</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="exceptionId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+					Unique identifier for an exception associated with an error.
+				</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="ins:ErrorParameter">
+						<xsd:annotation>
+							<xsd:documentation>
+					Some warning and error messages return one or more variables that contain
+					contextual information about the error. This is often the field or value that
+					triggered the error.
+				</xsd:documentation>
+							<xsd:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ErrorParameter">
+				<xsd:annotation>
+					<xsd:documentation>
+			Contextual information associated with an error.
+		</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="name" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>
+						The name of the parameter in the list of parameter types returned
+						within the error type.
+					</xsd:documentation>
+								<xsd:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>Conditionally</Returned>
+									</CallInfo>
+								</xsd:appinfo>
+							</xsd:annotation>
+						</xsd:attribute>
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="ErrorSeverity">
+				<xsd:annotation>
+					<xsd:documentation>
+			Indicates whether the error is a severe error (causing the request to fail)
+			or an informational error (a warning) that should be communicated to the
+			user.
+		</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Error">
+						<xsd:annotation>
+							<xsd:documentation>
+					The request that triggered the error was not processed successfully.
+					When a serious application-level error occurs, the error is returned
+					instead of the business data.
+				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Warning">
+						<xsd:annotation>
+							<xsd:documentation>
+					The request was processed successfully, but something occurred that may
+					affect your application or the user. For example, eBay may have changed a
+					value the user sent in. In this case, eBay returns a normal, successful
+					response and also returns the warning.
+				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="ErrorCategory">
+				<xsd:annotation>
+					<xsd:documentation>
+			There are three categories of error: request errors, application errors,
+			and system errors. Request and application errors are caused primarily by
+			invalid data passed in the request. System errors are caused primarily by
+			application failures and cannot be corrected by changing request values.
+		</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="System">
+						<xsd:annotation>
+							<xsd:documentation>
+					Indicates that an error has occurred on the eBay system side, such as a
+					database or server down. An application can retry the request as-is a
+					reasonable number of times (eBay recommends twice). If the error
+					persists, contact Developer Technical Support. Once the problem has been
+					resolved, the request may be resent in its original form.
+				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Application">
+						<xsd:annotation>
+							<xsd:documentation>
+					An error occurred due to a problem with the request, such as missing or
+					invalid fields. The problem must be corrected before the request can be
+					made again. If the problem is due to something in the application (such
+					as a missing required field), the application must be changed. Once the
+					problem in the application or data is resolved, resend the corrected
+					request to eBay.
+				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Request">
+						<xsd:annotation>
+							<xsd:documentation>
+					An error occurred due to a problem with the request, such as invalid or
+					missing data. The problem must be corrected before the request can be
+					made again. If the problem is a result of end-user data, the application
+					must alert the end-user to the problem and provide the means for the
+					end-user to correct the data. Once the problem in the data is resolved,
+					resend the request to eBay with the corrected data.
+				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="AckValue">
+				<xsd:annotation>
+					<xsd:documentation>
+			Indicates whether the error is a severe error (causing the request to fail)
+			or an informational error (a warning) that should be communicated to the
+			user.
+		</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Success">
+						<xsd:annotation>
+							<xsd:documentation>
+					The request was processed successfully, but something occurred that may
+					affect your application or the user.				
+				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Failure">
+						<xsd:annotation>
+							<xsd:documentation>
+					The request that triggered the error was not processed successfully.
+					When a serious application-level error occurs, the error is returned
+					instead of the business data.
+				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="Warning">
+						<xsd:annotation>
+							<xsd:documentation>
+					The request that triggered the error was processed successfully but with some warnings.
+				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="PartialFailure">
+						<xsd:annotation>
+							<xsd:documentation>
+					The request that triggered the error was processed successfully but with some warnings.				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:element name="getFieldsResponse">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ins:BaseServiceResponse">
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" minOccurs="0" name="fieldResponse" type="ins:ValidFields">
+									<xsd:annotation>
+										<xsd:documentation>
+											The list of getFields'
+											response objects (each objec
+											is a list of field names).
+										</xsd:documentation>
+									</xsd:annotation></xsd:element>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="validateRelationshipResponse" type="ins:ValidateRelationshipResponse">
+      </xsd:element>
+			<xsd:element name="discoverRelationshipResponse">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ins:BaseServiceResponse">
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" minOccurs="0" name="oneRelationshipResponse" type="ins:OneRelationshipResponse">
+                                    <xsd:annotation>
+                                    	<xsd:documentation>
+                                    		The list of
+                                    		discoverRelationship's
+                                    		response object (each object
+                                    		is of type -
+                                    		OneRelationshipResponse).
+                                    	</xsd:documentation>
+                                    </xsd:annotation>
+								</xsd:element>
+								<!-- 
+      			<xsd:element maxOccurs="unbounded" minOccurs="0" name="relationResponses" type="ins:RelationshipResponse"/>
+       		    <xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:string"/>
+      		 -->
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<!-- for one invocation in discover request  -->
+			<xsd:complexType name="OneRelationshipResponse">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="relationResponses" type="ins:RelationshipResponse">
+						<xsd:annotation>
+							<xsd:documentation>
+								One RelationshipResponse object if
+								category id is provided in the input
+								request; List of RelationshipResponse
+								object (one for each catalog for the
+								site) if no category id provied in the
+								input request.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The unique identifier from the specific
+								request in a bulk API call.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="RelationshipResponse">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="catalogId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The catalog id.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="validNVPairs" type="ins:NameValuePairs">
+						<xsd:annotation>
+							<xsd:documentation>
+								The list of valid name value pairs.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="relationMetadataVersion" type="xsd:int">
+						<xsd:annotation>
+							<xsd:documentation>
+      					Version of relation metadata
+      				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="navigateRelationshipResponse" type="ins:NavigateRelationshipResponse">      	
+      </xsd:element>
+			<xsd:element name="getMetadataVersionResponse" type="ins:GetMetadataVersionResponse">
+      </xsd:element>
+			<xsd:complexType name="GetFieldsRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="globalId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The unique identifier for a combination
+								of site, language, and territory. For
+								example, EBAY-US is the global ID that
+								corresponds to the eBay US site. The
+								global ID you specify must correspond to
+								an eBay site with a valid site ID (see
+								&lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/Concepts/SiteIDToGlobalID.html"&gt;eBay
+								Site ID to Global ID Mapping&lt;/a&gt;).
+								See &lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/CallRef/Enums/GlobalIdList.html"&gt;Global
+								ID Values&lt;/a&gt; for a complete list
+								of the eBay global IDs.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="unbounded" name="fieldsRequest" type="ins:FieldsRequest">
+						<xsd:annotation>
+							<xsd:documentation>
+								The list of request object to get the
+								field names of the matching catalog
+								dump.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="FieldsRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="categoryId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+                        		Category id
+                        	</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="context" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The namespace from which the aspects are
+								requested. Valid valures are: "FITS"
+								(fitment by application), "ISA" (fitment
+								by specification).
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								Uniquely identifies the specific request
+								in a bulk API call - clients are
+								expected to pass this unique identifier
+								for each request. The response for this
+								request will have the same invocation
+								ID, so client can match the request and
+								its response.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ValidFields">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="fieldName" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+                        		Unique set of fields (unique based on
+                        		fieldname)
+                        	</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+      					It is a sequence number to match request with
+      					response. All api are Bulk API, so one call
+      					can have many requests, but the order of
+      					response is not guanteeded. So we need a
+      					sequence number (client put in the request) to
+      					match the result from response.
+      				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="metadataVersion" type="xsd:long"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ValidateRelationshipRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="globalId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The unique identifier for a combination
+								of site, language, and territory. For
+								example, EBAY-US is the global ID that
+								corresponds to the eBay US site. The
+								global ID you specify must correspond to
+								an eBay site with a valid site ID (see
+								&lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/Concepts/SiteIDToGlobalID.html"&gt;eBay
+								Site ID to Global ID Mapping&lt;/a&gt;).
+								See &lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/CallRef/Enums/GlobalIdList.html"&gt;Global
+								ID Values&lt;/a&gt; for a complete list
+								of the eBay global IDs.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="1" name="relationRequest" type="ins:RelationRequest">
+						<xsd:annotation>
+							<xsd:documentation>
+								The list of request objects to validate
+								relationship.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="NameValuePairs">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="nameValuePairs" type="ins:NameValuePair">
+						<xsd:annotation>
+							<xsd:documentation>
+                        		Name and value pair. This could
+                        		represent the aspect name and value.
+                        	</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="NameValuePair">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="name" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+      					catalog Property name
+      				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="value" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+      					catalog property value
+      				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ValidateRelationshipResponse">
+				<xsd:complexContent>
+					<xsd:extension base="ins:BaseServiceResponse">
+						<xsd:sequence>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="validRelations" type="ins:ValidRelation">
+                                <xsd:annotation>
+                                	<xsd:documentation>
+                                		The list of
+                                		validateRelationship's response
+                                		objects (each object is of type
+                                		- ValidRelation).
+                                	</xsd:documentation>
+                                </xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="ValidRelation">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="validity" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:documentation>
+      					boolean value for validity of input
+      					(name/value pairs)
+      				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="relationMetadataVersion" type="xsd:long">
+						<xsd:annotation>
+							<xsd:documentation>
+                        		Version of relation metadata
+                        	</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="matchingProducts" type="xsd:long">
+						<xsd:annotation>
+							<xsd:documentation>
+                        		list of product reference ids that match
+                        		input. Available only if requested.
+                        	</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="DiscoverRelationshipRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="globalId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The unique identifier for a combination
+								of site, language, and territory. For
+								example, EBAY-US is the global ID that
+								corresponds to the eBay US site. The
+								global ID you specify must correspond to
+								an eBay site with a valid site ID (see
+								&lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/Concepts/SiteIDToGlobalID.html"&gt;eBay
+								Site ID to Global ID Mapping&lt;/a&gt;).
+								See &lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/CallRef/Enums/GlobalIdList.html"&gt;Global
+								ID Values&lt;/a&gt; for a complete list
+								of the eBay global IDs.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="1" name="discoverRequests" type="ins:DiscoverRequest">
+						<xsd:annotation>
+							<xsd:documentation>
+								The list of request objects to discover
+								relationship.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="NavigateRelationshipRequest">
+				<xsd:sequence>
+					<xsd:element name="globalId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The unique identifier for a combination
+								of site, language, and territory. For
+								example, EBAY-US is the global ID that
+								corresponds to the eBay US site. The
+								global ID you specify must correspond to
+								an eBay site with a valid site ID (see
+								&lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/Concepts/SiteIDToGlobalID.html"&gt;eBay
+								Site ID to Global ID Mapping&lt;/a&gt;).
+								See &lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/CallRef/Enums/GlobalIdList.html"&gt;Global
+								ID Values&lt;/a&gt; for a complete list
+								of the eBay global IDs.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="1" name="navigateRequests" type="ins:NavigateRequest">
+						<xsd:annotation>
+							<xsd:documentation>
+								The list of request objects to navigate
+								relationship and generate the dependency
+								tree.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="GetMetadataVersionRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="globalId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The unique identifier for a combination
+								of site, language, and territory. For
+								example, EBAY-US is the global ID that
+								corresponds to the eBay US site. The
+								global ID you specify must correspond to
+								an eBay site with a valid site ID (see
+								&lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/Concepts/SiteIDToGlobalID.html"&gt;eBay
+								Site ID to Global ID Mapping&lt;/a&gt;).
+								See &lt;a
+								href="http://developer.ebay.com/DevZone/merchandising/docs/CallRef/Enums/GlobalIdList.html"&gt;Global
+								ID Values&lt;/a&gt; for a complete list
+								of the eBay global IDs.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="1" name="versionRequest" type="ins:VersionRequest">
+                        <xsd:annotation>
+                        	<xsd:documentation>
+                        		The list of request objects to get
+                        		metadata version of the matching catalog
+                        		dump.
+                        	</xsd:documentation>
+                        </xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="validateRelationship" type="ins:ValidateRelationshipRequest">
+            </xsd:element>
+			<xsd:element name="discoverRelationship" type="ins:DiscoverRelationshipRequest">
+            </xsd:element>
+			<xsd:element name="navigateRelationship" type="ins:NavigateRelationshipRequest">
+            </xsd:element>
+			<xsd:element name="getMetadataVersion" type="ins:GetMetadataVersionRequest">
+            </xsd:element>
+			<xsd:complexType name="RelationRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="1" name="nameValuePairs" type="ins:NameValuePair">
+						<xsd:annotation>
+							<xsd:documentation>
+								Input name value pairs.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="categoryId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The category id.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="context" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The namespace where the input N:V pairs
+								should be validated. Valid valures are:
+								"FITS" (fitment by application), "ISA"
+								(fitment by specification).
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="metaFields" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+             					metaFields is used to decide whether to
+             					provide matching product reference ids
+             					in the response. Currently if you have
+             					"product_reference_id" as the first
+             					element, it will return matching
+             					product reference ids.
+             				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								Uniquely identifies the specific request
+								in a bulk API call - clients are
+								expected to pass this unique identifier
+								for each request. The response for this
+								request will have the same invocation
+								ID, so client can match the request and
+								its response.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="NavigateRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="categoryId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The category id.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="nameValuePairs" type="ins:NameValuePair">
+						<xsd:annotation>
+							<xsd:documentation>
+								The input name/value pairs to be used as
+								constraint.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="fields" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The field name for output navigation
+								tree.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="context" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The namespace from which to navigate
+								relationship and generate navigation
+								tree. Valid valures are:
+								"FITS" (fitment by
+								application), "ISA" (fitment
+								by specification).
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								Uniquely identifies the specific request
+								in a bulk API call - clients are
+								expected to pass this unique identifier
+								for each request. The response for this
+								request will have the same invocation
+								ID, so client can match the request and
+								its response.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="DiscoverRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="categoryId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The category id.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="1" name="nameValuePairs" type="ins:NameValuePair">
+						<xsd:annotation>
+							<xsd:documentation>
+		      					List of name:value pairs to be
+		      					validated
+		      				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="context" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The namespace from which to discover the
+								relationsship for input N:V pairs. Valid
+								valures are: "FITS" (fitment
+								by application), "ISA"
+								(fitment by specification).
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="depth" type="xsd:int">
+						<xsd:annotation>
+							<xsd:documentation>
+		      					depth=0 means only return the largest
+		      					matches, depth=1 means generate one
+		      					combination size smaller than the
+		      					largest, etc... Max depth = (# of
+		      					aspects in catalog - 2)
+		      				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="combinationLimit" type="xsd:int">
+						<xsd:annotation>
+							<xsd:documentation>
+		      					Stop generating name value pairs after
+		      					this limit.
+		      				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								Uniquely identifies the specific request
+								in a bulk API call - clients are
+								expected to pass this unique identifier
+								for each request. The response for this
+								request will have the same invocation
+								ID, so client can match the request and
+								its response.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="FieldName">
+				<xsd:sequence>
+					<xsd:element name="fieldName" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+            					Aspect name
+            				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ValidRelationTree">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="relationResponse" type="ins:NameValueTree">
+                        <xsd:annotation>
+                        	<xsd:documentation>
+                        		The navigation tree.
+                        	</xsd:documentation>
+                        </xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+                        <xsd:annotation>
+                        	<xsd:documentation>
+                        		The unique identifier from the specific
+                        		request in a bulk API call.
+                        	</xsd:documentation>
+                        </xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="relationMetadataVersion" type="xsd:long">
+						<xsd:annotation>
+							<xsd:documentation>
+								The version of relation metadata.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="NameValueTree">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="name" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+            					Aspect name
+            				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="children" type="ins:NameValueTreeNode">
+						<xsd:annotation>
+							<xsd:documentation>
+            					Hierarchical structure representing the
+            					relationship
+            				</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="NameValueTreeNode">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="value" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								Aspect Value.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="child" type="ins:NameValueTree">
+                        <xsd:annotation>
+                        	<xsd:documentation>
+                        		The child Name Value tree for this
+                        		aspect value.
+                        	</xsd:documentation>
+                        </xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="VersionRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="categoryId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The category id.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="context" type="xsd:token">
+                        <xsd:annotation>
+                        	<xsd:documentation>
+                        		The namespace from which the metadata
+                        		version is requested. Valid valures are:
+                        		"FITS" (fitment by
+                        		application), "ISA" (fitment
+                        		by specification).
+                        	</xsd:documentation>
+                        </xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								Uniquely identifies the specific request
+								in a bulk API call - clients are
+								expected to pass this unique identifier
+								for each request. The response for this
+								request will have the same invocation
+								ID, so client can match the request and
+								its response.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="GetMetadataVersionResponse">
+				<xsd:complexContent>
+					<xsd:extension base="ins:BaseServiceResponse">
+						<xsd:sequence>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="relationMetadataVersion" type="ins:VersionResponse">
+                                <xsd:annotation>
+                                	<xsd:documentation>
+                                		The list of getMetadataVersion's
+                                		response object (of type -
+                                		VersionResponse).
+                                	</xsd:documentation>
+                                </xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="NavigateRelationshipResponse">
+				<xsd:complexContent>
+					<xsd:extension base="ins:BaseServiceResponse">
+						<xsd:sequence>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="validRelationTree" type="ins:ValidRelationTree">
+                                <xsd:annotation>
+                                	<xsd:documentation>
+                                		The list of
+                                		navigateRelationship's response
+                                		object (Navigation Tree).
+                                	</xsd:documentation>
+                                </xsd:annotation>
+							</xsd:element>
+							<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+								<xsd:annotation>
+									<xsd:documentation>
+										The unique identifier from the
+										specific request in a bulk API
+										call.
+									</xsd:documentation>
+								</xsd:annotation></xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="VersionResponse">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="relationMetadataVersion" type="xsd:long">
+                        <xsd:annotation>
+                        	<xsd:documentation>
+                        		The version of relation metadata.
+                        	</xsd:documentation>
+                        </xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="invocationId" type="xsd:token">
+						<xsd:annotation>
+							<xsd:documentation>
+								The unique identifier from the specific
+								request in a bulk API call.
+							</xsd:documentation>
+						</xsd:annotation></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="discoverRelationshipRequest">
+		<wsdl:part element="ins:discoverRelationship" name="discoverRelationshipRequest">
+			<wsdl:documentation>The request for the discoverRealtionship API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="navigateRelationshipResponse">
+		<wsdl:part element="ins:navigateRelationshipResponse" name="navigateRelationshipResponse">
+			<wsdl:documentation>The response to the navigateRelationship API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFieldsRequest">
+		<wsdl:part element="ins:getFields" name="getFieldsRequest">
+			<wsdl:documentation>The request for the getFields API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="navigateRelationshipRequest">
+		<wsdl:part element="ins:navigateRelationship" name="navigateRelationshipRequest">
+			<wsdl:documentation>The request to the navigateRelationship API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="validateRelationshipRequest">
+		<wsdl:part element="ins:validateRelationship" name="validateRelationshipRequest">
+			<wsdl:documentation>The request for the validateRelationship API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFieldsResponse">
+		<wsdl:part element="ins:getFieldsResponse" name="getFieldsResponse">
+			<wsdl:documentation>The response for the getFields API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getMetadataVersionRequest">
+		<wsdl:part element="ins:getMetadataVersion" name="getMetadataVersionRequest">
+			<wsdl:documentation>The request to the getMetadataVersion API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getMetadataVersionResponse">
+		<wsdl:part element="ins:getMetadataVersionResponse" name="getMetadataVersionResponse">
+			<wsdl:documentation>The response to the getMetadataVersion API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="discoverRelationshipResponse">
+		<wsdl:part element="ins:discoverRelationshipResponse" name="discoverRelationshipResponse">
+			<wsdl:documentation>The response for the discoverRelationship API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="validateRelationshipResponse">
+		<wsdl:part element="ins:validateRelationshipResponse" name="validateRelationshipResponse">
+			<wsdl:documentation>The response for the validateRelationship API</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="MetadataDependencyServicePort">
+		<wsdl:operation name="getFields">
+			<wsdl:documentation> This operation takes an input site, category, namespace and returns all aspects for the catalog, to which that category maps in the specified namespace.
+ 
+</wsdl:documentation>
+			<wsdl:input message="tns:getFieldsRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:getFieldsResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="validateRelationship">
+			<wsdl:documentation> This operation takes an input site, category, input N:V pairs and namespace to determine if the input name value pairs are part of a valid product relation. Returns true (and product referenc IDs of the valid product relation if requested) or false. </wsdl:documentation>
+			<wsdl:input message="tns:validateRelationshipRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:validateRelationshipResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="discoverRelationship">
+			<wsdl:documentation> This operation takes an input site, optional category, input N:V pairs and Namespace to determine if the input name value pairs are part of a valid product relation. Returns the same name value paris if they form a valid product relation. If no such product, it returns a possible combination[s]. For example if the input is Make=Honda, Model = Integra, Year =1990, output will be to return possible combinations as Make=Honda and Year = 1990 Model = Integra and Year = 1990.</wsdl:documentation>
+			<wsdl:input message="tns:discoverRelationshipRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:discoverRelationshipResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="navigateRelationship">
+			<wsdl:documentation> This operation takes an input site, category, input N:V pairs and Namespace to return the next aspect[s] (based on the field[s] requested or the next implicit aspect[s] if no field is specified) and its possible values. If NV Pairs are not specified and there is no field requeste, then this returns a full tree dump. This API needs to support regular response as well as JSON response.</wsdl:documentation>
+			<wsdl:input message="tns:navigateRelationshipRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:navigateRelationshipResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getMetadataVersion">
+			<wsdl:documentation> This operatio takes an input site, category id, and namespace, returns the version of the catalog metadata, which the category maps to in the namespace.</wsdl:documentation>
+			<wsdl:input message="tns:getMetadataVersionRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:getMetadataVersionResponse">
+    </wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="MetadataDependencyServiceBindingSOAP" type="tns:MetadataDependencyServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getFields">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getFields"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="validateRelationship">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/validateRelationship"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="discoverRelationship">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/discoverRelationship"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="navigateRelationship">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/navigateRelationship"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getMetadataVersion">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getMetadataVersion"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="MetadataDependencyService">
+		<wsdl:documentation>MDDS (Metadata Dependency Service) is a SOA Service which captures the dependencies between name value pairs from the metadata (e.g. catalog), and provides the service calls such as validation, discovery, and navigation.<Version>1.0.0</Version>
+		</wsdl:documentation>
+		<wsdl:port binding="tns:MetadataDependencyServiceBindingSOAP" name="MetadataDependencyServiceMessage">
+			<soap:address location="http://svcs.ebay.com/MetadataDependencyService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

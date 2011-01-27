@@ -1,0 +1,1392 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebaypartnernetwork.com/adcommerce/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="CampaignService" targetNamespace="http://www.ebaypartnernetwork.com/adcommerce/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebaypartnernetwork.com/adcommerce/v1/services">
+
+
+			<xs:complexType name="BaseCampaignResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all Campaign Service calls.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAdCommerceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="CampaignResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Container for the campaign returned by the request. A campaign consists
+						of a set of AdGroups, ads, and keywords. A campaign can also be associated
+						with a specific set of eBay categories.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseCampaignResponse">
+						<xs:sequence>
+							<xs:element name="campaign" type="tns:Campaign">
+								<xs:annotation>
+									<xs:documentation>
+										Container of data pertaining to the associated campaign.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>addCampaign</CallName>
+											<CallName>deleteCampaign</CallName>
+											<CallName>getCampaign</CallName>
+											<CallName>getCampaigns</CallName>
+											<CallName>updateCampaign</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="BulkCampaignResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Container for the campaigns returned by the getCampaigns call.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseCampaignResponse">
+						<xs:sequence>
+							<xs:element name="campaignList" type="tns:CampaignList">
+								<xs:annotation>
+									<xs:documentation>
+										Container for the set of campaigns returned by getCampaigns.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>getCampaigns</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="CampaignList">
+				<xs:annotation>
+					<xs:documentation>
+						Container for the set of campaigns returned by getCampaigns.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="campaign" type="tns:Campaign">
+						<xs:annotation>
+							<xs:documentation>
+								Container for the details of an ad campaign. Not returned if
+								the associated campaign list has no current ad campaigns.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCampaigns</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="Campaign">
+				<xs:annotation>
+					<xs:documentation>
+						Container for the data related to a single ad campaign.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="campaignId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								eBay-assigned identification number
+								associated with the respective ad
+								campaign. Use this ID number to specify
+								the ad campaigns you want to retrieve,
+								update, or delete.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="description" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								User-supplied description of the
+								associated ad campaign.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>[??]</MaxLength>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="endDate" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the time, in GMT format, that
+								you want the ad campaign to end. If you
+								set an end date, the campaign
+								automatically becomes inactive on the
+								date you specify. The campaign does not
+								get deleted, so it is possible to
+								restart the campaign by updatng the
+								campaign with a new end date. See the
+								datetime type for details on GMT. &lt;br
+								/&gt; &lt;br /&gt; You are not required
+								to specify a campaign end date. If you
+								do not specify an end date, the the ads
+								in that campaign will remain active and
+								eligible for display every day, subject
+								to your daily budget limits.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="maxDailyBudget" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								The maximum daily spend for the
+								campaign. This budget limit covers every
+								ad group contained within the associated
+								campaign. You can modify the daily
+								budget for a campaign any time--your
+								changes will take effect on the next
+								day, starting at [Midnight GMT??].
+								&lt;br /&gt;&lt;br /&gt; The currency
+								for the value specified is converted to
+								currency that is associated with the
+								country specified in the campaign
+								target. [List ??] &lt;br /&gt;&lt;br
+								/&gt; &lt;span
+								class="tablenote"&gt;&lt;strong&gt;Note:&lt;/strong&gt;
+								It is possible for the daily spend for
+								an ad campaign to exceed the amount
+								specified in maxDailyBudget. Budgets are
+								targets and at times your actual daily
+								spend may slightly exceed your daily
+								budget settings. &lt;/span&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<Default/>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The descriptive name that you want to
+								give the ad campaign. The name should be
+								descriptive, but short enough to use in
+								the report tables.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>50</MaxLength>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="startDate" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								Specify the time, in GMT, that you want
+								the ad to begin. See the datetime type
+								for details on GMT.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="status" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Define the status of the ad campaign,
+								either &lt;code&gt;active&lt;/code&gt;
+								or &lt;code&gt;pause&lt;/code&gt;
+								(inactive). You can use this switch to
+								toggle the ad campaign on and off
+								without modifying the start and end
+								dates.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="target" type="tns:Target">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the country and language in
+								which you want the ad to appear.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="syndication" type="xs:boolean">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="type" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								This field is deprecated and no longer does anything
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="Target">
+					<xs:annotation>
+						<xs:documentation>
+							Specifies the country and language to which the campaign is targeted.
+						</xs:documentation>
+					</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="country" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the country to which you want to target the ad campaign.
+								Valid country values are:
+								&lt;ul&gt;
+									&lt;li&gt;Austrialia&lt;/li&gt;
+									&lt;li&gt;Canada&lt;/li&gt;
+									&lt;li&gt;France&lt;/li&gt;
+									&lt;li&gt;Germany&lt;/li&gt;
+									&lt;li&gt;Italy&lt;/li&gt;
+									&lt;li&gt;United Kingdom&lt;/li&gt;
+									&lt;li&gt;United States&lt;/li&gt;
+								&lt;/ul&gt;
+								Use the two-letter ISO 3166 country code to indicate the country in which
+								you want the campaign to run. For English names that correspond to each
+								country code (e.g., KY="Cayman Islands"), see the following ISO site:
+								&lt;br /&gt; &lt;a href=
+								"http://www.iso.ch/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html"
+								&gt;http://www.iso.ch/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html
+								&lt;/a&gt;.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>Conditionally</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="language" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the language in which the ad will run. Valid language
+								values are:
+								&lt;ul&gt;
+									&lt;li&gt;Austrialia - English&lt;/li&gt;
+									&lt;li&gt;Canada - English, Frence&lt;/li&gt;
+									&lt;li&gt;France - French&lt;/li&gt;
+									&lt;li&gt;Germany - German&lt;/li&gt;
+									&lt;li&gt;Italy - Italian&lt;/li&gt;
+									&lt;li&gt;United Kingdom - English&lt;/li&gt;
+									&lt;li&gt;United States - English&lt;/li&gt;
+								&lt;/ul&gt;
+								[Is there a Language code a-la Country Code??]
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>updateCampaign</CallName>
+									<RequiredInput>Conditionally</RequiredInput>
+								</CallInfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>getCampaigns</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<!--  calls  -->
+			<xs:element name="addCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Request to add a campaign to an account. Campaigns contain a budget, start
+							and end dates, a target (country and ad language), daily budget, and a name
+							and description.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="campaign" type="tns:Campaign">
+							<xs:annotation>
+								<xs:documentation>
+									Container for the ad campaign. Campaigns contain a budget, start and
+									end dates, and a target (country and ad language).
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<CallName>addCampaign</CallName>
+										<RequiredInput>Yes</RequiredInput>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="addCampaignResponse" type="tns:CampaignResponse"/>
+
+
+			<xs:element name="deleteCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Deletes the campaign specified by the campaignId input by the user.
+						&lt;br /&gt;&lt;br /&gt;
+						Category campaigns cannot be deleted. eBay does not return an
+						error if you attempt to delete an already deleted campaign.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Deletes the campaign specified by the campaignId input by the user.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="campaignId" type="xs:long">
+							<xs:annotation>
+								<xs:documentation>
+									Specify the ad campaign you want to delete using the campaignId number
+									that eBay returned when you created the ad campaign.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<CallName>deleteCampaign</CallName>
+										<RequiredInput>Yes</RequiredInput>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="deleteCampaignResponse" type="tns:BaseCampaignResponse"/>
+
+
+			<xs:element name="getCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Returns the ad campaign data for the campaign ID you specify.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="campaignId" type="xs:long">
+							<xs:annotation>
+								<xs:documentation>
+									Specify the ad campaign you want to retrieve using the campaignId number
+									that eBay returned when you created the ad campaign.
+									&lt;br /&gt;&lt;br /&gt;
+									This call does not return category campaigns nor deleted campaigns. eBay
+									returns an error if you enter the campaignId of a deleted campaign or the
+									ID of an ad campaign that uses categories instead of keyword matches. [??]
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<CallName>getCampaign</CallName>
+										<RequiredInput>Yes</RequiredInput>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="getCampaignResponse" type="tns:CampaignResponse"/>
+
+
+			<xs:element name="getCampaignsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Returns all the campaigns associated with the user. Each campaign
+						is returned in its own container. There is no input parameter for
+						this call. The user is determined by [How ??].
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Returns details on all the ad campaigns associated with the
+							respective user.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="getCampaignsResponse" type="tns:BulkCampaignResponse"/>
+
+
+			<xs:element name="updateCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Update the campaign identified by the specified campaign ID. Campaign
+						fields that can be updated are: [??]
+						&lt;br /&gt;&lt;br /&gt;
+						Note that you cannot update a category campaign. [??]
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Update the campaign identified by the specified campaign ID.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="campaign" type="tns:Campaign">
+							<xs:annotation>
+								<xs:documentation>
+									Specify the ad campaign you want to update using the campaignId number
+									that eBay returned when you created the ad campaign.
+									&lt;br /&gt; &lt;br /&gt;
+									This call takes a Campaign type as input. Specify values for the fields
+									that you want to update. You can modify the following fields: [??]
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<CallName>updateCampaign</CallName>
+										<RequiredInput>Yes</RequiredInput>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="updateCampaignResponse" type="tns:BaseCampaignResponse"/>
+
+
+			<!--  common types  -->
+			<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+
+
+			<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName/>
+							<RequiredInput>Yes</RequiredInput>
+						</CallInfo>
+						<CallInfo>
+							<CallName/>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType abstract="true" name="BaseAdCommerceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all AdCommerce operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="control" type="tns:Control">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName/>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+										<CallInfo>
+											<CallName/>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="Control">
+				<xs:annotation>
+					<xs:documentation>
+						Information specific to ...
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="requestId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								eBay-assigned identification string for the request. [??]
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="totalProcessedCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Total number of ads processed by the request. [??]
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="totalSuccessCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Total number of successful [??]
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="quotaRemaining" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								[??]
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>addCampaign</CallName>
+									<CallName>deleteCampaign</CallName>
+									<CallName>getCampaign</CallName>
+									<CallName>updateCampaign</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<!--  standard framework response types  -->
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Base request container for all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service operations. Contains error
+						information associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether or not errors or warnings were generated
+								during the processing of the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information associated an error or warning that occurred when
+								eBay processed the request. Not returned when the ack value is
+								Success. Run-time errors are not reported here, but are instead
+								reported as part of a SOAP fault.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The release version of the service that eBay used to
+								process the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								This value represents the date and time when eBay processed the
+								request. The time zone of this value is &lt;a href=
+								"http://developer.ebay.com/DevZone/shopping/docs/CallRef/types/simpleTypes.html#dateTime"
+								&gt;GMT&lt;/a&gt;, and is returned in the ISO 8601 date and time
+								format (YYYY-MM-DDTHH:MM:SS.SSSZ). See the "dateTime" type for
+								information about the time format and for details on converting
+								to and from the GMT time zone.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a fatal error (causing the request
+						to fail) or a less severe error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								eBay successfully processed the request and the business data is
+								returned in the response. Note that it is possible for a response
+								to return Success, but still not contain the expected data in the
+								result.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during the processing of the
+								request, causing the request to fail. When a serious
+								application-level error occurs, the error is returned instead
+								of the business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was successfully processed, but eBay encountered a
+								non-fatal error during the processing. For best results, requests
+								should return without warnings. Inspect the warning details and
+								resolve the problem before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								eBay successfully processed the request, but one or more
+								non-fatal errors occurred during the processing. For best
+								results, requests should return without warning messages.
+								Inspect the message details and resolve any problems before
+								resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Information regarding an error or warning that occurred when eBay
+						processed the request. Not returned when the ack value is Success.
+						Run-time errors are not reported here, but are instead reported as
+						part of a SOAP fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Container for error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the particular error condition that
+								occurred. Your application can use error codes as identifiers in
+								your customized error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain in which the error occurred.
+								&lt;dl&gt;
+								&lt;dt&gt;
+									&lt;strong&gt;domain values:&lt;/strong&gt;
+								&lt;/dt&gt;
+								&lt;dt&gt;
+									ebaypartnernetwork [Check??]
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									A business or validation error occurred in the respective
+									AdCommerce Service.
+								&lt;/dd&gt;
+								&lt;dt&gt;
+									SOA
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									An exception occurred in the Service Oriented Architecture
+									(SOA) framework.
+								&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the reported problem is fatal (an error) or is
+								less-severe (a warning). Review the error message details for
+								information on the cause. &lt;br /&gt;
+								&lt;br /&gt;
+								If the request fails and the application is the source of the
+								error (for example, a required element is missing), update the
+								application before you retry the request. If the problem is due
+								to incorrect user data, alert the end-user to the problem and
+								provide the means for them to correct the data. Once the problem
+								in the application or data is resolved, re-send the request to
+								eBay. &lt;br /&gt;
+								&lt;br /&gt;
+								If the source of the problem is on eBay's side, you can retry the
+								request a reasonable number of times (eBay recommends you try the
+								request twice). If the error persists, contact Developer
+								Technical Support. Once the problem has been resolved, you can
+								resend the request in its original form. &lt;br /&gt;
+								&lt;br /&gt;
+								If a warning occurs, warning information is returned in addition
+								to the business data. Normally, you do not need to resend the
+								request (as the original request was successful). However,
+								depending on the cause of the warning, you might need to contact
+								the end user, or eBay, to effect a long term solution to the
+								problem.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors: request errors,
+								application errors, and system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition that caused in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain in which the error occurred.
+								&lt;dl&gt;
+								&lt;dt&gt;
+									&lt;strong&gt;subdomain values:&lt;/strong&gt;
+								&lt;/dt&gt;
+								&lt;dt&gt;
+									AdCommerce [Check??]
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									The error is specific to the AdCommerce service.
+								&lt;/dd&gt;
+								&lt;dt&gt;
+									ebaypartnernetwork [Check??]
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									The error is common to all AdCommerce services.
+								&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Various warning and error messages return one or more variables that
+								contain contextual information about the error. This is often the
+								field or value that triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the input parameter returned with the error.
+									Inspecting the parameter (or its input value) will often aid in
+									understanding the cause of the error. Not all error messages
+									contain this value.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>Conditionally</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a fatal error (causing the request to fail)
+						or a less severe error (a warning) that should be communicated to the
+						user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during the processing of the request,
+								causing the request to fail. When eBay encounters an error, it returns
+								error data instead of the requested business data. Inspect the error
+								details and resolve the problem before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was successfully processed, but eBay encountered a
+								non-fatal error during the processing that could affect the data
+								returned. For example, eBay might have changed the value of an
+								input field. In this case, eBay returns a successful response,
+								but it also returns a warning. For best results, requests should
+								return without warnings. Inspect the warning details and resolve
+								the problem before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request errors, application errors,
+						and system errors. Request and application errors are often caused by
+						passing invalid data in the request. System errors are primarily caused by
+						application failures and cannot be corrected by changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on the eBay system side. For
+								example, a database or server could be down. Inspect the error message
+								to find the cause of the problem. If the problem is on the eBay side,
+								an application can retry the request as-is a reasonable number of
+								times (eBay recommends twice). If the error persists, contact
+								Developer Technical Support. Once the problem has been resolved, the
+								request may be resent in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with the request, with the most
+								likely source being the application sending the request. For example,
+								the request is missing a required data element or it contains an
+								invalid field. The problem must be corrected before the request can be
+								resent. Inspect the error message to find the cause of the problem. If
+								the problem is due to an application error, modify the application and
+								resend the request. If the error is due to invalid data, the source of
+								the data must be corrected before you resend the resend request to
+								eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with the request, with the most
+								likely source being missing or invalid data in the request. The
+								problem must be corrected before the request can be retried. Inspect
+								the error message to find the cause of the problem. If the problem is
+								a result of end-user data, alert the end-user to the problem and
+								provide the means for them to correct the problem. Once the problem is
+								resolved, resend the request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="updateCampaignRequest">
+		<wsdl:part element="tns:updateCampaignRequest" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCampaignResponse">
+		<wsdl:part element="tns:getCampaignResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteCampaignRequest">
+		<wsdl:part element="tns:deleteCampaignRequest" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addCampaignResponse">
+		<wsdl:part element="tns:addCampaignResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="tns:getVersionResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addCampaignRequest">
+		<wsdl:part element="tns:addCampaignRequest" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteCampaignResponse">
+		<wsdl:part element="tns:deleteCampaignResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateCampaignResponse">
+		<wsdl:part element="tns:updateCampaignResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCampaignRequest">
+		<wsdl:part element="tns:getCampaignRequest" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCampaignsRequest">
+		<wsdl:part element="tns:getCampaignsRequest" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCampaignsResponse">
+		<wsdl:part element="tns:getCampaignsResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:portType name="CampaignServicePortType">
+		<wsdl:operation name="getVersion">
+			<wsdl:output message="tns:getVersionResponse" name="getVersion">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addCampaign">
+			<wsdl:input message="tns:addCampaignRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:addCampaignResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateCampaign">
+			<wsdl:input message="tns:updateCampaignRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:updateCampaignResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteCampaign">
+			<wsdl:input message="tns:deleteCampaignRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:deleteCampaignResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaign">
+			<wsdl:input message="tns:getCampaignRequest"/>
+			<wsdl:output message="tns:getCampaignResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaigns">
+			<wsdl:output message="tns:getCampaignsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="CampaignServiceSOAP12Binding" type="tns:CampaignServicePortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getVersion">
+			<soap12:operation soapAction="urn:getVersion" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addCampaign">
+			<soap12:operation soapAction="urn:addCampaign" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteCampaign">
+			<soap12:operation soapAction="urn:deleteCampaign" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateCampaign">
+			<soap12:operation soapAction="urn:updateCampaign" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaign">
+			<soap12:operation soapAction="urn:getCampaign" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaigns">
+			<soap12:operation soapAction="urn:getCampaigns" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="CampaignService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+		</wsdl:documentation>
+		<wsdl:port binding="tns:CampaignServiceSOAP12Binding" name="CampaignServiceSOAP12port_http">
+			<soap12:address location="https://svcs.ebaypartnernetwork.com/services/adcommerce/v1/CampaignService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

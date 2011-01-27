@@ -1,0 +1,2093 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/checkout/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="CheckoutCartService" targetNamespace="http://www.ebay.com/marketplace/checkout/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/checkout/v1/services">
+
+            <xs:element name="createCheckoutCartRequest" type="tns:CreateCheckoutCartRequest"/>
+			<xs:element name="createCheckoutCartResponse" type="tns:CreateCheckoutCartResponse"/>
+			<xs:element name="purchaseCheckoutCartRequest" type="tns:PurchaseCheckoutCartRequest"/>
+			<xs:element name="purchaseCheckoutCartResponse" type="tns:PurchaseCheckoutCartResponse"/>
+			<xs:element name="getCheckoutCartRequest" type="tns:GetCheckoutCartRequest"/>
+			<xs:element name="getCheckoutCartResponse" type="tns:GetCheckoutCartResponse"/>
+
+
+			<xs:complexType name="CreateCheckoutCartRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Creates a checkout cart containing the specified
+						items.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="cartId" type="xs:long">
+								<xs:annotation>
+									<xs:documentation>
+										The ID of the cart to be
+										created. Should be Unique for
+										each cart.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												createCheckoutCart
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="lineItem" type="tns:LineItem">
+								<xs:annotation>
+									<xs:documentation>
+										The Items to be purchased.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												createCheckoutCart
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="flowStartStep" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+										Where in the checkout flow to
+										start with this cart.
+									</xs:documentation>
+									<xs:appinfo>
+										<ListBasedOn>
+											CheckoutFlowStartStep
+										</ListBasedOn>
+										<Default>
+											ReviewYourPurchase
+										</Default>
+										<CallInfo>
+											<CallName>
+												createCheckoutCart
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="successReturnURL" type="xs:anyURI">
+								<xs:annotation>
+									<xs:documentation>
+										The URL to which to return when
+										the checkout succeeds. If
+										omitted, the user is taken to
+										the eBay Checkout Success Page.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												createCheckoutCart
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="GetCheckoutCartRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Retrieves an existing checkout cart from eBay.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Retrieves an existing checkout cart from
+							eBay.
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="cartId" type="xs:long">
+								<xs:annotation>
+									<xs:documentation>
+										The ID of the cart.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												getCheckoutCart
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="PurchaseCheckoutCartRequest">
+				<xs:annotation>
+					<xs:documentation>
+						NOTE: This call will be removed from the schema.
+						Pays for the items in the checkout cart.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							NOTE: This call will be removed from the
+							schema.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="cartId" type="xs:long">
+								<xs:annotation>
+									<xs:documentation>
+										The ID of the cart.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												purchaseCheckoutCart
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="CreateCheckoutCartResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response to createCheckout.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="checkoutCart" type="tns:CheckoutCart">
+								<xs:annotation>
+									<xs:documentation>
+										The eBay checkout cart
+										containing items being
+										purchased.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												getCheckoutCart
+											</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="siteCheckoutEntryURL" type="xs:anyURI">
+								<xs:annotation>
+									<xs:documentation>
+										The eBay or PayPal URL to which
+										the buyer is to be directed to
+										begin checkout.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												createCheckoutCart
+											</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="GetCheckoutCartResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response to getCheckout.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="checkoutCart" type="tns:CheckoutCart">
+								<xs:annotation>
+									<xs:documentation>
+										The eBay checkout cart
+										containing items being
+										purchased.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												getCheckoutCart
+											</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="siteCheckoutEntryURL" type="xs:anyURI">
+								<xs:annotation>
+									<xs:documentation>
+										The eBay or PayPal URL to which
+										the buyer is to be directed to
+										begin checkout. Returned only if
+										applicable to third party.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												getCheckoutCart
+											</CallName>
+											<Returned>
+												Conditionally
+											</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="PurchaseCheckoutCartResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response to purchaseCheckoutCart.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="successReturnURL" type="xs:anyURI">
+								<xs:annotation>
+									<xs:documentation>
+										The URL to which to return when
+										purchase is complete.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												purchaseCheckoutCart
+											</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="successfulItemPurchasesCount" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>
+										The number of items actually
+										purchased.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												purchaseCheckoutCart
+											</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+						The base request container for all service
+						operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+						The base response container for all service
+						operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+								Acknowledgement of the operation's
+								success or failure.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								An error or warning that occurred when
+								eBay processed the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The version of the schema that your WSDL
+								is based on.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								The data and time of the response.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+						The nature of the response.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								eBay successfully processed the request
+								and the business data is returned in the
+								response. Note that it is possible for a
+								response to return Success, but still
+								not contain the expected data in the
+								result.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during
+								the processing of the request, causing
+								the request to fail. When a serious
+								application-level error occurs, the
+								error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was successfully processed,
+								but eBay encountered a non-fatal error
+								during the processing. For best results,
+								requests should return without warnings.
+								Inspect the warning details and resolve
+								the problem before resubmitting the
+								request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								eBay successfully processed the request,
+								but one or more non-fatal errors
+								occurred during the processing. For best
+								results, requests should return without
+								warning messages. Inspect the message
+								details and resolve any problems before
+								resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+						The source of the error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								System error
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								Application error
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								Problems in the request
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+						Details of the error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details of the error. Run time errors
+								are not reported here but as part of
+								SOAP fault.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+						Details of the error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain in which the error
+								occurred. &lt;dl&gt; &lt;lh&gt;Domains
+								include:&lt;/lh&gt;
+								&lt;dt&gt;Marketplace&lt;/dt&gt;
+								&lt;dd&gt;A business or validation error
+								occurred for the Bulk Data Exchange
+								service. &lt;/dd&gt;
+								&lt;dt&gt;SOA&lt;/dt&gt; &lt;dd&gt;An
+								exception occurred in the Service
+								Oriented Architecture (SOA)
+								framework.&lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the
+								request to fail (an Error) or not (a
+								Warning). &lt;br&gt;&lt;br&gt; If the
+								request fails and the source of the
+								problem is within the application (such
+								as a missing required element), change
+								the application before you retry the
+								request. If the problem is due to
+								end-user input data, please alert the
+								end- user to the problem and provide the
+								means for them to correct the data. Once
+								the problem in the application or data
+								is resolved, you can attempt to re-send
+								the request to eBay.
+								&lt;br&gt;&lt;br&gt; If the source of
+								the problem is on eBay's side, you can
+								retry the request as-is a reasonable
+								number of times (eBay recommends you try
+								the request twice). If the error
+								persists, contact Developer Technical
+								Support. Once the problem has been
+								resolved, you can resend the request in
+								its original form. &lt;br&gt;&lt;br&gt;
+								When a warning occurs, the warning is
+								returned in addition to the business
+								data. In this case, you do not need to
+								retry the request (as the original
+								request was successful). However,
+								depending on the cause or nature of the
+								warning, you might need to contact
+								either the end user or eBay to effect a
+								long term solution to the problem.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								The category of error. There are three
+								categories of errors: request errors,
+								application errors, and system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The error message text.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain upon which the
+								error occurred. &lt;dl&gt;
+								&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+								&lt;dt&gt;BuyingService&lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								BuyingService service. &lt;/dd&gt;
+								&lt;dt&gt;MarketplaceCommon&lt;/dt&gt;
+								&lt;dd&gt;The error is common to all
+								Marketplace services. &lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some warning and error messages return
+								one or more variables that contain
+								contextual information about the error.
+								This is often the field or value that
+								triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the get
+									of parameter types returned within
+									the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="VariationDetails">
+				<xs:annotation>
+					<xs:documentation>
+						Container element for the Item Specifics for a
+						Variation. Applicable for multi-variation
+						listings.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="SKU" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The SKU (Stock Keeping Unit) to uniquely
+								identify this Variation. Applicable for
+								multi-variation listings. &lt;div
+								class="tablenote"&gt;&lt;b&gt;Note:&lt;/b&gt;
+								SKU is not validated by eBay. It is to
+								be used only by the seller. It is never
+								to be exposed to the buyer.
+								&lt;/div&gt;&lt;br&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="variationSpecifics" type="tns:VariationSpecifics">
+						<xs:annotation>
+							<xs:documentation>
+								The Item Specifics for a Variation.
+								Applicable for multi-variation listings.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ShippingServiceDetails">
+				<xs:annotation>
+					<xs:documentation>
+						Details of an eBay shipping service.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="shippingService" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								A domestic shipping service offered for
+								shipping the item (for example, UPS
+								Ground). For a list of valid values that
+								you can cache for future use, call
+								GeteBayDetails with DetailName set to
+								ShippingServiceDetails.
+							</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>
+									ShippingServiceList
+								</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="shippingServiceName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The name to be displayed for this
+								shipping service.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingTimeMin" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								The minimum guaranteed number of days in
+								which the shipping carrier can ship an
+								item (not including the time it takes
+								the seller to deliver the item to the
+								shipping carrier).
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingTimeMax" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								The maximum guaranteed number of days
+								the shipping carrier will take to ship
+								an item (not including the time it takes
+								the seller to deliver the item to the
+								shipping carrier).
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingInsuranceCost" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								The insurance cost associated with
+								shipping a single item with this
+								shipping service. Exception: for
+								GetItemShipping, this is proportional to
+								QuantitySold. If the item has not yet
+								been sold, insurance information cannot
+								be calculated and the value is 0.00. For
+								calculated shipping only.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="User">
+				<xs:annotation>
+					<xs:documentation>
+						Details of an eBay.com User
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="userId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The eBay login name of the user.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="immutableUserId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for the user that does
+								not change when the eBay user name is
+								changed.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="feedbackScore" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The aggregate feedback score for a user.
+								A user's feedback score is the net
+								positive feedback minus the net negative
+								feedback left for the user.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="NameValueList">
+				<xs:annotation>
+					<xs:documentation>
+						Name/value pair. Applicable to multi-variation
+						listings only.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The name in a name/value pair. Sample
+								Variation Specific name: Size, Color.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The value in a name/value pair. Sample
+								Variation Specific value: Medium, Black.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="VariationSpecifics">
+				<xs:annotation>
+					<xs:documentation>
+						The Item Specifics for a Variation. Applicable
+						for multi-variation listings.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="nameValueList" type="tns:NameValueList">
+						<xs:annotation>
+							<xs:documentation>
+								Name/value pair. On input, if
+								nameValueList is provided, both name and
+								value must be provided. Only applicable
+								for multi-variation listings.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LineItemIdentifier">
+				<xs:annotation>
+					<xs:documentation>
+						A transaction id, order id, donation id, or
+						coupon code.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="itemId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The eBay item ID.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SKU" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The SKU (Stock Keeping Unit) that the
+								seller defined for the listing
+								associated with the item being
+								retrieved. &lt;div
+								class="tablenote"&gt;&lt;b&gt;Note:&lt;/b&gt;
+								SKU is not validated by eBay. It is to
+								be used only by the seller. It is never
+								to be exposed to the buyer.
+								&lt;/div&gt;&lt;br&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="variationDetails" type="tns:VariationDetails">
+						<xs:annotation>
+							<xs:documentation>
+								Details to identify a Variation of an
+								item uniquely. Only applicable to
+								multi-variation listings.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="transactionId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The transaction ID of the item that was
+								committed for purchase. Not applicable
+								to Immediate Payment listings.
+								Applications can call getCheckoutCart
+								before and after checkout. After
+								checkout, the final
+								"purchased" cart is returned
+								with transaction IDs for all purchased
+								items.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="lineItemType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The type of line item in the cart (e.g.
+								item versus transaction versus multi-
+								variation item).
+							</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>
+									LineItemTypeList
+								</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="SalesTax">
+				<xs:annotation>
+					<xs:documentation>
+						(US only) The amount of sales tax, calculated
+						for a transaction based on the SalesTaxPercent
+						and pricing information.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="salesTaxAmount" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								The amount of sales tax, calculated for
+								a transaction based on the
+								SalesTaxPercent and pricing information.
+								(US only)
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="salesTaxPercent" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>
+								Percent of an item's price to be charged
+								as the sales tax for the transaction.
+								The value passed in is stored with a
+								precision of 3 digits after the decimal
+								point (##.###).
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="salesTaxState" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								State or jurisdiction for which the
+								sales tax is being collected. Only
+								returned if the seller specified a
+								value.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingIncludedInTax" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Whether shipping costs were part of the
+								base amount that was taxed. Flat or
+								calculated shipping. (US only)
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PaymentSummary">
+				<xs:annotation>
+					<xs:documentation>
+						Payment details for the seller order.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="itemSubtotal" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								Subtotal of all item prices in this
+								seller order.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingAndHandlingSubtotal" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								Subtotal of shipping and handling
+								charges for this order.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="taxSubtotal" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								Tax for this seller order.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subtotal" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								Subtotal of itemSubtotal +
+								shippingAndHandlingSubtotal +
+								taxSubtotal.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SellerOrder">
+				<xs:annotation>
+					<xs:documentation>
+						A grouping of packages by seller.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="seller" type="tns:User">
+						<xs:annotation>
+							<xs:documentation>
+								Details to identify the seller.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="package" type="tns:Package">
+						<xs:annotation>
+							<xs:documentation>
+								A collection of items that are to be
+								shipped together in one package.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="paymentSummary" type="tns:PaymentSummary">
+						<xs:annotation>
+							<xs:documentation>
+								Order level payment details.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Address">
+				<xs:annotation>
+					<xs:documentation>
+						Details of an address.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name associated with address, if such
+								exists.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="street1" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Street details, line 1
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="street2" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Street details, line 2, if any.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="city" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>City</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="county" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>County</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="stateOrProvince" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								State or province. Returned only if
+								applicable.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="country" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>Country</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>
+									CountryCodeList
+								</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="postalCode" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Zip code or postal code.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="phone" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								User's primary phone number. This may
+								return a value of "Invalid
+								Request" if you are not authorized
+								to see the user's phone number.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ClientType">
+				<xs:annotation>
+					<xs:documentation>
+						The type of client.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Site">
+						<xs:annotation>
+							<xs:documentation>
+								The eBay web site
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="OpeneBay">
+						<xs:annotation>
+							<xs:documentation>
+								A Selling Manager application
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="CheckoutFlowStartStep">
+				<xs:annotation>
+					<xs:documentation>
+						Entry points for checkout.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="ReviewYourPurchase">
+						<xs:annotation>
+							<xs:documentation>
+								The eBay "Review Your
+								Purchase" page.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ChoosePaymentMethod">
+						<xs:annotation>
+							<xs:documentation>
+								The PayPal "Choose the Payment
+								Method" page.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="CheckoutCart">
+				<xs:annotation>
+					<xs:documentation>
+						An eBay checkout cart.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="cartId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								The ID of the cart.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="buyer" type="tns:User">
+						<xs:annotation>
+							<xs:documentation>
+								Details about the buyer.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="shippingAddress" type="tns:Address">
+						<xs:annotation>
+							<xs:documentation>
+								The registered shipping address of the
+								buyer.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="sellerOrder" type="tns:SellerOrder">
+						<xs:annotation>
+							<xs:documentation>
+								All of the packages from one seller.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="cartStatus" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The Status of the Cart in the eBay
+								System.
+							</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>
+									CartStatusList
+								</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="LineItem">
+				<xs:annotation>
+					<xs:documentation>
+						A entity or line item from the Review Your
+						Purchase summary view. It may be a single
+						transaction, a seller-created order (where a
+						seller combines transactions), a donation to an
+						eBay Charity, or a coupon that results in a cart
+						discount.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="lineItemIdentifier" type="tns:LineItemIdentifier">
+						<xs:annotation>
+							<xs:documentation>
+								A transaction id, order id, donation id,
+								or coupon code.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="itemTitle" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The entity's title on the eBay web site.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="quantity" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Quantity
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="price" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+								The price of the item. For Immediate
+								Payment listings, this is the item at
+								the time it was added to the cart (it is
+								possible for the item price to change in
+								the time it takes for the user to move
+								from initiating a "buy" to
+								beginning and completing the checkout
+								process).
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="itemShippingService" type="tns:ShippingServiceDetails">
+						<xs:annotation>
+							<xs:documentation>
+								A shipping service offered on the eBay
+								web site by the seller for this item.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="lineItemStatus" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The Status of this Cart LineItem in the
+								eBay System.
+							</xs:documentation>
+							<xs:appinfo>
+								<ListBasedOn>
+									LineItemStatusList
+								</ListBasedOn>
+								<CallInfo>
+									<CallName>getCheckoutCart</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="CartStatusList">
+				<xs:annotation>
+					<xs:documentation>
+						The Status of the Cart in the eBay System.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="PurchaseNotInitiated">
+						<xs:annotation>
+							<xs:documentation>
+								The Cart has not been Purchased.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Purchased">
+						<xs:annotation>
+							<xs:documentation>
+								The Cart has been Purchased.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PurchaseFailed">
+						<xs:annotation>
+							<xs:documentation>
+								Purchase of the Cart Failed.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="LineItemStatusList">
+				<xs:annotation>
+					<xs:documentation>
+						The Status of the LineItem in the eBay System.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="PurchaseNotInitiated">
+						<xs:annotation>
+							<xs:documentation>
+								The LineItem has not been Purchased.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Purchased">
+						<xs:annotation>
+							<xs:documentation>
+								The LineItem has been Purchased.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PurchaseCanceled">
+						<xs:annotation>
+							<xs:documentation>
+								Purchase of the LineItem was Canceled
+								(See error message for Details).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		<xs:complexType name="Amount">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/></xs:appinfo></xs:annotation>
+        <xs:simpleContent>
+                  <xs:extension base="xs:double">
+                      <xs:attribute name="currencyId" type="xs:string" use="required"/>
+                  </xs:extension>
+           </xs:simpleContent>
+       </xs:complexType><xs:complexType name="Package">
+		<xs:annotation>
+			<xs:documentation>
+				A collection of items. All items in a package
+				are from the same seller.
+			</xs:documentation>
+		<xs:appinfo><typeLibrarySource library="BuyingCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/buying/v1/services"/></xs:appinfo></xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="lineItem" type="tns:LineItem">
+				<xs:annotation>
+					<xs:documentation>
+						An item in the package.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>getCheckoutCart</CallName>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="selectedShippingService" type="tns:ShippingServiceDetails">
+				<xs:annotation>
+					<xs:documentation>
+						The shipping method selected by the
+						buyer on the eBay web site.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>getCheckoutCart</CallName>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shippingCost" type="tns:Amount">
+				<xs:annotation>
+					<xs:documentation>
+						The cost to ship this package of items.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>getCheckoutCart</CallName>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="tax" type="tns:SalesTax">
+				<xs:annotation>
+					<xs:documentation>
+						The tax on shipping this package.
+						Returned only if greater than 0.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>getCheckoutCart</CallName>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="insuranceCost" type="tns:Amount">
+				<xs:annotation>
+					<xs:documentation>
+						The cost of insurance for shipping this
+						package. Returned only if there was
+						insurance.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>getCheckoutCart</CallName>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="otherChargesOrDiscounts" type="tns:Amount">
+				<xs:annotation>
+					<xs:documentation>
+						Other charges or discounts not captured
+						in other fields. If positive, it is a
+						charge. If negative, it is a discount.
+						Returned only if not 0.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>getCheckoutCart</CallName>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="total" type="tns:Amount">
+				<xs:annotation>
+					<xs:documentation>
+						The total of (quantity * item price) +
+						shipping cost + tax + insuranceCost +
+						otherChargesOrDiscounts.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>getCheckoutCart</CallName>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType></xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="createCheckoutCartRequest">
+		<wsdl:part element="tns:createCheckoutCartRequest" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="createCheckoutCartResponse">
+		<wsdl:part element="tns:createCheckoutCartResponse" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="purchaseCheckoutCartRequest">
+		<wsdl:part element="tns:purchaseCheckoutCartRequest" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="purchaseCheckoutCartResponse">
+		<wsdl:part element="tns:purchaseCheckoutCartResponse" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="getCheckoutCartRequest">
+		<wsdl:part element="tns:getCheckoutCartRequest" name="params"/>
+	</wsdl:message>
+	<wsdl:message name="getCheckoutCartResponse">
+		<wsdl:part element="tns:getCheckoutCartResponse" name="params"/>
+	</wsdl:message>
+
+	<wsdl:portType name="CheckoutCartServicePort">
+		<wsdl:operation name="createCheckoutCart">
+			<wsdl:documentation>
+				Create a checkout cart
+			</wsdl:documentation>
+			<wsdl:input message="tns:createCheckoutCartRequest"/>
+			<wsdl:output message="tns:createCheckoutCartResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="purchaseCheckoutCart">
+			<wsdl:documentation>
+				Purchase the checkout cart
+			</wsdl:documentation>
+			<wsdl:input message="tns:purchaseCheckoutCartRequest"/>
+			<wsdl:output message="tns:purchaseCheckoutCartResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getCheckoutCart">
+			<wsdl:documentation>
+				Retrieve a checkout cart by cart id
+			</wsdl:documentation>
+			<wsdl:input message="tns:getCheckoutCartRequest"/>
+			<wsdl:output message="tns:getCheckoutCartResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="CheckoutCartServiceHttpBinding" type="tns:CheckoutCartServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="createCheckoutCart">
+			<http:operation location="CheckoutCartService/createCheckoutCart"/>
+			<wsdl:input>
+				<mime:content part="createCheckoutCart" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createCheckoutCart" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="purchaseCheckoutCart">
+			<http:operation location="CheckoutCartService/purchaseCheckoutCart"/>
+			<wsdl:input>
+				<mime:content part="purchaseCheckoutCart" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="purchaseCheckoutCart" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCheckoutCart">
+			<http:operation location="CheckoutCartService/getCheckoutCart"/>
+			<wsdl:input>
+				<mime:content part="getCheckoutCart" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getCheckoutCart" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:binding name="CheckoutCartServiceSoapBinding" type="tns:CheckoutCartServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="createCheckoutCart">
+			<soap12:operation soapAction="urn:createCheckoutCart" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="purchaseCheckoutCart">
+			<soap12:operation soapAction="urn:purchaseCheckoutCart" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCheckoutCart">
+			<soap12:operation soapAction="urn:getCheckoutCart" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="CheckoutCartService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+			Checkout cart service provides operations to create,
+			retrieve, purchase checkout carts
+		</wsdl:documentation>
+		<wsdl:port binding="tns:CheckoutCartServiceHttpBinding" name="CheckoutCartServiceHttp">
+			<http:address location="http://svcs.ebay.com/services/checkout/v1/CheckoutCartService"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:CheckoutCartServiceSoapBinding" name="CheckoutCartServiceSOAP">
+			<soap12:address location="http://svcs.ebay.com/services/checkout/v1/CheckoutCartService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

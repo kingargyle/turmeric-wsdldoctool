@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/soaframework/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns2="http://www.ebay.com/soaframework/services/common/types" targetNamespace="http://www.ebay.com/marketplace/services">
+    <wsdl:types>
+        <xs:schema xmlns:ns1="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/soaframework/services">
+            <xs:complexType name="shippingCalculatorResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="errorDataList" nillable="true" type="ns1:ErrorData"/>
+                    <xs:element name="id" type="xs:int"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="shippingServiceResponses" nillable="true" type="tns:shippingServiceResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="shippingServiceResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="errorCode" type="ns1:ErrorMessage"/>
+                    <xs:element minOccurs="0" name="shippingInsuranceCost" type="ns2:Amount"/>
+                    <xs:element minOccurs="0" name="shippingServiceCost" type="ns2:Amount"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="shippingCalculatorBatchRequest">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="shippingCalculatorRequests" type="tns:shippingCalculatorRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="shippingCalculatorRequest">
+                <xs:sequence>
+                    <xs:element name="destAddress" type="ns2:Address"/>
+                    <xs:element name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="shippingDate" type="xs:dateTime"/>
+                    <xs:element name="shippingPackageInfo" type="tns:shippingPackageInfo"/>
+                    <xs:element maxOccurs="unbounded" name="shippingServiceData" type="tns:shippingServiceData"/>
+                    <xs:element name="sourceAddress" type="ns2:Address"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="shippingPackageInfo">
+                <xs:sequence>
+                    <xs:element name="declaredValue" type="ns2:Amount"/>
+                    <xs:element minOccurs="0" name="isIrregular" type="xs:boolean"/>
+                    <xs:element name="packageDepth" type="ns2:LinearMeasure"/>
+                    <xs:element name="packageLength" type="ns2:LinearMeasure"/>
+                    <xs:element name="packageType" type="xs:string"/>
+                    <xs:element name="packageWidth" type="ns2:LinearMeasure"/>
+                    <xs:element name="weightMajor" type="ns2:WeightMeasure"/>
+                    <xs:element name="weightMinor" type="ns2:WeightMeasure"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="shippingServiceData">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="deliveryConfirmation" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="shippingDeliveryType" type="tns:shippingDeliveryType"/>
+                    <xs:element minOccurs="0" name="shippingRateType" type="tns:shippingRateType"/>
+                    <xs:element name="shippingService" type="xs:string"/>
+                    <xs:element minOccurs="0" name="signatureRequired" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="shippingCalculatorBatchResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="shippingCalculatorResponses" nillable="true" type="tns:shippingCalculatorResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="shippingDeliveryType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Residential"/>
+                    <xs:enumeration value="Commercial"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="shippingRateType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="OnDemand"/>
+                    <xs:enumeration value="DailyPickup"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:ns0="http://www.ebay.com/soaframework/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+            <xs:complexType name="ErrorData">
+                <xs:sequence>
+                    <xs:element name="errorId" type="xs:long"/>
+                    <xs:element name="domain" type="xs:string"/>
+                    <xs:element name="severity" type="tns:ErrorSeverity"/>
+                    <xs:element name="category" type="tns:ErrorCategory"/>
+                    <xs:element name="message" type="xs:string"/>
+                    <xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+                    <xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ErrorParameter">
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="name" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="ErrorMessage">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="ErrorSeverity">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Error"/>
+                    <xs:enumeration value="Warning"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="ErrorCategory">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="System"/>
+                    <xs:enumeration value="Application"/>
+                    <xs:enumeration value="Request"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="ErrorMessage" nillable="true" type="tns:ErrorMessage"/>
+            <xs:element name="calculateBatchRates" nillable="true" type="ns0:shippingCalculatorBatchRequest"/>
+            <xs:element name="calculateBatchRatesResponse" nillable="true" type="ns0:shippingCalculatorBatchResponse"/>
+            <xs:element name="calculateRates" nillable="true" type="ns0:shippingCalculatorRequest"/>
+            <xs:element name="calculateRatesResponse" nillable="true" type="ns0:shippingCalculatorResponse"/>
+        </xs:schema>
+        <xs:schema xmlns:tns="http://www.ebay.com/soaframework/services/common/types" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/soaframework/services/common/types">
+            <xs:complexType name="Amount">
+                <xs:simpleContent>
+                    <xs:extension base="xs:double">
+                        <xs:attribute name="currencyID" type="xs:string" use="required"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="street1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="street2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="city" type="xs:string"/>
+                    <xs:element minOccurs="0" name="county" type="xs:string"/>
+                    <xs:element minOccurs="0" name="stateOrProvince" type="xs:string"/>
+                    <xs:element minOccurs="0" name="country" type="xs:string"/>
+                    <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
+                    <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LinearMeasure">
+                <xs:simpleContent>
+                    <xs:extension base="xs:double">
+                        <xs:attribute name="unit" type="ns2:linearMeasurementUnit" use="required"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="WeightMeasure">
+                <xs:simpleContent>
+                    <xs:extension base="xs:double">
+                        <xs:attribute name="unit" type="ns2:weightMeasurementUnit" use="required"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:simpleType name="linearMeasurementUnit">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="cm"/>
+                    <xs:enumeration value="mm"/>
+                    <xs:enumeration value="inches"/>
+                    <xs:enumeration value="ft"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="weightMeasurementUnit">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="kg"/>
+                    <xs:enumeration value="gm"/>
+                    <xs:enumeration value="lbs"/>
+                    <xs:enumeration value="oz"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="calculateRatesRequest">
+        <wsdl:part element="ns0:calculateRates" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="calculateRatesResponse">
+        <wsdl:part element="ns0:calculateRatesResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="ErrorMessage">
+        <wsdl:part element="ns0:ErrorMessage" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="calculateBatchRatesRequest">
+        <wsdl:part element="ns0:calculateBatchRates" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="calculateBatchRatesResponse">
+        <wsdl:part element="ns0:calculateBatchRatesResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:portType name="ShippingCalculatorServicePortType">
+        <wsdl:operation name="calculateRates">
+            <wsdl:input message="ns0:calculateRatesRequest" wsaw:Action="urn:calculateRates"/>
+            <wsdl:output message="ns0:calculateRatesResponse" wsaw:Action="urn:calculateRatesResponse"/>
+            <wsdl:fault message="ns0:ErrorMessage" name="ErrorMessage" wsaw:Action="urn:calculateRatesErrorMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="calculateBatchRates">
+            <wsdl:input message="ns0:calculateBatchRatesRequest" wsaw:Action="urn:calculateBatchRates"/>
+            <wsdl:output message="ns0:calculateBatchRatesResponse" wsaw:Action="urn:calculateBatchRatesResponse"/>
+            <wsdl:fault message="ns0:ErrorMessage" name="ErrorMessage" wsaw:Action="urn:calculateBatchRatesErrorMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ShippingCalculatorServiceSoap11Binding" type="ns0:ShippingCalculatorServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="calculateRates">
+            <soap:operation soapAction="urn:calculateRates" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ErrorMessage">
+                <soap:fault name="ErrorMessage" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="calculateBatchRates">
+            <soap:operation soapAction="urn:calculateBatchRates" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ErrorMessage">
+                <soap:fault name="ErrorMessage" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ShippingCalculatorServiceSoap12Binding" type="ns0:ShippingCalculatorServicePortType">
+        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="calculateRates">
+            <soap12:operation soapAction="urn:calculateRates" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ErrorMessage">
+                <soap12:fault name="ErrorMessage" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="calculateBatchRates">
+            <soap12:operation soapAction="urn:calculateBatchRates" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ErrorMessage">
+                <soap12:fault name="ErrorMessage" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ShippingCalculatorServiceHttpBinding" type="ns0:ShippingCalculatorServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="calculateRates">
+            <http:operation location="ShippingCalculatorService/calculateRates"/>
+            <wsdl:input>
+                <mime:content part="calculateRates" type="text/xml"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content part="calculateRates" type="text/xml"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="calculateBatchRates">
+            <http:operation location="ShippingCalculatorService/calculateBatchRates"/>
+            <wsdl:input>
+                <mime:content part="calculateBatchRates" type="text/xml"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content part="calculateBatchRates" type="text/xml"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ShippingCalculatorService">
+        <wsdl:port binding="ns0:ShippingCalculatorServiceSoap11Binding" name="ShippingCalculatorServiceHttpSoap11Endpoint">
+            <soap:address location="http://localhost:8080/ShippingCalculatorService"/>
+        </wsdl:port>
+        <wsdl:port binding="ns0:ShippingCalculatorServiceSoap12Binding" name="ShippingCalculatorServiceHttpSoap12Endpoint">
+            <soap12:address location="http://localhost:8080/ShippingCalculatorService"/>
+        </wsdl:port>
+        <wsdl:port binding="ns0:ShippingCalculatorServiceHttpBinding" name="ShippingCalculatorServiceHttpEndpoint">
+            <http:address location="http://localhost:8080/ShippingCalculatorService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

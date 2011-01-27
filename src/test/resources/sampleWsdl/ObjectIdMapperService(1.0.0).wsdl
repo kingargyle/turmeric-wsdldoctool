@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:ns1="http://www.ebay.com/soaframework/common/types" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+        	
+			<xs:complexType abstract="true" name="BaseServiceRequestType">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for all service operations.
+					</xs:documentation>
+				</xs:annotation>
+		    	<xs:sequence>
+				<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		    	</xs:sequence>
+            </xs:complexType>
+            
+            <xs:complexType abstract="true" name="BaseServiceResponseType">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service operations. error ( boolean ) value indicate if there is any error in the errorMessage List. The error in errorMessage could be an 
+						error or a warning.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+			    			<xs:element name="ack" type="tns:AckValue"/>
+						<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage"/>
+						<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+           	</xs:complexType>
+     
+           	<xs:complexType abstract="true" name="BaseObjectIdMapperServiceRequestType">
+				<xs:annotation>
+				<xs:documentation>
+					This is the base class for request container for all operations in ObjectIdMapper Service.
+				</xs:documentation>
+				</xs:annotation>
+		    	<xs:complexContent>
+				<xs:extension base="tns:BaseServiceRequestType">
+				</xs:extension>
+		    	</xs:complexContent>
+            	</xs:complexType>
+            	
+            <xs:complexType abstract="true" name="BaseObjectIdMapperServiceResponseType">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service operations in ObjectIdMapper Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponseType">
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+        	
+        	<xs:complexType name="RegisterRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+					<xs:sequence>
+						<xs:element minOccurs="0" name="type" type="xs:string"/>
+						<xs:element minOccurs="0" name="namespace" type="xs:string"/>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="RegisterResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            
+            <xs:complexType name="UnRegisterRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+					<xs:sequence>
+						<xs:element minOccurs="0" name="type" type="xs:string"/>
+						<xs:element minOccurs="0" name="namespace" type="xs:string"/>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="UnRegisterResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+                        
+            <xs:complexType name="GetIdFromStringRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+					<xs:sequence>
+						<xs:element minOccurs="0" name="type" type="xs:string"/>
+						<xs:element minOccurs="0" name="namespace" type="xs:string"/>
+						<xs:element minOccurs="0" name="objectName" type="xs:string"/>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GetIdFromStringResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+					<xs:sequence>
+						<xs:element minOccurs="0" name="objectId" type="xs:int"/>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GetStringFromIdRequest">
+            <xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="type" type="xs:string"/>
+                    <xs:element minOccurs="0" name="namespace" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectId" type="xs:int"/>
+                </xs:sequence>
+                </xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GetStringFromIdResponse">
+            <xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+				<xs:sequence>
+                    <xs:element minOccurs="0" name="objectName" type="xs:string"/>
+                </xs:sequence>
+                </xs:extension>
+			</xs:complexContent>
+            </xs:complexType>
+			<xs:complexType name="SetIdStringRequest">
+				<xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+				<xs:sequence>
+                    <xs:element minOccurs="0" name="type" type="xs:string"/>
+                    <xs:element minOccurs="0" name="namespace" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectId" type="xs:int"/>
+                </xs:sequence>
+                </xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+           <xs:complexType name="SetIdStringResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            
+           <xs:complexType name="DeleteIdStringMapRequest">
+				<xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+				<xs:sequence>
+                    <xs:element minOccurs="0" name="type" type="xs:string"/>
+                    <xs:element minOccurs="0" name="namespace" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectId" type="xs:int"/>
+                </xs:sequence>
+                </xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+           <xs:complexType name="DeleteIdStringMapResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+					</xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            
+           <xs:complexType name="GetNamespaceRequest">
+				<xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="type" type="xs:string"/>
+                </xs:sequence>
+                </xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GetNamespaceResponse">
+               <xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="namespace" type="xs:string"/>
+                </xs:sequence>
+                </xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+			<xs:complexType name="GetNamespaceTypeRequest">
+            <xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+				</xs:extension>
+			</xs:complexContent>
+            </xs:complexType>
+			<xs:complexType name="GetNamespaceTypeResponse">
+			<xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="namespaceType" type="xs:string"/>
+                </xs:sequence>
+                </xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+			<xs:complexType name="GetAllObjectNamesRequest">
+            <xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceRequestType">
+				 <xs:sequence>
+                    <xs:element minOccurs="0" name="type" type="xs:string"/>
+                    <xs:element minOccurs="0" name="namespace" type="xs:string"/>
+                </xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+            </xs:complexType>
+			<xs:complexType name="GetAllObjectNamesResponse">
+			<xs:complexContent>
+				<xs:extension base="tns:BaseObjectIdMapperServiceResponseType">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="objectName" type="xs:string"/>
+                </xs:sequence>
+                </xs:extension>
+				</xs:complexContent>
+            </xs:complexType>
+          
+                <xs:simpleType name="AckValue">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the error is a severe error (causing the request to fail)
+					or an informational error (a warning) that should be communicated to the
+					user.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="Success">
+					<xs:annotation>
+						<xs:documentation>
+							The request was processed successfully, but something occurred that may
+							affect your application or the user.				
+						</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="Failure">
+					<xs:annotation>
+						<xs:documentation>
+							The request that triggered the error was not processed successfully.
+							When a serious application-level error occurs, the error is returned
+							instead of the business data.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="Warning">
+					<xs:annotation>
+						<xs:documentation>
+							The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="PartialFailure">
+					<xs:annotation>
+						<xs:documentation>
+							The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+
+     	   <xs:complexType name="ErrorMessage">
+			<xs:annotation>
+				<xs:documentation>
+					ErrorMessage to indicate any Error/Warning occured as part of service call.
+					Any run time error will not be reported here, but will be reported aspart of
+					soap fault.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+			    <xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData"/>
+			</xs:sequence>
+            	</xs:complexType>
+            
+            <xs:complexType name="ErrorData">
+			<xs:annotation>
+				<xs:documentation>
+					This represents error details.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+			    <xs:element name="errorId" type="xs:long"/>
+			    <xs:element name="domain" type="xs:string"/>
+			    <xs:element name="severity" type="tns:ErrorSeverity"/>
+			    <xs:element name="category" type="tns:ErrorCategory"/>
+			    <xs:element name="message" type="xs:string"/>
+			    <xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+			    <xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+			    <xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter"/>
+			</xs:sequence>
+            	</xs:complexType>
+            
+			<xs:complexType name="ErrorParameter">
+			<xs:annotation>
+				<xs:documentation>
+					represent contextual data associated with an error.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:simpleContent>
+			    <xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string"/>
+			    </xs:extension>
+			</xs:simpleContent>
+            	</xs:complexType>
+            
+           	<xs:simpleType name="ErrorSeverity">
+			<xs:annotation>
+				<xs:documentation>
+					Reprents the level of error. E.g. Error/Warning
+				</xs:documentation>
+			</xs:annotation>
+			<xs:restriction base="xs:string">
+			    <xs:enumeration value="Error"/>
+			    <xs:enumeration value="Warning"/>
+			</xs:restriction>
+            	</xs:simpleType>
+            
+           	<xs:simpleType name="ErrorCategory">
+			<xs:annotation>
+				<xs:documentation>
+					Reprents the error catagorization. Request and Application Error are mostly occured due to 
+					invalid data passed in request. System Error cannot be fixed by changing request values and 
+					mostly occured due to application failure.						 
+				</xs:documentation>
+			</xs:annotation>
+                	<xs:restriction base="xs:string">
+			    <xs:enumeration value="System"/>
+			    <xs:enumeration value="Application"/>
+			    <xs:enumeration value="Request"/>
+			</xs:restriction>
+            	</xs:simpleType>
+            	
+           
+		
+		<xs:element name="registerRequest" nillable="true" type="tns:RegisterRequest"/>
+		<xs:element name="registerResponse" nillable="true" type="tns:RegisterResponse"/>
+		
+		<xs:element name="unRegisterRequest" nillable="true" type="tns:UnRegisterRequest"/>
+		<xs:element name="unRegisterResponse" nillable="true" type="tns:UnRegisterResponse"/>
+		
+		<xs:element name="getIdFromStringRequest" nillable="true" type="tns:GetIdFromStringRequest"/>
+		<xs:element name="getIdFromStringResponse" nillable="true" type="tns:GetIdFromStringResponse"/>
+		
+		<xs:element name="getStringFromIdRequest" nillable="true" type="tns:GetStringFromIdRequest"/>
+		<xs:element name="getStringFromIdResponse" nillable="true" type="tns:GetStringFromIdResponse"/>
+		
+		<xs:element name="setIdStringRequest" nillable="true" type="tns:SetIdStringRequest"/>
+		<xs:element name="setIdStringResponse" nillable="true" type="tns:SetIdStringResponse"/>
+					
+		<xs:element name="deleteIdStringMapRequest" nillable="true" type="tns:DeleteIdStringMapRequest"/>
+		<xs:element name="deleteIdStringMapResponse" nillable="true" type="tns:DeleteIdStringMapResponse"/>
+		
+		<xs:element name="getNamespaceRequest" nillable="true" type="tns:GetNamespaceRequest"/>
+		<xs:element name="getNamespaceResponse" nillable="true" type="tns:GetNamespaceResponse"/>
+		
+		<xs:element name="getNamespaceTypeRequest" nillable="true" type="tns:GetNamespaceTypeRequest"/>
+		<xs:element name="getNamespaceTypeResponse" nillable="true" type="tns:GetNamespaceTypeResponse"/>		
+		
+		<xs:element name="getAllObjectNamesRequest" nillable="true" type="tns:GetAllObjectNamesRequest"/>
+		<xs:element name="getAllObjectNamesResponse" nillable="true" type="tns:GetAllObjectNamesResponse"/>
+		
+        </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="setIdStringResponse">
+    <wsdl:part element="ns0:setIdStringResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStringFromIdResponse">
+    <wsdl:part element="ns0:getStringFromIdResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getIdFromStringResponse">
+    <wsdl:part element="ns0:getIdFromStringResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="registerRequest">
+    <wsdl:part element="ns0:registerRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getNamespaceRequest">
+    <wsdl:part element="ns0:getNamespaceRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getNamespaceResponse">
+    <wsdl:part element="ns0:getNamespaceResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="registerResponse">
+    <wsdl:part element="ns0:registerResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStringFromIdRequest">
+    <wsdl:part element="ns0:getStringFromIdRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getIdFromStringRequest">
+    <wsdl:part element="ns0:getIdFromStringRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="setIdStringRequest">
+    <wsdl:part element="ns0:setIdStringRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getNamespaceTypeRequest">
+    <wsdl:part element="ns0:getNamespaceTypeRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getNamespaceTypeResponse">
+    <wsdl:part element="ns0:getNamespaceTypeResponse" name="parameters"/>
+  </wsdl:message>
+    <wsdl:message name="getAllObjectNamesRequest">
+    <wsdl:part element="ns0:getAllObjectNamesRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getAllObjectNamesResponse">
+    <wsdl:part element="ns0:getAllObjectNamesResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="deleteIdStringMapRequest">
+	<wsdl:part element="ns0:deleteIdStringMapRequest" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="deleteIdStringMapResponse">
+	<wsdl:part element="ns0:deleteIdStringMapResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="unRegisterRequest">
+	 <wsdl:part element="ns0:unRegisterRequest" name="parameters"/>
+  </wsdl:message>
+
+ <wsdl:message name="unRegisterResponse">
+	<wsdl:part element="ns0:unRegisterResponse" name="parameters"/>
+ </wsdl:message>
+  
+  <wsdl:portType name="ObjectIdMapperServicePortType">
+    <wsdl:operation name="register">
+      <wsdl:input message="ns0:registerRequest"/>
+      <wsdl:output message="ns0:registerResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="unRegister">
+		<wsdl:input message="ns0:unRegisterRequest"/>
+		<wsdl:output message="ns0:unRegisterResponse"/>
+	</wsdl:operation>
+    
+    <wsdl:operation name="getIdFromString">
+      <wsdl:input message="ns0:getIdFromStringRequest"/>
+      <wsdl:output message="ns0:getIdFromStringResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getStringFromId">
+      <wsdl:input message="ns0:getStringFromIdRequest"/>
+      <wsdl:output message="ns0:getStringFromIdResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setIdString">
+      <wsdl:input message="ns0:setIdStringRequest"/>
+      <wsdl:output message="ns0:setIdStringResponse"/>
+    </wsdl:operation>
+    
+     <wsdl:operation name="deleteIdStringMap">
+	    <wsdl:input message="ns0:deleteIdStringMapRequest"/>
+		<wsdl:output message="ns0:deleteIdStringMapResponse"/>
+	</wsdl:operation>
+    
+    <wsdl:operation name="getNamespace">
+      <wsdl:input message="ns0:getNamespaceRequest"/>
+      <wsdl:output message="ns0:getNamespaceResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getNamespaceType">
+      <wsdl:input message="ns0:getNamespaceTypeRequest"/>
+      <wsdl:output message="ns0:getNamespaceTypeResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getAllObjectNames">
+      <wsdl:input message="ns0:getAllObjectNamesRequest"/>
+      <wsdl:output message="ns0:getAllObjectNamesResponse"/>
+    </wsdl:operation>    
+  </wsdl:portType>
+  <wsdl:binding name="ObjectIdMapperServiceSOAP12Binding" type="ns0:ObjectIdMapperServicePortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="register">
+    <soap12:operation soapAction="urn:register" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="unRegister">
+		<soap12:operation soapAction="urn:unRegister" style="document"/>
+		<wsdl:input>
+			<soap12:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap12:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>    
+    <wsdl:operation name="getIdFromString">
+    <soap12:operation soapAction="urn:getIdFromString" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStringFromId">
+    <soap12:operation soapAction="urn:getStringFromId" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setIdString">
+    <soap12:operation soapAction="urn:setIdString" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="deleteIdStringMap">
+		<soap12:operation soapAction="urn:deleteIdStringMap" style="document"/>
+		<wsdl:input>
+			<soap12:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap12:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+    
+    <wsdl:operation name="getNamespace">
+    <soap12:operation soapAction="urn:getNamespace" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNamespaceType">
+    <soap12:operation soapAction="urn:getNamespaceType" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+     <wsdl:operation name="getAllObjectNames">
+    <soap12:operation soapAction="urn:getAllObjectNames" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ObjectIdMapperServiceHttpBinding" type="ns0:ObjectIdMapperServicePortType">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="register">
+      <http:operation location="ObjectIdMapperService/register"/>
+      <wsdl:input>
+        <mime:content part="registerRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="registerResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="unRegister">
+		<http:operation location="ObjectIdMapperService/unRegister"/>
+		<wsdl:input>
+			<mime:content part="unRegisterRequest" type="text/xml"/>
+		</wsdl:input>
+		<wsdl:output>
+			<mime:content part="unRegisterResponse" type="text/xml"/>
+		</wsdl:output>
+	</wsdl:operation>
+    <wsdl:operation name="getIdFromString">
+      <http:operation location="ObjectIdMapperService/getIdFromString"/>
+      <wsdl:input>
+        <mime:content part="getIdFromStringRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getIdFromStringResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStringFromId">
+      <http:operation location="ObjectIdMapperService/getStringFromId"/>
+      <wsdl:input>
+        <mime:content part="getStringFromIdRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getStringFromIdResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setIdString">
+      <http:operation location="ObjectIdMapperService/setIdString"/>
+      <wsdl:input>
+        <mime:content part="setIdStringRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="setIdStringResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="deleteIdStringMap">
+		<http:operation location="ObjectIdMapperService/deleteIdStringMap"/>
+		<wsdl:input>
+			<mime:content part="deleteIdStringMapRequest" type="text/xml"/>
+		</wsdl:input>
+		<wsdl:output>
+			<mime:content part="deleteIdStringMapResponse" type="text/xml"/>
+		</wsdl:output>
+	</wsdl:operation>
+    
+    <wsdl:operation name="getNamespace">
+      <http:operation location="ObjectIdMapperService/getNamespace"/>
+      <wsdl:input>
+        <mime:content part="getNamespaceRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getNamespaceResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNamespaceType">
+      <http:operation location="ObjectIdMapperService/getNamespaceType"/>
+      <wsdl:input>
+        <mime:content part="getNamespaceTypeRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getNamespaceTypeResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+     <wsdl:operation name="getAllObjectNames">
+      <http:operation location="ObjectIdMapperService/getAllObjectNames"/>
+      <wsdl:input>
+        <mime:content part="getAllObjectNamesRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getAllObjectNamesResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ObjectIdMapperServiceSOAP11Binding" type="ns0:ObjectIdMapperServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="register">
+      <soap:operation soapAction="urn:register" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="unRegister">
+		<soap:operation soapAction="urn:unRegister" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+    <wsdl:operation name="getIdFromString">
+      <soap:operation soapAction="urn:getIdFromString" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStringFromId">
+      <soap:operation soapAction="urn:getStringFromId" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setIdString">
+      <soap:operation soapAction="urn:setIdString" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="deleteIdStringMap">
+		<soap:operation soapAction="urn:deleteIdStringMap" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+    
+    <wsdl:operation name="getNamespace">
+      <soap:operation soapAction="urn:getNamespace" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNamespaceType">
+      <soap:operation soapAction="urn:getNamespaceType" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+        <wsdl:operation name="getAllObjectNames">
+      <soap:operation soapAction="urn:getAllObjectNames" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ObjectIdMapperService">
+    <wsdl:port binding="ns0:ObjectIdMapperServiceHttpBinding" name="ObjectIdMapperServiceHttpport">
+      <http:address location="http://localhost:8080/AuthenticationService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:ObjectIdMapperServiceSOAP11Binding" name="ObjectIdMapperServiceSOAP11port_http">
+      <soap:address location="http://localhost:8080/AuthenticationService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:ObjectIdMapperServiceSOAP12Binding" name="ObjectIdMapperServiceSOAP12port_http">
+    <soap12:address location="http://localhost:8080/AuthenticationService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,3353 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:impl="urn:webservice.reimage.grid.ebay.com" xmlns:intf="urn:webservice.reimage.grid.ebay.com" xmlns:tns1="http://to.webservice.grid.ebay.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns2="http://to.app.reimage.grid.ebay.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="urn:webservice.reimage.grid.ebay.com">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+  <schema targetNamespace="http://to.webservice.grid.ebay.com">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="urn:webservice.reimage.grid.ebay.com"/>
+   <import namespace="http://to.app.reimage.grid.ebay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType abstract="true" name="BaseTo">
+    <sequence/>
+   </complexType>
+   <complexType name="ResponseTo">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="requestMessage" nillable="true" type="xsd:string"/>
+       <element name="requestStatus" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="MenuContext">
+    <sequence/>
+   </complexType>
+   <complexType abstract="true" name="ContextualTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="context" nillable="true" type="tns1:MenuContext"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="UserSessionTo">
+    <complexContent>
+     <extension base="tns1:ContextualTo">
+      <sequence>
+       <element name="entitlements" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+       <element name="superUser" type="xsd:boolean"/>
+       <element name="groupPath" nillable="true" type="xsd:string"/>
+       <element name="groupAdmin" type="xsd:boolean"/>
+       <element name="sessionId" nillable="true" type="xsd:string"/>
+       <element name="groupId" type="xsd:int"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="HistoryTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="objectType" nillable="true" type="xsd:string"/>
+       <element name="event" nillable="true" type="xsd:string"/>
+       <element name="sessionId" nillable="true" type="xsd:string"/>
+       <element name="verb" nillable="true" type="xsd:string"/>
+       <element name="ticketId" nillable="true" type="xsd:string"/>
+       <element name="creationDate" nillable="true" type="xsd:string"/>
+       <element name="message" nillable="true" type="xsd:string"/>
+       <element name="ticketEnabled" type="xsd:boolean"/>
+       <element name="actor" nillable="true" type="xsd:string"/>
+       <element name="objectName" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="HistoryToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="historyTos" nillable="true" type="impl:ArrayOf_tns1_HistoryTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="HistoryObjectTypeTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="historyType" nillable="true" type="xsd:string"/>
+       <element name="val" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="HistoryObjectTypeToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="historyObjectTypeTos" nillable="true" type="impl:ArrayOf_tns1_HistoryObjectTypeTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="TrainTo">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="trainNumber" nillable="true" type="xsd:string"/>
+       <element name="endDate" nillable="true" type="xsd:dateTime"/>
+       <element name="startDate" nillable="true" type="xsd:dateTime"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="QuarterTo">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="name" nillable="true" type="xsd:string"/>
+       <element name="trains" nillable="true" type="impl:ArrayOf_tns1_TrainTo"/>
+       <element name="current" type="xsd:boolean"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="QuarterToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="quarterTos" nillable="true" type="impl:ArrayOf_tns1_QuarterTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="FlowData">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="flowId" type="xsd:int"/>
+       <element name="currentStatus" nillable="true" type="xsd:string"/>
+       <element name="type" nillable="true" type="xsd:string"/>
+       <element name="endDate" nillable="true" type="xsd:dateTime"/>
+       <element name="action" nillable="true" type="xsd:string"/>
+       <element name="currentState" nillable="true" type="xsd:string"/>
+       <element name="status" nillable="true" type="xsd:string"/>
+       <element name="requester" nillable="true" type="xsd:string"/>
+       <element name="currentAction" nillable="true" type="xsd:string"/>
+       <element name="creationDate" nillable="true" type="xsd:dateTime"/>
+       <element name="nextAction" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="FlowGroupData">
+    <complexContent>
+     <extension base="tns1:FlowData">
+      <sequence>
+       <element name="flowDataArray" nillable="true" type="impl:ArrayOf_tns1_FlowData"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="LabelledValueTo">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="label" nillable="true" type="xsd:string"/>
+       <element name="value" nillable="true" type="xsd:string"/>
+       <element name="groupColorCode" type="xsd:int"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="CasesTo">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="actions" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+       <element name="exemptValues" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+       <element name="casesInfo" nillable="true" type="impl:ArrayOf_tns1_LabelledValueTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="CasesGroupTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="casesTo" nillable="true" type="impl:ArrayOf_tns1_CasesTo"/>
+       <element name="casesType" nillable="true" type="xsd:string"/>
+       <element name="bulkActions" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ValidationTo">
+    <sequence>
+     <element name="lvtos" nillable="true" type="impl:ArrayOf_tns1_LabelledValueTo"/>
+     <element name="assetTag" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ValidationToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="validationTos" nillable="true" type="impl:ArrayOf_tns1_ValidationTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="poolOdbName" nillable="true" type="xsd:string"/>
+       <element name="poolId" type="xsd:int"/>
+       <element name="poolName" nillable="true" type="xsd:string"/>
+       <element name="poolCalName" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PoolToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="poolToArray" nillable="true" type="impl:ArrayOf_tns1_PoolTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="VlanSubnetTo">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="subnet" nillable="true" type="xsd:string"/>
+       <element name="vlan" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PodVlanSubnetTo">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="pod" nillable="true" type="xsd:string"/>
+       <element name="vlanSubnets" nillable="true" type="impl:ArrayOf_tns1_VlanSubnetTo"/>
+       <element name="phases" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ConfigurationGroupTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="pools" nillable="true" type="tns1:PoolToArray"/>
+       <element name="pvsTos" nillable="true" type="impl:ArrayOf_tns1_PodVlanSubnetTo"/>
+       <element name="osTypes" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="WorkFlowStepTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="completed" type="xsd:boolean"/>
+       <element name="stepIndex" type="xsd:int"/>
+       <element name="stepName" nillable="true" type="xsd:string"/>
+       <element name="endTime" nillable="true" type="xsd:string"/>
+       <element name="noOfFailures" type="xsd:int"/>
+       <element name="stepDefinition" nillable="true" type="xsd:string"/>
+       <element name="status" nillable="true" type="xsd:string"/>
+       <element name="details" nillable="true" type="xsd:string"/>
+       <element name="startTime" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="AnalysisDetailTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="details" nillable="true" type="impl:ArrayOf_tns1_LabelledValueTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="AnalysisTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="detailsTos" nillable="true" type="impl:ArrayOf_tns1_AnalysisDetailTo"/>
+       <element name="endTime" nillable="true" type="xsd:string"/>
+       <element name="type" nillable="true" type="xsd:string"/>
+       <element name="name" nillable="true" type="xsd:string"/>
+       <element name="status" nillable="true" type="xsd:string"/>
+       <element name="startTime" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="AnalysisGroupTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="analysisTos" nillable="true" type="impl:ArrayOf_tns1_AnalysisTo"/>
+       <element name="status" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="LBConfigurationTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="intlLbvServer" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+       <element name="lb" nillable="true" type="xsd:string"/>
+       <element name="coreLbvServer" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+       <element name="lbType" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="LBConfigurationToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="lbConfigurationTos" nillable="true" type="impl:ArrayOf_tns1_LBConfigurationTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="HistoryResultTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="lvtos" nillable="true" type="impl:ArrayOf_tns1_LabelledValueTo"/>
+       <element name="sessionId" type="xsd:int"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="HistoryResultToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="historyResultTos" nillable="true" type="impl:ArrayOf_tns1_HistoryResultTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="DNSPayloadTo">
+    <sequence>
+     <element name="ipAddress" nillable="true" type="xsd:string"/>
+     <element name="clause" nillable="true" type="xsd:string"/>
+     <element name="hostName" nillable="true" type="xsd:string"/>
+     <element name="chassi" nillable="true" type="xsd:string"/>
+     <element name="domainSuffix" nillable="true" type="xsd:string"/>
+     <element name="ipClass" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="DNSPayloadGroupTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="reverseFormatPayloadTos" nillable="true" type="impl:ArrayOf_tns1_DNSPayloadTo"/>
+       <element name="forwardFormatPayloadTos" nillable="true" type="impl:ArrayOf_tns1_DNSPayloadTo"/>
+       <element name="rsaFormatPayloadTos" nillable="true" type="impl:ArrayOf_tns1_DNSPayloadTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PodVlanSubnetToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="podVlanSunetToArray" nillable="true" type="impl:ArrayOf_tns1_PodVlanSubnetTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="StringArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="valueArray" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="DCSubnetLBConfigMapTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="pod" nillable="true" type="xsd:string"/>
+       <element name="dataCenter" nillable="true" type="xsd:string"/>
+       <element name="pool" nillable="true" type="xsd:string"/>
+       <element name="responseCode" nillable="true" type="xsd:string"/>
+       <element name="lbConfigToArray" nillable="true" type="tns1:LBConfigurationToArray"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="WorkFlowStepToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="workFlowStepTos" nillable="true" type="impl:ArrayOf_tns1_WorkFlowStepTo"/>
+       <element name="sessionId" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="CrTktInfoTo">
+    <sequence>
+     <element name="subType" nillable="true" type="xsd:string"/>
+     <element name="crNumber" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="CrTktInfoToArray">
+    <sequence>
+     <element name="crTkts" nillable="true" type="impl:ArrayOf_tns1_CrTktInfoTo"/>
+    </sequence>
+   </complexType>
+   <complexType name="TraceInfoTo">
+    <sequence>
+     <element name="repairTktNo" nillable="true" type="xsd:string"/>
+     <element name="sasrvTktNo" nillable="true" type="xsd:string"/>
+     <element name="crTkts" nillable="true" type="tns1:CrTktInfoToArray"/>
+    </sequence>
+   </complexType>
+   <complexType name="AssetModuleGroupTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="ignoreLBHealth" type="xsd:boolean"/>
+       <element name="caseId" nillable="true" type="xsd:string"/>
+       <element name="nextModule" nillable="true" type="xsd:string"/>
+       <element name="verb" nillable="true" type="xsd:string"/>
+       <element name="assets" nillable="true" type="impl:ArrayOf_xsd_anyType"/>
+       <element name="masterFlowIds" nillable="true" type="impl:ArrayOf_xsd_anyType"/>
+       <element name="forceConfigure" type="xsd:boolean"/>
+       <element name="hostNameTemplate" nillable="true" type="xsd:string"/>
+       <element name="requestId" nillable="true" type="xsd:string"/>
+       <element name="flags" nillable="true" type="impl:ArrayOf_xsd_anyType"/>
+       <element name="traceInfo" nillable="true" type="tns1:TraceInfoTo"/>
+       <element name="groupErrors" nillable="true" type="impl:ArrayOf_xsd_anyType"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="PodPhaseTo">
+    <sequence>
+     <element name="pod" nillable="true" type="xsd:string"/>
+     <element name="location" nillable="true" type="xsd:string"/>
+     <element name="assetTag" nillable="true" type="xsd:string"/>
+     <element name="phase" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="PodPhaseToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="podPhaseInfo" nillable="true" type="impl:ArrayOf_tns1_PodPhaseTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="WorkFlowGroupTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="workFlowStepToArray" nillable="true" type="impl:ArrayOf_tns1_WorkFlowStepToArray"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="DataCenterInfoTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="dcName" nillable="true" type="xsd:string"/>
+       <element name="dcSubnet" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="DataCenterInfoToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="dataCenterInfos" nillable="true" type="impl:ArrayOf_tns1_DataCenterInfoTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="DCSubnetLBConfigMapToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="dcSubnetLbConfigToArray" nillable="true" type="impl:ArrayOf_tns1_DCSubnetLBConfigMapTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="LabelledValueToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="labelledValueToArray" nillable="true" type="impl:ArrayOf_tns1_LabelledValueTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ConfigRepositoryTreeTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="attributeId" type="xsd:int"/>
+       <element name="attributeValue" nillable="true" type="xsd:string"/>
+       <element name="configType" nillable="true" type="xsd:string"/>
+       <element name="dependents" nillable="true" type="impl:ArrayOf_tns1_ConfigRepositoryTreeTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ConfigRepositoryTreeToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="treeTos" nillable="true" type="impl:ArrayOf_tns1_ConfigRepositoryTreeTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ReimageConfigurableAttributeTo">
+    <complexContent>
+     <extension base="tns1:BaseTo">
+      <sequence>
+       <element name="attributeId" type="xsd:int"/>
+       <element name="oldPod" nillable="true" type="xsd:string"/>
+       <element name="oldVlan" nillable="true" type="xsd:string"/>
+       <element name="newSubnet" nillable="true" type="xsd:string"/>
+       <element name="attributeValue" nillable="true" type="xsd:string"/>
+       <element name="newPod" nillable="true" type="xsd:string"/>
+       <element name="configType" nillable="true" type="xsd:string"/>
+       <element name="newVlan" nillable="true" type="xsd:string"/>
+       <element name="oldSubnet" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema targetNamespace="urn:webservice.reimage.grid.ebay.com">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://to.webservice.grid.ebay.com"/>
+   <import namespace="http://to.app.reimage.grid.ebay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_soapenc_string">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_HistoryTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:HistoryTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_HistoryObjectTypeTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:HistoryObjectTypeTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_TrainTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:TrainTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_QuarterTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:QuarterTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_xsd_int">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:int[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_FlowData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:FlowData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_LabelledValueTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:LabelledValueTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_CasesTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:CasesTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_ValidationTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:ValidationTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_PoolTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:PoolTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_VlanSubnetTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:VlanSubnetTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_PodVlanSubnetTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:PodVlanSubnetTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_ImageFlowData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:ImageFlowData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_AnalysisDetailTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:AnalysisDetailTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_AnalysisTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:AnalysisTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_LBConfigurationTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:LBConfigurationTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_HistoryResultTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:HistoryResultTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_DNSPayloadTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:DNSPayloadTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_ProcuredAssetTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:ProcuredAssetTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_WorkFlowStepTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:WorkFlowStepTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_xsd_anyType">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_CrTktInfoTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:CrTktInfoTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_PodPhaseTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:PodPhaseTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_WorkFlowStepToArray">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:WorkFlowStepToArray[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_DataCenterInfoTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:DataCenterInfoTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_DCSubnetLBConfigMapTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:DCSubnetLBConfigMapTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_ImageFlowGroupData">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:ImageFlowGroupData[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_ConfigRepositoryTreeTo">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:ConfigRepositoryTreeTo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://to.app.reimage.grid.ebay.com">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://to.webservice.grid.ebay.com"/>
+   <import namespace="urn:webservice.reimage.grid.ebay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ProcuredAssetTo">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="rqSrvTicketId" nillable="true" type="xsd:string"/>
+       <element name="phase" nillable="true" type="xsd:string"/>
+       <element name="netMask" nillable="true" type="xsd:string"/>
+       <element name="intlLbvServer" nillable="true" type="xsd:string"/>
+       <element name="vlan" nillable="true" type="xsd:string"/>
+       <element name="loadBalancer" nillable="true" type="xsd:string"/>
+       <element name="parentModel" nillable="true" type="xsd:string"/>
+       <element name="buildTicketId" nillable="true" type="xsd:string"/>
+       <element name="intlGroup" nillable="true" type="xsd:string"/>
+       <element name="autoInit" type="xsd:boolean"/>
+       <element name="coreEnabled" type="xsd:boolean"/>
+       <element name="siblings" nillable="true" type="xsd:string"/>
+       <element name="dataCenter" nillable="true" type="xsd:string"/>
+       <element name="crNumber" nillable="true" type="xsd:string"/>
+       <element name="configuredBy" nillable="true" type="xsd:string"/>
+       <element name="domainSuffix" nillable="true" type="xsd:string"/>
+       <element name="chassiNumber" nillable="true" type="xsd:string"/>
+       <element name="os" nillable="true" type="xsd:string"/>
+       <element name="pod" nillable="true" type="xsd:string"/>
+       <element name="webGroup" nillable="true" type="xsd:string"/>
+       <element name="hostName" nillable="true" type="xsd:string"/>
+       <element name="subnet" nillable="true" type="xsd:string"/>
+       <element name="coreGroup" nillable="true" type="xsd:string"/>
+       <element name="intlEnabled" type="xsd:boolean"/>
+       <element name="loadBalancerType" nillable="true" type="xsd:string"/>
+       <element name="crStatus" nillable="true" type="xsd:string"/>
+       <element name="ticketAssignee" nillable="true" type="xsd:string"/>
+       <element name="serialNumber" nillable="true" type="xsd:string"/>
+       <element name="coreLbvServer" nillable="true" type="xsd:string"/>
+       <element name="assetNumber" nillable="true" type="xsd:string"/>
+       <element name="location" nillable="true" type="xsd:string"/>
+       <element name="gatewayIp" nillable="true" type="xsd:string"/>
+       <element name="hostIp" nillable="true" type="xsd:string"/>
+       <element name="gateway" nillable="true" type="xsd:string"/>
+       <element name="saSrvTicketId" nillable="true" type="xsd:string"/>
+       <element name="model" nillable="true" type="xsd:string"/>
+       <element name="poolCalName" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ImageFlowData">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="actions" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+       <element name="procuredAsset" nillable="true" type="tns2:ProcuredAssetTo"/>
+       <element name="objectType" nillable="true" type="xsd:string"/>
+       <element name="flowData" nillable="true" type="tns1:FlowData"/>
+       <element name="objectName" nillable="true" type="xsd:string"/>
+       <element name="creationDate" nillable="true" type="xsd:dateTime"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ImageFlowGroupData">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="rqSrvTicketId" nillable="true" type="xsd:string"/>
+       <element name="actions" nillable="true" type="impl:ArrayOf_soapenc_string"/>
+       <element name="objectType" nillable="true" type="xsd:string"/>
+       <element name="masterFlow" nillable="true" type="tns1:FlowData"/>
+       <element name="imageFlows" nillable="true" type="impl:ArrayOf_tns2_ImageFlowData"/>
+       <element name="networkTicketId" nillable="true" type="xsd:string"/>
+       <element name="sasrvAssignee" nillable="true" type="xsd:string"/>
+       <element name="buildTicketId" nillable="true" type="xsd:string"/>
+       <element name="creationDate" nillable="true" type="xsd:dateTime"/>
+       <element name="autoInit" type="xsd:boolean"/>
+       <element name="siteTicketId" nillable="true" type="xsd:string"/>
+       <element name="crNumber" nillable="true" type="xsd:string"/>
+       <element name="objectName" nillable="true" type="xsd:string"/>
+       <element name="poolName" nillable="true" type="xsd:string"/>
+       <element name="saSrvTicketId" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ProcuredAssetToArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="procuredAssetToArray" nillable="true" type="impl:ArrayOf_tns2_ProcuredAssetTo"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ImageFlowGroupDataArray">
+    <complexContent>
+     <extension base="tns1:ResponseTo">
+      <sequence>
+       <element name="imageFlowGroupDataArray" nillable="true" type="impl:ArrayOf_tns2_ImageFlowGroupData"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://xml.apache.org/xml-soap">
+   <import namespace="http://to.webservice.grid.ebay.com"/>
+   <import namespace="urn:webservice.reimage.grid.ebay.com"/>
+   <import namespace="http://to.app.reimage.grid.ebay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="Vector">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getDCForPodResponse">
+
+      <wsdl:part name="getDCForPodReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllSiblingsResponse">
+
+      <wsdl:part name="getAllSiblingsReturn" type="tns1:StringArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="startReimageFlowResponse">
+
+      <wsdl:part name="startReimageFlowReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getHistoryByObjectNameResponse">
+
+      <wsdl:part name="getHistoryByObjectNameReturn" type="tns1:HistoryToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllSiblingsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="intf:ArrayOf_soapenc_string"/>
+
+      <wsdl:part name="in2" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCompletedStepsForRetryResponse">
+
+      <wsdl:part name="getCompletedStepsForRetryReturn" type="tns1:StringArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="returnToInventoryResponse">
+
+      <wsdl:part name="returnToInventoryReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelCRTicketRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="xsd:boolean"/>
+
+      <wsdl:part name="in2" type="intf:ArrayOf_xsd_int"/>
+
+      <wsdl:part name="in3" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="retryFailedStepsResponse">
+
+      <wsdl:part name="retryFailedStepsReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeToVerifyStateResponse">
+
+      <wsdl:part name="changeToVerifyStateReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDefaultAutomatedTasksResponse">
+
+      <wsdl:part name="getDefaultAutomatedTasksReturn" type="tns1:StringArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="skipFlowRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+      <wsdl:part name="in1" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDesignatedActionsResponse">
+
+      <wsdl:part name="getDesignatedActionsReturn" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllPendingGroupsRequest">
+
+      <wsdl:part name="in0" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAssetInformationToConfigureResponse">
+
+      <wsdl:part name="getAssetInformationToConfigureReturn" type="tns1:AssetModuleGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchHistoriesRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_tns1_LabelledValueTo"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="soapenc:string"/>
+
+      <wsdl:part name="in3" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAssetsToNotifyResponse">
+
+      <wsdl:part name="getAssetsToNotifyReturn" type="tns1:AssetModuleGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAssetInformationToConfigureRequest">
+
+      <wsdl:part name="in0" type="tns1:AssetModuleGroupTo"/>
+
+      <wsdl:part name="in1" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="findHistoryByObjectNameAndTypeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllPoolsRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="processAssetsRequest">
+
+      <wsdl:part name="in0" type="tns1:AssetModuleGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelFlowResponse">
+
+      <wsdl:part name="cancelFlowReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getConfigurationAnalysisRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getFlowGroupResponse">
+
+      <wsdl:part name="getFlowGroupReturn" type="tns1:FlowGroupData"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="imageGroupRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllHistoryObjectTypesRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="retryFailedStepsRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllVlanSubnetsRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getHistoryForLoggedOnUserResponse">
+
+      <wsdl:part name="getHistoryForLoggedOnUserReturn" type="tns1:HistoryToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeFlipCRResponse">
+
+      <wsdl:part name="resumeFlipCRReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQuartsOfYearRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="approveCRRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="skipFlowResponse">
+
+      <wsdl:part name="skipFlowReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getFlowRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllDataCentersResponse">
+
+      <wsdl:part name="getAllDataCentersReturn" type="tns1:DataCenterInfoToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateIpAddressRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getFlowResponse">
+
+      <wsdl:part name="getFlowReturn" type="tns1:FlowData"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateConfigurationDetailsResponse">
+
+      <wsdl:part name="updateConfigurationDetailsReturn" type="tns1:AssetModuleGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAssetsToNotifyRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="startSessionResponse">
+
+      <wsdl:part name="startSessionReturn" type="tns1:UserSessionTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUnNotifiedHistoryForLoggedOnUserResponse">
+
+      <wsdl:part name="getUnNotifiedHistoryForLoggedOnUserReturn" type="tns1:HistoryToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllVlanSubnetsResponse">
+
+      <wsdl:part name="getAllVlanSubnetsReturn" type="tns1:ConfigRepositoryTreeToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="endSessionRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="approveCRResponse">
+
+      <wsdl:part name="approveCRReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getHistoryByObjectNameRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelFlowRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="pauseResponse">
+
+      <wsdl:part name="pauseReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAutoSelectLBandLBVServerRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_soapenc_string"/>
+
+      <wsdl:part name="in1" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDNSDataRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchHistoriesResponse">
+
+      <wsdl:part name="searchHistoriesReturn" type="tns1:HistoryResultToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="findHistoryByObjectNameAndTypeResponse">
+
+      <wsdl:part name="findHistoryByObjectNameAndTypeReturn" type="tns1:HistoryToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLBandLBVServerResponse">
+
+      <wsdl:part name="getLBandLBVServerReturn" type="tns1:DCSubnetLBConfigMapToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getBladeCenterIpsRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="startSessionRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeFlipCRRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllPodVlanSubnetsRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelCRTicketResponse">
+
+      <wsdl:part name="cancelCRTicketReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDesignatedActionsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="rollbackCRRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="xsd:boolean"/>
+
+      <wsdl:part name="in2" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUnNotifiedHistoryForLoggedOnUserRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getDCForPodRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllHistoryObjectTypesResponse">
+
+      <wsdl:part name="getAllHistoryObjectTypesReturn" type="tns1:HistoryObjectTypeToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAutoSelectLBandLBVServerResponse">
+
+      <wsdl:part name="getAutoSelectLBandLBVServerReturn" type="tns1:DCSubnetLBConfigMapToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeFlowRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+      <wsdl:part name="in1" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getConfigurationRepositoryTreeRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPodPhaseforAssetsResponse">
+
+      <wsdl:part name="getPodPhaseforAssetsReturn" type="tns1:PodPhaseToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCompletedStepsForRetryRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="endSessionResponse">
+
+      <wsdl:part name="endSessionReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPodPhaseforAssetsRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllDataCentersRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="configureRepositoryDataRequest">
+
+      <wsdl:part name="in0" type="tns1:ReimageConfigurableAttributeTo"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllImagingAssetsResponse">
+
+      <wsdl:part name="getAllImagingAssetsReturn" type="tns2:ImageFlowGroupDataArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="pauseFlowResponse">
+
+      <wsdl:part name="pauseFlowReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllOSsRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="returnToInventoryRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateAssetsRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllCasesByTypeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeFlowResponse">
+
+      <wsdl:part name="resumeFlowReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="startFlowResponse">
+
+      <wsdl:part name="startFlowReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getBladeCenterIpsResponse">
+
+      <wsdl:part name="getBladeCenterIpsReturn" type="tns1:LabelledValueToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQuartsOfYearResponse">
+
+      <wsdl:part name="getQuartsOfYearReturn" type="tns1:QuarterToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelReimageFlowResponse">
+
+      <wsdl:part name="cancelReimageFlowReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeFlowResponse">
+
+      <wsdl:part name="changeFlowReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllPodVlanSubnetsResponse">
+
+      <wsdl:part name="getAllPodVlanSubnetsReturn" type="tns1:PodVlanSubnetToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="processAssetsResponse">
+
+      <wsdl:part name="processAssetsReturn" type="tns1:AssetModuleGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllQuartersResponse">
+
+      <wsdl:part name="getAllQuartersReturn" type="tns1:QuarterToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getConfigurationRepositoryTreeResponse">
+
+      <wsdl:part name="getConfigurationRepositoryTreeReturn" type="tns1:ConfigRepositoryTreeToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllProcuredAssetsRequest">
+
+      <wsdl:part name="in0" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getConfigurationAnalysisResponse">
+
+      <wsdl:part name="getConfigurationAnalysisReturn" type="tns1:AnalysisGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllPoolsResponse">
+
+      <wsdl:part name="getAllPoolsReturn" type="tns1:PoolToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateAssetsResponse">
+
+      <wsdl:part name="validateAssetsReturn" type="tns1:ValidationToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCompletedStepsRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeResponse">
+
+      <wsdl:part name="resumeReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCompletedStepsResponse">
+
+      <wsdl:part name="getCompletedStepsReturn" type="tns1:WorkFlowGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeToVerifyStateRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateIpAddressResponse">
+
+      <wsdl:part name="validateIpAddressReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelReimageFlowRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllOSsResponse">
+
+      <wsdl:part name="getAllOSsReturn" type="tns1:StringArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="pauseFlowRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllQuartersRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getHistoryForLoggedOnUserRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getSearchImageHistoryAttributesResponse">
+
+      <wsdl:part name="getSearchImageHistoryAttributesReturn" type="tns1:LabelledValueToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSearchImageHistoryAttributesRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="rollbackCRResponse">
+
+      <wsdl:part name="rollbackCRReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllDefaultQuartersResponse">
+
+      <wsdl:part name="getAllDefaultQuartersReturn" type="tns1:QuarterToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="retryStepResponse">
+
+      <wsdl:part name="retryStepReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllProcuredAssetsResponse">
+
+      <wsdl:part name="getAllProcuredAssetsReturn" type="tns2:ProcuredAssetToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateConfigurationDetailsRequest">
+
+      <wsdl:part name="in0" type="tns1:AssetModuleGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllConfigurationResponse">
+
+      <wsdl:part name="getAllConfigurationReturn" type="tns1:ConfigurationGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllConfigurationRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllImagingAssetsRequest">
+
+      <wsdl:part name="in0" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="startFlowRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getHistoryByObjectTypeResponse">
+
+      <wsdl:part name="getHistoryByObjectTypeReturn" type="tns1:HistoryToArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDNSDataResponse">
+
+      <wsdl:part name="getDNSDataReturn" type="tns1:DNSPayloadGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="pauseRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="startReimageFlowRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_xsd_int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getFlowGroupRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllDefaultQuartersRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllPendingGroupsResponse">
+
+      <wsdl:part name="getAllPendingGroupsReturn" type="tns2:ImageFlowGroupDataArray"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="retryStepRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="imageGroupResponse">
+
+      <wsdl:part name="imageGroupReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLBandLBVServerRequest">
+
+      <wsdl:part name="in0" type="intf:ArrayOf_soapenc_string"/>
+
+      <wsdl:part name="in1" type="intf:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeFlowRequest">
+
+      <wsdl:part name="in0" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDefaultAutomatedTasksRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getHistoryByObjectTypeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="configureRepositoryDataResponse">
+
+      <wsdl:part name="configureRepositoryDataReturn" type="tns1:ResponseTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllCasesByTypeResponse">
+
+      <wsdl:part name="getAllCasesByTypeReturn" type="tns1:CasesGroupTo"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ReimageService">
+
+      <wsdl:operation name="endSession">
+
+         <wsdl:input message="intf:endSessionRequest" name="endSessionRequest"/>
+
+         <wsdl:output message="intf:endSessionResponse" name="endSessionResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="startSession" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:startSessionRequest" name="startSessionRequest"/>
+
+         <wsdl:output message="intf:startSessionResponse" name="startSessionResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getHistoryForLoggedOnUser">
+
+         <wsdl:input message="intf:getHistoryForLoggedOnUserRequest" name="getHistoryForLoggedOnUserRequest"/>
+
+         <wsdl:output message="intf:getHistoryForLoggedOnUserResponse" name="getHistoryForLoggedOnUserResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getHistoryByObjectName" parameterOrder="in0">
+
+         <wsdl:input message="intf:getHistoryByObjectNameRequest" name="getHistoryByObjectNameRequest"/>
+
+         <wsdl:output message="intf:getHistoryByObjectNameResponse" name="getHistoryByObjectNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getHistoryByObjectType" parameterOrder="in0">
+
+         <wsdl:input message="intf:getHistoryByObjectTypeRequest" name="getHistoryByObjectTypeRequest"/>
+
+         <wsdl:output message="intf:getHistoryByObjectTypeResponse" name="getHistoryByObjectTypeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUnNotifiedHistoryForLoggedOnUser">
+
+         <wsdl:input message="intf:getUnNotifiedHistoryForLoggedOnUserRequest" name="getUnNotifiedHistoryForLoggedOnUserRequest"/>
+
+         <wsdl:output message="intf:getUnNotifiedHistoryForLoggedOnUserResponse" name="getUnNotifiedHistoryForLoggedOnUserResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findHistoryByObjectNameAndType" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="intf:findHistoryByObjectNameAndTypeRequest" name="findHistoryByObjectNameAndTypeRequest"/>
+
+         <wsdl:output message="intf:findHistoryByObjectNameAndTypeResponse" name="findHistoryByObjectNameAndTypeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllHistoryObjectTypes">
+
+         <wsdl:input message="intf:getAllHistoryObjectTypesRequest" name="getAllHistoryObjectTypesRequest"/>
+
+         <wsdl:output message="intf:getAllHistoryObjectTypesResponse" name="getAllHistoryObjectTypesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQuartsOfYear" parameterOrder="in0">
+
+         <wsdl:input message="intf:getQuartsOfYearRequest" name="getQuartsOfYearRequest"/>
+
+         <wsdl:output message="intf:getQuartsOfYearResponse" name="getQuartsOfYearResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllQuarters" parameterOrder="in0">
+
+         <wsdl:input message="intf:getAllQuartersRequest" name="getAllQuartersRequest"/>
+
+         <wsdl:output message="intf:getAllQuartersResponse" name="getAllQuartersResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllDefaultQuarters">
+
+         <wsdl:input message="intf:getAllDefaultQuartersRequest" name="getAllDefaultQuartersRequest"/>
+
+         <wsdl:output message="intf:getAllDefaultQuartersResponse" name="getAllDefaultQuartersResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getFlowGroup" parameterOrder="in0">
+
+         <wsdl:input message="intf:getFlowGroupRequest" name="getFlowGroupRequest"/>
+
+         <wsdl:output message="intf:getFlowGroupResponse" name="getFlowGroupResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getFlow" parameterOrder="in0">
+
+         <wsdl:input message="intf:getFlowRequest" name="getFlowRequest"/>
+
+         <wsdl:output message="intf:getFlowResponse" name="getFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="pauseFlow" parameterOrder="in0">
+
+         <wsdl:input message="intf:pauseFlowRequest" name="pauseFlowRequest"/>
+
+         <wsdl:output message="intf:pauseFlowResponse" name="pauseFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resumeFlow" parameterOrder="in0">
+
+         <wsdl:input message="intf:resumeFlowRequest" name="resumeFlowRequest"/>
+
+         <wsdl:output message="intf:resumeFlowResponse" name="resumeFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelFlow" parameterOrder="in0">
+
+         <wsdl:input message="intf:cancelFlowRequest" name="cancelFlowRequest"/>
+
+         <wsdl:output message="intf:cancelFlowResponse" name="cancelFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeFlow" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:changeFlowRequest" name="changeFlowRequest"/>
+
+         <wsdl:output message="intf:changeFlowResponse" name="changeFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="startFlow" parameterOrder="in0">
+
+         <wsdl:input message="intf:startFlowRequest" name="startFlowRequest"/>
+
+         <wsdl:output message="intf:startFlowResponse" name="startFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllPools">
+
+         <wsdl:input message="intf:getAllPoolsRequest" name="getAllPoolsRequest"/>
+
+         <wsdl:output message="intf:getAllPoolsResponse" name="getAllPoolsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllOSs">
+
+         <wsdl:input message="intf:getAllOSsRequest" name="getAllOSsRequest"/>
+
+         <wsdl:output message="intf:getAllOSsResponse" name="getAllOSsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllPodVlanSubnets">
+
+         <wsdl:input message="intf:getAllPodVlanSubnetsRequest" name="getAllPodVlanSubnetsRequest"/>
+
+         <wsdl:output message="intf:getAllPodVlanSubnetsResponse" name="getAllPodVlanSubnetsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllProcuredAssets" parameterOrder="in0">
+
+         <wsdl:input message="intf:getAllProcuredAssetsRequest" name="getAllProcuredAssetsRequest"/>
+
+         <wsdl:output message="intf:getAllProcuredAssetsResponse" name="getAllProcuredAssetsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="startReimageFlow" parameterOrder="in0">
+
+         <wsdl:input message="intf:startReimageFlowRequest" name="startReimageFlowRequest"/>
+
+         <wsdl:output message="intf:startReimageFlowResponse" name="startReimageFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelReimageFlow" parameterOrder="in0">
+
+         <wsdl:input message="intf:cancelReimageFlowRequest" name="cancelReimageFlowRequest"/>
+
+         <wsdl:output message="intf:cancelReimageFlowResponse" name="cancelReimageFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="skipFlow" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:skipFlowRequest" name="skipFlowRequest"/>
+
+         <wsdl:output message="intf:skipFlowResponse" name="skipFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="pause" parameterOrder="in0">
+
+         <wsdl:input message="intf:pauseRequest" name="pauseRequest"/>
+
+         <wsdl:output message="intf:pauseResponse" name="pauseResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resume" parameterOrder="in0">
+
+         <wsdl:input message="intf:resumeRequest" name="resumeRequest"/>
+
+         <wsdl:output message="intf:resumeResponse" name="resumeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="returnToInventory" parameterOrder="in0">
+
+         <wsdl:input message="intf:returnToInventoryRequest" name="returnToInventoryRequest"/>
+
+         <wsdl:output message="intf:returnToInventoryResponse" name="returnToInventoryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllPendingGroups" parameterOrder="in0">
+
+         <wsdl:input message="intf:getAllPendingGroupsRequest" name="getAllPendingGroupsRequest"/>
+
+         <wsdl:output message="intf:getAllPendingGroupsResponse" name="getAllPendingGroupsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="imageGroup" parameterOrder="in0">
+
+         <wsdl:input message="intf:imageGroupRequest" name="imageGroupRequest"/>
+
+         <wsdl:output message="intf:imageGroupResponse" name="imageGroupResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllImagingAssets" parameterOrder="in0">
+
+         <wsdl:input message="intf:getAllImagingAssetsRequest" name="getAllImagingAssetsRequest"/>
+
+         <wsdl:output message="intf:getAllImagingAssetsResponse" name="getAllImagingAssetsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeToVerifyState" parameterOrder="in0">
+
+         <wsdl:input message="intf:changeToVerifyStateRequest" name="changeToVerifyStateRequest"/>
+
+         <wsdl:output message="intf:changeToVerifyStateResponse" name="changeToVerifyStateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getConfigurationRepositoryTree">
+
+         <wsdl:input message="intf:getConfigurationRepositoryTreeRequest" name="getConfigurationRepositoryTreeRequest"/>
+
+         <wsdl:output message="intf:getConfigurationRepositoryTreeResponse" name="getConfigurationRepositoryTreeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="configureRepositoryData" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:configureRepositoryDataRequest" name="configureRepositoryDataRequest"/>
+
+         <wsdl:output message="intf:configureRepositoryDataResponse" name="configureRepositoryDataResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCompletedSteps" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:getCompletedStepsRequest" name="getCompletedStepsRequest"/>
+
+         <wsdl:output message="intf:getCompletedStepsResponse" name="getCompletedStepsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="retryStep" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:retryStepRequest" name="retryStepRequest"/>
+
+         <wsdl:output message="intf:retryStepResponse" name="retryStepResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchHistories" parameterOrder="in0 in1 in2 in3">
+
+         <wsdl:input message="intf:searchHistoriesRequest" name="searchHistoriesRequest"/>
+
+         <wsdl:output message="intf:searchHistoriesResponse" name="searchHistoriesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAssetInformationToConfigure" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:getAssetInformationToConfigureRequest" name="getAssetInformationToConfigureRequest"/>
+
+         <wsdl:output message="intf:getAssetInformationToConfigureResponse" name="getAssetInformationToConfigureResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="processAssets" parameterOrder="in0">
+
+         <wsdl:input message="intf:processAssetsRequest" name="processAssetsRequest"/>
+
+         <wsdl:output message="intf:processAssetsResponse" name="processAssetsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllDataCenters">
+
+         <wsdl:input message="intf:getAllDataCentersRequest" name="getAllDataCentersRequest"/>
+
+         <wsdl:output message="intf:getAllDataCentersResponse" name="getAllDataCentersResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAutoSelectLBandLBVServer" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:getAutoSelectLBandLBVServerRequest" name="getAutoSelectLBandLBVServerRequest"/>
+
+         <wsdl:output message="intf:getAutoSelectLBandLBVServerResponse" name="getAutoSelectLBandLBVServerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLBandLBVServer" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:getLBandLBVServerRequest" name="getLBandLBVServerRequest"/>
+
+         <wsdl:output message="intf:getLBandLBVServerResponse" name="getLBandLBVServerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateConfigurationDetails" parameterOrder="in0">
+
+         <wsdl:input message="intf:updateConfigurationDetailsRequest" name="updateConfigurationDetailsRequest"/>
+
+         <wsdl:output message="intf:updateConfigurationDetailsResponse" name="updateConfigurationDetailsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateIpAddress" parameterOrder="in0">
+
+         <wsdl:input message="intf:validateIpAddressRequest" name="validateIpAddressRequest"/>
+
+         <wsdl:output message="intf:validateIpAddressResponse" name="validateIpAddressResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCompletedStepsForRetry" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:getCompletedStepsForRetryRequest" name="getCompletedStepsForRetryRequest"/>
+
+         <wsdl:output message="intf:getCompletedStepsForRetryResponse" name="getCompletedStepsForRetryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDefaultAutomatedTasks">
+
+         <wsdl:input message="intf:getDefaultAutomatedTasksRequest" name="getDefaultAutomatedTasksRequest"/>
+
+         <wsdl:output message="intf:getDefaultAutomatedTasksResponse" name="getDefaultAutomatedTasksResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSearchImageHistoryAttributes">
+
+         <wsdl:input message="intf:getSearchImageHistoryAttributesRequest" name="getSearchImageHistoryAttributesRequest"/>
+
+         <wsdl:output message="intf:getSearchImageHistoryAttributesResponse" name="getSearchImageHistoryAttributesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelCRTicket" parameterOrder="in0 in1 in2 in3">
+
+         <wsdl:input message="intf:cancelCRTicketRequest" name="cancelCRTicketRequest"/>
+
+         <wsdl:output message="intf:cancelCRTicketResponse" name="cancelCRTicketResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="retryFailedSteps" parameterOrder="in0">
+
+         <wsdl:input message="intf:retryFailedStepsRequest" name="retryFailedStepsRequest"/>
+
+         <wsdl:output message="intf:retryFailedStepsResponse" name="retryFailedStepsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllCasesByType" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:getAllCasesByTypeRequest" name="getAllCasesByTypeRequest"/>
+
+         <wsdl:output message="intf:getAllCasesByTypeResponse" name="getAllCasesByTypeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllSiblings" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="intf:getAllSiblingsRequest" name="getAllSiblingsRequest"/>
+
+         <wsdl:output message="intf:getAllSiblingsResponse" name="getAllSiblingsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="approveCR" parameterOrder="in0 in1">
+
+         <wsdl:input message="intf:approveCRRequest" name="approveCRRequest"/>
+
+         <wsdl:output message="intf:approveCRResponse" name="approveCRResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDesignatedActions" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="intf:getDesignatedActionsRequest" name="getDesignatedActionsRequest"/>
+
+         <wsdl:output message="intf:getDesignatedActionsResponse" name="getDesignatedActionsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="rollbackCR" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="intf:rollbackCRRequest" name="rollbackCRRequest"/>
+
+         <wsdl:output message="intf:rollbackCRResponse" name="rollbackCRResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDCForPod" parameterOrder="in0">
+
+         <wsdl:input message="intf:getDCForPodRequest" name="getDCForPodRequest"/>
+
+         <wsdl:output message="intf:getDCForPodResponse" name="getDCForPodResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllVlanSubnets" parameterOrder="in0">
+
+         <wsdl:input message="intf:getAllVlanSubnetsRequest" name="getAllVlanSubnetsRequest"/>
+
+         <wsdl:output message="intf:getAllVlanSubnetsResponse" name="getAllVlanSubnetsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDNSData" parameterOrder="in0">
+
+         <wsdl:input message="intf:getDNSDataRequest" name="getDNSDataRequest"/>
+
+         <wsdl:output message="intf:getDNSDataResponse" name="getDNSDataResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resumeFlipCR" parameterOrder="in0">
+
+         <wsdl:input message="intf:resumeFlipCRRequest" name="resumeFlipCRRequest"/>
+
+         <wsdl:output message="intf:resumeFlipCRResponse" name="resumeFlipCRResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllConfiguration">
+
+         <wsdl:input message="intf:getAllConfigurationRequest" name="getAllConfigurationRequest"/>
+
+         <wsdl:output message="intf:getAllConfigurationResponse" name="getAllConfigurationResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getBladeCenterIps" parameterOrder="in0">
+
+         <wsdl:input message="intf:getBladeCenterIpsRequest" name="getBladeCenterIpsRequest"/>
+
+         <wsdl:output message="intf:getBladeCenterIpsResponse" name="getBladeCenterIpsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getConfigurationAnalysis" parameterOrder="in0">
+
+         <wsdl:input message="intf:getConfigurationAnalysisRequest" name="getConfigurationAnalysisRequest"/>
+
+         <wsdl:output message="intf:getConfigurationAnalysisResponse" name="getConfigurationAnalysisResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPodPhaseforAssets" parameterOrder="in0">
+
+         <wsdl:input message="intf:getPodPhaseforAssetsRequest" name="getPodPhaseforAssetsRequest"/>
+
+         <wsdl:output message="intf:getPodPhaseforAssetsResponse" name="getPodPhaseforAssetsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateAssets" parameterOrder="in0">
+
+         <wsdl:input message="intf:validateAssetsRequest" name="validateAssetsRequest"/>
+
+         <wsdl:output message="intf:validateAssetsResponse" name="validateAssetsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAssetsToNotify" parameterOrder="in0">
+
+         <wsdl:input message="intf:getAssetsToNotifyRequest" name="getAssetsToNotifyRequest"/>
+
+         <wsdl:output message="intf:getAssetsToNotifyResponse" name="getAssetsToNotifyResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ReimageServiceSoapBinding" type="intf:ReimageService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="endSession">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="endSessionRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="endSessionResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="startSession">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="startSessionRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="startSessionResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getHistoryForLoggedOnUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getHistoryForLoggedOnUserRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getHistoryForLoggedOnUserResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getHistoryByObjectName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getHistoryByObjectNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getHistoryByObjectNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getHistoryByObjectType">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getHistoryByObjectTypeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getHistoryByObjectTypeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUnNotifiedHistoryForLoggedOnUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUnNotifiedHistoryForLoggedOnUserRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUnNotifiedHistoryForLoggedOnUserResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findHistoryByObjectNameAndType">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findHistoryByObjectNameAndTypeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findHistoryByObjectNameAndTypeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllHistoryObjectTypes">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllHistoryObjectTypesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllHistoryObjectTypesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQuartsOfYear">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getQuartsOfYearRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getQuartsOfYearResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllQuarters">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllQuartersRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllQuartersResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllDefaultQuarters">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllDefaultQuartersRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllDefaultQuartersResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getFlowGroup">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getFlowGroupRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getFlowGroupResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="pauseFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="pauseFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="pauseFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resumeFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="resumeFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="resumeFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cancelFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cancelFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="changeFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="changeFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="startFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="startFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="startFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllPools">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllPoolsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllPoolsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllOSs">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllOSsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllOSsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllPodVlanSubnets">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllPodVlanSubnetsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllPodVlanSubnetsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllProcuredAssets">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllProcuredAssetsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllProcuredAssetsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="startReimageFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="startReimageFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="startReimageFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelReimageFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cancelReimageFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cancelReimageFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="skipFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="skipFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="skipFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="pause">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="pauseRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="pauseResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resume">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="resumeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="resumeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="returnToInventory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="returnToInventoryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="returnToInventoryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllPendingGroups">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllPendingGroupsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllPendingGroupsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="imageGroup">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="imageGroupRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="imageGroupResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllImagingAssets">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllImagingAssetsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllImagingAssetsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeToVerifyState">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="changeToVerifyStateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="changeToVerifyStateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getConfigurationRepositoryTree">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getConfigurationRepositoryTreeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getConfigurationRepositoryTreeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="configureRepositoryData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="configureRepositoryDataRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="configureRepositoryDataResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCompletedSteps">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCompletedStepsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCompletedStepsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="retryStep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="retryStepRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="retryStepResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchHistories">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchHistoriesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchHistoriesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAssetInformationToConfigure">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAssetInformationToConfigureRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAssetInformationToConfigureResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="processAssets">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="processAssetsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="processAssetsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllDataCenters">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllDataCentersRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllDataCentersResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAutoSelectLBandLBVServer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAutoSelectLBandLBVServerRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAutoSelectLBandLBVServerResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLBandLBVServer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLBandLBVServerRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLBandLBVServerResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateConfigurationDetails">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateConfigurationDetailsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateConfigurationDetailsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateIpAddress">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="validateIpAddressRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="validateIpAddressResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCompletedStepsForRetry">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCompletedStepsForRetryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCompletedStepsForRetryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDefaultAutomatedTasks">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDefaultAutomatedTasksRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDefaultAutomatedTasksResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSearchImageHistoryAttributes">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getSearchImageHistoryAttributesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getSearchImageHistoryAttributesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelCRTicket">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cancelCRTicketRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cancelCRTicketResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="retryFailedSteps">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="retryFailedStepsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="retryFailedStepsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllCasesByType">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllCasesByTypeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllCasesByTypeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllSiblings">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllSiblingsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllSiblingsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="approveCR">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="approveCRRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="approveCRResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDesignatedActions">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDesignatedActionsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDesignatedActionsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="rollbackCR">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="rollbackCRRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="rollbackCRResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDCForPod">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDCForPodRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDCForPodResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllVlanSubnets">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllVlanSubnetsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllVlanSubnetsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDNSData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDNSDataRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDNSDataResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resumeFlipCR">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="resumeFlipCRRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="resumeFlipCRResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllConfiguration">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllConfigurationRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllConfigurationResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getBladeCenterIps">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getBladeCenterIpsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getBladeCenterIpsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getConfigurationAnalysis">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getConfigurationAnalysisRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getConfigurationAnalysisResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPodPhaseforAssets">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPodPhaseforAssetsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPodPhaseforAssetsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateAssets">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="validateAssetsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="validateAssetsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAssetsToNotify">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAssetsToNotifyRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAssetsToNotifyResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservice.reimage.grid.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ReimageServiceService">
+
+      <wsdl:port binding="intf:ReimageServiceSoapBinding" name="ReimageService">
+
+         <wsdlsoap:address location="http://sj-wfce001.sjc.ebay.com/grid/services/ReimageService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

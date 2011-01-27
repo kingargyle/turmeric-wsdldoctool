@@ -1,0 +1,3086 @@
+<?xml version="1.0" encoding="UTF-8"?><!--- B''H --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services"> 						
+			<xs:complexType name="MetricGroupData">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="criteriaInfo" type="tns:CriteriaInfo"/>
+					<xs:element minOccurs="0" name="diff" type="xs:double"/>
+					<xs:element minOccurs="0" name="count2" type="xs:double"/>
+					<xs:element minOccurs="0" name="count1" type="xs:double"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MetricGroupDataList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfMetricGroupData" nillable="true" type="tns:MetricGroupData"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="ErrorGroupData">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="count" type="xs:long"/>
+					<xs:element minOccurs="0" name="poolName" type="xs:string"/>
+					<xs:element minOccurs="0" name="errorName" type="xs:string"/>
+					<xs:element minOccurs="0" name="operationName" type="xs:string"/>
+					<xs:element minOccurs="0" name="machineName" type="xs:string"/>
+					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>
+					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="PolicyMetricData">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="policyName" type="xs:string"/>
+					<xs:element minOccurs="0" name="hitCount" type="xs:long"/>
+					<xs:element minOccurs="0" name="listType" type="xs:string"/>
+					<xs:element minOccurs="0" name="subjectType" type="xs:string"/>
+					<xs:element minOccurs="0" name="subjectValue" type="xs:string"/>
+					<xs:element minOccurs="0" name="effectDuration" type="xs:long"/>
+					<xs:element minOccurs="0" name="operationName" type="xs:string"/>
+					<xs:element minOccurs="0" name="effect" type="xs:string"/>
+					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="ErrorGroupDataList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfErrorGroupData" nillable="true" type="tns:ErrorGroupData"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="PolicyMetricDataList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfPolicyMetricData" nillable="true" type="tns:PolicyMetricData"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MetricData">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="timeSlot" type="xs:long"/>
+					<xs:element minOccurs="0" name="criteria" type="xs:string"/>
+					<xs:element minOccurs="0" name="count" type="xs:double"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MetricDataList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfMetricData" nillable="true" type="tns:MetricData"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MetricConsumerGroupData">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorCountDiff" type="xs:double"/>
+					<xs:element minOccurs="0" name="errorCount2" type="xs:double"/>
+					<xs:element minOccurs="0" name="errorCount1" type="xs:double"/>
+					<xs:element minOccurs="0" name="callCountDiff" type="xs:double"/>
+					<xs:element minOccurs="0" name="callCount2" type="xs:double"/>
+					<xs:element minOccurs="0" name="callCount1" type="xs:double"/>
+					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="PolicyMetricGraphData">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="timeSlot" type="xs:long"/>
+					<xs:element minOccurs="0" name="hitCount" type="xs:long"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MetricDef">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="category" type="xs:string"/>
+					<xs:element minOccurs="0" name="rule" type="xs:string"/>
+					<xs:element minOccurs="0" name="unit" type="xs:string"/>
+					<xs:element minOccurs="0" name="name" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="CriteriaInfo">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="poolName" type="xs:string"/>
+					<xs:element minOccurs="0" name="metricName" type="xs:string"/>
+					<xs:element minOccurs="0" name="operationName" type="xs:string"/>
+					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>
+					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>
+					<xs:element minOccurs="0" name="roleType" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MetricConsumerGroupDataList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfMetricConsumerGroupData" nillable="true" type="tns:MetricConsumerGroupData"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MetricSummaryData">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorCountDiff" type="xs:double"/>
+					<xs:element minOccurs="0" name="errorCount2" type="xs:long"/>
+					<xs:element minOccurs="0" name="errorCount1" type="xs:long"/>
+					<xs:element minOccurs="0" name="ratioCountDiff" type="xs:double"/>
+					<xs:element minOccurs="0" name="ratio2" type="xs:double"/>
+					<xs:element minOccurs="0" name="ratio1" type="xs:double"/>
+					<xs:element minOccurs="0" name="callCountDiff" type="xs:double"/>
+					<xs:element minOccurs="0" name="responseTime2" type="xs:double"/>
+					<xs:element minOccurs="0" name="responseTime1" type="xs:double"/>
+					<xs:element minOccurs="0" name="responseTimeDiff" type="xs:double"/>
+					<xs:element minOccurs="0" name="callCount2" type="xs:long"/>
+					<xs:element minOccurs="0" name="callCount1" type="xs:long"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="PolicyMetricGraphDataList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfPolicyMetricGraphData" nillable="true" type="tns:PolicyMetricGraphData"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MetricDefList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfMetricDef" nillable="true" type="tns:MetricDef"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="StringList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfString" nillable="true" type="xs:string"/>
+				</xs:sequence>				
+			</xs:complexType>						
+			<xs:complexType name="getAllServicesRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllServicesResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getServicesByPoolRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="poolName" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getServicesByPoolResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getServicesByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getServicesByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getMetricsByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getMetricsByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricDefList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getOperationsByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getOperationsByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAllPoolsRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllPoolsResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getPoolsByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getPoolsByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getMachinesByPoolRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="poolName" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getMachinesByPoolResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAllConsumersRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllConsumersResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getConsumersByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getConsumersByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAllErrorsRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllErrorsResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalCallAndErrorByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalCallAndErrorByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricSummaryData"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ConsumersCallByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ConsumersCallByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNConsumersCallByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNConsumersCallByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ConsumersErrorByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ConsumersErrorByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNConsumersErrorByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNConsumersErrorByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop5OperationsCallByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop5OperationsCallByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNOperationsCallByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNOperationsCallByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop5OperationsPerformanceByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop5OperationsPerformanceByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNOperationsPerformanceByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNOperationsPerformanceByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop5OperationsErrorByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop5OperationsErrorByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNOperationsErrorByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNOperationsErrorByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ErrorsByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ErrorsByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNErrorsByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNErrorsByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalCallAndErrorByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalCallAndErrorByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricSummaryData"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalCallByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalCallByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricSummaryData"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalErrorByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalErrorByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricSummaryData"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAvgResponseTimeByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAvgResponseTimeByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricSummaryData"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getServicesCallAndErrorByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getServicesCallAndErrorByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricConsumerGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ServicesCallByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ServicesCallByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNServicesCallByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNServicesCallByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ServicesErrorByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ServicesErrorByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNServicesErrorByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNServicesErrorByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ErrorsByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ErrorsByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNErrorsByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNErrorsByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalCallAndErrorByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalCallAndErrorByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricSummaryData"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalCallByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalCallByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricSummaryData"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAvgResponseTimeByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAvgResponseTimeByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricSummaryData"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ConsumersCallByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ConsumersCallByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNConsumersCallByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNConsumersCallByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ConsumersErrorByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ConsumersErrorByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNConsumersErrorByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNConsumersErrorByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTop10ErrorsByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTop10ErrorsByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTopNErrorsByOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="consumerName" type="xs:string"/>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="numRows" type="xs:long"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTopNErrorsByOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getCallCountGroupByPoolAndServiceOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCallCountGroupByPoolAndServiceOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getCallCountGroupByConsumerAndServiceOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCallCountGroupByConsumerAndServiceOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getCallCountGroupByApplicationAndServiceOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCallCountGroupByApplicationAndServiceOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getErrorCountGroupByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getErrorCountGroupByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getErrorCountGroupByServiceAndOperationRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getErrorCountGroupByServiceAndOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getErrorCountGroupByConsumerRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="time1" type="xs:long"/>					<xs:element minOccurs="0" name="time2" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getErrorCountGroupByConsumerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAllPolicyTypesRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllPolicyTypesResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAllPoliciesRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllPoliciesResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAllPolicyServicesRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllPolicyServicesResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getPolicyOperationsByServiceRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getPolicyOperationsByServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAllSubjectTypesRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllSubjectTypesResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getSubjectValuesByTypeRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="subjectType" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSubjectValuesByTypeResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAllEffectsRequest">
+				<xs:sequence>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAllEffectsResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:StringList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getPolicyMetricDataRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="startTime" type="xs:long"/>					<xs:element minOccurs="0" name="endTime" type="xs:long"/>					<xs:element minOccurs="0" name="policyType" type="xs:string"/>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="subjectTypeName" type="xs:string"/>					<xs:element minOccurs="0" name="subjectValue" type="xs:string"/>					<xs:element minOccurs="0" name="effect" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getPolicyMetricDataResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:PolicyMetricDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getPolicyMetricDetailDataRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="startTime" type="xs:long"/>					<xs:element minOccurs="0" name="endTime" type="xs:long"/>					<xs:element minOccurs="0" name="policyName" type="xs:string"/>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="subjectTypeName" type="xs:string"/>					<xs:element minOccurs="0" name="subjectValue" type="xs:string"/>					<xs:element minOccurs="0" name="listType" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getPolicyMetricDetailDataResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:PolicyMetricGraphDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getErrorViewRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="serviceName" type="xs:string"/>					<xs:element minOccurs="0" name="operationName" type="xs:string"/>					<xs:element minOccurs="0" name="errorName" type="xs:string"/>					<xs:element minOccurs="0" name="startTime" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="role" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getErrorViewResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:ErrorGroupDataList"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getMetricValueRequest">
+				<xs:sequence>					<xs:element minOccurs="0" name="criteriaInfo" type="tns:CriteriaInfo"/>					<xs:element minOccurs="0" name="startTime" type="xs:long"/>					<xs:element minOccurs="0" name="duration" type="xs:long"/>					<xs:element minOccurs="0" name="step" type="xs:string"/>					<xs:element minOccurs="0" name="autoDelay" type="xs:string"/>				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getMetricValueResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+					<xs:element minOccurs="0" name="returnData" type="tns:MetricDataList"/>
+				</xs:sequence>
+			</xs:complexType>						
+			<xs:element name="getAllServices" type="tns:getAllServicesRequest"/>
+			<xs:element name="getAllServicesResponse" nillable="true" type="tns:getAllServicesResponse"/>			
+			<xs:element name="getServicesByPool" type="tns:getServicesByPoolRequest"/>
+			<xs:element name="getServicesByPoolResponse" nillable="true" type="tns:getServicesByPoolResponse"/>			
+			<xs:element name="getServicesByConsumer" type="tns:getServicesByConsumerRequest"/>
+			<xs:element name="getServicesByConsumerResponse" nillable="true" type="tns:getServicesByConsumerResponse"/>			
+			<xs:element name="getMetricsByService" type="tns:getMetricsByServiceRequest"/>
+			<xs:element name="getMetricsByServiceResponse" nillable="true" type="tns:getMetricsByServiceResponse"/>			
+			<xs:element name="getOperationsByService" type="tns:getOperationsByServiceRequest"/>
+			<xs:element name="getOperationsByServiceResponse" nillable="true" type="tns:getOperationsByServiceResponse"/>			
+			<xs:element name="getAllPools" type="tns:getAllPoolsRequest"/>
+			<xs:element name="getAllPoolsResponse" nillable="true" type="tns:getAllPoolsResponse"/>			
+			<xs:element name="getPoolsByService" type="tns:getPoolsByServiceRequest"/>
+			<xs:element name="getPoolsByServiceResponse" nillable="true" type="tns:getPoolsByServiceResponse"/>			
+			<xs:element name="getMachinesByPool" type="tns:getMachinesByPoolRequest"/>
+			<xs:element name="getMachinesByPoolResponse" nillable="true" type="tns:getMachinesByPoolResponse"/>			
+			<xs:element name="getAllConsumers" type="tns:getAllConsumersRequest"/>
+			<xs:element name="getAllConsumersResponse" nillable="true" type="tns:getAllConsumersResponse"/>			
+			<xs:element name="getConsumersByService" type="tns:getConsumersByServiceRequest"/>
+			<xs:element name="getConsumersByServiceResponse" nillable="true" type="tns:getConsumersByServiceResponse"/>			
+			<xs:element name="getAllErrors" type="tns:getAllErrorsRequest"/>
+			<xs:element name="getAllErrorsResponse" nillable="true" type="tns:getAllErrorsResponse"/>			
+			<xs:element name="getTotalCallAndErrorByService" type="tns:getTotalCallAndErrorByServiceRequest"/>
+			<xs:element name="getTotalCallAndErrorByServiceResponse" nillable="true" type="tns:getTotalCallAndErrorByServiceResponse"/>			
+			<xs:element name="getTop10ConsumersCallByService" type="tns:getTop10ConsumersCallByServiceRequest"/>
+			<xs:element name="getTop10ConsumersCallByServiceResponse" nillable="true" type="tns:getTop10ConsumersCallByServiceResponse"/>			
+			<xs:element name="getTopNConsumersCallByService" type="tns:getTopNConsumersCallByServiceRequest"/>
+			<xs:element name="getTopNConsumersCallByServiceResponse" nillable="true" type="tns:getTopNConsumersCallByServiceResponse"/>			
+			<xs:element name="getTop10ConsumersErrorByService" type="tns:getTop10ConsumersErrorByServiceRequest"/>
+			<xs:element name="getTop10ConsumersErrorByServiceResponse" nillable="true" type="tns:getTop10ConsumersErrorByServiceResponse"/>			
+			<xs:element name="getTopNConsumersErrorByService" type="tns:getTopNConsumersErrorByServiceRequest"/>
+			<xs:element name="getTopNConsumersErrorByServiceResponse" nillable="true" type="tns:getTopNConsumersErrorByServiceResponse"/>			
+			<xs:element name="getTop5OperationsCallByService" type="tns:getTop5OperationsCallByServiceRequest"/>
+			<xs:element name="getTop5OperationsCallByServiceResponse" nillable="true" type="tns:getTop5OperationsCallByServiceResponse"/>			
+			<xs:element name="getTopNOperationsCallByService" type="tns:getTopNOperationsCallByServiceRequest"/>
+			<xs:element name="getTopNOperationsCallByServiceResponse" nillable="true" type="tns:getTopNOperationsCallByServiceResponse"/>			
+			<xs:element name="getTop5OperationsPerformanceByService" type="tns:getTop5OperationsPerformanceByServiceRequest"/>
+			<xs:element name="getTop5OperationsPerformanceByServiceResponse" nillable="true" type="tns:getTop5OperationsPerformanceByServiceResponse"/>			
+			<xs:element name="getTopNOperationsPerformanceByService" type="tns:getTopNOperationsPerformanceByServiceRequest"/>
+			<xs:element name="getTopNOperationsPerformanceByServiceResponse" nillable="true" type="tns:getTopNOperationsPerformanceByServiceResponse"/>			
+			<xs:element name="getTop5OperationsErrorByService" type="tns:getTop5OperationsErrorByServiceRequest"/>
+			<xs:element name="getTop5OperationsErrorByServiceResponse" nillable="true" type="tns:getTop5OperationsErrorByServiceResponse"/>			
+			<xs:element name="getTopNOperationsErrorByService" type="tns:getTopNOperationsErrorByServiceRequest"/>
+			<xs:element name="getTopNOperationsErrorByServiceResponse" nillable="true" type="tns:getTopNOperationsErrorByServiceResponse"/>			
+			<xs:element name="getTop10ErrorsByService" type="tns:getTop10ErrorsByServiceRequest"/>
+			<xs:element name="getTop10ErrorsByServiceResponse" nillable="true" type="tns:getTop10ErrorsByServiceResponse"/>			
+			<xs:element name="getTopNErrorsByService" type="tns:getTopNErrorsByServiceRequest"/>
+			<xs:element name="getTopNErrorsByServiceResponse" nillable="true" type="tns:getTopNErrorsByServiceResponse"/>			
+			<xs:element name="getTotalCallAndErrorByConsumer" type="tns:getTotalCallAndErrorByConsumerRequest"/>
+			<xs:element name="getTotalCallAndErrorByConsumerResponse" nillable="true" type="tns:getTotalCallAndErrorByConsumerResponse"/>			
+			<xs:element name="getTotalCallByConsumer" type="tns:getTotalCallByConsumerRequest"/>
+			<xs:element name="getTotalCallByConsumerResponse" nillable="true" type="tns:getTotalCallByConsumerResponse"/>			
+			<xs:element name="getTotalErrorByConsumer" type="tns:getTotalErrorByConsumerRequest"/>
+			<xs:element name="getTotalErrorByConsumerResponse" nillable="true" type="tns:getTotalErrorByConsumerResponse"/>			
+			<xs:element name="getAvgResponseTimeByConsumer" type="tns:getAvgResponseTimeByConsumerRequest"/>
+			<xs:element name="getAvgResponseTimeByConsumerResponse" nillable="true" type="tns:getAvgResponseTimeByConsumerResponse"/>			
+			<xs:element name="getServicesCallAndErrorByConsumer" type="tns:getServicesCallAndErrorByConsumerRequest"/>
+			<xs:element name="getServicesCallAndErrorByConsumerResponse" nillable="true" type="tns:getServicesCallAndErrorByConsumerResponse"/>			
+			<xs:element name="getTop10ServicesCallByConsumer" type="tns:getTop10ServicesCallByConsumerRequest"/>
+			<xs:element name="getTop10ServicesCallByConsumerResponse" nillable="true" type="tns:getTop10ServicesCallByConsumerResponse"/>			
+			<xs:element name="getTopNServicesCallByConsumer" type="tns:getTopNServicesCallByConsumerRequest"/>
+			<xs:element name="getTopNServicesCallByConsumerResponse" nillable="true" type="tns:getTopNServicesCallByConsumerResponse"/>			
+			<xs:element name="getTop10ServicesErrorByConsumer" type="tns:getTop10ServicesErrorByConsumerRequest"/>
+			<xs:element name="getTop10ServicesErrorByConsumerResponse" nillable="true" type="tns:getTop10ServicesErrorByConsumerResponse"/>			
+			<xs:element name="getTopNServicesErrorByConsumer" type="tns:getTopNServicesErrorByConsumerRequest"/>
+			<xs:element name="getTopNServicesErrorByConsumerResponse" nillable="true" type="tns:getTopNServicesErrorByConsumerResponse"/>			
+			<xs:element name="getTop10ErrorsByConsumer" type="tns:getTop10ErrorsByConsumerRequest"/>
+			<xs:element name="getTop10ErrorsByConsumerResponse" nillable="true" type="tns:getTop10ErrorsByConsumerResponse"/>			
+			<xs:element name="getTopNErrorsByConsumer" type="tns:getTopNErrorsByConsumerRequest"/>
+			<xs:element name="getTopNErrorsByConsumerResponse" nillable="true" type="tns:getTopNErrorsByConsumerResponse"/>			
+			<xs:element name="getTotalCallAndErrorByOperation" type="tns:getTotalCallAndErrorByOperationRequest"/>
+			<xs:element name="getTotalCallAndErrorByOperationResponse" nillable="true" type="tns:getTotalCallAndErrorByOperationResponse"/>			
+			<xs:element name="getTotalCallByOperation" type="tns:getTotalCallByOperationRequest"/>
+			<xs:element name="getTotalCallByOperationResponse" nillable="true" type="tns:getTotalCallByOperationResponse"/>			
+			<xs:element name="getAvgResponseTimeByOperation" type="tns:getAvgResponseTimeByOperationRequest"/>
+			<xs:element name="getAvgResponseTimeByOperationResponse" nillable="true" type="tns:getAvgResponseTimeByOperationResponse"/>			
+			<xs:element name="getTop10ConsumersCallByOperation" type="tns:getTop10ConsumersCallByOperationRequest"/>
+			<xs:element name="getTop10ConsumersCallByOperationResponse" nillable="true" type="tns:getTop10ConsumersCallByOperationResponse"/>			
+			<xs:element name="getTopNConsumersCallByOperation" type="tns:getTopNConsumersCallByOperationRequest"/>
+			<xs:element name="getTopNConsumersCallByOperationResponse" nillable="true" type="tns:getTopNConsumersCallByOperationResponse"/>			
+			<xs:element name="getTop10ConsumersErrorByOperation" type="tns:getTop10ConsumersErrorByOperationRequest"/>
+			<xs:element name="getTop10ConsumersErrorByOperationResponse" nillable="true" type="tns:getTop10ConsumersErrorByOperationResponse"/>			
+			<xs:element name="getTopNConsumersErrorByOperation" type="tns:getTopNConsumersErrorByOperationRequest"/>
+			<xs:element name="getTopNConsumersErrorByOperationResponse" nillable="true" type="tns:getTopNConsumersErrorByOperationResponse"/>			
+			<xs:element name="getTop10ErrorsByOperation" type="tns:getTop10ErrorsByOperationRequest"/>
+			<xs:element name="getTop10ErrorsByOperationResponse" nillable="true" type="tns:getTop10ErrorsByOperationResponse"/>			
+			<xs:element name="getTopNErrorsByOperation" type="tns:getTopNErrorsByOperationRequest"/>
+			<xs:element name="getTopNErrorsByOperationResponse" nillable="true" type="tns:getTopNErrorsByOperationResponse"/>			
+			<xs:element name="getCallCountGroupByPoolAndServiceOperation" type="tns:getCallCountGroupByPoolAndServiceOperationRequest"/>
+			<xs:element name="getCallCountGroupByPoolAndServiceOperationResponse" nillable="true" type="tns:getCallCountGroupByPoolAndServiceOperationResponse"/>			
+			<xs:element name="getCallCountGroupByConsumerAndServiceOperation" type="tns:getCallCountGroupByConsumerAndServiceOperationRequest"/>
+			<xs:element name="getCallCountGroupByConsumerAndServiceOperationResponse" nillable="true" type="tns:getCallCountGroupByConsumerAndServiceOperationResponse"/>			
+			<xs:element name="getCallCountGroupByApplicationAndServiceOperation" type="tns:getCallCountGroupByApplicationAndServiceOperationRequest"/>
+			<xs:element name="getCallCountGroupByApplicationAndServiceOperationResponse" nillable="true" type="tns:getCallCountGroupByApplicationAndServiceOperationResponse"/>			
+			<xs:element name="getErrorCountGroupByService" type="tns:getErrorCountGroupByServiceRequest"/>
+			<xs:element name="getErrorCountGroupByServiceResponse" nillable="true" type="tns:getErrorCountGroupByServiceResponse"/>			
+			<xs:element name="getErrorCountGroupByServiceAndOperation" type="tns:getErrorCountGroupByServiceAndOperationRequest"/>
+			<xs:element name="getErrorCountGroupByServiceAndOperationResponse" nillable="true" type="tns:getErrorCountGroupByServiceAndOperationResponse"/>			
+			<xs:element name="getErrorCountGroupByConsumer" type="tns:getErrorCountGroupByConsumerRequest"/>
+			<xs:element name="getErrorCountGroupByConsumerResponse" nillable="true" type="tns:getErrorCountGroupByConsumerResponse"/>			
+			<xs:element name="getAllPolicyTypes" type="tns:getAllPolicyTypesRequest"/>
+			<xs:element name="getAllPolicyTypesResponse" nillable="true" type="tns:getAllPolicyTypesResponse"/>			
+			<xs:element name="getAllPolicies" type="tns:getAllPoliciesRequest"/>
+			<xs:element name="getAllPoliciesResponse" nillable="true" type="tns:getAllPoliciesResponse"/>			
+			<xs:element name="getAllPolicyServices" type="tns:getAllPolicyServicesRequest"/>
+			<xs:element name="getAllPolicyServicesResponse" nillable="true" type="tns:getAllPolicyServicesResponse"/>			
+			<xs:element name="getPolicyOperationsByService" type="tns:getPolicyOperationsByServiceRequest"/>
+			<xs:element name="getPolicyOperationsByServiceResponse" nillable="true" type="tns:getPolicyOperationsByServiceResponse"/>			
+			<xs:element name="getAllSubjectTypes" type="tns:getAllSubjectTypesRequest"/>
+			<xs:element name="getAllSubjectTypesResponse" nillable="true" type="tns:getAllSubjectTypesResponse"/>			
+			<xs:element name="getSubjectValuesByType" type="tns:getSubjectValuesByTypeRequest"/>
+			<xs:element name="getSubjectValuesByTypeResponse" nillable="true" type="tns:getSubjectValuesByTypeResponse"/>			
+			<xs:element name="getAllEffects" type="tns:getAllEffectsRequest"/>
+			<xs:element name="getAllEffectsResponse" nillable="true" type="tns:getAllEffectsResponse"/>			
+			<xs:element name="getPolicyMetricData" type="tns:getPolicyMetricDataRequest"/>
+			<xs:element name="getPolicyMetricDataResponse" nillable="true" type="tns:getPolicyMetricDataResponse"/>			
+			<xs:element name="getPolicyMetricDetailData" type="tns:getPolicyMetricDetailDataRequest"/>
+			<xs:element name="getPolicyMetricDetailDataResponse" nillable="true" type="tns:getPolicyMetricDetailDataResponse"/>			
+			<xs:element name="getErrorView" type="tns:getErrorViewRequest"/>
+			<xs:element name="getErrorViewResponse" nillable="true" type="tns:getErrorViewResponse"/>			
+			<xs:element name="getMetricValue" type="tns:getMetricValueRequest"/>
+			<xs:element name="getMetricValueResponse" nillable="true" type="tns:getMetricValueResponse"/>			
+		</xs:schema>
+	</wsdl:types>			
+	<wsdl:message name="getAllServicesRequest">
+		<wsdl:part element="tns:getAllServices" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllServicesResponse">
+		<wsdl:part element="tns:getAllServicesResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getServicesByPoolRequest">
+		<wsdl:part element="tns:getServicesByPool" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getServicesByPoolResponse">
+		<wsdl:part element="tns:getServicesByPoolResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getServicesByConsumerRequest">
+		<wsdl:part element="tns:getServicesByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getServicesByConsumerResponse">
+		<wsdl:part element="tns:getServicesByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getMetricsByServiceRequest">
+		<wsdl:part element="tns:getMetricsByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getMetricsByServiceResponse">
+		<wsdl:part element="tns:getMetricsByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getOperationsByServiceRequest">
+		<wsdl:part element="tns:getOperationsByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getOperationsByServiceResponse">
+		<wsdl:part element="tns:getOperationsByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAllPoolsRequest">
+		<wsdl:part element="tns:getAllPools" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllPoolsResponse">
+		<wsdl:part element="tns:getAllPoolsResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getPoolsByServiceRequest">
+		<wsdl:part element="tns:getPoolsByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getPoolsByServiceResponse">
+		<wsdl:part element="tns:getPoolsByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getMachinesByPoolRequest">
+		<wsdl:part element="tns:getMachinesByPool" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getMachinesByPoolResponse">
+		<wsdl:part element="tns:getMachinesByPoolResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAllConsumersRequest">
+		<wsdl:part element="tns:getAllConsumers" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllConsumersResponse">
+		<wsdl:part element="tns:getAllConsumersResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getConsumersByServiceRequest">
+		<wsdl:part element="tns:getConsumersByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getConsumersByServiceResponse">
+		<wsdl:part element="tns:getConsumersByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAllErrorsRequest">
+		<wsdl:part element="tns:getAllErrors" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllErrorsResponse">
+		<wsdl:part element="tns:getAllErrorsResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalCallAndErrorByServiceRequest">
+		<wsdl:part element="tns:getTotalCallAndErrorByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalCallAndErrorByServiceResponse">
+		<wsdl:part element="tns:getTotalCallAndErrorByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ConsumersCallByServiceRequest">
+		<wsdl:part element="tns:getTop10ConsumersCallByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ConsumersCallByServiceResponse">
+		<wsdl:part element="tns:getTop10ConsumersCallByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNConsumersCallByServiceRequest">
+		<wsdl:part element="tns:getTopNConsumersCallByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNConsumersCallByServiceResponse">
+		<wsdl:part element="tns:getTopNConsumersCallByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ConsumersErrorByServiceRequest">
+		<wsdl:part element="tns:getTop10ConsumersErrorByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ConsumersErrorByServiceResponse">
+		<wsdl:part element="tns:getTop10ConsumersErrorByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNConsumersErrorByServiceRequest">
+		<wsdl:part element="tns:getTopNConsumersErrorByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNConsumersErrorByServiceResponse">
+		<wsdl:part element="tns:getTopNConsumersErrorByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop5OperationsCallByServiceRequest">
+		<wsdl:part element="tns:getTop5OperationsCallByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop5OperationsCallByServiceResponse">
+		<wsdl:part element="tns:getTop5OperationsCallByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNOperationsCallByServiceRequest">
+		<wsdl:part element="tns:getTopNOperationsCallByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNOperationsCallByServiceResponse">
+		<wsdl:part element="tns:getTopNOperationsCallByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop5OperationsPerformanceByServiceRequest">
+		<wsdl:part element="tns:getTop5OperationsPerformanceByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop5OperationsPerformanceByServiceResponse">
+		<wsdl:part element="tns:getTop5OperationsPerformanceByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNOperationsPerformanceByServiceRequest">
+		<wsdl:part element="tns:getTopNOperationsPerformanceByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNOperationsPerformanceByServiceResponse">
+		<wsdl:part element="tns:getTopNOperationsPerformanceByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop5OperationsErrorByServiceRequest">
+		<wsdl:part element="tns:getTop5OperationsErrorByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop5OperationsErrorByServiceResponse">
+		<wsdl:part element="tns:getTop5OperationsErrorByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNOperationsErrorByServiceRequest">
+		<wsdl:part element="tns:getTopNOperationsErrorByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNOperationsErrorByServiceResponse">
+		<wsdl:part element="tns:getTopNOperationsErrorByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ErrorsByServiceRequest">
+		<wsdl:part element="tns:getTop10ErrorsByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ErrorsByServiceResponse">
+		<wsdl:part element="tns:getTop10ErrorsByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNErrorsByServiceRequest">
+		<wsdl:part element="tns:getTopNErrorsByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNErrorsByServiceResponse">
+		<wsdl:part element="tns:getTopNErrorsByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalCallAndErrorByConsumerRequest">
+		<wsdl:part element="tns:getTotalCallAndErrorByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalCallAndErrorByConsumerResponse">
+		<wsdl:part element="tns:getTotalCallAndErrorByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalCallByConsumerRequest">
+		<wsdl:part element="tns:getTotalCallByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalCallByConsumerResponse">
+		<wsdl:part element="tns:getTotalCallByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalErrorByConsumerRequest">
+		<wsdl:part element="tns:getTotalErrorByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalErrorByConsumerResponse">
+		<wsdl:part element="tns:getTotalErrorByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAvgResponseTimeByConsumerRequest">
+		<wsdl:part element="tns:getAvgResponseTimeByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAvgResponseTimeByConsumerResponse">
+		<wsdl:part element="tns:getAvgResponseTimeByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getServicesCallAndErrorByConsumerRequest">
+		<wsdl:part element="tns:getServicesCallAndErrorByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getServicesCallAndErrorByConsumerResponse">
+		<wsdl:part element="tns:getServicesCallAndErrorByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ServicesCallByConsumerRequest">
+		<wsdl:part element="tns:getTop10ServicesCallByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ServicesCallByConsumerResponse">
+		<wsdl:part element="tns:getTop10ServicesCallByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNServicesCallByConsumerRequest">
+		<wsdl:part element="tns:getTopNServicesCallByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNServicesCallByConsumerResponse">
+		<wsdl:part element="tns:getTopNServicesCallByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ServicesErrorByConsumerRequest">
+		<wsdl:part element="tns:getTop10ServicesErrorByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ServicesErrorByConsumerResponse">
+		<wsdl:part element="tns:getTop10ServicesErrorByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNServicesErrorByConsumerRequest">
+		<wsdl:part element="tns:getTopNServicesErrorByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNServicesErrorByConsumerResponse">
+		<wsdl:part element="tns:getTopNServicesErrorByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ErrorsByConsumerRequest">
+		<wsdl:part element="tns:getTop10ErrorsByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ErrorsByConsumerResponse">
+		<wsdl:part element="tns:getTop10ErrorsByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNErrorsByConsumerRequest">
+		<wsdl:part element="tns:getTopNErrorsByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNErrorsByConsumerResponse">
+		<wsdl:part element="tns:getTopNErrorsByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalCallAndErrorByOperationRequest">
+		<wsdl:part element="tns:getTotalCallAndErrorByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalCallAndErrorByOperationResponse">
+		<wsdl:part element="tns:getTotalCallAndErrorByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalCallByOperationRequest">
+		<wsdl:part element="tns:getTotalCallByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalCallByOperationResponse">
+		<wsdl:part element="tns:getTotalCallByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAvgResponseTimeByOperationRequest">
+		<wsdl:part element="tns:getAvgResponseTimeByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAvgResponseTimeByOperationResponse">
+		<wsdl:part element="tns:getAvgResponseTimeByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ConsumersCallByOperationRequest">
+		<wsdl:part element="tns:getTop10ConsumersCallByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ConsumersCallByOperationResponse">
+		<wsdl:part element="tns:getTop10ConsumersCallByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNConsumersCallByOperationRequest">
+		<wsdl:part element="tns:getTopNConsumersCallByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNConsumersCallByOperationResponse">
+		<wsdl:part element="tns:getTopNConsumersCallByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ConsumersErrorByOperationRequest">
+		<wsdl:part element="tns:getTop10ConsumersErrorByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ConsumersErrorByOperationResponse">
+		<wsdl:part element="tns:getTop10ConsumersErrorByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNConsumersErrorByOperationRequest">
+		<wsdl:part element="tns:getTopNConsumersErrorByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNConsumersErrorByOperationResponse">
+		<wsdl:part element="tns:getTopNConsumersErrorByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTop10ErrorsByOperationRequest">
+		<wsdl:part element="tns:getTop10ErrorsByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTop10ErrorsByOperationResponse">
+		<wsdl:part element="tns:getTop10ErrorsByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTopNErrorsByOperationRequest">
+		<wsdl:part element="tns:getTopNErrorsByOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopNErrorsByOperationResponse">
+		<wsdl:part element="tns:getTopNErrorsByOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getCallCountGroupByPoolAndServiceOperationRequest">
+		<wsdl:part element="tns:getCallCountGroupByPoolAndServiceOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCallCountGroupByPoolAndServiceOperationResponse">
+		<wsdl:part element="tns:getCallCountGroupByPoolAndServiceOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getCallCountGroupByConsumerAndServiceOperationRequest">
+		<wsdl:part element="tns:getCallCountGroupByConsumerAndServiceOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCallCountGroupByConsumerAndServiceOperationResponse">
+		<wsdl:part element="tns:getCallCountGroupByConsumerAndServiceOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getCallCountGroupByApplicationAndServiceOperationRequest">
+		<wsdl:part element="tns:getCallCountGroupByApplicationAndServiceOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCallCountGroupByApplicationAndServiceOperationResponse">
+		<wsdl:part element="tns:getCallCountGroupByApplicationAndServiceOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getErrorCountGroupByServiceRequest">
+		<wsdl:part element="tns:getErrorCountGroupByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getErrorCountGroupByServiceResponse">
+		<wsdl:part element="tns:getErrorCountGroupByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getErrorCountGroupByServiceAndOperationRequest">
+		<wsdl:part element="tns:getErrorCountGroupByServiceAndOperation" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getErrorCountGroupByServiceAndOperationResponse">
+		<wsdl:part element="tns:getErrorCountGroupByServiceAndOperationResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getErrorCountGroupByConsumerRequest">
+		<wsdl:part element="tns:getErrorCountGroupByConsumer" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getErrorCountGroupByConsumerResponse">
+		<wsdl:part element="tns:getErrorCountGroupByConsumerResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAllPolicyTypesRequest">
+		<wsdl:part element="tns:getAllPolicyTypes" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllPolicyTypesResponse">
+		<wsdl:part element="tns:getAllPolicyTypesResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAllPoliciesRequest">
+		<wsdl:part element="tns:getAllPolicies" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllPoliciesResponse">
+		<wsdl:part element="tns:getAllPoliciesResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAllPolicyServicesRequest">
+		<wsdl:part element="tns:getAllPolicyServices" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllPolicyServicesResponse">
+		<wsdl:part element="tns:getAllPolicyServicesResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getPolicyOperationsByServiceRequest">
+		<wsdl:part element="tns:getPolicyOperationsByService" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getPolicyOperationsByServiceResponse">
+		<wsdl:part element="tns:getPolicyOperationsByServiceResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAllSubjectTypesRequest">
+		<wsdl:part element="tns:getAllSubjectTypes" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllSubjectTypesResponse">
+		<wsdl:part element="tns:getAllSubjectTypesResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getSubjectValuesByTypeRequest">
+		<wsdl:part element="tns:getSubjectValuesByType" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getSubjectValuesByTypeResponse">
+		<wsdl:part element="tns:getSubjectValuesByTypeResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAllEffectsRequest">
+		<wsdl:part element="tns:getAllEffects" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllEffectsResponse">
+		<wsdl:part element="tns:getAllEffectsResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getPolicyMetricDataRequest">
+		<wsdl:part element="tns:getPolicyMetricData" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getPolicyMetricDataResponse">
+		<wsdl:part element="tns:getPolicyMetricDataResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getPolicyMetricDetailDataRequest">
+		<wsdl:part element="tns:getPolicyMetricDetailData" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getPolicyMetricDetailDataResponse">
+		<wsdl:part element="tns:getPolicyMetricDetailDataResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getErrorViewRequest">
+		<wsdl:part element="tns:getErrorView" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getErrorViewResponse">
+		<wsdl:part element="tns:getErrorViewResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getMetricValueRequest">
+		<wsdl:part element="tns:getMetricValue" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getMetricValueResponse">
+		<wsdl:part element="tns:getMetricValueResponse" name="parameters"/>
+	</wsdl:message>	
+	<wsdl:portType name="SOAMetricDAOPortType">		
+		<wsdl:operation name="getAllServices">
+			<wsdl:input message="tns:getAllServicesRequest"/>
+			<wsdl:output message="tns:getAllServicesResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getServicesByPool">
+			<wsdl:input message="tns:getServicesByPoolRequest"/>
+			<wsdl:output message="tns:getServicesByPoolResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getServicesByConsumer">
+			<wsdl:input message="tns:getServicesByConsumerRequest"/>
+			<wsdl:output message="tns:getServicesByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getMetricsByService">
+			<wsdl:input message="tns:getMetricsByServiceRequest"/>
+			<wsdl:output message="tns:getMetricsByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getOperationsByService">
+			<wsdl:input message="tns:getOperationsByServiceRequest"/>
+			<wsdl:output message="tns:getOperationsByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAllPools">
+			<wsdl:input message="tns:getAllPoolsRequest"/>
+			<wsdl:output message="tns:getAllPoolsResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getPoolsByService">
+			<wsdl:input message="tns:getPoolsByServiceRequest"/>
+			<wsdl:output message="tns:getPoolsByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getMachinesByPool">
+			<wsdl:input message="tns:getMachinesByPoolRequest"/>
+			<wsdl:output message="tns:getMachinesByPoolResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAllConsumers">
+			<wsdl:input message="tns:getAllConsumersRequest"/>
+			<wsdl:output message="tns:getAllConsumersResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getConsumersByService">
+			<wsdl:input message="tns:getConsumersByServiceRequest"/>
+			<wsdl:output message="tns:getConsumersByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAllErrors">
+			<wsdl:input message="tns:getAllErrorsRequest"/>
+			<wsdl:output message="tns:getAllErrorsResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalCallAndErrorByService">
+			<wsdl:input message="tns:getTotalCallAndErrorByServiceRequest"/>
+			<wsdl:output message="tns:getTotalCallAndErrorByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ConsumersCallByService">
+			<wsdl:input message="tns:getTop10ConsumersCallByServiceRequest"/>
+			<wsdl:output message="tns:getTop10ConsumersCallByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNConsumersCallByService">
+			<wsdl:input message="tns:getTopNConsumersCallByServiceRequest"/>
+			<wsdl:output message="tns:getTopNConsumersCallByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ConsumersErrorByService">
+			<wsdl:input message="tns:getTop10ConsumersErrorByServiceRequest"/>
+			<wsdl:output message="tns:getTop10ConsumersErrorByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNConsumersErrorByService">
+			<wsdl:input message="tns:getTopNConsumersErrorByServiceRequest"/>
+			<wsdl:output message="tns:getTopNConsumersErrorByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop5OperationsCallByService">
+			<wsdl:input message="tns:getTop5OperationsCallByServiceRequest"/>
+			<wsdl:output message="tns:getTop5OperationsCallByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNOperationsCallByService">
+			<wsdl:input message="tns:getTopNOperationsCallByServiceRequest"/>
+			<wsdl:output message="tns:getTopNOperationsCallByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop5OperationsPerformanceByService">
+			<wsdl:input message="tns:getTop5OperationsPerformanceByServiceRequest"/>
+			<wsdl:output message="tns:getTop5OperationsPerformanceByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNOperationsPerformanceByService">
+			<wsdl:input message="tns:getTopNOperationsPerformanceByServiceRequest"/>
+			<wsdl:output message="tns:getTopNOperationsPerformanceByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop5OperationsErrorByService">
+			<wsdl:input message="tns:getTop5OperationsErrorByServiceRequest"/>
+			<wsdl:output message="tns:getTop5OperationsErrorByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNOperationsErrorByService">
+			<wsdl:input message="tns:getTopNOperationsErrorByServiceRequest"/>
+			<wsdl:output message="tns:getTopNOperationsErrorByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ErrorsByService">
+			<wsdl:input message="tns:getTop10ErrorsByServiceRequest"/>
+			<wsdl:output message="tns:getTop10ErrorsByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNErrorsByService">
+			<wsdl:input message="tns:getTopNErrorsByServiceRequest"/>
+			<wsdl:output message="tns:getTopNErrorsByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalCallAndErrorByConsumer">
+			<wsdl:input message="tns:getTotalCallAndErrorByConsumerRequest"/>
+			<wsdl:output message="tns:getTotalCallAndErrorByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalCallByConsumer">
+			<wsdl:input message="tns:getTotalCallByConsumerRequest"/>
+			<wsdl:output message="tns:getTotalCallByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalErrorByConsumer">
+			<wsdl:input message="tns:getTotalErrorByConsumerRequest"/>
+			<wsdl:output message="tns:getTotalErrorByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAvgResponseTimeByConsumer">
+			<wsdl:input message="tns:getAvgResponseTimeByConsumerRequest"/>
+			<wsdl:output message="tns:getAvgResponseTimeByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getServicesCallAndErrorByConsumer">
+			<wsdl:input message="tns:getServicesCallAndErrorByConsumerRequest"/>
+			<wsdl:output message="tns:getServicesCallAndErrorByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ServicesCallByConsumer">
+			<wsdl:input message="tns:getTop10ServicesCallByConsumerRequest"/>
+			<wsdl:output message="tns:getTop10ServicesCallByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNServicesCallByConsumer">
+			<wsdl:input message="tns:getTopNServicesCallByConsumerRequest"/>
+			<wsdl:output message="tns:getTopNServicesCallByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ServicesErrorByConsumer">
+			<wsdl:input message="tns:getTop10ServicesErrorByConsumerRequest"/>
+			<wsdl:output message="tns:getTop10ServicesErrorByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNServicesErrorByConsumer">
+			<wsdl:input message="tns:getTopNServicesErrorByConsumerRequest"/>
+			<wsdl:output message="tns:getTopNServicesErrorByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ErrorsByConsumer">
+			<wsdl:input message="tns:getTop10ErrorsByConsumerRequest"/>
+			<wsdl:output message="tns:getTop10ErrorsByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNErrorsByConsumer">
+			<wsdl:input message="tns:getTopNErrorsByConsumerRequest"/>
+			<wsdl:output message="tns:getTopNErrorsByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalCallAndErrorByOperation">
+			<wsdl:input message="tns:getTotalCallAndErrorByOperationRequest"/>
+			<wsdl:output message="tns:getTotalCallAndErrorByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalCallByOperation">
+			<wsdl:input message="tns:getTotalCallByOperationRequest"/>
+			<wsdl:output message="tns:getTotalCallByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAvgResponseTimeByOperation">
+			<wsdl:input message="tns:getAvgResponseTimeByOperationRequest"/>
+			<wsdl:output message="tns:getAvgResponseTimeByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ConsumersCallByOperation">
+			<wsdl:input message="tns:getTop10ConsumersCallByOperationRequest"/>
+			<wsdl:output message="tns:getTop10ConsumersCallByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNConsumersCallByOperation">
+			<wsdl:input message="tns:getTopNConsumersCallByOperationRequest"/>
+			<wsdl:output message="tns:getTopNConsumersCallByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ConsumersErrorByOperation">
+			<wsdl:input message="tns:getTop10ConsumersErrorByOperationRequest"/>
+			<wsdl:output message="tns:getTop10ConsumersErrorByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNConsumersErrorByOperation">
+			<wsdl:input message="tns:getTopNConsumersErrorByOperationRequest"/>
+			<wsdl:output message="tns:getTopNConsumersErrorByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTop10ErrorsByOperation">
+			<wsdl:input message="tns:getTop10ErrorsByOperationRequest"/>
+			<wsdl:output message="tns:getTop10ErrorsByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTopNErrorsByOperation">
+			<wsdl:input message="tns:getTopNErrorsByOperationRequest"/>
+			<wsdl:output message="tns:getTopNErrorsByOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getCallCountGroupByPoolAndServiceOperation">
+			<wsdl:input message="tns:getCallCountGroupByPoolAndServiceOperationRequest"/>
+			<wsdl:output message="tns:getCallCountGroupByPoolAndServiceOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getCallCountGroupByConsumerAndServiceOperation">
+			<wsdl:input message="tns:getCallCountGroupByConsumerAndServiceOperationRequest"/>
+			<wsdl:output message="tns:getCallCountGroupByConsumerAndServiceOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getCallCountGroupByApplicationAndServiceOperation">
+			<wsdl:input message="tns:getCallCountGroupByApplicationAndServiceOperationRequest"/>
+			<wsdl:output message="tns:getCallCountGroupByApplicationAndServiceOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getErrorCountGroupByService">
+			<wsdl:input message="tns:getErrorCountGroupByServiceRequest"/>
+			<wsdl:output message="tns:getErrorCountGroupByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getErrorCountGroupByServiceAndOperation">
+			<wsdl:input message="tns:getErrorCountGroupByServiceAndOperationRequest"/>
+			<wsdl:output message="tns:getErrorCountGroupByServiceAndOperationResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getErrorCountGroupByConsumer">
+			<wsdl:input message="tns:getErrorCountGroupByConsumerRequest"/>
+			<wsdl:output message="tns:getErrorCountGroupByConsumerResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAllPolicyTypes">
+			<wsdl:input message="tns:getAllPolicyTypesRequest"/>
+			<wsdl:output message="tns:getAllPolicyTypesResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAllPolicies">
+			<wsdl:input message="tns:getAllPoliciesRequest"/>
+			<wsdl:output message="tns:getAllPoliciesResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAllPolicyServices">
+			<wsdl:input message="tns:getAllPolicyServicesRequest"/>
+			<wsdl:output message="tns:getAllPolicyServicesResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getPolicyOperationsByService">
+			<wsdl:input message="tns:getPolicyOperationsByServiceRequest"/>
+			<wsdl:output message="tns:getPolicyOperationsByServiceResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAllSubjectTypes">
+			<wsdl:input message="tns:getAllSubjectTypesRequest"/>
+			<wsdl:output message="tns:getAllSubjectTypesResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getSubjectValuesByType">
+			<wsdl:input message="tns:getSubjectValuesByTypeRequest"/>
+			<wsdl:output message="tns:getSubjectValuesByTypeResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAllEffects">
+			<wsdl:input message="tns:getAllEffectsRequest"/>
+			<wsdl:output message="tns:getAllEffectsResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getPolicyMetricData">
+			<wsdl:input message="tns:getPolicyMetricDataRequest"/>
+			<wsdl:output message="tns:getPolicyMetricDataResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getPolicyMetricDetailData">
+			<wsdl:input message="tns:getPolicyMetricDetailDataRequest"/>
+			<wsdl:output message="tns:getPolicyMetricDetailDataResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getErrorView">
+			<wsdl:input message="tns:getErrorViewRequest"/>
+			<wsdl:output message="tns:getErrorViewResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getMetricValue">
+			<wsdl:input message="tns:getMetricValueRequest"/>
+			<wsdl:output message="tns:getMetricValueResponse"/>
+		</wsdl:operation>		
+	</wsdl:portType>	
+	<wsdl:binding name="SOAMetricDAOSoap11Binding" type="tns:SOAMetricDAOPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>		
+			<wsdl:operation name="getAllServices">
+				<soap:operation soapAction="urn:getAllServices" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesByPool">
+				<soap:operation soapAction="urn:getServicesByPool" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesByConsumer">
+				<soap:operation soapAction="urn:getServicesByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMetricsByService">
+				<soap:operation soapAction="urn:getMetricsByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getOperationsByService">
+				<soap:operation soapAction="urn:getOperationsByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPools">
+				<soap:operation soapAction="urn:getAllPools" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPoolsByService">
+				<soap:operation soapAction="urn:getPoolsByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMachinesByPool">
+				<soap:operation soapAction="urn:getMachinesByPool" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllConsumers">
+				<soap:operation soapAction="urn:getAllConsumers" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getConsumersByService">
+				<soap:operation soapAction="urn:getConsumersByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllErrors">
+				<soap:operation soapAction="urn:getAllErrors" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByService">
+				<soap:operation soapAction="urn:getTotalCallAndErrorByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersCallByService">
+				<soap:operation soapAction="urn:getTop10ConsumersCallByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersCallByService">
+				<soap:operation soapAction="urn:getTopNConsumersCallByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersErrorByService">
+				<soap:operation soapAction="urn:getTop10ConsumersErrorByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersErrorByService">
+				<soap:operation soapAction="urn:getTopNConsumersErrorByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsCallByService">
+				<soap:operation soapAction="urn:getTop5OperationsCallByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsCallByService">
+				<soap:operation soapAction="urn:getTopNOperationsCallByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsPerformanceByService">
+				<soap:operation soapAction="urn:getTop5OperationsPerformanceByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsPerformanceByService">
+				<soap:operation soapAction="urn:getTopNOperationsPerformanceByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsErrorByService">
+				<soap:operation soapAction="urn:getTop5OperationsErrorByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsErrorByService">
+				<soap:operation soapAction="urn:getTopNOperationsErrorByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByService">
+				<soap:operation soapAction="urn:getTop10ErrorsByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByService">
+				<soap:operation soapAction="urn:getTopNErrorsByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByConsumer">
+				<soap:operation soapAction="urn:getTotalCallAndErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallByConsumer">
+				<soap:operation soapAction="urn:getTotalCallByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalErrorByConsumer">
+				<soap:operation soapAction="urn:getTotalErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgResponseTimeByConsumer">
+				<soap:operation soapAction="urn:getAvgResponseTimeByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesCallAndErrorByConsumer">
+				<soap:operation soapAction="urn:getServicesCallAndErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ServicesCallByConsumer">
+				<soap:operation soapAction="urn:getTop10ServicesCallByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNServicesCallByConsumer">
+				<soap:operation soapAction="urn:getTopNServicesCallByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ServicesErrorByConsumer">
+				<soap:operation soapAction="urn:getTop10ServicesErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNServicesErrorByConsumer">
+				<soap:operation soapAction="urn:getTopNServicesErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByConsumer">
+				<soap:operation soapAction="urn:getTop10ErrorsByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByConsumer">
+				<soap:operation soapAction="urn:getTopNErrorsByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByOperation">
+				<soap:operation soapAction="urn:getTotalCallAndErrorByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallByOperation">
+				<soap:operation soapAction="urn:getTotalCallByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgResponseTimeByOperation">
+				<soap:operation soapAction="urn:getAvgResponseTimeByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersCallByOperation">
+				<soap:operation soapAction="urn:getTop10ConsumersCallByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersCallByOperation">
+				<soap:operation soapAction="urn:getTopNConsumersCallByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersErrorByOperation">
+				<soap:operation soapAction="urn:getTop10ConsumersErrorByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersErrorByOperation">
+				<soap:operation soapAction="urn:getTopNConsumersErrorByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByOperation">
+				<soap:operation soapAction="urn:getTop10ErrorsByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByOperation">
+				<soap:operation soapAction="urn:getTopNErrorsByOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByPoolAndServiceOperation">
+				<soap:operation soapAction="urn:getCallCountGroupByPoolAndServiceOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByConsumerAndServiceOperation">
+				<soap:operation soapAction="urn:getCallCountGroupByConsumerAndServiceOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByApplicationAndServiceOperation">
+				<soap:operation soapAction="urn:getCallCountGroupByApplicationAndServiceOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByService">
+				<soap:operation soapAction="urn:getErrorCountGroupByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByServiceAndOperation">
+				<soap:operation soapAction="urn:getErrorCountGroupByServiceAndOperation" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByConsumer">
+				<soap:operation soapAction="urn:getErrorCountGroupByConsumer" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicyTypes">
+				<soap:operation soapAction="urn:getAllPolicyTypes" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicies">
+				<soap:operation soapAction="urn:getAllPolicies" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicyServices">
+				<soap:operation soapAction="urn:getAllPolicyServices" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyOperationsByService">
+				<soap:operation soapAction="urn:getPolicyOperationsByService" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllSubjectTypes">
+				<soap:operation soapAction="urn:getAllSubjectTypes" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSubjectValuesByType">
+				<soap:operation soapAction="urn:getSubjectValuesByType" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllEffects">
+				<soap:operation soapAction="urn:getAllEffects" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyMetricData">
+				<soap:operation soapAction="urn:getPolicyMetricData" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyMetricDetailData">
+				<soap:operation soapAction="urn:getPolicyMetricDetailData" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorView">
+				<soap:operation soapAction="urn:getErrorView" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMetricValue">
+				<soap:operation soapAction="urn:getMetricValue" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:binding name="SOAMetricDAOSoap12Binding" type="tns:SOAMetricDAOPortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>		
+			<wsdl:operation name="getAllServices">
+				<soap12:operation soapAction="urn:getAllServices" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesByPool">
+				<soap12:operation soapAction="urn:getServicesByPool" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesByConsumer">
+				<soap12:operation soapAction="urn:getServicesByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMetricsByService">
+				<soap12:operation soapAction="urn:getMetricsByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getOperationsByService">
+				<soap12:operation soapAction="urn:getOperationsByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPools">
+				<soap12:operation soapAction="urn:getAllPools" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPoolsByService">
+				<soap12:operation soapAction="urn:getPoolsByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMachinesByPool">
+				<soap12:operation soapAction="urn:getMachinesByPool" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllConsumers">
+				<soap12:operation soapAction="urn:getAllConsumers" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getConsumersByService">
+				<soap12:operation soapAction="urn:getConsumersByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllErrors">
+				<soap12:operation soapAction="urn:getAllErrors" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByService">
+				<soap12:operation soapAction="urn:getTotalCallAndErrorByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersCallByService">
+				<soap12:operation soapAction="urn:getTop10ConsumersCallByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersCallByService">
+				<soap12:operation soapAction="urn:getTopNConsumersCallByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersErrorByService">
+				<soap12:operation soapAction="urn:getTop10ConsumersErrorByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersErrorByService">
+				<soap12:operation soapAction="urn:getTopNConsumersErrorByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsCallByService">
+				<soap12:operation soapAction="urn:getTop5OperationsCallByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsCallByService">
+				<soap12:operation soapAction="urn:getTopNOperationsCallByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsPerformanceByService">
+				<soap12:operation soapAction="urn:getTop5OperationsPerformanceByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsPerformanceByService">
+				<soap12:operation soapAction="urn:getTopNOperationsPerformanceByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsErrorByService">
+				<soap12:operation soapAction="urn:getTop5OperationsErrorByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsErrorByService">
+				<soap12:operation soapAction="urn:getTopNOperationsErrorByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByService">
+				<soap12:operation soapAction="urn:getTop10ErrorsByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByService">
+				<soap12:operation soapAction="urn:getTopNErrorsByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByConsumer">
+				<soap12:operation soapAction="urn:getTotalCallAndErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallByConsumer">
+				<soap12:operation soapAction="urn:getTotalCallByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalErrorByConsumer">
+				<soap12:operation soapAction="urn:getTotalErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgResponseTimeByConsumer">
+				<soap12:operation soapAction="urn:getAvgResponseTimeByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesCallAndErrorByConsumer">
+				<soap12:operation soapAction="urn:getServicesCallAndErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ServicesCallByConsumer">
+				<soap12:operation soapAction="urn:getTop10ServicesCallByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNServicesCallByConsumer">
+				<soap12:operation soapAction="urn:getTopNServicesCallByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ServicesErrorByConsumer">
+				<soap12:operation soapAction="urn:getTop10ServicesErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNServicesErrorByConsumer">
+				<soap12:operation soapAction="urn:getTopNServicesErrorByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByConsumer">
+				<soap12:operation soapAction="urn:getTop10ErrorsByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByConsumer">
+				<soap12:operation soapAction="urn:getTopNErrorsByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByOperation">
+				<soap12:operation soapAction="urn:getTotalCallAndErrorByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallByOperation">
+				<soap12:operation soapAction="urn:getTotalCallByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgResponseTimeByOperation">
+				<soap12:operation soapAction="urn:getAvgResponseTimeByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersCallByOperation">
+				<soap12:operation soapAction="urn:getTop10ConsumersCallByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersCallByOperation">
+				<soap12:operation soapAction="urn:getTopNConsumersCallByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersErrorByOperation">
+				<soap12:operation soapAction="urn:getTop10ConsumersErrorByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersErrorByOperation">
+				<soap12:operation soapAction="urn:getTopNConsumersErrorByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByOperation">
+				<soap12:operation soapAction="urn:getTop10ErrorsByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByOperation">
+				<soap12:operation soapAction="urn:getTopNErrorsByOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByPoolAndServiceOperation">
+				<soap12:operation soapAction="urn:getCallCountGroupByPoolAndServiceOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByConsumerAndServiceOperation">
+				<soap12:operation soapAction="urn:getCallCountGroupByConsumerAndServiceOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByApplicationAndServiceOperation">
+				<soap12:operation soapAction="urn:getCallCountGroupByApplicationAndServiceOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByService">
+				<soap12:operation soapAction="urn:getErrorCountGroupByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByServiceAndOperation">
+				<soap12:operation soapAction="urn:getErrorCountGroupByServiceAndOperation" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByConsumer">
+				<soap12:operation soapAction="urn:getErrorCountGroupByConsumer" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicyTypes">
+				<soap12:operation soapAction="urn:getAllPolicyTypes" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicies">
+				<soap12:operation soapAction="urn:getAllPolicies" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicyServices">
+				<soap12:operation soapAction="urn:getAllPolicyServices" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyOperationsByService">
+				<soap12:operation soapAction="urn:getPolicyOperationsByService" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllSubjectTypes">
+				<soap12:operation soapAction="urn:getAllSubjectTypes" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSubjectValuesByType">
+				<soap12:operation soapAction="urn:getSubjectValuesByType" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllEffects">
+				<soap12:operation soapAction="urn:getAllEffects" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyMetricData">
+				<soap12:operation soapAction="urn:getPolicyMetricData" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyMetricDetailData">
+				<soap12:operation soapAction="urn:getPolicyMetricDetailData" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorView">
+				<soap12:operation soapAction="urn:getErrorView" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMetricValue">
+				<soap12:operation soapAction="urn:getMetricValue" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:binding name="SOAMetricDAOHTTPBinding" type="tns:SOAMetricDAOPortType">
+		<http:binding verb="POST"/>		
+			<wsdl:operation name="getAllServices">
+				<http:operation location="SOAMetricDAO/getAllServices"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesByPool">
+				<http:operation location="SOAMetricDAO/getServicesByPool"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesByConsumer">
+				<http:operation location="SOAMetricDAO/getServicesByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMetricsByService">
+				<http:operation location="SOAMetricDAO/getMetricsByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getOperationsByService">
+				<http:operation location="SOAMetricDAO/getOperationsByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPools">
+				<http:operation location="SOAMetricDAO/getAllPools"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPoolsByService">
+				<http:operation location="SOAMetricDAO/getPoolsByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMachinesByPool">
+				<http:operation location="SOAMetricDAO/getMachinesByPool"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllConsumers">
+				<http:operation location="SOAMetricDAO/getAllConsumers"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getConsumersByService">
+				<http:operation location="SOAMetricDAO/getConsumersByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllErrors">
+				<http:operation location="SOAMetricDAO/getAllErrors"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByService">
+				<http:operation location="SOAMetricDAO/getTotalCallAndErrorByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersCallByService">
+				<http:operation location="SOAMetricDAO/getTop10ConsumersCallByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersCallByService">
+				<http:operation location="SOAMetricDAO/getTopNConsumersCallByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersErrorByService">
+				<http:operation location="SOAMetricDAO/getTop10ConsumersErrorByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersErrorByService">
+				<http:operation location="SOAMetricDAO/getTopNConsumersErrorByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsCallByService">
+				<http:operation location="SOAMetricDAO/getTop5OperationsCallByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsCallByService">
+				<http:operation location="SOAMetricDAO/getTopNOperationsCallByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsPerformanceByService">
+				<http:operation location="SOAMetricDAO/getTop5OperationsPerformanceByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsPerformanceByService">
+				<http:operation location="SOAMetricDAO/getTopNOperationsPerformanceByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop5OperationsErrorByService">
+				<http:operation location="SOAMetricDAO/getTop5OperationsErrorByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNOperationsErrorByService">
+				<http:operation location="SOAMetricDAO/getTopNOperationsErrorByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByService">
+				<http:operation location="SOAMetricDAO/getTop10ErrorsByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByService">
+				<http:operation location="SOAMetricDAO/getTopNErrorsByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByConsumer">
+				<http:operation location="SOAMetricDAO/getTotalCallAndErrorByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallByConsumer">
+				<http:operation location="SOAMetricDAO/getTotalCallByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalErrorByConsumer">
+				<http:operation location="SOAMetricDAO/getTotalErrorByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgResponseTimeByConsumer">
+				<http:operation location="SOAMetricDAO/getAvgResponseTimeByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getServicesCallAndErrorByConsumer">
+				<http:operation location="SOAMetricDAO/getServicesCallAndErrorByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ServicesCallByConsumer">
+				<http:operation location="SOAMetricDAO/getTop10ServicesCallByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNServicesCallByConsumer">
+				<http:operation location="SOAMetricDAO/getTopNServicesCallByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ServicesErrorByConsumer">
+				<http:operation location="SOAMetricDAO/getTop10ServicesErrorByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNServicesErrorByConsumer">
+				<http:operation location="SOAMetricDAO/getTopNServicesErrorByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByConsumer">
+				<http:operation location="SOAMetricDAO/getTop10ErrorsByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByConsumer">
+				<http:operation location="SOAMetricDAO/getTopNErrorsByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallAndErrorByOperation">
+				<http:operation location="SOAMetricDAO/getTotalCallAndErrorByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalCallByOperation">
+				<http:operation location="SOAMetricDAO/getTotalCallByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgResponseTimeByOperation">
+				<http:operation location="SOAMetricDAO/getAvgResponseTimeByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersCallByOperation">
+				<http:operation location="SOAMetricDAO/getTop10ConsumersCallByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersCallByOperation">
+				<http:operation location="SOAMetricDAO/getTopNConsumersCallByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ConsumersErrorByOperation">
+				<http:operation location="SOAMetricDAO/getTop10ConsumersErrorByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNConsumersErrorByOperation">
+				<http:operation location="SOAMetricDAO/getTopNConsumersErrorByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTop10ErrorsByOperation">
+				<http:operation location="SOAMetricDAO/getTop10ErrorsByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTopNErrorsByOperation">
+				<http:operation location="SOAMetricDAO/getTopNErrorsByOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByPoolAndServiceOperation">
+				<http:operation location="SOAMetricDAO/getCallCountGroupByPoolAndServiceOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByConsumerAndServiceOperation">
+				<http:operation location="SOAMetricDAO/getCallCountGroupByConsumerAndServiceOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCallCountGroupByApplicationAndServiceOperation">
+				<http:operation location="SOAMetricDAO/getCallCountGroupByApplicationAndServiceOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByService">
+				<http:operation location="SOAMetricDAO/getErrorCountGroupByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByServiceAndOperation">
+				<http:operation location="SOAMetricDAO/getErrorCountGroupByServiceAndOperation"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorCountGroupByConsumer">
+				<http:operation location="SOAMetricDAO/getErrorCountGroupByConsumer"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicyTypes">
+				<http:operation location="SOAMetricDAO/getAllPolicyTypes"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicies">
+				<http:operation location="SOAMetricDAO/getAllPolicies"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllPolicyServices">
+				<http:operation location="SOAMetricDAO/getAllPolicyServices"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyOperationsByService">
+				<http:operation location="SOAMetricDAO/getPolicyOperationsByService"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllSubjectTypes">
+				<http:operation location="SOAMetricDAO/getAllSubjectTypes"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSubjectValuesByType">
+				<http:operation location="SOAMetricDAO/getSubjectValuesByType"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAllEffects">
+				<http:operation location="SOAMetricDAO/getAllEffects"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyMetricData">
+				<http:operation location="SOAMetricDAO/getPolicyMetricData"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getPolicyMetricDetailData">
+				<http:operation location="SOAMetricDAO/getPolicyMetricDetailData"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getErrorView">
+				<http:operation location="SOAMetricDAO/getErrorView"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMetricValue">
+				<http:operation location="SOAMetricDAO/getMetricValue"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:service name="SOAMetricDAO">	
+		<wsdl:port binding="tns:SOAMetricDAOSoap11Binding" name="SOAMetricDAOHttpSoap11Endpoint">
+			<soap:address location="http://sqwscal199.smf.ebay.com:8080/SOAMetricWebApp/SOAMetricDAO"/>
+		</wsdl:port>		
+		<wsdl:port binding="tns:SOAMetricDAOSoap12Binding" name="SOAMetricDAOHttpSoap12Endpoint">
+			<soap12:address location="http://sqwscal199.smf.ebay.com:8080/SOAMetricWebApp/SOAMetricDAO"/>
+		</wsdl:port>		
+		<wsdl:port binding="tns:SOAMetricDAOHTTPBinding" name="SOAMetricDAOHttpEndpoint">
+			<http:address location="http://sqwscal199.smf.ebay.com:8080/SOAMetricWebApp/SOAMetricDAO"/>
+		</wsdl:port>		
+	</wsdl:service>
+</wsdl:definitions>

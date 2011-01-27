@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+					This is the base class for request container for all service operations.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+			Base response container for all service operations. Contains error information
+			associated with the request.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+					
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+					Information for an error or warning that occurred when eBay processed the
+					request.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseWhitelistServiceRequestType">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all operations in Whitelist Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="resourceName" type="xs:string"/>
+							<xs:element minOccurs="0" name="operationName" type="xs:string"/>
+							<xs:element minOccurs="0" name="resourceType" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseWhitelistServiceResponseType">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations in Whitelist Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="IsWhitelistedRequestType">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseWhitelistServiceRequestType">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subject" type="tns:SubjectType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="resolvedSubjectGroup" type="tns:SubjectGroupType"/>
+							<!--
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="contextInfo" type="tns:ContextInfoType">
+								<xs:annotation>
+								<xs:documentation>
+								This element is being deprecated as part of the SOA policy service extension task
+								</xs:documentation>
+								</xs:annotation>
+								</xs:element>
+							-->
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="IsWhitelistedResponseType">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseWhitelistServiceResponseType">
+						<xs:sequence>
+							<xs:element name="isWhitelisted" type="xs:boolean"/>
+							<xs:element name="Effect" type="tns:Effect"/>
+							<xs:element name="subject" type="tns:SubjectType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="resolvedSubjectGroup" type="tns:SubjectGroupType"/>
+							<!--
+								<xs:element name="contextInfo" type="tns:ContextInfoType">
+								<xs:annotation>
+								<xs:documentation>
+								This element is being deprecated as part of the SOA policy service extension task
+								</xs:documentation>
+								</xs:annotation>
+								</xs:element>
+							-->
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="SubjectType">
+				<xs:sequence>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!--
+				<xs:complexType name="ContextInfoType">
+				<xs:sequence>
+				<xs:element name="value" type="xs:string"/>
+				<xs:element name="type" type="xs:string"/>
+				</xs:sequence>
+				</xs:complexType>
+			-->
+			<xs:complexType name="SubjectGroupType">
+				<xs:sequence>
+					<!--
+						<xs:element name="name" type="xs:string"/>
+					-->
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="name" type="xs:string"/>
+				</xs:sequence>
+				<!--
+					<xs:attribute name="isCalculated" type="xs:boolean"/>
+				-->
+				<xs:attribute name="calculator" type="xs:string" use="optional"/>
+			</xs:complexType>
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+					Indicates whether the error is a severe error (causing the request to fail)
+					or an informational error (a warning) that should be communicated to the
+					user.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+							The request was processed successfully, but something occurred that may
+							affect your application or the user.				
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+							The request that triggered the error was not processed successfully.
+							When a serious application-level error occurs, the error is returned
+							instead of the business data.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+							The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+							The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+					ErrorMessage to indicate any Error/Warning occured as part of service call.
+					Any run time error will not be reported here, but will be reported aspart of
+					soap fault.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+					This represents error details.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+					represent contextual data associated with an error.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+					Reprents the level of error. E.g. Error/Warning
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+					Reprents the error catagorization. Request and Application Error are mostly occured due to 
+					invalid data passed in request. System Error cannot be fixed by changing request values and 
+					mostly occured due to application failure.						 
+				</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="Effect">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Allow"/>
+					<xs:enumeration value="Flag"/>
+					<xs:enumeration value="Challenge"/>
+					<xs:enumeration value="Block"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="isWhitelistedRequest" nillable="true" type="tns:IsWhitelistedRequestType"/>
+			<xs:element name="isWhitelistedResponse" nillable="true" type="tns:IsWhitelistedResponseType"/>
+		</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="isWhitelistedResponse">
+    <wsdl:part element="ns0:isWhitelistedResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isWhitelistedRequest">
+    <wsdl:part element="ns0:isWhitelistedRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="WhitelistServicePortType">
+    <wsdl:operation name="isWhitelisted">
+      <wsdl:input message="ns0:isWhitelistedRequest">
+    </wsdl:input>
+      <wsdl:output message="ns0:isWhitelistedResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WhitelistServiceHttpBinding" type="ns0:WhitelistServicePortType">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="isWhitelisted">
+      <http:operation location="WhitelistService/isWhitelisted"/>
+      <wsdl:input>
+        <mime:content part="isWhitelistedRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="isWhitelistedResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WhitelistServiceSOAP11Binding" type="ns0:WhitelistServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="isWhitelisted">
+      <soap:operation soapAction="urn:isWhitelisted" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WhitelistServiceSOAP12Binding" type="ns0:WhitelistServicePortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="isWhitelisted">
+      <soap12:operation soapAction="urn:isWhitelisted" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WhitelistService">
+    <wsdl:port binding="ns0:WhitelistServiceSOAP11Binding" name="WhitelistServiceSOAP11port_http">
+      <soap:address location="http://localhost:8080/WhitelistService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:WhitelistServiceSOAP12Binding" name="WhitelistServiceSOAP12port_http">
+      <soap12:address location="http://localhost:8080/WhitelistService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:WhitelistServiceHttpBinding" name="WhitelistServiceHttpport">
+      <http:address location="http://localhost:8080/WhitelistService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

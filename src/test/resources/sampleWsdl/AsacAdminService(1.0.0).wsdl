@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns:aas="http://www.ebay.com/marketplace/customersupport/v1/services" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="AsacAdminService" targetNamespace="http://www.ebay.com/marketplace/customersupport/v1/services">
+	<types>		
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/customersupport/v1/services">
+			
+			<xs:complexType name="AsacUsers">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="asacUser" type="aas:AsacUserDetail"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AsacUserDetail">
+				<xs:complexContent>
+					<xs:extension base="aas:AsacUser">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="createionDate" type="xs:dateTime"/>
+							<xs:element minOccurs="0" name="lastModifiedDate" type="xs:dateTime"/>
+							<xs:element minOccurs="0" name="lastSignInDate" type="xs:dateTime"/>
+							<xs:element minOccurs="0" name="passwordUpdateDate" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsacUser">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="approvedBy" type="xs:string"/>
+					<xs:element minOccurs="0" name="comment" type="xs:string"/>
+					<xs:element minOccurs="0" name="email" type="xs:string"/>
+					<xs:element minOccurs="0" name="employeeNo" type="xs:string"/>
+					<xs:element minOccurs="0" name="expirationDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="firstName" type="xs:string"/>
+					<xs:element minOccurs="0" name="forcePasswordExpiration" type="xs:int"/>
+					<xs:element minOccurs="0" name="justification" type="xs:string"/>
+					<xs:element name="lastName" type="xs:string"/>
+					<xs:element minOccurs="0" name="location" type="xs:string"/>
+					<xs:element minOccurs="0" name="loginName" type="xs:string"/>
+					<xs:element minOccurs="0" name="manager" type="xs:string"/>
+					<xs:element minOccurs="0" name="password" type="xs:string"/>
+					<xs:element minOccurs="0" name="confirmPassword" type="xs:string"/>
+					<xs:element minOccurs="0" name="passwordFailureCount" type="xs:int"/>
+					<xs:element minOccurs="0" name="passwordNeverExpire" type="xs:int"/>
+					<xs:element minOccurs="0" name="telephone" type="xs:string"/>
+					<xs:element minOccurs="0" name="userId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="UserKey">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="userId" type="xs:long"/>
+					<xs:element minOccurs="0" name="loginName" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:element name="createUser" nillable="true" type="aas:CreateUpdateUserRequest"/>
+			<xs:element name="createUserResponse" nillable="true" type="aas:CreateUpdateUserResponse"/>
+			<xs:element name="updateUser" nillable="true" type="aas:CreateUpdateUserRequest"/>
+			<xs:element name="updateUserResponse" nillable="true" type="aas:CreateUpdateUserResponse"/>
+			<xs:element name="findUsers" nillable="true" type="aas:FindUsersRequest"/>
+			<xs:element name="findUsersResponse" nillable="true" type="aas:FindUsersResponse"/>
+			<xs:element name="changePassword" nillable="true" type="aas:ChangePasswordRequest"/>
+			<xs:element name="changePasswordResponse" nillable="true" type="aas:ChangePasswordResponse"/>
+
+			<xs:complexType name="CreateUpdateUserRequest">
+				<xs:complexContent>
+					<xs:extension base="aas:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="asacUser" type="aas:AsacUser">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="CreateUpdateUserResponse">
+				<xs:complexContent>
+					<xs:extension base="aas:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="asacUser" type="aas:AsacUserDetail">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="FindUsersRequest">
+				<xs:complexContent>
+					<xs:extension base="aas:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="userKey" type="aas:UserKey">
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="queryString" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="FindUsersResponse">
+				<xs:complexContent>
+					<xs:extension base="aas:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="asacUser" type="aas:AsacUserDetail">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ChangePasswordRequest">
+				<xs:complexContent>
+					<xs:extension base="aas:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="loginName" type="xs:string">
+							</xs:element>
+							<xs:element maxOccurs="1" name="oldPasword" type="xs:string">
+							</xs:element>
+							<xs:element maxOccurs="1" name="newPassword" type="xs:string">
+							</xs:element>
+							<xs:element maxOccurs="1" name="confirmNewPassword" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ChangePasswordResponse">
+				<xs:complexContent>
+					<xs:extension base="aas:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="success" type="xs:boolean">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+					</xs:element>
+					<xs:element name="severity" type="aas:ErrorSeverity">
+					</xs:element>
+					<xs:element name="category" type="aas:ErrorCategory">
+					</xs:element>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="aas:ErrorParameter">
+					</xs:element>
+				</xs:sequence>
+
+
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<!-- 
+					<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+					processContents="lax" />
+					</xs:sequence>
+				-->
+
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="aas:ErrorData">
+					</xs:element>
+				</xs:sequence>
+
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+
+			</xs:simpleType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:sequence>
+					<xs:element name="ack" type="aas:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="aas:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:element name="getVersion" type="aas:GetVersionRequest"/>
+			<xs:complexType name="GetVersionRequest">
+				<xs:annotation>
+					<xs:documentation/>
+
+					<xs:appinfo/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="aas:BaseServiceRequest">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation/>
+
+					<xs:appinfo/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="aas:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="version" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="getVersionResponse" type="aas:GetVersionResponse"/>
+		</xs:schema>
+	</types>
+	<message name="updateUserResponse">
+		<part element="aas:updateUserResponse" name="parameters"/>
+	</message>
+	<message name="createUserResponse">
+		<part element="aas:createUserResponse" name="parameters"/>
+	</message>
+	<message name="createUserRequest">
+		<part element="aas:createUser" name="parameters"/>
+	</message>
+	<message name="updateUserRequest">
+		<part element="aas:updateUser" name="parameters"/>
+	</message>
+	<wsdl:message name="findUsersRequest">
+		<wsdl:part element="aas:findUsers" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="findUsersResponse">
+		<wsdl:part element="aas:findUsersResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="changePasswordRequest">
+		<wsdl:part element="aas:changePassword" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="changePasswordResponse">
+		<wsdl:part element="aas:changePasswordResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part element="aas:getVersion" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="aas:getVersionResponse" name="parameters"/>
+	</wsdl:message>
+	<portType name="AsacAdminServicePort">
+		<operation name="createUser">
+			<input message="aas:createUserRequest"/>
+			<output message="aas:createUserResponse"/>
+		</operation>
+		<operation name="updateUser">
+			<input message="aas:updateUserRequest"/>
+			<output message="aas:updateUserResponse"/>
+		</operation>
+		<wsdl:operation name="findUsers">
+			<wsdl:input message="aas:findUsersRequest"/>
+			<wsdl:output message="aas:findUsersResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="changePassword">
+			<wsdl:input message="aas:changePasswordRequest"/>
+			<wsdl:output message="aas:changePasswordResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="aas:getVersionRequest"/>
+			<wsdl:output message="aas:getVersionResponse"/>
+		</wsdl:operation>
+	</portType>
+	<binding name="AsacAdminServiceSOAPBinding" type="aas:AsacAdminServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="createUser">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/createUser"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="updateUser">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/updateUser"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="findUsers">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/findUsers"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="changePassword">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/changePassword"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getVersion">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getVersion"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<binding name="AsacAdminServiceHttpBinding" type="aas:AsacAdminServicePort">
+		<http:binding verb="POST"/>
+		<operation name="createUser">
+			<http:operation location="/createUser"/>
+			<input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="parameters" type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="updateUser">
+			<http:operation location="/updateUser"/>
+			<input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="parameters" type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="findUsers">
+			<http:operation location="/findUsers"/>
+			<input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="parameters" type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="changePassword">
+			<http:operation location="/changePassword"/>
+			<input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="parameters" type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="getVersion">
+			<http:operation location="/getVersion"/>
+			<input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="parameters" type="text/xml"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="AsacAdminService">
+		<port binding="aas:AsacAdminServiceHttpBinding" name="AsacAdminServiceHttpPort">
+			<http:address location="https://svcs.ebay.com/services/customersupport/AsacAdminService/v1"/>
+		</port>
+		<port binding="aas:AsacAdminServiceSOAPBinding" name="AsacAdminServiceSOAPPort">
+			<soap:address location="https://svcs.ebay.com/services/customersupport/AsacAdminService/v1"/>
+		</port>
+	</service>
+</definitions>

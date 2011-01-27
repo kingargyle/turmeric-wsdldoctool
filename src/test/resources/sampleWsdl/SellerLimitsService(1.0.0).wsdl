@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="SellerLimitsService" targetNamespace="http://www.ebay.com/marketplace/services">
+
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+
+			<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation/>
+
+					<xs:appinfo/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="getSellerLimitsRequest">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="userId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAllSellerLimitsResponse">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="dataValidationErrors" type="tns:ErrorData">
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="sellerLimits" type="tns:AllSellerLimitsType">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCurrentSellerLimitsResponse">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence maxOccurs="1" minOccurs="0">
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="dataValidationErrors" type="tns:ErrorData">
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="sellerLimits" type="tns:CurrentSellerLimitsType">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="setSellerLimitsRequest">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence maxOccurs="1" minOccurs="0">
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="sellerLimits" type="tns:OverwrittenSellerLimitsType">
+							</xs:element>
+							<xs:element name="adminUserId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="setSellerLimitsResponse">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence maxOccurs="1" minOccurs="0">
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="userStatus" type="tns:UserStatus">
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="dataValidationErrors" type="tns:ErrorData">
+						</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:complexType name="AllSellerLimitsType">
+				<xs:sequence maxOccurs="1" minOccurs="0">
+					<xs:element name="userId" type="xs:long"/>
+					<xs:element name="riskAnaliticsSellerLimits" type="tns:RiskAnaliticsLimitsType">
+					</xs:element>
+					<xs:element name="overwrittenSellerLimits" type="tns:OverwrittenLimitsType">
+					</xs:element>
+					<xs:element name="currentSellerLimits" type="tns:LimitsType">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="LimitsType">
+				<xs:sequence maxOccurs="1" minOccurs="0">
+
+					<xs:element name="openListings" type="xs:long"/>
+
+					<xs:element name="closedListings" type="xs:long">
+					</xs:element>
+
+					<xs:element name="openGms" type="tns:Amount"/>
+
+					<xs:element name="closedGms" type="tns:Amount"/>
+
+
+					<xs:element name="accountBalance" type="tns:Amount">
+					</xs:element>
+
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UserStatus">
+				<xs:sequence>
+					<xs:element name="userId" type="xs:long"/>
+					<xs:element name="status" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PercentagesType">
+				<xs:sequence maxOccurs="1" minOccurs="0">
+					<xs:element name="openListingsPercent" type="xs:double">
+					</xs:element>
+					<xs:element name="openGmsPercent" type="xs:double">
+					</xs:element>
+					<xs:element name="closedListingPercent" type="xs:double">
+					</xs:element>
+					<xs:element name="closedGmsPercent" type="xs:double">
+					</xs:element>
+					<xs:element name="accountBalancePercent" type="xs:double">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="CurrentSellerLimitsType">
+				<xs:sequence>
+					<xs:element name="sellerCurrentLimits" type="tns:LimitsType">
+					</xs:element>
+					<xs:element name="sellerCurrentPercentages" type="tns:PercentagesType">
+					</xs:element>
+					<xs:element name="userId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="RiskAnaliticsLimitsType">
+				<xs:sequence>
+					<xs:element name="riskCode" type="xs:long">
+					</xs:element>
+					<xs:element name="limits" type="tns:LimitsType"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OverwrittenLimitsType">
+				<xs:sequence>
+					<xs:element name="percentages" type="tns:PercentagesType">
+					</xs:element>
+					<xs:element name="limits" type="tns:LimitsType"/>
+					<xs:element name="startDate" type="xs:dateTime"/>
+					<xs:element name="endDate" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OverwrittenSellerLimitsType">
+				<xs:sequence>
+					<xs:element name="userId" type="xs:long"/>
+					<xs:element name="overwrittenSellerLimits" type="tns:OverwrittenLimitsType">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Amount">
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+					<xs:attribute name="currencyId" type="xs:string" use="required"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="tns:getVersionResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAllSellerLimitsRequest">
+		<wsdl:part element="tns:getSellerLimitsRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getAllSellerLimitsResponse">
+		<wsdl:part element="tns:getAllSellerLimitsResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCurrentSellerLimitsRequest">
+		<wsdl:part element="tns:getSellerLimitsRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCurrentSellerLimitsResponse">
+		<wsdl:part element="tns:getCurrentSellerLimitsResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="setSellerLimitsRequest">
+		<wsdl:part element="tns:setSellerLimitsRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setSellerLimitsResponse">
+		<wsdl:part element="tns:setSellerLimitsResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="SellerLimitsServicePort">
+		<wsdl:operation name="getVersion">
+			<wsdl:output message="tns:getVersionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getAllSellerLimits">
+			<wsdl:input message="tns:getAllSellerLimitsRequest"/>
+			<wsdl:output message="tns:getAllSellerLimitsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getCurrentSellerLimits">
+			<wsdl:input message="tns:getCurrentSellerLimitsRequest"/>
+			<wsdl:output message="tns:getCurrentSellerLimitsResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="setSellerLimits">
+			<wsdl:input message="tns:setSellerLimitsRequest"/>
+			<wsdl:output message="tns:setSellerLimitsResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SellerLimitsServiceHttpBinding" type="tns:SellerLimitsServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getVersion">
+			<http:operation location="SellerLimitsService/getVersion"/>
+			<wsdl:output>
+				<mime:content part="getVersion" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="SellerLimitsServiceSOAPBinding" type="tns:SellerLimitsServicePort">
+
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getVersion">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getVersion"/>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAllSellerLimits">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getAllSellerLimit"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCurrentSellerLimits">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/getSellerCurrentLimit"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setSellerLimits">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/setAllSellerLimits"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SellerLimitsService">
+		<wsdl:port binding="tns:SellerLimitsServiceHttpBinding" name="SellerLimitsServiceHttp">
+			<http:address location="http://svcs.ebay.com/SellerLimitsService"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:SellerLimitsServiceSOAPBinding" name="SellerLimitsServiceSOAP">
+			<soap12:address location="http://svcs.ebay.com/SellerLimitsService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,1549 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="AssertionsService" targetNamespace="http://www.ebay.com/marketplace/services">
+
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error is a severe
+								error (causing the request to fail) or
+								an informational error (a warning) that
+								should be communicated to the user.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning
+						occured as part of service call. Any run time
+						error will not be reported here, but will be
+						reported aspart of soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain upon which the error
+								occurred. &lt;dl&gt; &lt;lh&gt;Domains
+								include:&lt;/lh&gt; &lt;dt&gt;
+								Marketplace &lt;/dt&gt; &lt;dd&gt; A
+								business or validation error occurred
+								for the Merchandising Service.
+								&lt;/dd&gt; &lt;dt&gt; SOA &lt;/dt&gt;
+								&lt;dd&gt; An exception occurred in the
+								Service Oriented Architecture (SOA)
+								framework. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the
+								request to fail (Error) or not
+								(Warning). &lt;br&gt;&lt;br&gt; If the
+								request fails and the source of the
+								problem is within the application (such
+								as a missing required element), please
+								change the application before you retry
+								the request. If the problem is due to
+								end-user input data, please alert the
+								end-user to the problem and provide the
+								means for them to correct the data. Once
+								the problem in the application or data
+								is resolved, you can attempt to re- send
+								the request to eBay.
+								&lt;br&gt;&lt;br&gt; If the source of
+								the problem is on eBay's side, you can
+								retry the request as-is a reasonable
+								number of times (eBay recommends twice).
+								If the error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+								&lt;br&gt;&lt;br&gt; When a warning
+								occurs, the error is returned in
+								addition to the business data. In this
+								case, you do not need to retry the
+								request (as the original request was
+								successful). However, depending on the
+								cause or nature of the warning, you
+								might need to contact either the end
+								user or eBay to effect a long term
+								solution to the problem to prevent it
+								from reoccurring in the future.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors:
+								request errors, application errors, and
+								system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition
+								that resulted in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain upon which the
+								error occurred. &lt;dl&gt;
+								&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+								&lt;dt&gt; Merchandising &lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								Merchandising service. &lt;/dd&gt;
+								&lt;dt&gt; MarketplaceCommon &lt;/dt&gt;
+								&lt;dd&gt; The error is common to all
+								Marketplace services. &lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some warning and error messages return
+								one or more variables that contain
+								contextual information about the error.
+								This is often the field or value that
+								triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the
+									list of parameter types returned
+									within the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:element name="applyAssertionsRequest" type="tns:ApplyAssertionsRequest">
+			</xs:element>
+			<xs:element name="applyAssertionsResponse" type="tns:ApplyAssertionsResponse">
+			</xs:element>
+
+			<xs:element name="applyAssertionGroupsRequest" type="tns:ApplyAssertionGroupsRequest">
+			</xs:element>
+			<xs:element name="applyAssertionGroupsResponse" type="tns:ApplyAssertionGroupsResponse">
+			</xs:element>
+
+
+			<xs:complexType name="ApplyAssertionsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="assertions" type="tns:Assertion">
+								<xs:annotation>
+									<xs:documentation>
+										a content validation rule that
+										results in a success, a failure,
+										or a warning. The content an
+										assertion is applied to can
+										consist of a set of documents of
+										various formats. Assertions are
+										expressed as scripts written in
+										some programming language, ex:
+										XQuery or Perl.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="artifacts" type="tns:AssertableArtifact">
+								<xs:annotation>
+									<xs:documentation>
+										content refers to a collection
+										of artifacts that is subject to
+										validation against assertions.
+										Content is typically formed by
+										artifacts of a given RM asset,
+										although it can also be formed
+										by external artifacts that are
+										not stored in RM.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+			<xs:complexType name="ApplyAssertionGroupsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="assertionGroups" type="tns:AssertionGroupAsset">
+								<xs:annotation>
+									<xs:documentation>
+										an unordered collection of
+										assertions. When an assertion
+										group is applied to content, all
+										assertions in that group are
+										evaluated against that content.
+										An assertion group fails if any
+										single assertion in the group
+										fails. For instance, one group
+										can hold a collection of
+										assertions related to naming
+										conventions, while another group
+										may consist of assertions
+										focusing on data type modeling
+										rules.
+									</xs:documentation>
+								</xs:annotation>
+
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="artifacts" type="tns:AssertableArtifact">
+								<xs:annotation>
+									<xs:documentation>
+										content refers to a collection
+										of artifacts that is subject to
+										validation against assertions.
+										Content is typically formed by
+										artifacts of a given RM asset,
+										although it can also be formed
+										by external artifacts that are
+										not stored in RM.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="ArtifactAsset">
+				<xs:annotation>
+					<xs:documentation>
+						Details of the Asset which is stored in a
+						Repository Manager instance.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="libraryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Library name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The Asset for an Artifact can be any
+								Asset. But whats important is the kind
+								of Artifact which the fwk should
+								validate and that is defined by the
+								element , Artifact Category
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="artifactCategory" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The category of the Artifact on which
+								the validation has to be performed. For
+								Service Asset Types the WSDL doc is
+								under the cateforey named "WSDL"
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AssertionGroupAsset">
+				<xs:annotation>
+					<xs:documentation>
+						Details of the Asset which is stored in a
+						Repository Manager instance.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="libraryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Library name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetType" type="tns:AssertionGroupAssetTypes">
+						<xs:annotation>
+							<xs:documentation>
+								The following Asset Types are possible
+								for AssertionGroups
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="AssertionGroupAssetTypes">
+				<xs:annotation>
+					<xs:documentation>
+						Asset type of AssertionGroups
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AssertionGroup"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="AssertionAsset">
+				<xs:annotation>
+					<xs:documentation>
+						Details of the Asset which is stored in a
+						Repository Manager instance.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="libraryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Library name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetType" type="tns:AssertionAssetTypes">
+						<xs:annotation>
+							<xs:documentation>
+								The following Asset Types are possible
+								for contents of AssertionsFramework.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssertionModuleAsset">
+				<xs:annotation>
+					<xs:documentation>
+						Details of the Asset which is stored in a
+						Repository Manager instance.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="libraryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Library name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetType" type="tns:AssertionModuleAssetTypes">
+						<xs:annotation>
+							<xs:documentation>
+								The following Asset Types are possible
+								for contents of AssertionsFramework.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssetReference">
+				<xs:annotation>
+					<xs:documentation>
+						Details of the Asset which is stored in a
+						Repository Manager instance.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="libraryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Library name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetType" type="tns:AssertionAssetTypes">
+						<xs:annotation>
+							<xs:documentation>
+								The following Asset Types are possible
+								for contents of AssertionsFramework.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="AssertionAssetTypes">
+				<xs:annotation>
+					<xs:documentation>
+						The following Asset Types are possible for
+						contents of AssertionsFramework.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Assertion"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:simpleType name="AssertionModuleAssetTypes">
+				<xs:annotation>
+					<xs:documentation>
+						The following Asset Types are possible for
+						contents of AssertionsFramework.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AssertionModule"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:simpleType name="AssertionSeverity">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ERROR"/>
+					<xs:enumeration value="WARNING"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="AssetContent">
+				<xs:annotation>
+					An Artifact to be verified stored as an asset in the
+					Repository Manager.
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="contentName" type="xs:string"/>
+					<xs:element name="assetReference" type="tns:AssetReference">
+						<xs:annotation>
+							<xs:documentation>
+								Details of the Asset which is stored in
+								a Repository Manager instance.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ExternalAssertionModule">
+				<xs:annotation>
+					<xs:documentation>
+						Assertion modules are utility functions which
+						can be shared across different Assertion
+						scripts. Assertion Modules can be inside or
+						outside the Repository Manager.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="name" type="xs:string">
+					</xs:element>
+					<xs:element name="version" type="xs:token"/>
+					<xs:element name="description" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="moduleScripts" type="tns:ExternalContent">
+						<xs:annotation>
+							<xs:documentation>
+								ModuleScripts are uitility functions.
+								Content is typically formed by artifacts
+								of a given RM asset, although it can
+								also be formed by external artifacts
+								that are not stored in RM.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="assertionProcessorType" type="tns:AssertionProcessorType">
+					</xs:element>
+					<xs:element minOccurs="0" name="contentBindingName" type="tns:ContentBindingName">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:simpleType name="AssertionProcessorType">
+				<xs:annotation>
+					<xs:documentation>
+						The Processor Types supported by the Assertion
+						Framework
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="XQUERY"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="TextContent">
+				<xs:annotation>
+					<xs:documentation>
+						Data presented as a String/text. The data may
+						either be assertion scripts or documents to be
+						verified.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="content" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="URLContent">
+				<xs:annotation>
+					<xs:documentation>
+						If the content is located at an URL specify the
+						details of it.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="url" type="xs:anyURI"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="proxy" type="tns:ProxyDetails">
+						<xs:annotation>
+							<xs:documentation>
+								Proxy details to be used in case of URLs
+								which are behind a proxy.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ProxyDetails">
+				<xs:annotation>
+					<xs:documentation>
+						Proxy details to be used in case of URLs which
+						are behind a proxy.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="host" type="xs:anyURI"/>
+					<xs:element name="port" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="BinaryContent">
+				<xs:annotation>
+					<xs:documentation>
+						Representation of content in Binary Format.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="content" type="xs:hexBinary"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="ContentBindingName">
+				<xs:annotation>
+					<xs:documentation>
+						This defines the name of the binding variable
+						which would be used in the AssertionScript to
+						represent the content to be processed by the
+						Assertion script.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="FILE_PATH"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ArtifactContentTypes">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="WSDL"/>
+					<xs:enumeration value="XSD"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:complexType name="ExternalArtifact">
+				<xs:annotation>
+					<xs:documentation>
+						Any external content, it can be an Assertion,
+						AssertionModule or the Artifact to be validated
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="contentType" type="tns:ArtifactContentTypes">
+					</xs:element>
+					<xs:choice>
+						<xs:annotation>
+							<xs:documentation>
+								Specify the details of the content to be
+								validated.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:element name="binaryContent" type="tns:BinaryContent">
+							<xs:annotation>
+								<xs:documentation>
+									Representation of content in Binary
+									Format.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="textContent" type="tns:TextContent">
+							<xs:annotation>
+								<xs:documentation>
+									Data presented as a String. The data
+									may either be assertion scripts or
+									documents to be verified.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="urlContent" type="tns:URLContent">
+							<xs:annotation>
+								<xs:documentation>
+									If the content is located at an URL
+									specify the details of it.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ExternalArtifactReference">
+				<xs:annotation>
+					<xs:documentation>
+						Provides the high level details of the external
+						artifact which was processed.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="contentName" type="xs:string">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ExternalContent">
+				<xs:annotation>
+					<xs:documentation>
+						Any external content, it can be an Assertion,
+						AssertionModule or the Artifact to be validated
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:choice>
+						<xs:annotation>
+							<xs:documentation>
+								Specify the details of the content to be
+								validated.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:element name="binaryContent" type="tns:BinaryContent">
+							<xs:annotation>
+								<xs:documentation>
+									Representation of content in Binary
+									Format.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="stringContent" type="tns:TextContent">
+							<xs:annotation>
+								<xs:documentation>
+									Data presented as a String. The data
+									may either be assertion scripts or
+									documents to be verified.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="urlContent" type="tns:URLContent">
+							<xs:annotation>
+								<xs:documentation>
+									If the content is located at an URL
+									specify the details of it.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ContentType">
+				<xs:annotation>
+					<xs:documentation>
+						The content types which are supported by this
+						Service for validation againt Assertions.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="wsdl">
+						<xs:annotation>
+							<xs:documentation>
+								WSDL documents.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="xml">
+						<xs:annotation>
+							<xs:documentation>
+								XML documents other than WSDLs should
+								use this value as the content type.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="AssertableArtifact">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="artifactAssetReference" type="tns:ArtifactAsset">
+							<xs:annotation>
+								<xs:documentation>
+									The Artifact which is to be
+									validated presented as details of
+									the Asset which is stored in
+									Repository Manager instance.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="artifactExternal" type="tns:ExternalArtifact">
+							<xs:annotation>
+								<xs:documentation>
+									The artifact which is to be
+									validated presented as an externally
+									stored object. It can either be in
+									binary, string or url format.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssertableArtifactReference">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="artifactAsset" type="tns:ArtifactAsset">
+							<xs:annotation>
+								<xs:documentation>
+									The Artifact which is to be
+									validated presented as details of
+									the Asset which is stored in
+									Repository Manager instance.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="artifactExternal" type="tns:ExternalArtifactReference">
+							<xs:annotation>
+								<xs:documentation>
+									The artifact which is to be
+									validated presented as an externally
+									stored object. It can either be in
+									binary, string or url format.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="Assertion">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="assertionAsset" type="tns:AssertionAsset">
+							<xs:annotation>
+								<xs:documentation>
+									an AssertionModule which is present
+									inside the Repository Manager as an
+									asset.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="externalAssertion" type="tns:ExternalAssertion">
+							<xs:annotation>
+								<xs:documentation>
+									An assertion whichis outside the
+									Repository Manager.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ExternalAssertion">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="name" type="xs:string">
+					</xs:element>
+					<xs:element name="version" type="xs:token"/>
+					<xs:element name="description" type="xs:string"/>
+					<xs:element minOccurs="1" name="errorSeverity" type="tns:AssertionSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								The error severity to be thrown in case
+								the input content fails this Assertion.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="assertionScript" type="tns:ExternalContent">
+						<xs:annotation>
+							<xs:documentation>
+								The object storing the actual script
+								content of the assertion.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="assertionProcessorType" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="1" name="contentBindingName" type="tns:ContentBindingName">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="assertionModules" type="tns:AssertionModule">
+						<xs:annotation>
+							<xs:documentation>
+								An Asset which represents an assertion
+								module. An Assertion Module is A
+								reusable supporting artifact (function)
+								that is required by an assertion. It can
+								be a piece of shared script or a library
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssertionModule">
+				<xs:annotation>
+					<xs:documentation>
+						An Asset which represents an assertion module.
+						An Assertion Module is A reusable supporting
+						artifact (function) that is required by an
+						assertion. It can be a piece of shared script or
+						a library
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="assertionModuleExternal" type="tns:ExternalAssertionModule">
+							<xs:annotation>
+								<xs:documentation>
+									an AssertionModule which is present
+									outside the Repository manager. This
+									can be presented as Binary, String
+									or as a Url.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="moduleAssetReference" type="tns:AssertionModuleAsset">
+							<xs:annotation>
+								<xs:documentation>
+									an AssertionModule which is present
+									inside the Repository Manager as an
+									asset.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ApplyAssertionsResponse">
+				<xs:annotation>
+					<xs:documentation>
+						The response type of the operations
+						ApplyAssertions.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="assertionReport" type="tns:AssertionReport">
+								<xs:annotation>
+									<xs:documentation>
+										The report containing the
+										details of the result of
+										applying the Assertions on the
+										input content(s)
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="ApplyAssertionGroupsResponse">
+				<xs:annotation>
+					<xs:documentation>
+						The response type of the operations
+						ApplyAssertionGroups.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="assertionGroupReport" type="tns:AssertionGroupReport">
+								<xs:annotation>
+									<xs:documentation>
+										The report containing the
+										details of the result of
+										applying the Assertions on the
+										input content(s)
+									</xs:documentation>
+								</xs:annotation>
+
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssertionGroupReport">
+				<xs:annotation>
+					<xs:documentation>
+						Reports per AssertionGroup
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="assertionGroup" type="tns:AssertionGroup">
+					</xs:element>
+					<xs:element name="groupLevelSeverity" type="tns:AssertionGroupSeverity">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="artifactReport" type="tns:ArtifactReport">
+						<xs:annotation>
+							<xs:documentation>
+								The report containing the details of the
+								result of applying the Assertions on the
+								input content(s) at an Artifact level.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:simpleType name="AssertionGroupSeverity">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ERROR"/>
+					<xs:enumeration value="WARNING"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="AssertionReport">
+				<xs:annotation>
+					<xs:documentation>
+						The format of the Report for the operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="artifactReport" type="tns:ArtifactReport">
+						<xs:annotation>
+							<xs:documentation>
+								The validation report of a single
+								Artifact.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ArtifactReport">
+				<xs:annotation>
+					<xs:documentation>
+						Report per Artifact.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="artifact" type="tns:AssertableArtifactReference">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="assertionResults" type="tns:AssertionResult">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssertionResult">
+				<xs:sequence>
+					<xs:element name="assertionName" type="xs:string"/>
+					<xs:element name="assertionVersion" type="xs:token">
+					</xs:element>
+					<xs:element name="assertionDescription" type="xs:string">
+					</xs:element>
+					<xs:element name="assertionSeverity" type="tns:AssertionSeverity">
+					</xs:element>
+					<xs:element name="validationResult" type="tns:ValidationResult">
+						<xs:annotation>
+							<xs:documentation>
+								The result of indvidual Assertion
+								operations carried out.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="resultItems" type="tns:AssertionResultItem">
+						<xs:annotation>
+							<xs:documentation>
+								Results of assertions conducted on a
+								Artifact
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:simpleType name="ValidationResult">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="PASSED"/>
+					<xs:enumeration value="FAILED"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+
+			<xs:complexType name="AssertionResultItem">
+				<xs:sequence>
+					<xs:element name="contentName" type="xs:string"/>
+					<xs:element name="messageText" type="xs:string"/>
+					<xs:element name="lineNumber" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The line number of the content Artifact
+								where the Assertion has failed
+								validation.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssertionGroup">
+				<xs:annotation>
+					<xs:documentation>
+						an unordered collection of assertions. When an
+						assertion group is applied to content, all
+						assertions in that group are evaluated against
+						that content. An assertion group fails if any
+						single assertion in the group fails. For
+						instance, one group can hold a collection of
+						assertions related to naming conventions, while
+						another group may consist of assertions focusing
+						on data type modeling rules
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the AssertionGroup
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the AssertionGroup Asset
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="description" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="groupMembers" type="tns:AssertionGroupMember">
+						<xs:annotation>
+							<xs:documentation>
+								Members of Assertion Group, like
+								Assertions and other Assertion Groups.
+							</xs:documentation>
+						</xs:annotation>
+
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AssertionGroupMember">
+				<xs:sequence>
+					<xs:element name="assertionGroupAssetReference" type="tns:AssetReference">
+						<xs:annotation>
+							<xs:documentation>
+								Members of an Assertion Group. These
+								many be other AssertionGroups or
+								Assertions.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="applyAssertionsRequest">
+		<wsdl:part element="tns:applyAssertionsRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="applyAssertionsResponse">
+		<wsdl:part element="tns:applyAssertionsResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="applyAssertionGroupsRequest">
+		<wsdl:part element="tns:applyAssertionGroupsRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="applyAssertionGroupsResponse">
+		<wsdl:part element="tns:applyAssertionGroupsResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:portType name="AssertionsServicePort">
+		<wsdl:operation name="applyAssertions">
+			<wsdl:input message="tns:applyAssertionsRequest" name="applyAssertionsRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:applyAssertionsResponse" name="applyAssertionsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="applyAssertionGroups">
+			<wsdl:input message="tns:applyAssertionGroupsRequest" name="applyAssertionGroupsRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:applyAssertionGroupsResponse" name="applyAssertionGroupsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+
+
+	<wsdl:binding name="AssertionsServiceHttpBinding" type="tns:AssertionsServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="applyAssertions">
+			<http:operation location="/applyAssertions"/>
+			<wsdl:input>
+				<mime:content part="applyAssertions" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="applyAssertionsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="applyAssertionGroups">
+			<http:operation location="/applyAssertionGroups"/>
+			<wsdl:input>
+				<mime:content part="applyAssertionGroups" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="applyAssertionGroupsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="AssertionsServiceSOAPBinding" type="tns:AssertionsServicePort">
+
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="applyAssertions">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/applyAssertions"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="applyAssertionGroups">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/applyAssertionGroups"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AssertionsService">
+		<wsdl:port binding="tns:AssertionsServiceHttpBinding" name="AssertionsServiceHttp">
+			<http:address location="http://webservices.ebay.com/AssertionsService"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:AssertionsServiceSOAPBinding" name="AssertionsServiceSOAP">
+			<soap12:address location="http://webservices.ebay.com/AssertionsService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

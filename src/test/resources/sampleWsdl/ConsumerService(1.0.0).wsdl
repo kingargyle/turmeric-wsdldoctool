@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/security/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="ConsumerService" targetNamespace="http://www.ebay.com/marketplace/security/v1/services">
+	<types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/security/v1/services">
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType abstract="true" name="BaseRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="extension" type="tns:ExtensionType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="extension" type="tns:ExtensionType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ExtensionType">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="id" type="xs:positiveInteger"/>
+					<xs:element name="version" type="xs:string"/>
+					<xs:element name="contentType" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<!-- 
+					<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+					processContents="lax" />
+					</xs:sequence>
+				-->
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="authenticateRequest" type="tns:AuthenticateRequest"/>
+			<xs:complexType name="AuthenticateRequest">
+				<xs:annotation>
+					<xs:documentation>
+						consumerId is unique identification of the
+						consumer and secret is also called certificate.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							The caller sends the consumerId and secret
+							and the service will verify if the
+							consumerId and secret are valid. Also it
+							will verify the consumerId and secret match
+							or not.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element name="consumerId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The consumerId the callers wants
+										to authenticate.
+									</xs:documentation>
+									<xs:appinfo>
+									    <MaxLength>80</MaxLength>
+										<CallInfo>
+											<CallName>authenticate</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="secret" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The secret of the consumerId the
+										callers wants to authenticate
+										th.
+									</xs:documentation>
+									<xs:appinfo>
+										<MaxLength>64</MaxLength>
+										<CallInfo>
+											<CallName>authenticate</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="authenticateResponse" type="tns:AuthenticateResponse"/>
+			<xs:complexType name="AuthenticateResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is the response to indicate if the
+						authentication succeeds or fails
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="consumerKey" type="xs:long">
+								<xs:annotation>
+									<xs:documentation>
+										The internal digit or oracle id
+										for the consumerId passed in the
+										request. It is returned only if
+										both the consumerId and secret
+										passed in the request are valid.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<AllCalls/>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="createConsumerRequest" type="tns:CreateConsumerRequest"/>
+			<xs:complexType name="CreateConsumerRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Consumer info includes consumer name,
+						description, consumerId, and type info. The
+						owner info includes the names, contact phone,
+						email and the escalation info.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Create a consumer and the corresponding
+							developer/owner info in ebay_applications
+							and ebay_developers table. This is intended
+							for internal usage. The consumer is
+							identified by the unique consumerId and the
+							developer/owner is identified by the unique
+							devId.
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element name="consumer" type="tns:Consumer">
+								<xs:annotation>
+									<xs:documentation>
+										The consumer object which has both consumer and
+										owner info
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>createConsumer</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="createConsumerResponse" type="tns:CreateConsumerResponse"/>
+			<xs:complexType name="CreateConsumerResponse">
+				<xs:annotation>
+					<xs:documentation>
+						The credentials will be returned in the response
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="consumerCredential" type="tns:ConsumerCredential">
+								<xs:annotation>
+									<xs:documentation>
+										The generated secrets and IAF
+										tokens will be returned
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<AllCalls/>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>									
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="updateConsumerRequest" type="tns:UpdateConsumerRequest"/>
+			<xs:complexType name="UpdateConsumerRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Consumer info includes consumer name,
+						description, consumerId, and type info. The
+						owner info includes the names, contact phone,
+						email and the escalation info.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Update a consumer and the corresponding
+							developer/owner info in ebay_applications
+							and ebay_developers table. This is intended
+							for internal usage. The consumer is
+							identified by the unique consumerId and the
+							developer/owner is identified by the unique
+							devId.
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element name="consumer" type="tns:Consumer">
+								<xs:annotation>
+									<xs:documentation>
+										The consumer object which has both consumer and
+										owner info
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>updateConsumer</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="updateConsumerResponse" type="tns:UpdateConsumerResponse"/>
+			<xs:complexType name="UpdateConsumerResponse">
+				<xs:annotation>
+					<xs:documentation>
+						The use case is to update the consumer and
+						developer related metadata
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="getConsumerCredentialsRequest" type="tns:GetConsumerCredentialsRequest"/>
+			<xs:complexType name="GetConsumerCredentialsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Retrieve the secret/certificate associated with
+						the consumerId. It can also request the IAF
+						token if the optional request parameter
+						includeToken is set true. The intended use case
+						is for the caller to retrieve the secret and
+						token if those are lost by the caller somehow.
+						Also the caller can set another additional
+						parameter to reset the secret. The default is
+						only secret is returned. There is no token
+						returned and no secret reset by default.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Retrieve the secret/certificate associated
+							with the consumerId. It can also request the
+							IAF token.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element name="consumerId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										consumerId the caller wants to
+										get the credentials back for.
+									</xs:documentation>
+									<xs:appinfo>
+										<MaxLength>80</MaxLength>
+										<CallInfo>
+											<CallName>getConsumerCredentials</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="includeToken" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										Indicate whether the caller
+										wants to get the token in the
+										response. It is false by default
+										if it is not set in the request.
+									</xs:documentation>
+									<xs:appinfo>
+										<Default>false</Default>
+										<CallInfo>
+											<CallName>getConsumerCredentials</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="getNewSecret" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										Indicate whether the caller
+										wants to replace the current
+										secret and generate a new one.
+										It is false by default if it is
+										not set in the request.
+									</xs:documentation>
+									<xs:appinfo>
+										<Default>false</Default>
+										<CallInfo>
+											<CallName>getConsumerCredentials</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="getConsumerCredentialsResponse" type="tns:GetConsumerCredentialsResponse"/>
+			<xs:complexType name="GetConsumerCredentialsResponse">
+				<xs:annotation>
+					<xs:documentation>
+						The secret and IAF token for the specific
+						consumerId will be returned.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="consumerCredential" type="tns:ConsumerCredential">
+								<xs:annotation>
+									<xs:documentation>
+										list of consumerCredentials
+										including secret and IAF Token.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<AllCalls/>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="Consumer">
+				<xs:annotation>
+					<xs:documentation>
+						This defines the consumer object which has both consumer and its owner info.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>createConsumer,updateConsumer</CallName>
+							<RequiredInput>Yes</RequiredInput>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="consumerId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is a UUID generated in AssetRepository. It should have two parts.
+								The first part is a namespace and the second part is a UUID string.
+								One example is:ebay-marketplace-consumerid:c16938b1-c86e-4cb8-8487-22f765ad634e
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>80</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="consumerName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is the consumer name.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>150</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="consumerDescription" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is the consumer description.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>500</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="consumerType" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								We have two values for now. 0 means
+								external consumer and 1 means internal
+								consumer. If no value is passed in the
+								request, the default will be 0. Please specify 1 if 
+								it is internal consumer.
+							</xs:documentation>
+							<xs:appinfo>
+								<Min>0</Min>
+								<Max>1</Max>
+								<Default>0</Default>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="status" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								The status of the consumer. 0 means
+								active and 1 means inactive. The default
+								is 0 if it is not set in the request
+							</xs:documentation>
+							<xs:appinfo>
+								<Min>0</Min>
+								<Max>1</Max>
+								<Default>0</Default>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="developer" type="tns:Developer">
+						<xs:annotation>
+							<xs:documentation>
+								This holds the owner, contact and
+								escalation info of a consumer.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="Developer">
+				<xs:annotation>
+					<xs:documentation>
+						This defines the Developer object which has consumer owner info.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>createConsumer,updateConsumer</CallName>
+							<RequiredInput>Yes</RequiredInput>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>			
+				<xs:sequence>
+					<xs:element name="developerId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is a UUID generated in
+								AssetRepository. It should have two parts.
+								The first part is a namespace and the second part is a UUID string.
+								One example is: ebay-marketplace-devid:7f552131-e2bf-4dce-9070-af2644bc5fa5
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>80</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="company" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The company name of the consumer owner.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>160</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="address" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The address of the consumer owner.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>80</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="city" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The city of the consumer owner.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>80</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="state" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The state of the consumer owner.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>80</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="zip" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The zip code of the consumer owner.
+							<xs:appinfo>
+								<MaxLength>12</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="countryId" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								The ebay countryID of the consumer
+								owner. Please check ebay countryEnum to see all possible values. 
+								The default should be 1 (US) if no value is passed in the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<Min>0</Min>
+								<Max>1000</Max>
+								<Default>1</Default>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="firstContact" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The name of the consumer owner. 
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>80</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="firstEmail" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The email address of the consumer owner.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>127</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="firstPhone" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The phone number of the consumer owner.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>32</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="firstFax" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The fax number of the consumer owner.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>32</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="secondContact" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The name of the escalation person. 
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>80</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="secondEmail" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The email address of the escalation person. 
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>127</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="secondPhone" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The phone number of the escalation person.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>32</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="secondFax" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The fax number of the escalation person.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>32</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="emergencyContact" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The phone number for emergency contact.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>32</MaxLength>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="status" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								The status of this developer or owner. 0
+								means active and 1 means inactive. The
+								default is 0 if it is set in the request
+							</xs:documentation>
+							<xs:appinfo>
+								<Min>0</Min>
+								<Max>1</Max>
+								<Default>0</Default>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="licenseType" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								The license type of the owner or
+								developer. 0 means commercial license
+								and 1 means non-commercial license type.
+								The default is 0.
+							</xs:documentation>
+							<xs:appinfo>
+								<Min>0</Min>
+								<Max>1</Max>
+								<Default>0</Default>
+								<CallInfo>
+									<CallName>createConsumer</CallName>
+									<CallName>updateConsumer</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ConsumerCredential">
+				<xs:annotation>
+					<xs:documentation>
+						This defines the Credential object which could be secret or IAF token.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+    						<CallName>createConsumer</CallName>
+   							<CallName>getConsumerCredentials</CallName>
+	    					<Returned>Conditionally</Returned>
+    					</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			
+				<xs:sequence>
+					<xs:element name="credentialType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								This is the credential type. We have two
+								values for now. 1. Secret, this is a
+								secret 2. IAFToken, this is a IAF token.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+    								<CallName>createConsumer</CallName>
+   									<CallName>getConsumerCredentials</CallName>
+	    							<Returned>Conditionally</Returned>
+    							</CallInfo>
+							</xs:appinfo>					
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="credentialValue" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is the actual value of the
+								credential.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+    								<CallName>createConsumer</CallName>
+   									<CallName>getConsumerCredentials</CallName>
+	    							<Returned>Conditionally</Returned>
+    							</CallInfo>
+							</xs:appinfo>					
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:element name="getVersionRequest" nillable="true" type="tns:GetVersionRequest"/>
+			<xs:complexType name="GetVersionRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest"/>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+			<xs:complexType name="GetVersionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+		</xs:schema>
+	</types>
+	<message name="authenticateResponse">
+		<part element="tns:authenticateResponse" name="params"/>
+	</message>
+	<message name="getConsumerCredentialsResponse">
+		<part element="tns:getConsumerCredentialsResponse" name="params">
+		</part>
+	</message>
+	<message name="updateConsumerResponse">
+		<part element="tns:updateConsumerResponse" name="params"/>
+	</message>
+	<message name="updateConsumerRequest">
+		<part element="tns:updateConsumerRequest" name="params"/>
+	</message>
+	<message name="createConsumerResponse">
+		<part element="tns:createConsumerResponse" name="params"/>
+	</message>
+	<message name="createConsumerRequest">
+		<part element="tns:createConsumerRequest" name="params"/>
+	</message>
+	<message name="getConsumerCredentialsRequest">
+		<part element="tns:getConsumerCredentialsRequest" name="params">
+		</part>
+	</message>
+	<message name="authenticateRequest">
+		<part element="tns:authenticateRequest" name="params"/>
+	</message>
+	<message name="getVersionRequest">
+		<part element="tns:getVersionRequest" name="params"/>
+	</message>
+	<message name="getVersionResponse">
+		<part element="tns:getVersionResponse" name="params"/>
+	</message>
+	
+	<portType name="ConsumerServicePort">
+		<operation name="authenticate">
+			<input message="tns:authenticateRequest"/>
+			<output message="tns:authenticateResponse"/>
+		</operation>
+
+		<operation name="createConsumer">
+			<input message="tns:createConsumerRequest"/>
+			<output message="tns:createConsumerResponse"/>
+		</operation>
+		<operation name="updateConsumer">
+			<input message="tns:updateConsumerRequest"/>
+			<output message="tns:updateConsumerResponse"/>
+		</operation>
+		<operation name="getConsumerCredentials">
+			<input message="tns:getConsumerCredentialsRequest"/>
+			<output message="tns:getConsumerCredentialsResponse">
+			</output>
+		</operation>
+		<operation name="getVersion">
+			<input message="tns:getVersionRequest"/>
+			<output message="tns:getVersionResponse">
+			</output>
+		</operation>		
+	</portType>
+	<binding name="ConsumerServiceHttpBinding" type="tns:ConsumerServicePort">
+		<http:binding verb="POST"/>
+		<operation name="authenticate">
+			<http:operation location="/authenticate"/>
+			<input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="params" type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="createConsumer">
+			<http:operation location="/createConsumer"/>
+			<input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="params" type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="updateConsumer">
+			<http:operation location="/updateConsumer"/>
+			<input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="params" type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="getConsumerCredentials">
+			<http:operation location="/getConsumerCredentials"/>
+			<input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="params" type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="getVersion">
+			<http:operation location="/getVersion"/>
+			<input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</input>
+			<output>
+				<mime:content part="params" type="text/xml"/>
+			</output>
+		</operation>
+	</binding>
+	<binding name="ConsumerServiceSOAPBinding" type="tns:ConsumerServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="authenticate">
+			<soap12:operation soapAction="http://www.ebay.com/marketplace/security/v1/services/authenticate"/>
+			<input>
+				<soap12:body use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="createConsumer">
+			<soap12:operation soapAction="http://www.ebay.com/marketplace/security/v1/services/createConsumer"/>
+			<input>
+				<soap12:body use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="updateConsumer">
+			<soap12:operation soapAction="http://www.ebay.com/marketplace/security/v1/services/updateConsumer"/>
+			<input>
+				<soap12:body use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getConsumerCredentials">
+			<soap12:operation soapAction="http://www.ebay.com/marketplace/security/v1/services/getConsumerCredentials"/>
+			<input>
+				<soap12:body use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getVersion">
+			<soap12:operation soapAction="http://www.ebay.com/marketplace/security/v1/services/getVersion"/>
+			<input>
+				<soap12:body use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="ConsumerService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+		</wsdl:documentation>
+		<port binding="tns:ConsumerServiceHttpBinding" name="ConsumerServiceHttpPort">
+			<http:address location="https://svcs.ebay.com/services/security/v1/ConsumerService"/>
+		</port>
+		<port binding="tns:ConsumerServiceSOAPBinding" name="ConsumerServiceSOAPPort">
+			<soap12:address location="https://svcs.ebay.com/services/security/v1/ConsumerService"/>
+		</port>
+	</service>
+</definitions>

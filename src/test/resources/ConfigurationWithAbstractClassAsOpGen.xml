@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<outputgenerators>
+		<outputgenerator>
+			<class>java.util.Calendar
+			</class>
+			<mode>normal</mode>
+		</outputgenerator>
+	</outputgenerators>	
+</config>

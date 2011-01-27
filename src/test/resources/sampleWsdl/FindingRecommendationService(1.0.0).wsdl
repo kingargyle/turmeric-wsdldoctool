@@ -1,0 +1,1381 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/search/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="FindingRecommendationService" targetNamespace="http://www.ebay.com/marketplace/search/v1/services">
+
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/search/v1/services">
+
+            <xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+
+			<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation/>
+
+					<xs:appinfo/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="version" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+		
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+		
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+		
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning
+						occured as part of service call. Any run time
+						error will not be reported here, but will be
+						reported aspart of soap fault.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+		    		<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData">
+		    		</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+					</xs:element>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional">
+								<xs:annotation>
+									<xs:documentation>
+										The name of the parameter in the
+										list of parameter types returned
+										within the error type.
+									</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+			        <xs:enumeration value="Error"/>
+			        <xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:complexType name="FindingRecommendationRequest">
+                <xs:annotation>
+                	<xs:documentation>
+                		This contains the list of operations requested
+                		from the bulk getRecommendation operation
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+
+
+
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="subRequest" type="tns:RecommendationRequestOperation">
+					</xs:element>
+
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="FindingRecommendationResponse">
+                <xs:annotation>
+                	<xs:documentation>
+                		This is a container for all the response from
+                		the GetRecommendation operation
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="recommendationResponse" type="tns:RecommendationResponse">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="RecommendationResponse">
+                <xs:annotation>
+                	<xs:documentation>
+                		This represents a single recommendation
+                		response. Caller must match the invocation ID to
+                		associate this to the corresponding request.
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+
+					<xs:element maxOccurs="1" minOccurs="1" name="invocationId" type="xs:string">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		The invocation ID ( in the request) that
+                        		corresponds to this response. Caller
+                        		must match the invocation ID to
+                        		associate this to the corresponding
+                        		request.
+                        	</xs:documentation>
+                        </xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="singleResponse" type="tns:SingleRecommendationResponse">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="SingleRecommendationResponse">
+                <xs:annotation>
+                	<xs:documentation>
+                		This represents a composite response object and
+                		one of the response will be set.
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+
+
+
+
+					<xs:element maxOccurs="1" minOccurs="0" name="relatedSearchesResponse" type="tns:AssociatedSearchesResponse">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="refinedSearchesResponse" type="tns:AssociatedSearchesResponse">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="dominantCategoryResponse" type="tns:DominantCategoryResponse">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="topBrandsResponse" type="tns:TopBrandsResponse">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="relatedNeighborhoodResponse" type="tns:RelatedNeighborhoodResponse">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="topSearchesResponse" type="tns:TopSearchesResponse">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+
+
+
+
+
+
+
+			<xs:complexType abstract="true" name="Key">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="SearchServicesTypeLibrary" namespace="http://www.ebay.com/marketplace/search/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CategoryKey">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="SearchServicesTypeLibrary" namespace="http://www.ebay.com/marketplace/search/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:Key">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="categoryId" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Valid Ebay Category ID
+                                	</xs:documentation>
+                                </xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+
+
+
+
+
+
+            <xs:complexType abstract="true" name="RecommendationRequestOperation">
+                <xs:annotation>
+                	<xs:documentation>
+                		This represents the base interface for
+                		Recommendation Request Operation.
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="invocationId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The invocation ID must by unique for
+								each sub operation requested in the
+								getRecommendation bulk operation. If
+								uniqueness is broken, the response will
+								NOT be as expected.
+							</xs:documentation>
+						</xs:annotation></xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+            </xs:complexType>
+
+
+
+            <xs:complexType name="DominantCategoryOperation">
+            	<xs:complexContent>
+            		<xs:extension base="tns:RecommendationRequestOperation">
+            			<xs:sequence>
+
+            				<xs:element maxOccurs="1" minOccurs="1" name="inputData" type="tns:DominantCategoryRequest">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="DominantCategoryRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationRequest">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="globalId" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Global ID
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="1" name="keywords" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Input Keywords
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+
+            <xs:complexType name="TopBrandsRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationRequest">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="globalId" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Global ID
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+
+            				<xs:element maxOccurs="1" minOccurs="1" name="category" type="tns:CategoryKey">
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="1" name="numberOfResults" type="xs:int">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Number of results desired in the
+                                		response
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+
+
+            <xs:complexType name="AssociatedSearchesRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationRequest">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="globalId" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Global ID
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="1" name="keywords" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Input Keywords
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="numberOfResults" type="xs:int">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		number of results desired in the
+                                		response
+                                	</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="category" type="tns:CategoryKey">
+            				</xs:element>
+
+            			</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            <xs:element name="getRecommendationRequest" type="tns:FindingRecommendationRequest">
+            </xs:element>
+            <xs:element name="getRecommendationResponse" type="tns:FindingRecommendationResponse">
+            </xs:element>
+
+
+
+
+
+
+
+            <xs:element name="getRefinedSearchesRequest" type="tns:AssociatedSearchesRequest">
+
+            </xs:element>
+            <xs:element name="getRefinedSearchesResponse" type="tns:AssociatedSearchesResponse">
+
+            </xs:element>
+
+            <xs:complexType name="RelatedSearchesOperation">
+            	<xs:complexContent>
+            		<xs:extension base="tns:RecommendationRequestOperation">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="inputData" type="tns:AssociatedSearchesRequest">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="RefinedSearchesOperation">
+            	<xs:complexContent>
+            		<xs:extension base="tns:RecommendationRequestOperation">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="inputData" type="tns:AssociatedSearchesRequest">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+
+            <xs:complexType name="AssociatedSearchesResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationResponse">
+		            	<xs:sequence>
+		            		<xs:element maxOccurs="unbounded" minOccurs="0" name="response" type="tns:AssociatedSearchesRecord">
+		            		</xs:element>
+		            	</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="AssociatedSearchesRecord">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="originalKeywords" type="xs:string">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		original (Input) keywords
+                        	</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="0" name="originalCategory" type="tns:CategoryKey">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		original (Input) category
+                        	</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="0" name="recommendedKeywords" type="xs:string">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		recommended keywords
+                        	</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="0" name="recommendedCategory" type="tns:CategoryKey">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		recommended category
+                        	</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="1" name="qualityScore" type="xs:int">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		quality score
+                        	</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            </xs:complexType>
+            <xs:element name="getDominantCategoryRequest" type="tns:DominantCategoryRequest">
+
+            </xs:element>
+            <xs:element name="getDominantCategoryResponse" type="tns:DominantCategoryResponse">
+
+            </xs:element>
+
+            <xs:complexType name="DominantCategoryResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationResponse">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="0" name="category" type="tns:CategoryKey">
+            				</xs:element>
+            			</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            <xs:element name="getTopBrandsRequest" type="tns:TopBrandsRequest">
+
+            </xs:element>
+            <xs:element name="getTopBrandsResponse" type="tns:TopBrandsResponse">
+
+            </xs:element>
+
+            <xs:complexType name="TopBrandsResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationResponse">
+		            	<xs:sequence>
+		            		<xs:element maxOccurs="unbounded" minOccurs="0" name="response" type="tns:TopBrandsRecord">
+		            		</xs:element>
+		            	</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="TopBrandsRecord">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="brand" type="xs:string">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		brand name
+                        	</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+
+            				<xs:element maxOccurs="1" minOccurs="1" name="rank" type="xs:int">
+                        <xs:annotation>
+                        	<xs:documentation>rank</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            </xs:complexType>
+            <xs:element name="getRelatedSearchesRequest" type="tns:AssociatedSearchesRequest">
+
+            </xs:element>
+            <xs:element name="getRelatedSearchesResponse" type="tns:AssociatedSearchesResponse">
+
+            </xs:element>
+
+
+
+
+
+            <xs:complexType abstract="true" name="BaseFindingRecommendationRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseServiceRequest">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="0" name="enableDiagnostics" type="xs:boolean">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Set to true if diagnostics
+                                		response is desired
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType abstract="true" name="BaseFindingRecommendationResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseServiceResponse">
+            			<xs:sequence>
+            				<xs:element maxOccurs="unbounded" minOccurs="0" name="diagnostics" type="tns:DiagnosticInfo">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Diagnostics associated with this
+                                		response. This will be available
+                                		only when diagnostics is
+                                		requested. For bulk API it will
+                                		have common diagnostic
+                                		information with all the
+                                		sub-response
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+		
+            <xs:complexType name="TopBrandsOperation">
+            	<xs:complexContent>
+            		<xs:extension base="tns:RecommendationRequestOperation">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="inputData" type="tns:TopBrandsRequest">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+		
+            <xs:complexType name="TopSearchesRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationRequest">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="globalId" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Global ID
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="1" name="numberOfResults" type="xs:int">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Number of results desired in the
+                                		response
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="0" name="category" type="tns:CategoryKey">
+            				</xs:element>
+
+            			</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="TopSearchesOperation">
+            	<xs:complexContent>
+            		<xs:extension base="tns:RecommendationRequestOperation">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="inputData" type="tns:TopSearchesRequest">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            <xs:element name="getTopSearchesRequest" type="tns:TopSearchesRequest">
+
+            </xs:element>
+            <xs:element name="getTopSearchesResponse" type="tns:TopSearchesResponse">
+
+            </xs:element>
+			<xs:complexType name="DiagnosticInfo">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="SearchServicesTypeLibrary" namespace="http://www.ebay.com/marketplace/search/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="sender" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="log" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="record" type="tns:Property">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Property">
+				<xs:annotation>
+					<xs:documentation>
+						Name value pair for defining properties associated with entities.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SearchServicesTypeLibrary" namespace="http://www.ebay.com/marketplace/search/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="name" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="xs:string"/>				
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getRelatedNeighborhoodResponse" type="tns:RelatedNeighborhoodResponse">
+			</xs:element>
+            <xs:element name="getRelatedNeighborhoodRequest" type="tns:RelatedNeighborhoodRequest"/>
+        
+            <xs:complexType name="RelatedNeighborhoodRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationRequest">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="globalId" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Global ID
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="1" name="keywords" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Input Keywords
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="1" name="numberOfResults" type="xs:int">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Number of results desired in the
+                                		response
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="RelatedNeighborhoodOperation">
+            	<xs:complexContent>
+            		<xs:extension base="tns:RecommendationRequestOperation">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="inputData" type="tns:RelatedNeighborhoodRequest">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+
+
+            <xs:complexType name="RelatedNeighborhoodResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationResponse">
+		            	<xs:sequence>
+		            		<xs:element maxOccurs="unbounded" minOccurs="0" name="response" type="tns:RelatedNeighborhoodRecord">
+		            		</xs:element>
+		            	</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="RelatedNeighborhoodRecord">
+            			<xs:sequence>
+            				<xs:element maxOccurs="1" minOccurs="1" name="neighborhood" type="xs:string">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		related neighborhood name
+                        	</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="1" name="id" type="tns:NeighborhoodKey">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		related neighborhood ID
+                        	</xs:documentation>
+                        </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            </xs:complexType>
+        
+            <xs:complexType name="TopSearchesRecord">
+            	<xs:sequence>
+            		<xs:element maxOccurs="1" minOccurs="1" name="keywords" type="xs:string">
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		keywords (searches)
+                        	</xs:documentation>
+                        </xs:annotation>
+            		</xs:element>
+            		<xs:element maxOccurs="1" minOccurs="1" name="category" type="tns:CategoryKey">
+            		</xs:element>
+            		<xs:element maxOccurs="1" minOccurs="1" name="rank" type="xs:int"/>
+            	</xs:sequence>
+            </xs:complexType>
+		
+            <xs:complexType name="TopSearchesResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseFindingRecommendationResponse">
+            			<xs:sequence>
+            				<xs:element maxOccurs="unbounded" minOccurs="0" name="response" type="tns:TopSearchesRecord">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+		<xs:complexType name="NeighborhoodKey">
+	    	<xs:annotation>
+	    		<xs:documentation/>
+		    	<xs:appinfo><typeLibrarySource library="SearchServicesTypeLibrary" namespace="http://www.ebay.com/marketplace/search/v1/services"/></xs:appinfo>
+	    	</xs:annotation>
+	    	<xs:complexContent>
+	    		<xs:extension base="tns:Key">
+	    			<xs:sequence>
+	    				<xs:element maxOccurs="1" minOccurs="1" name="id" type="xs:string"/>
+	    			</xs:sequence>
+	
+	    		</xs:extension>
+	    	</xs:complexContent>
+   		</xs:complexType>
+    </xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="tns:getVersionResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getRecommendationRequest">
+		<wsdl:part element="tns:getRecommendationRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRecommendationResponse">
+		<wsdl:part element="tns:getRecommendationResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRefinedSearchesRequest">
+		<wsdl:part element="tns:getRefinedSearchesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getRefinedSearchesResponse">
+		<wsdl:part element="tns:getRefinedSearchesResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getDominantCategoryRequest">
+		<wsdl:part element="tns:getDominantCategoryRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getDominantCategoryResponse">
+		<wsdl:part element="tns:getDominantCategoryResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopBrandsRequest">
+		<wsdl:part element="tns:getTopBrandsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopBrandsResponse">
+		<wsdl:part element="tns:getTopBrandsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getRelatedSearchesRequest">
+		<wsdl:part element="tns:getRelatedSearchesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getRelatedSearchesResponse">
+		<wsdl:part element="tns:getRelatedSearchesResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopSearchesRequest">
+		<wsdl:part element="tns:getTopSearchesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTopSearchesResponse">
+		<wsdl:part element="tns:getTopSearchesResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getRelatedNeighborhoodRequest">
+		<wsdl:part element="tns:getRelatedNeighborhoodRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getRelatedNeighborhoodResponse">
+		<wsdl:part element="tns:getRelatedNeighborhoodResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="FindingRecommendationServicePort">
+		<wsdl:operation name="getVersion">
+			<wsdl:documentation>Get the version for this service.  This is per SOA guidelines that each service support such an API</wsdl:documentation>
+			<wsdl:output message="tns:getVersionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getRecommendation">
+			<wsdl:documentation>This is the bulk API that enables invoking a bunch of recommendation service operations as part of a single call.  This API would optimize (where feasible) the actual calls made to 
+SIBE or DSBE search backends.
+
+Ensure that each sub-operation  (individual operation) requested has its own unique invocation ID.  The caller would need to match the invocation ID in the response to get the
+corresponding response for a request.  The behavior of this API would NOT be as expected if this is not honored
+
+There is currently no limit on the number of operations.  Realistically at most 20 operations should be batched together.
+</wsdl:documentation>
+			<wsdl:input message="tns:getRecommendationRequest"/>
+			<wsdl:output message="tns:getRecommendationResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getRefinedSearches">
+			<wsdl:documentation>This gives the ability to get refined searches given a Global ID and Keywords.  This algorithm returns a set of searches (x+y) that users who searched for x, also performed.  
+In other words these are searches which contain the keywords in the given query as well as other keywords.  For instance users who searched for &amp;quot;ipod&amp;quot; could also have searched 
+for queries like &amp;quot;ipod nano&amp;quot; or &amp;quot;ipod nano black&amp;quot;.  In this case &amp;quot;ipod nano&amp;quot; and &amp;quot;ipod nano black&amp;quot; are considered to be refinement searches.</wsdl:documentation>
+			<wsdl:input message="tns:getRefinedSearchesRequest"/>
+			<wsdl:output message="tns:getRefinedSearchesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getDominantCategory">
+			<wsdl:documentation>This gives the ability to get dominant category, if present, given a Global ID and Keywords
+</wsdl:documentation>
+			<wsdl:input message="tns:getDominantCategoryRequest"/>
+			<wsdl:output message="tns:getDominantCategoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getTopBrands">
+			<wsdl:documentation>Get the Top Brands for a specific Global ID and Category.  This will be available only for categories which are enabled (via LightHouse tool).  Brands are defined by the 
+aspect “&amp;quot;brand&amp;quot;.  Synonyms of brands used in other product types are not considered for this algorithm at this time.  For this, all completed items are searched and a 
+brand histogram is provided based on purchases.
+</wsdl:documentation>
+			<wsdl:input message="tns:getTopBrandsRequest"/>
+			<wsdl:output message="tns:getTopBrandsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getRelatedSearches">
+			<wsdl:documentation>Get related searches for a Global ID and Keywords.  This algorithm returns a set of searches y that users who searched for x also did.  For instance users who searched using 
+the query &amp;quot;Lucky Brand Jeans&amp;quot; also searched for &amp;quot;Seven for All Mankind Jeans&amp;quot; within a single session, would make 
+&amp;quot;Seven for All Mankind jeans&amp;quot; a related search for &amp;quot;Lucky brand Jeans&amp;quot;.</wsdl:documentation>
+			<wsdl:input message="tns:getRelatedSearchesRequest"/>
+			<wsdl:output message="tns:getRelatedSearchesResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getTopSearches">
+			<wsdl:documentation>This is a special case of the refinement searches algorithm without a query as an input context.  This then returns the top searches for a site (and if specified, a category). 
+ For instance top searches for site =0 would provide the searches across site 0 that were performed the most number of times.</wsdl:documentation>
+			<wsdl:input message="tns:getTopSearchesRequest"/>
+			<wsdl:output message="tns:getTopSearchesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getRelatedNeighborhood">
+			<wsdl:documentation>Get the related neighborhood for a site and query</wsdl:documentation>
+			<wsdl:input message="tns:getRelatedNeighborhoodRequest"/>
+			<wsdl:output message="tns:getRelatedNeighborhoodResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="FindingRecommendationServiceHttpBinding" type="tns:FindingRecommendationServicePort">
+
+
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getVersion">
+
+			<http:operation location="/getVersion"/>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRecommendation">
+
+			<http:operation location="/getRecommendation"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+
+
+
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRefinedSearches">
+
+			<http:operation location="/getRefinedSearches"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDominantCategory">
+
+			<http:operation location="/getDominantCategory"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTopBrands">
+
+			<http:operation location="/getTopBrands"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRelatedSearches">
+
+			<http:operation location="/getRelatedSearches"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+
+
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+
+
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTopSearches">
+
+			<http:operation location="/getTopSearches"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRelatedNeighborhood">
+
+			<http:operation location="/getRelatedNeighborhood"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+
+
+
+
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+
+
+
+
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="FindingRecommendationServiceSOAPBinding" type="tns:FindingRecommendationServicePort">
+
+
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getRecommendation">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getRecommendation"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRefinedSearches">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getRefinedSearches"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDominantCategory">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getDominantCategory"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTopBrands">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getTopBrands"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRelatedSearches">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getRelatedSearches"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getVersion"/>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTopSearches">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getTopSearches"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRelatedNeighborhood">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getRelatedNeighborhood"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="FindingRecommendationService">
+		<wsdl:port binding="tns:FindingRecommendationServiceHttpBinding" name="FindingRecommendationServiceHttpPort">
+			<http:address location="https://svcs.ebay.com/services/search/FindingRecommendationService/v1"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:FindingRecommendationServiceSOAPBinding" name="FindingRecommendationServiceSOAPPort">
+			<soap12:address location="https://svcs.ebay.com/services/search/FindingRecommendationService/v1"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

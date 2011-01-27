@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ebay.com/marketplace/billingonbehalf/v1/services" xmlns:coretype="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:dtl="http://www.ebay.com/marketplace/billingonbehalf/v1/services" name="BillingOnBehalfService" targetNamespace="http://www.ebay.com/marketplace/billingonbehalf/v1/services">
+
+    <wsdl:types>
+
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/billingonbehalf/v1/services">
+            <xs:import namespace="http://www.ebay.com/marketplace/services"/>
+
+            <xs:element name="addUsageRequest" type="tns:AddUsageRequest"/>
+            <xs:element name="addUsageResponse" type="tns:AddUsageResponse"/>
+
+            <xs:complexType name="AddUsageRequest">
+                <xs:complexContent>
+                    <xs:extension base="coretype:BaseServiceRequest">
+                        <xs:sequence>
+                            <xs:element minOccurs="1" name="account" type="tns:AccountIdentity"/>
+                            <xs:element minOccurs="1" name="clientChargeId" type="xs:long"/>
+                            <xs:element minOccurs="1" name="transactionDate" type="xs:dateTime"/>
+                            <xs:element minOccurs="1" name="amount" type="coretype:Money"/>
+                            <xs:element minOccurs="1" name="usageCategory" type="tns:UsageCategory"/>
+                            <xs:element minOccurs="1" name="planId" type="xs:long"/>
+                            <xs:element minOccurs="1" name="memo" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="1" name="immediatePayment" type="xs:boolean"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="AccountIdentity">
+                <xs:sequence>
+                    <xs:element minOccurs="1" name="ownerId" type="xs:long"/>
+                    <xs:element minOccurs="1" name="globalId" type="coretype:GlobalId"/>
+                    <xs:element minOccurs="1" name="developerId" type="xs:long"/>
+                    <xs:element minOccurs="1" name="applicationId" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:simpleType name="UsageCategory">
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="SUBSCRIPTION_CHARGE"/>
+                    <xs:enumeration value="PLAN_USAGE"/>
+                    <xs:enumeration value="NON_PLAN_USAGE"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:complexType name="AddUsageResponse">
+                <xs:complexContent>
+                    <xs:extension base="coretype:BaseServiceResponse">
+                        <xs:sequence>
+                            <xs:element name="billingUsageChargeId" type="xs:long"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+        </xs:schema>
+
+        <!-- eBay Core types. -->
+        <xsd:schema targetNamespace="http://www.ebay.com/marketplace/services">
+            <xs:complexType abstract="true" name="BaseServiceRequest">
+                <xs:sequence>
+                    <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+
+
+            <xs:complexType abstract="true" name="BaseServiceResponse">
+                <xs:sequence>
+                    <xs:element name="ack" type="coretype:AckValue"/>
+                    <xs:element minOccurs="0" name="errorMessage" type="coretype:ErrorMessage"/>
+                    <xs:element minOccurs="0" name="version" type="xs:string"/>
+                    <xs:element minOccurs="0" name="timestamp" type="xs:dateTime"/>
+
+                    <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:simpleType name="AckValue">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Success"/>
+                    <xs:enumeration value="Failure"/>
+                    <xs:enumeration value="Warning"/>
+                    <xs:enumeration value="PartialFailure"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xsd:complexType name="ErrorMessage">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="coretype:ErrorData"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="ErrorData">
+                <xsd:sequence>
+                    <xsd:element name="errorId" type="xsd:long"/>
+                    <xsd:element name="domain" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="subdomain" type="xsd:string"/>
+                    <xsd:element name="severity" type="coretype:ErrorSeverity"/>
+                    <xsd:element name="category" type="coretype:ErrorCategory"/>
+                    <xsd:element name="message" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="exceptionId" type="xsd:token"/>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="coretype:ErrorParameter"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:simpleType name="ErrorSeverity">
+
+                <xsd:restriction base="xsd:token">
+                    <xsd:enumeration value="Error"/>
+                    <xsd:enumeration value="Warning"/>
+                </xsd:restriction>
+
+            </xsd:simpleType>
+
+
+            <xsd:simpleType name="ErrorCategory">
+                <xsd:restriction base="xsd:token">
+                    <xsd:enumeration value="System"/>
+                    <xsd:enumeration value="Application"/>
+                    <xsd:enumeration value="Request"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+
+
+            <xsd:complexType name="ErrorParameter">
+
+                <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                        <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                    </xsd:extension>
+                </xsd:simpleContent>
+
+            </xsd:complexType>
+
+            <xs:complexType name="Money">
+                <xs:simpleContent>
+                    <xs:extension base="xs:decimal">
+                        <xs:attribute name="currencyCode" type="coretype:IsoCurrencyCode" use="required"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+
+           <xs:simpleType name="GlobalId">
+                <xs:annotation>
+                    <xs:documentation>
+                        This type is used to represent a combination of site and Locale. Locales are combination of language and territory. 
+                        Some territories have a default language. Others can have more than one language and there might not be a default one.
+                        Example: EBAY-US   indicates language English in territory U.S.
+                                 EBAY-ENCA indicates language en_US in territory Canada.
+                                 EBAY-FRCA indicates language en_FR in territory Canada.
+                        Accepted values are use case specific.
+                
+                        The syntax is: ebay_properties '-' site ('_' variant)?
+                        where ? emans optional. Example for ebay_properties are: EBAY, AC, SDC, PP etc
+                        site is not just limited to country language.  We actually have MOTOR.
+                        The only use of variant for now is OLD for depreciated sites.
+                    </xs:documentation>
+        		</xs:annotation>
+        	    <xs:restriction base="xs:token"/>
+           </xs:simpleType>            
+            
+            <xsd:simpleType name="IsoCurrencyCode">
+                <xsd:annotation>
+                    <xs:documentation>
+                        This is a type for ISO currency code
+                    </xs:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xs:token">
+                    <xsd:enumeration value="USD"/>
+                    <xsd:enumeration value="CAD"/>
+                    <xsd:enumeration value="GBP"/>
+                    <xsd:enumeration value="DEM"/>
+                    <xsd:enumeration value="AUD"/>
+                    <xsd:enumeration value="FRF"/>
+                    <xsd:enumeration value="SEK"/>
+                    <xsd:enumeration value="CNY"/>
+                    <xsd:enumeration value="ESP"/>
+                    <xsd:enumeration value="NOK"/>
+                    <xsd:enumeration value="JPY"/>
+                    <xsd:enumeration value="EUR"/>
+                    <xsd:enumeration value="DKK"/>
+                    <xsd:enumeration value="FIM"/>
+                    <xsd:enumeration value="ITL"/>
+                    <xsd:enumeration value="ATS"/>
+                    <xsd:enumeration value="HKD"/>
+                    <xsd:enumeration value="NLG"/>
+                    <xsd:enumeration value="CHF"/>
+                    <xsd:enumeration value="TWD"/>
+                    <xsd:enumeration value="SGD"/>
+                    <xsd:enumeration value="BEF"/>
+                    <xsd:enumeration value="IEP"/>
+                    <xsd:enumeration value="PTE"/>
+                    <xsd:enumeration value="CZK"/>
+                    <xsd:enumeration value="GRD"/>
+                    <xsd:enumeration value="HUF"/>
+                    <xsd:enumeration value="IDR"/>
+                    <xsd:enumeration value="ILS"/>
+                    <xsd:enumeration value="NZD"/>
+                    <xsd:enumeration value="PHP"/>
+                    <xsd:enumeration value="PLN"/>
+                    <xsd:enumeration value="RUR"/>
+                    <xsd:enumeration value="THB"/>
+                    <xsd:enumeration value="ZAR"/>
+                    <xsd:enumeration value="INR"/>
+                    <xsd:enumeration value="PEN"/>
+                    <xsd:enumeration value="MYR"/>
+                    <xsd:enumeration value="VND"/>
+                    <xsd:enumeration value="KRW"/>
+                    <xsd:enumeration value="TRY"/>
+                    <xsd:enumeration value="ANG"/>
+                    <xsd:enumeration value="AWG"/>
+                    <xsd:enumeration value="BMD"/>
+                    <xsd:enumeration value="CRC"/>
+                    <xsd:enumeration value="RON"/>
+                    <xsd:enumeration value="VEF"/>
+                    <xsd:enumeration value="BBD"/>
+                    <xsd:enumeration value="BGN"/>
+                    <xsd:enumeration value="BND"/>
+                    <xsd:enumeration value="BSD"/>
+                    <xsd:enumeration value="COP"/>
+                    <xsd:enumeration value="DOP"/>
+                    <xsd:enumeration value="GTQ"/>
+                    <xsd:enumeration value="KYD"/>
+                    <xsd:enumeration value="MVR"/>
+                    <xsd:enumeration value="QAR"/>
+                    <xsd:enumeration value="SAR"/>
+                    <xsd:enumeration value="TTD"/>
+                    <xsd:enumeration value="UAH"/>
+                    <xsd:enumeration value="UYU"/>
+                    <xsd:enumeration value="XCD"/>
+                    <xsd:enumeration value="XPF"/>
+                    <xsd:enumeration value="JMD"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="addUsageRequest">
+        <wsdl:part element="tns:addUsageRequest" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="addUsageResponse">
+        <wsdl:part element="tns:addUsageResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:portType name="BillingOnBehalfServicePort">
+        <wsdl:operation name="addUsage">
+            <wsdl:input message="tns:addUsageRequest"/>
+            <wsdl:output message="tns:addUsageResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+
+    <wsdl:binding name="BillingOnBehalfServiceHttpBinding" type="tns:BillingOnBehalfServicePort">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="addUsage">
+            <http:operation location="BillingOnBehalfService/addUsage"/>
+            <wsdl:input>
+                <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+            </wsdl:input>
+
+            <wsdl:output>
+                <mime:content part="parameters" type="text/xml"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+
+    <wsdl:binding name="BillingOnBehalfServiceSOAP11Binding" type="tns:BillingOnBehalfServicePort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="addUsage">
+            <soap:operation soapAction="urn:addUsage" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:binding name="BillingOnBehalfServiceSOA12PBinding" type="tns:BillingOnBehalfServicePort">
+
+        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="addUsage">
+            <soap12:operation soapAction="urn:addUsage" style="document"/>
+
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="BillingOnBehalfService">
+        <wsdl:port binding="tns:BillingOnBehalfServiceHttpBinding" name="BillingOnBehalfServiceHttp">
+            <http:address location="http://svcs.ebay.com/billingonbehalf/BillingOnBehalfService/v1"/>
+        </wsdl:port>
+
+        <wsdl:port binding="tns:BillingOnBehalfServiceSOAP11Binding" name="BillingOnBehalfServiceSOAP11">
+            <soap:address location="http://svcs.ebay.com/billingonbehalf/BillingOnBehalfService/v1"/>
+        </wsdl:port>
+
+        <wsdl:port binding="tns:BillingOnBehalfServiceSOA12PBinding" name="BillingOnBehalfServiceSOAP12">
+            <soap12:address location="http://svcs.ebay.com/billingonbehalf/BillingOnBehalfService/v1"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

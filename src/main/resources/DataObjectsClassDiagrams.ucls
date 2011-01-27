@@ -1,0 +1,367 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationInfo.java" 
+    binary="false">    
+    <position x="146" y="1507" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.AttributeElement" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/AttributeElement.java" 
+    binary="false">    
+    <position x="566" y="1350" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.OperationHolder" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/OperationHolder.java" 
+    binary="false">    
+    <position x="1162" y="1434" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationTag" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationTag.java" 
+    binary="false">    
+    <position x="137" y="1192" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ComplexType.java" 
+    binary="false">    
+    <position x="133" y="827" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.EnumElement" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/EnumElement.java" 
+    binary="false">    
+    <position x="544" y="1118" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element" 
+    project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Element.java" binary="false">    
+    <position x="820" y="1006" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Attribute" 
+    project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Attribute.java" binary="false">    
+    <position x="834" y="1249" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType" 
+    project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/PortType.java" binary="false">    
+    <position x="1164" y="1701" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/SimpleType.java" 
+    binary="false">    
+    <position x="570" y="796" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.AbstractType" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/AbstractType.java" 
+    binary="false">    
+    <position x="279" y="556" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface" 
+    project="DocTool" file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/WSDLDocInterface.java" 
+    binary="false">    
+    <position x="1022" y="253" width="230" height="176"/>    
+    <display autosize="false" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.XSDDocument" 
+    project="DocTool" file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/XSDDocument.java" 
+    binary="false">    
+    <position x="801" y="402" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.WSDLDocument" 
+    project="DocTool" file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/WSDLDocument.java" 
+    binary="false">    
+    <position x="1162" y="906" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface" 
+    project="DocTool" file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/XSDDocInterface.java" 
+    binary="false">    
+    <position x="1136" y="112" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <association>    
+    <bendpoint x="366" y="1469"/>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.AbstractType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/AbstractType.java" 
+      binary="false" navigable="false">      
+      <attribute name="annotations"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationInfo.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/WSDLDocInterface.java" binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/XSDDocInterface.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.WSDLDocument" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/WSDLDocument.java" binary="false" 
+      navigable="false">      
+      <attribute name="operations"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.OperationHolder" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/OperationHolder.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ComplexType.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.AbstractType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/AbstractType.java" 
+      binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/SimpleType.java" 
+      binary="false" navigable="false">      
+      <attribute name="instanceElements"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Element.java" binary="false" 
+      navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.AttributeElement" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/AttributeElement.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Element.java" 
+      binary="false"/>  
+  </generalization>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/SimpleType.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.AbstractType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/AbstractType.java" 
+      binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/SimpleType.java" 
+      binary="false" navigable="false">      
+      <attribute name="enums"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.EnumElement" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/EnumElement.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.WSDLDocument" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/WSDLDocument.java" binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/WSDLDocInterface.java" binary="false"/>  
+  </realization>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Element.java" binary="false" 
+      navigable="false">      
+      <attribute name="attributes"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Attribute" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Attribute.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.XSDDocument" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/XSDDocument.java" binary="false" 
+      navigable="false">      
+      <attribute name="complexTypes"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ComplexType.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ComplexType.java" 
+      binary="false" navigable="false">      
+      <attribute name="simpleAttributeContent"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.AttributeElement" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/AttributeElement.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationTag" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationTag.java" 
+      binary="false" navigable="false">      
+      <attribute name="myParsedAnnotationInfo"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationInfo.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/PortType.java" 
+      binary="false" navigable="false">      
+      <attribute name="operations"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.OperationHolder" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/OperationHolder.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Element.java" binary="false" 
+      navigable="false">      
+      <attribute name="annotation"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationInfo.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ComplexType.java" 
+      binary="false" navigable="false">      
+      <attribute name="childElements"/>      
+      <multiplicity minimum="0" maximum="2147483647">        
+        <position x="419" y="946" width="20" height="13"/>      
+      </multiplicity>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Element.java" binary="false" 
+      navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.OperationHolder" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/OperationHolder.java" 
+      binary="false" navigable="false">      
+      <attribute name="inputElement"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Element.java" binary="false" 
+      navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="792" y="744"/>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.XSDDocument" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/XSDDocument.java" binary="false" 
+      navigable="false">      
+      <attribute name="nameToElemMap">        
+        <position x="443" y="945" width="84" height="14"/>      
+      </attribute>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/Element.java" binary="false" 
+      navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.XSDDocument" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/XSDDocument.java" binary="false" 
+      navigable="false">      
+      <attribute name="nameToSimpleTypeMap"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/SimpleType.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.XSDDocument" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/XSDDocument.java" binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/XSDDocInterface.java" binary="false"/>  
+  </realization>  
+  <classifier-display autosize="true" package="false" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="false" protected="false" private="false"/>    
+    <operations public="true" package="false" protected="false" private="false"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+</class-diagram>

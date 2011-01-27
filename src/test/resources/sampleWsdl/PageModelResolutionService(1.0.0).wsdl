@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/search/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="PageModelResolutionService" targetNamespace="http://www.ebay.com/marketplace/search/v1/services">
+
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/search/v1/services">
+
+			<xs:complexType name="Property">
+				<xs:annotation>
+					<xs:documentation>
+						Name value pair for defining properties
+						associated with entities.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SearchServicesTypeLibrary" namespace="http://www.ebay.com/marketplace/search/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="name" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+		
+			<xs:complexType name="DiagnosticInfo">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="SearchServicesTypeLibrary" namespace="http://www.ebay.com/marketplace/search/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="sender" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="log" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="record" type="tns:Property">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:element name="getVersionResponse" type="tns:GetVersionResponse"/>
+			<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Document goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getPageRequest" type="tns:GetPageRequest">
+
+			</xs:element>
+			<xs:element name="getPageResponse" type="tns:GetPageResponse">
+
+			</xs:element>
+
+			<xs:complexType name="GetPageResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="page" type="tns:Page">
+								<xs:annotation>
+									<xs:documentation>
+										The page Model that comes out as
+										a response.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="diagnosticInfo" type="tns:DiagnosticInfo">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		The diagnostic information
+                                		regarding whether the elements
+                                		of the page were chosen by which
+                                		providers ( will display
+                                		information regarding which
+                                		PageElements were chosen by
+                                		manual rules and Experimentation
+                                		)
+                                	</xs:documentation>
+                                </xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="Page">
+				<xs:annotation>
+					<xs:documentation>
+						This is a top level Container that contains
+						other nodes/PageElements . It has a golbally
+						unique Id associated with it .
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:Container">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="panel" type="tns:Panel">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		A Panel is a container that
+                                		contains other panels OR slots .
+                                		A panel will be usually be
+                                		mapped to an area in the final
+                                		rendering of the containing Page
+                                		.
+                                	</xs:documentation>
+                                </xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="Panel">
+				<xs:annotation>
+					<xs:documentation>
+						panel represents the presentation containment
+						hierarchical component of the page.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:Container">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="slot" type="tns:Slot">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		A slot contains a set of
+                                		mutually exclusive Modules..
+                                		However at runtime only one of
+                                		them is chosen .
+                                	</xs:documentation>
+                                </xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="panel" type="tns:Panel">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="Slot">
+				<xs:annotation>
+					<xs:documentation>
+						It models a particular holder of a module .By
+						default it can hold a mutually exclusive set of
+						modules at design time. But at runtime only one
+						module is picked and hence Slot assumes the role
+						of a Module-holder.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:Container">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="module" type="tns:Module">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		Module is refered to as the
+                                		provider of the content that
+                                		will be rendered in the Panel
+                                		that it is Contained in . A
+                                		module cannot contain other
+                                		Panels Or modules
+                                	</xs:documentation>
+                                </xs:annotation>
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="Module">
+				<xs:annotation>
+					<xs:documentation>
+						Module is responsible for generation of content
+						which gets feeded into the panel that contains
+						it..
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:PageElement"/>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="Container">
+				<xs:complexContent>
+					<xs:extension base="tns:PageElement">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="layoutRef" type="tns:LayoutRef">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="LayoutRef">
+				<xs:annotation>
+					<xs:documentation>
+						This holds a reference to a particular layout
+						that can be associated with any of the
+						PageElement.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="pageElementKey" type="tns:PageElementKey">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+
+
+
+			<xs:simpleType name="PageElementKey">
+				<xs:restriction base="xs:int"/>
+			</xs:simpleType>
+
+			<xs:complexType name="PageElement">
+				<xs:annotation>
+					<xs:documentation>
+						Represents a collection of PageProperties .
+						along with a unique Id at which it applies
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="pageElementKey" type="tns:PageElementKey">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="pageElementProperty" type="tns:PageElementProperty">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="PageElementProperty">
+				<xs:annotation>
+					<xs:documentation>
+						A standard Property . i.e. name -value pair .
+						along with some metadata Information about those
+						properties. This property could be associalted
+						at any level on the page.
+						(page,Panel,Slot,Module)
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:Property">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="propertyMetadata" type="tns:Property">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetPageRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="guid" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										This represents the GUID :
+										Global User ID that is alloted
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+							<xs:element maxOccurs="1" minOccurs="1" name="pageKey" type="tns:PageElementKey">
+								<xs:annotation>
+									<xs:documentation>
+										This field represents the input
+										command for the page it does not
+										mean an explicit override of the
+										page by the client .
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="inputContext" type="tns:InputContext">
+								<xs:annotation>
+									<xs:documentation>
+										It represents a set of name
+										value pairs that constitute an
+										inputContext of the incoming
+										page
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="1" name="serviceContext" type="tns:BaseServiceContext">
+								<xs:annotation>
+									<xs:documentation>
+										This represents the context of
+										the service . (like site ,
+										etc.... )
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="overrideProperty" type="tns:PageElementProperty">
+								<xs:annotation>
+									<xs:documentation>
+										these would specify a set of
+										overrides from the clients .
+										these overrriden property values
+										shall be applied to every
+										pageElement whereever that
+										property exists.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="enableDiagnostics" type="xs:boolean">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+			<xs:element name="getVersionRequest" type="tns:GetVersionRequest">
+                <xs:annotation>
+                	<xs:documentation>
+                		Get the version for this service. This is per
+                		SOA guidelines that each service support such an
+                		API
+                	</xs:documentation>
+                </xs:annotation>
+			</xs:element>
+
+			<xs:complexType name="GetVersionRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest"/>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="InputContext">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="ruleProperty" type="tns:Property">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+					</xs:element>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+					</xs:element>
+				</xs:sequence>
+
+
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<!-- 
+					<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+					processContents="lax" />
+					</xs:sequence>
+				-->
+
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the
+									list of parameter types returned
+									within the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+
+			</xs:simpleType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="BaseServiceContext">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="SearchServicesTypeLibrary" namespace="http://www.ebay.com/marketplace/search/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="globalId" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="partnerId" type="xs:int">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="tns:getVersionResponse" name="parameters">
+			<wsdl:documentation>
+				provides the version of the service
+			</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getPageRequest">
+		<wsdl:part element="tns:getPageRequest" name="parameters">
+			<wsdl:documentation>This API should be called when we need to resolve a particular Page id to its Page Model .. A page Model comprises of all the PageElements that are contained within a page. The current Page Model  decomposes the page into multiple Panes with each Panel
+in turn consisting of nested Panels and Slots . and slots containing a single Module. At every Page Element level (be it Page,Panel,Slot,Module) there could be a bunch of properties associated with it .. The page Model also emits their Properties along with those page Elements</wsdl:documentation></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getPageResponse">
+		<wsdl:part element="tns:getPageResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part element="tns:getVersionRequest" name="parameters">
+			<wsdl:documentation/></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="PageModelResolutionServicePort">
+		<wsdl:documentation>
+			The goal of this service is to resolve to RuntimePageModel
+			when the client is requesting a Page through a Key (the key
+			could be page Enum or some other artifact that the vertical
+			teams uses to denote a page ). This resolution shall also
+			incorporate all the necessary overrides (like url
+			;cusomization etc) on the page so that when the client gets
+			its Page it is completely finalized and all it needs to do
+			is execute the modules in that Page.
+		</wsdl:documentation>
+		<wsdl:operation name="getVersion">
+			<wsdl:documentation>Get the version for this service. This is per SOA guidelines that each service support such an API</wsdl:documentation>
+			<wsdl:input message="tns:getVersionRequest"/>
+			<wsdl:output message="tns:getVersionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPage">
+			<wsdl:documentation>
+				This is the API call that the client shall be using to
+				get the finalized pageModel .
+			</wsdl:documentation>
+			<wsdl:input message="tns:getPageRequest"/>
+			<wsdl:output message="tns:getPageResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PageModelResolutionServiceHttpBinding" type="tns:PageModelResolutionServicePort">
+
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getVersion">
+
+			<http:operation location="/getVersion"/>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPage">
+			<http:operation location="/getPage"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="PageModelResolutionServiceSOAPBinding" type="tns:PageModelResolutionServicePort">
+
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getVersion">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getVersion"/>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPage">
+
+			<soap:operation soapAction="http://www.ebay.com/marketplace/search/v1/services/getPage"/>
+			<wsdl:input>
+
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PageModelResolutionService">
+		<wsdl:port binding="tns:PageModelResolutionServiceHttpBinding" name="PageModelResolutionServiceHttpPort">
+			<http:address location="https://svcs.ebay.com/services/search/PageModelResolutionService/v1"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:PageModelResolutionServiceSOAPBinding" name="PageModelResolutionServiceSOAPPort">
+			<soap12:address location="https://svcs.ebay.com/services/search/PageModelResolutionService/v1"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

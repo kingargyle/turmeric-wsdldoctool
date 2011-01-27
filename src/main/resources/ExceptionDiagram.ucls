@@ -1,0 +1,135 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true">  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.exception.OutputFormatterException" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/OutputFormatterException.java" 
+    binary="false">    
+    <position x="44" y="347" width="244" height="67"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.exception.ParserException" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/ParserException.java" 
+    binary="false">    
+    <position x="328" y="347" width="244" height="83"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.exception.ConfigurationException" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/ConfigurationException.java" 
+    binary="false">    
+    <position x="912" y="347" width="244" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.exception.AnnotationParserException" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/AnnotationParserException.java" 
+    binary="false">    
+    <position x="1196" y="347" width="245" height="83"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.exception.WsdlDocException" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/WsdlDocException.java" 
+    binary="false">    
+    <position x="411" y="192" width="244" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.exception.CommandLineParserException" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/CommandLineParserException.java" 
+    binary="false">    
+    <position x="612" y="347" width="260" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="java.lang.RuntimeException" project="DocTool" 
+    file="C:/Saikiran/edeinstaller-4.2/java6-ibm-sr4ifx3-2009-06-22-windows/jre/lib/rt.jar" binary="true">    
+    <position x="912" y="192" width="199" height="115"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="java.lang.Exception" project="DocTool" 
+    file="C:/Saikiran/edeinstaller-4.2/java6-ibm-sr4ifx3-2009-06-22-windows/jre/lib/rt.jar" binary="true">    
+    <position x="661" y="37" width="161" height="115"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.OutputFormatterException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/OutputFormatterException.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.WsdlDocException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/WsdlDocException.java" 
+      binary="false"/>  
+  </generalization>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.WsdlDocException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/WsdlDocException.java" 
+      binary="false"/>    
+    <target project="DocTool" name="java.lang.Exception" 
+      file="C:/Saikiran/edeinstaller-4.2/java6-ibm-sr4ifx3-2009-06-22-windows/jre/lib/rt.jar" binary="true"/>  
+  </generalization>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.ParserException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/ParserException.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.WsdlDocException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/WsdlDocException.java" 
+      binary="false"/>  
+  </generalization>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.CommandLineParserException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/CommandLineParserException.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.WsdlDocException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/WsdlDocException.java" 
+      binary="false"/>  
+  </generalization>  
+  <generalization>    
+    <source project="DocTool" name="java.lang.RuntimeException" 
+      file="C:/Saikiran/edeinstaller-4.2/java6-ibm-sr4ifx3-2009-06-22-windows/jre/lib/rt.jar" binary="true"/>    
+    <target project="DocTool" name="java.lang.Exception" 
+      file="C:/Saikiran/edeinstaller-4.2/java6-ibm-sr4ifx3-2009-06-22-windows/jre/lib/rt.jar" binary="true"/>  
+  </generalization>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.ConfigurationException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/ConfigurationException.java" 
+      binary="false"/>    
+    <target project="DocTool" name="java.lang.RuntimeException" 
+      file="C:/Saikiran/edeinstaller-4.2/java6-ibm-sr4ifx3-2009-06-22-windows/jre/lib/rt.jar" binary="true"/>  
+  </generalization>  
+  <generalization>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.AnnotationParserException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/AnnotationParserException.java" 
+      binary="false"/>    
+    <target project="DocTool" name="java.lang.RuntimeException" 
+      file="C:/Saikiran/edeinstaller-4.2/java6-ibm-sr4ifx3-2009-06-22-windows/jre/lib/rt.jar" binary="true"/>  
+  </generalization>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="false" protected="false" private="false"/>    
+    <operations public="true" package="false" protected="true" private="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

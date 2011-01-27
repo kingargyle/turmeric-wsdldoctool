@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/catalog/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="CoreCatalogMetadataService" targetNamespace="http://www.ebay.com/marketplace/catalog/v1/services">
+
+<wsdl:types>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/catalog/v1/services">
+
+<xs:complexType abstract="true" name="BaseServiceRequest">
+	<xs:annotation>
+		<xs:documentation>
+			This is the base class for request container for all service operations.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType abstract="true" name="BaseServiceResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Base response container for all service operations. Contains error information
+			associated with the request.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="ack" type="tns:AckValue">
+			<xs:annotation>
+				<xs:documentation>
+					
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+			<xs:annotation>
+				<xs:documentation>
+					Information for an error or warning that occurred when eBay processed the
+					request.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="ErrorMessage">
+	<xs:annotation>
+		<xs:documentation>
+			ErrorMessage to indicate any Error/Warning occured as part of service call.
+			Any run time error will not be reported here, but will be reported aspart of
+			soap fault.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+			<xs:annotation>
+				<xs:documentation>
+					Details about a single error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+
+
+<xs:complexType name="ErrorData">
+	<xs:annotation>
+		<xs:documentation>
+			This represents error details.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="errorId" type="xs:long">
+			<xs:annotation>
+				<xs:documentation>
+					A unique code that identifies the particular error condition that occurred.
+					Your application can use error codes as identifiers in your customized
+					error-handling algorithms.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="domain" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the domain upon which the error occurred. 
+					&lt;dl&gt;
+					&lt;lh&gt;Domains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Marketplace
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						A business or validation error occurred for the Merchandising Service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						SOA
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						An exception occurred in the Service Oriented Architecture (SOA) framework.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="severity" type="tns:ErrorSeverity">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the error caused the request to fail (Error) or not
+					(Warning).
+					&lt;br&gt;&lt;br&gt;
+					If the request fails and the source of the problem is within the application
+					(such as a missing required element), please change the application before you
+					retry the request. If the problem is due to end-user input data, please alert
+					the end-user to the problem and provide the means for them to correct the data.
+					Once the problem in the application or data is resolved, you can attempt to re-
+					send the request to eBay.
+					&lt;br&gt;&lt;br&gt;
+					If the source of the problem is on eBay's side, you can retry the request as-is
+					a reasonable number of times (eBay recommends twice). If the error persists,
+					contact Developer Technical Support. Once the problem has been resolved, the
+					request may be resent in its original form.
+					&lt;br&gt;&lt;br&gt;
+					When a warning occurs, the error is returned in addition to the business data.
+					In this case, you do not need to retry the request (as the original request was
+					successful). However, depending on the cause or nature of the warning, you
+					might need to contact either the end user or eBay to effect a long term
+					solution to the problem to prevent it from reoccurring in the future.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="category" type="tns:ErrorCategory">
+			<xs:annotation>
+				<xs:documentation>
+					There are three categories of errors: request errors, application errors, and
+					system errors.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="message" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					A detailed description of the condition that resulted in the error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="subdomain" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the subdomain upon which the error occurred. 
+					&lt;dl&gt;
+					&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Merchandising
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is specific to the Merchandising service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						MarketplaceCommon
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is common to all Marketplace services.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+			<xs:annotation>
+				<xs:documentation>
+					Unique identifier for an exception associated with an error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+			<xs:annotation>
+				<xs:documentation>
+					Some warning and error messages return one or more variables that contain
+					contextual information about the error. This is often the field or value that
+					triggered the error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="ErrorParameter">
+	<xs:annotation>
+		<xs:documentation>
+			Contextual information associated with an error.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						The name of the parameter in the list of parameter types returned
+						within the error type.
+					</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<AllCalls/>
+								<Returned>Conditionally</Returned>
+							</CallInfo>
+						</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+
+
+
+<xs:simpleType name="AckValue">
+	<xs:annotation>
+		<xs:documentation>
+			Indicates whether the error is a severe error (causing the request to fail)
+			or an informational error (a warning) that should be communicated to the
+			user.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Success">
+			<xs:annotation>
+				<xs:documentation>
+					The request was processed successfully, but something occurred that may
+					affect your application or the user.				
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Failure">
+			<xs:annotation>
+				<xs:documentation>
+					The request that triggered the error was not processed successfully.
+					When a serious application-level error occurs, the error is returned
+					instead of the business data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Warning">
+			<xs:annotation>
+				<xs:documentation>
+					The request that triggered the error was processed successfully but with some warnings.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="PartialFailure">
+			<xs:annotation>
+				<xs:documentation>
+					The request that triggered the error was processed successfully but with some warnings.				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="ErrorSeverity">
+	<xs:annotation>
+		<xs:documentation>
+			Indicates whether the error is a severe error (causing the request to fail)
+			or an informational error (a warning) that should be communicated to the
+			user.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Error">
+			<xs:annotation>
+				<xs:documentation>
+					The request that triggered the error was not processed successfully.
+					When a serious application-level error occurs, the error is returned
+					instead of the business data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Warning">
+			<xs:annotation>
+				<xs:documentation>
+					The request was processed successfully, but something occurred that may
+					affect your application or the user. For example, eBay may have changed a
+					value the user sent in. In this case, eBay returns a normal, successful
+					response and also returns the warning.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="ErrorCategory">
+	<xs:annotation>
+		<xs:documentation>
+			There are three categories of error: request errors, application errors,
+			and system errors. Request and application errors are caused primarily by
+			invalid data passed in the request. System errors are caused primarily by
+			application failures and cannot be corrected by changing request values.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="System">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates that an error has occurred on the eBay system side, such as a
+					database or server down. An application can retry the request as-is a
+					reasonable number of times (eBay recommends twice). If the error
+					persists, contact Developer Technical Support. Once the problem has been
+					resolved, the request may be resent in its original form.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Application">
+			<xs:annotation>
+				<xs:documentation>
+					An error occurred due to a problem with the request, such as missing or
+					invalid fields. The problem must be corrected before the request can be
+					made again. If the problem is due to something in the application (such
+					as a missing required field), the application must be changed. Once the
+					problem in the application or data is resolved, resend the corrected
+					request to eBay.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Request">
+			<xs:annotation>
+				<xs:documentation>
+					An error occurred due to a problem with the request, such as invalid or
+					missing data. The problem must be corrected before the request can be
+					made again. If the problem is a result of end-user data, the application
+					must alert the end-user to the problem and provide the means for the
+					end-user to correct the data. Once the problem in the data is resolved,
+					resend the request to eBay with the corrected data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+            <xs:complexType name="GetMetadataRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseServiceRequest">
+            			<xs:sequence>
+            				<xs:element name="catalogName" type="xs:string">
+            					<xs:annotation>
+            						<xs:documentation>
+            							Catalog name for which basic
+            							metadata is needed.
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            				<xs:element name="locale" type="tns:Locale">
+            					<xs:annotation>
+            						<xs:documentation>
+            							Domains can have multiple
+            							locales. This element states
+            							explicitly the locale for this
+            							request.
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="unbounded" minOccurs="1" name="metadataRequestType" type="tns:MetadataRequestType">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		The kind of information
+                                		requested in the ouput. More
+                                		than one type of information can
+                                		be requested in one request.
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="Locale">
+				<xs:annotation>
+					<xs:documentation>
+						Valid values are:
+						en_US, de_dE, en_GB, fr_FR, nl_NL, it_IT, zh_CN, en_AU, es_ES, in_IN, fr_CA, fr_BE
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:token"/>
+				</xs:simpleContent>
+            </xs:complexType>
+        
+            <xs:complexType name="MetadataRequestType">
+            	<xs:annotation>
+            		<xs:documentation>
+            			List of valid values are as follows:
+            			"ALL_METADATA",
+            			"CATALOG_PROPERTIES",
+            			"ALL_PROPERTY_SETS",
+            			"IDENTITY_SET" and
+            			"UNIQUE_SET".
+            		</xs:documentation>
+            	</xs:annotation>
+            	<xs:simpleContent>
+            		<xs:extension base="xs:token"/>
+            	</xs:simpleContent>
+            </xs:complexType>
+            
+            <xs:complexType name="PropertySetType">
+                <xs:annotation>
+                	<xs:documentation>
+                		Property sets can be of various types. List of
+                		valid values are as follows: "IDENTITY_SET",
+                		"UNIQUE_SET".
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:simpleContent>
+					<xs:extension base="xs:token"/>
+				</xs:simpleContent>
+            </xs:complexType>
+        
+            <xs:complexType name="NumericValue">
+            	<xs:sequence>
+            		<xs:element name="value" type="xs:string">
+            			<xs:annotation>
+            				<xs:documentation>
+            					A number.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:element name="unitOfMeasurement" type="tns:UnitOfMeasurement">
+            			<xs:annotation>
+            				<xs:documentation>
+            					UOM of this value. List of valid values
+            					are: bps, kbps, bit, byte, kb, MB, mW,
+            					W, Hz, kHz, m, mm, rph, hr, min, ms, ns,
+            					sec, g, lbs This is optional b/c UOM may
+            					not apply to all numeric values (e.g.
+            					number of doors)
+            				</xs:documentation>
+            			</xs:annotation></xs:element>
+            	</xs:sequence>
+            </xs:complexType>
+            
+            <xs:complexType name="UnitOfMeasurement">
+				<xs:annotation>			
+					<xs:documentation>
+						UOM of this value.
+						List of valid values are: bps, kbps, bit, byte, kb, MB, mW, W, Hz, kHz, m, mm, rph, hr, min, ms, ns, sec, g, lbs
+					</xs:documentation>
+				</xs:annotation>	
+				<xs:simpleContent>
+					<xs:extension base="xs:token"/>
+				</xs:simpleContent>
+            </xs:complexType>
+        
+            <xs:complexType name="StringValue">
+                <xs:annotation>
+                	<xs:documentation>
+                		This class holds a String value.
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+            		<xs:element name="value" type="xs:string">
+            			<xs:annotation>
+            				<xs:documentation>
+            					A string value.
+            				</xs:documentation>
+            			</xs:annotation></xs:element>
+            	</xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="URIValue">
+            	<xs:annotation>
+            		<xs:documentation>
+            			This holds a URL value.
+            		</xs:documentation>
+            	</xs:annotation>
+            	<xs:sequence>
+            		<xs:element name="value" type="xs:anyURI">
+            			<xs:annotation>
+            				<xs:documentation>
+            					as part of request, this will be the URL
+            					to download media file as part of
+            					response, this will be the URL where the
+            					media file is stored on EPS
+            				</xs:documentation>
+            			</xs:annotation></xs:element>
+            	</xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="Value">
+            	<xs:sequence>
+            		<xs:choice>
+                        <xs:annotation>
+                        	<xs:documentation>
+                        		A value can be one of the types given
+                        		below.
+                        	</xs:documentation>
+                        </xs:annotation>
+                        <xs:element name="stringValue" type="tns:StringValue">
+                            <xs:annotation>
+                            	<xs:documentation>
+                            		For string value type.
+                            	</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+            			<xs:element name="numericValue" type="tns:NumericValue">
+                            <xs:annotation>
+                            	<xs:documentation>
+                            		For numeric value type.
+                            	</xs:documentation>
+                            </xs:annotation>
+            			</xs:element>
+            			<xs:element name="uriValue" type="tns:URIValue">
+                            <xs:annotation>
+                            	<xs:documentation>
+                            		For URL value type.
+                            	</xs:documentation>
+                            </xs:annotation>
+            			</xs:element>
+            		</xs:choice>
+            		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+            	</xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="Property">
+            	<xs:sequence>
+            		<xs:element name="canonicalName" type="xs:string">
+            			<xs:annotation>
+            				<xs:documentation>
+            					This is the canonical name of the
+            					property. Used to identify a property
+            					within a catalog.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+            	</xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="PropertyValue">
+            	<xs:sequence>
+            		<xs:element name="property" type="tns:Property"/>
+            		<xs:element maxOccurs="unbounded" minOccurs="1" name="value" type="tns:Value"/>
+            		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+            	</xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="PropertyWithMetadata">
+            	<xs:annotation>
+            		<xs:documentation>
+            			Extends property and adds metadata.
+            		</xs:documentation>
+            	</xs:annotation>
+            	<xs:complexContent>
+            		<xs:extension base="tns:Property">
+            			<xs:sequence>
+            				<xs:element minOccurs="0" name="localizedName" type="xs:string"/>
+            				<xs:element name="dataType" type="tns:DataType">
+            					<xs:annotation>
+            						<xs:documentation>
+            							A property can accept values
+            							only of a certain data type. We
+            							will use industry standard data
+            							types for this purpose. The ones
+            							we plan to use for now are
+            							"numeric" and "string". We may
+            							have "binary" or other types in
+            							the future.
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="0" name="unitOfMeasurement" type="tns:UnitOfMeasurement"/>
+            				<xs:element name="multivalued" type="xs:boolean">
+            					<xs:annotation>
+            						<xs:documentation>
+            							Some properties may have
+            							multiple values. E.g.
+            							"Interfaces" for a laptop can
+            							have "USB", "Bluetooth", etc. as
+            							values. In this case, the value
+            							for this element would be
+            							"true".
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            				<xs:element name="managed" type="xs:boolean">
+            					<xs:annotation>
+            						<xs:documentation>
+            							Some property values are
+            							explictly managed by data
+            							managers. Examples of such
+            							properties could be "Color" and
+            							its possible values could be
+            							well-known values like "Red",
+            							"Blue", "Green", etc. In this
+            							case, the value of this element
+            							would be "true". However, most
+            							properties would be non-managed,
+            							e.g. "Author" for a book, in
+            							which case, this value would be
+            							"false".
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            				<xs:element name="computed" type="xs:boolean">
+            					<xs:annotation>
+            						<xs:documentation>
+            							Some properties are not directly
+            							supplied by the vendor. They
+            							need to computed from other
+            							properties (that are supplied by
+            							the vendor). E.g. Vendor may
+            							supply "Height" and "Width"
+            							properties, while "Area"
+            							property can be computed using
+            							these two by the formula "Height
+            							x Width". Most properties are
+            							non-computed.
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="1" minOccurs="0" name="valueSortType" type="tns:ValueSortType"/>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:simpleType name="DataType">
+            	<xs:restriction base="xs:string">
+            		<xs:enumeration value="Numeric"/>
+            		<xs:enumeration value="String"/>
+            		<xs:enumeration value="URI"/>
+            	</xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="ValueSortType">
+            	<xs:annotation>
+            		<xs:documentation>
+            			Way to sort property values.
+            		</xs:documentation>
+            	</xs:annotation>
+            	<xs:restriction base="xs:string">
+            		<xs:enumeration value="ALPHABETIC_ASCENDING"/>
+            		<xs:enumeration value="ALPHABETIC_DESCENDING"/>
+            		<xs:enumeration value="NUMERIC_ASCENDING"/>
+            		<xs:enumeration value="NUMERIC_DESCENDING"/>
+            		<xs:enumeration value="AS_GIVEN">
+						<xs:annotation>
+							<xs:documentation>
+								Values are ordered in the sequence they are listed/given.
+							</xs:documentation>
+						</xs:annotation>
+            		</xs:enumeration>
+            	</xs:restriction>
+            </xs:simpleType>
+
+            <xs:complexType name="PropertyWithMetadataAndValues">
+            	<xs:annotation>
+            		<xs:documentation>
+            			Associates property-with-metadata with values.
+            		</xs:documentation>
+            	</xs:annotation>
+            	<xs:sequence>
+            		<xs:element name="property" type="tns:PropertyWithMetadata"/>
+            		<xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="tns:Value"/>
+            		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+            	</xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="PropertySet">
+            	<xs:annotation>
+            		<xs:documentation>
+            			A set of properties. E.g. identity set, unique
+            			set, etc.
+            		</xs:documentation>
+            	</xs:annotation>
+            	<xs:sequence>
+            		<xs:element name="canonicalName" type="xs:string">
+            			<xs:annotation>
+            				<xs:documentation>
+            					The global name for this property set.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:element minOccurs="0" name="localizedName" type="xs:string">
+            			<xs:annotation>
+            				<xs:documentation>
+            					The localized name for this property
+            					set.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:element name="type" type="tns:PropertySetType"/>
+            		<xs:element minOccurs="0" name="order" type="xs:int">
+            			<xs:annotation>
+            				<xs:documentation>
+            					Some property sets are ordered. E.g.
+            					display sets. The application may need
+            					to display the "display sets" in a
+            					particular order. This element
+            					determines such an order. It is optional
+            					since not all sets are ordered.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:element maxOccurs="unbounded" minOccurs="1" name="property" type="tns:Property">
+            			<xs:annotation>
+            				<xs:documentation>
+            					A list of properties in this property
+            					set.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+            	</xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="Catalog">
+            	<xs:annotation>
+            		<xs:documentation>
+            			A catalog within the Ebay Inc.
+            		</xs:documentation>
+            	</xs:annotation>
+            	<xs:sequence>
+            		<xs:element name="id" type="xs:int">
+            			<xs:annotation>
+            				<xs:documentation>
+            					Id of the catalog. Catalogs are global
+            					and need a locale to identify a
+            					localized catalog.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:element name="canonicalName" type="xs:string">
+            			<xs:annotation>
+            				<xs:documentation>
+            					The name of the global catalog.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:element name="localizedName" type="xs:string">
+            			<xs:annotation>
+            				<xs:documentation>
+            					The name of the localized catalog.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:element name="locale" type="tns:Locale"/>
+            		<xs:element maxOccurs="unbounded" minOccurs="0" name="property" type="tns:PropertyWithMetadataAndValues">
+            			<xs:annotation>
+            				<xs:documentation>
+            					A list of properties in this catalog.
+            					This is optional because a client may
+            					request only property sets.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:element maxOccurs="unbounded" minOccurs="0" name="propertySet" type="tns:PropertySet">
+            			<xs:annotation>
+            				<xs:documentation>
+            					Property sets for the catalog. This is
+            					optional because a client may request
+            					only catalog properties.
+            				</xs:documentation>
+            			</xs:annotation>
+            		</xs:element>
+            		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+            	</xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="GetMetadataResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseServiceResponse">
+            			<xs:sequence>
+            				<xs:element name="catalog" type="tns:Catalog"/>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="ComputePropertiesRequest">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseServiceRequest">
+            			<xs:sequence>
+            				<xs:element name="catalogName" type="xs:string">
+            					<xs:annotation>
+            						<xs:documentation>
+            							Catalog name for which
+            							properties need to be computed.
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            				<xs:element name="locale" type="tns:Locale"/>
+            				<xs:element maxOccurs="unbounded" minOccurs="1" name="propertyValue" type="tns:PropertyValue">
+            					<xs:annotation>
+            						<xs:documentation>
+            							List of properties and their
+            							values to use when computing
+            							properties. All properties used
+            							in computation rules should be
+            							specified here.
+            						</xs:documentation>
+            					</xs:annotation>
+            				</xs:element>
+            				<xs:element maxOccurs="unbounded" minOccurs="0" name="requestedProperty" type="tns:Property">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		List of properties to compute.
+                                		This is optional if all
+                                		properties are to be computed.
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="ComputePropertiesResponse">
+            	<xs:complexContent>
+            		<xs:extension base="tns:BaseServiceResponse">
+            			<xs:sequence>
+            				<xs:element maxOccurs="unbounded" minOccurs="0" name="computedPropertyValue" type="tns:PropertyValue">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		List of properties that were
+                                		computed. Non-computed
+                                		properties are not included in
+                                		this response. This is an
+                                		optional field in case there are
+                                		no computed properties for the
+                                		catalog.
+                                	</xs:documentation>
+                                </xs:annotation>
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:extension>
+            	</xs:complexContent>
+            </xs:complexType>
+
+            <xs:element name="getMetadata" nillable="true" type="tns:GetMetadataRequest"/>
+            <xs:element name="getMetadataResponse" nillable="true" type="tns:GetMetadataResponse"/>
+            <xs:element name="computeProperties" nillable="true" type="tns:ComputePropertiesRequest"/>
+            <xs:element name="computePropertiesResponse" nillable="true" type="tns:ComputePropertiesResponse"/>
+
+</xs:schema>
+</wsdl:types>
+
+  <wsdl:message name="getMetadataRequest">
+  	<wsdl:part element="tns:getMetadata" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getMetadataResponse">
+  	<wsdl:part element="tns:getMetadataResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="computePropertiesRequest">
+        <wsdl:part element="tns:computeProperties" name="parameters"/>
+  </wsdl:message>
+	<wsdl:message name="computePropertiesResponse">
+		<wsdl:part element="tns:computePropertiesResponse" name="parameters"/>
+	</wsdl:message>
+
+  <wsdl:portType name="CoreCatalogMetadataServicePort">
+    <wsdl:operation name="getMetadata">
+    	<wsdl:input message="tns:getMetadataRequest"/>
+    	<wsdl:output message="tns:getMetadataResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="computeProperties">
+    	<wsdl:input message="tns:computePropertiesRequest"/>
+    	<wsdl:output message="tns:computePropertiesResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="CoreCatalogMetadataServiceSOAPBinding" type="tns:CoreCatalogMetadataServicePort">
+  	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  	<wsdl:operation name="getMetadata">
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/catalog/v1/services/getMetadata"/>
+  		<wsdl:input>
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="computeProperties">
+  		<soap:operation soapAction="http://www.ebay.com/marketplace/catalog/v1/services/computeProperties"/>
+  		<wsdl:input>
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:binding name="CoreCatalogMetadataServiceHttpBinding" type="tns:CoreCatalogMetadataServicePort">
+  	<http:binding verb="POST"/>
+  	<wsdl:operation name="getMetadata">
+  		<http:operation location="/getMetadata"/>
+  		<wsdl:input>
+  			<mime:content part="getMetadata" type="application/x-www-form-urlencoded"/>
+  		</wsdl:input>
+  		<wsdl:output>
+  			<mime:content part="getMetadataResponse" type="text/xml"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="computeProperties">
+  		<http:operation location="/computeProperties"/>
+  		<wsdl:input>
+  			<mime:content part="computeProperties" type="application/x-www-form-urlencoded"/>
+  		</wsdl:input>
+  		<wsdl:output>
+  			<mime:content part="computePropertiesResponse" type="text/xml"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+ 
+  <wsdl:service name="CoreCatalogMetadataService">
+ 		<wsdl:port binding="tns:CoreCatalogMetadataServiceHttpBinding" name="CoreCatalogMetadataServiceHttp">
+			<http:address location="http://apicatalogs.vip.ebay.com/ws/spf/CoreCatalogMetadataService"/>
+		</wsdl:port>
+ 		<wsdl:port binding="tns:CoreCatalogMetadataServiceSOAPBinding" name="CoreCatalogMetadataServiceSOAP">
+			<soap12:address location="http://apicatalogs.vip.ebay.com/ws/spf/CoreCatalogMetadataService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

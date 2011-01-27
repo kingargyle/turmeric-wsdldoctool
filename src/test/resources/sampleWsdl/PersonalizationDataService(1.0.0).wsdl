@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/personalization/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" jaxb:version="wsdl:2.0" targetNamespace="http://www.ebay.com/marketplace/personalization/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.0" targetNamespace="http://www.ebay.com/marketplace/personalization/v1/services">
+		
+			<xs:element name="getAttributesRequest" nillable="true" type="tns:GetAttributesRequest"/>
+			<xs:element name="getAttributesResponse" nillable="true" type="tns:GetAttributesResponse"/>
+			<xs:element name="setAttributesRequest" nillable="true" type="tns:SetAttributesRequest"/>
+			<xs:element name="setAttributesResponse" nillable="true" type="tns:SetAttributesResponse"/>
+
+			<xs:complexType name="ExtensionType">
+			    <xs:sequence>
+			        <xs:element name="id" type="xs:positiveInteger"/>
+			        <xs:element name="version" type="xs:string"/>
+			        <xs:element name="contentType" type="xs:string"/>
+			        <xs:element name="value" type="xs:string"/>
+			        <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+			    </xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ClientId">
+				<xs:annotation>
+					<xs:documentation>
+						Client identifier
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="Id" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AttributeId">
+				<xs:annotation>
+					<xs:documentation>Attribute Id</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="AttributeId" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseAttributeValue">
+				<xs:annotation>
+					<xs:documentation>
+						Attribute Value base type
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="lastModifiedTime" type="xs:dateTime">
+					</xs:element>
+					 <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="BooleanAttributeValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element name="value" type="xs:boolean">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="CustomAttributeValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element name="rawValue" type="xs:string">
+							</xs:element>
+						
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="DateAttributeValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element name="value" type="xs:dateTime">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+			<xs:complexType name="FloatAttributeValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element name="value" type="xs:float"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="IntAttributeValue">
+				<xs:annotation/>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element name="value" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="LongAttributeValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element name="value" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ListValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:choice>
+						<xs:element maxOccurs="1" name="booleanValue" type="tns:BooleanAttributeValue">
+						</xs:element>
+						<xs:element maxOccurs="1" name="intValue" type="tns:IntAttributeValue">
+						</xs:element>
+						<xs:element maxOccurs="1" name="stringValue" type="tns:StringAttributeValue">
+						</xs:element>
+						<xs:element maxOccurs="1" name="longValue" type="tns:LongAttributeValue">
+						</xs:element>
+						<xs:element maxOccurs="1" name="floatValue" type="tns:FloatAttributeValue">
+						</xs:element>
+						<xs:element maxOccurs="1" name="doubleValue" type="tns:DoubleAttributeValue">
+						</xs:element>
+						<xs:element maxOccurs="1" name="dateValue" type="tns:DateAttributeValue">
+						</xs:element>
+						<xs:element maxOccurs="1" name="customValue" type="tns:CustomAttributeValue">
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="StatusEnum">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SUCCESS"/>
+					<xs:enumeration value="ERROR"/>
+					<xs:enumeration value="TIMEOUT"/>
+					<xs:enumeration value="DEFAULT_VALUE"/>
+					<xs:enumeration value="NOT_PROCESSED"/>
+					<xs:enumeration value="RESERVED1"/>
+					<xs:enumeration value="RESERVED2"/>
+					<xs:enumeration value="RESERVED3"/>
+					<xs:enumeration value="RESERVED4"/>
+					<xs:enumeration value="RESERVED5"/>
+					<xs:enumeration value="RESERVED6"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Status">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="statusCode" type="tns:StatusEnum">
+					</xs:element>
+					<xs:element minOccurs="0" name="errorCode" type="xs:int">
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="xs:string">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ListAttributeValue">
+				<xs:annotation/>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="value" type="tns:ListValue">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="Attribute">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="Id" type="tns:AttributeId"/>
+					<xs:element name="Status" type="tns:Status"/>
+					<xs:element name="Value" type="tns:AttributeValue"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Key">
+				<xs:annotation/>
+				<xs:complexContent>
+					<xs:extension base="tns:Attribute"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="PdsBaseServiceRequest">				
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="extensionData" type="tns:ExtensionType"/>
+							<xs:element name="clientId" type="tns:ClientId"/>	
+						
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		
+			<xs:complexType abstract="true" name="PdsBaseServiceResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>						
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="extensionData" type="tns:ExtensionType"/>							
+						</xs:sequence>
+					</xs:extension>						
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetAttributesRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Get Attributes Request
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:PdsBaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="keys">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" name="key" type="tns:Key"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="attributeIds">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" name="attributeId" type="tns:AttributeId"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetAttributesResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Get Attributes Response
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:PdsBaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="attributes" type="tns:Attribute"/>
+							<xs:element maxOccurs="unbounded" name="keys" type="tns:Key"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SetAttributesRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Set Attributes Request
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:PdsBaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="keys">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" name="key" type="tns:Key"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="attributes">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" name="attribute" type="tns:Attribute"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SetAttributesResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Set Attributes Response
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:PdsBaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeStatus">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attributeId" type="tns:AttributeId"/>
+										<xs:element name="status" type="tns:Status"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="keys">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" name="key" type="tns:Key"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<!-- inherited ones from the marketplace svc definitions -->
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning
+						occured as part of service call. Any run time
+						error will not be reported here, but will be
+						reported aspart of soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain upon which the error
+								occurred. &lt;dl&gt; &lt;lh&gt;Domains
+								include:&lt;/lh&gt; &lt;dt&gt;
+								Marketplace &lt;/dt&gt; &lt;dd&gt; A
+								business or validation error occurred
+								for the Merchandising Service.
+								&lt;/dd&gt; &lt;dt&gt; SOA &lt;/dt&gt;
+								&lt;dd&gt; An exception occurred in the
+								Service Oriented Architecture (SOA)
+								framework. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the
+								request to fail (Error) or not
+								(Warning). &lt;br&gt;&lt;br&gt; If the
+								request fails and the source of the
+								problem is within the application (such
+								as a missing required element), please
+								change the application before you retry
+								the request. If the problem is due to
+								end-user input data, please alert the
+								end-user to the problem and provide the
+								means for them to correct the data. Once
+								the problem in the application or data
+								is resolved, you can attempt to re- send
+								the request to eBay.
+								&lt;br&gt;&lt;br&gt; If the source of
+								the problem is on eBay's side, you can
+								retry the request as-is a reasonable
+								number of times (eBay recommends twice).
+								If the error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+								&lt;br&gt;&lt;br&gt; When a warning
+								occurs, the error is returned in
+								addition to the business data. In this
+								case, you do not need to retry the
+								request (as the original request was
+								successful). However, depending on the
+								cause or nature of the warning, you
+								might need to contact either the end
+								user or eBay to effect a long term
+								solution to the problem to prevent it
+								from reoccurring in the future.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors:
+								request errors, application errors, and
+								system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition
+								that resulted in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain upon which the
+								error occurred. &lt;dl&gt;
+								&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+								&lt;dt&gt; Merchandising &lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								Merchandising service. &lt;/dd&gt;
+								&lt;dt&gt; MarketplaceCommon &lt;/dt&gt;
+								&lt;dd&gt; The error is common to all
+								Marketplace services. &lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some warning and error messages return
+								one or more variables that contain
+								contextual information about the error.
+								This is often the field or value that
+								triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the
+									list of parameter types returned
+									within the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:complexType name="StringAttributeValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element name="value" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="DoubleAttributeValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAttributeValue">
+						<xs:sequence>
+							<xs:element name="value" type="xs:double"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AttributeValue">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="complexListValue" type="tns:ListAttributeValue">
+						</xs:element>
+						<xs:element name="simpleListValue" type="tns:ListValue">
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="setAttributesRequest">
+		<wsdl:part element="tns:setAttributesRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getAttributesResponse">
+		<wsdl:part element="tns:getAttributesResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getAttributesRequest">
+		<wsdl:part element="tns:getAttributesRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setAttributesResponse">
+		<wsdl:part element="tns:setAttributesResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="PersonalizationDataServicePort">
+		<wsdl:operation name="getAttributes">
+			<wsdl:documentation>
+				Get one or more attributes
+			</wsdl:documentation>
+			<wsdl:input message="tns:getAttributesRequest"/>
+			<wsdl:output message="tns:getAttributesResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setAttributes">
+			<wsdl:documentation>
+				Set one or more attributes
+			</wsdl:documentation>
+			<wsdl:input message="tns:setAttributesRequest"/>
+			<wsdl:output message="tns:setAttributesResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PersonalizationDataServiceSOAPBinding" type="tns:PersonalizationDataServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getAttributes">
+			<wsdl:documentation>
+				Get one or more attributes
+			</wsdl:documentation>
+			<soap12:operation soapAction="urn:getPdsAttributes" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setAttributes">
+			<wsdl:documentation>
+				Set one or more attributes
+			</wsdl:documentation>
+			<soap12:operation soapAction="urn:setPdsAttributes" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="PersonalizationDataServiceSOAP11Binding" type="tns:PersonalizationDataServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getAttributes">
+			<wsdl:documentation>
+				Get one or more attributes
+			</wsdl:documentation>
+			<soap:operation soapAction="urn:getAttributes" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setAttributes">
+			<wsdl:documentation>
+				Set one or more attributes
+			</wsdl:documentation>
+			<soap:operation soapAction="urn:setAttributes" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="PersonalizationDataServiceHttpBinding" type="tns:PersonalizationDataServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getAttributes">
+			<wsdl:documentation>
+				Get one or more attributes
+			</wsdl:documentation>
+			<http:operation location="PersonalizationDataService/getAttributes"/>
+			<wsdl:input>
+				<mime:content part="getAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAttributesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setAttributes">
+			<wsdl:documentation>
+				Set one or more attributes
+			</wsdl:documentation>
+			<http:operation location="PersonalizationDataService/setAttributes"/>
+			<wsdl:input>
+				<mime:content part="setAttributesRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="setAttributesResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PersonalizationDataService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+			Pds Service provides a unified way to access user/visitor
+			attributes.
+		</wsdl:documentation>
+		<wsdl:port binding="tns:PersonalizationDataServiceHttpBinding" name="PersonalizationDataServiceHttp">
+			<http:address location="https://svcs.ebay.com/services/personalization/PersonalizationDataService/v1"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:PersonalizationDataServiceSOAPBinding" name="PersonalizationDataServiceSOAP12">
+			<soap12:address location="https://svcs.ebay.com/services/personalization/PersonalizationDataService/v1"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:PersonalizationDataServiceSOAP11Binding" name="PersonalizationDataServiceSOAP11port_http">
+			<soap:address location="https://svcs.ebay.com/services/personalization/PersonalizationDataService/v1"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,2125 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<!-- list operations -->
+			<xs:element name="addTEVListRequest" nillable="true" type="tns:AddTEVListRequest"/>
+			<xs:element name="addTEVListResponse" nillable="true" type="tns:AddTEVListResponse"/>
+			<xs:element name="getTEVListRequest" nillable="true" type="tns:GetTEVListRequest"/>
+			<xs:element name="getTEVListResponse" nillable="true" type="tns:GetTEVListResponse"/>
+			<xs:element name="updateTEVListRequest" nillable="true" type="tns:UpdateTEVListRequest"/>
+			<xs:element name="updateTEVListResponse" nillable="true" type="tns:UpdateTEVListResponse"/>
+			<xs:element name="deleteTEVListRequest" nillable="true" type="tns:DeleteTEVListRequest"/>
+			<xs:element name="deleteTEVListResponse" nillable="true" type="tns:DeleteTEVListResponse"/>
+			<xs:element name="getTEVListLatestVersionRequest" nillable="true" type="tns:GetTEVListLatestVersionRequest"/>
+			<xs:element name="getTEVListLatestVersionResponse" nillable="true" type="tns:GetTEVListLatestVersionResponse"/>
+			<xs:element name="getTEVListsRequest" nillable="true" type="tns:GetTEVListsRequest"/>
+			<xs:element name="getTEVListsResponse" nillable="true" type="tns:GetTEVListsResponse"/>
+			<!-- ruleset operations-->
+			<xs:element name="addRulesetRequest" nillable="true" type="tns:AddRulesetRequest"/>
+			<xs:element name="addRulesetResponse" nillable="true" type="tns:AddRulesetResponse"/>
+			<xs:element name="getRulesetRequest" nillable="true" type="tns:GetRulesetRequest"/>
+			<xs:element name="getRulesetResponse" nillable="true" type="tns:GetRulesetResponse"/>
+			<xs:element name="updateRulesetRequest" nillable="true" type="tns:UpdateRulesetRequest"/>
+			<xs:element name="updateRulesetResponse" nillable="true" type="tns:UpdateRulesetResponse"/>
+			<xs:element name="deleteRulesetRequest" nillable="true" type="tns:DeleteRulesetRequest"/>
+			<xs:element name="deleteRulesetResponse" nillable="true" type="tns:DeleteRulesetResponse"/>
+			<xs:element name="addRuleRequest" nillable="true" type="tns:AddRuleRequest"/>
+			<xs:element name="addRuleResponse" nillable="true" type="tns:AddRuleResponse"/>
+			<xs:element name="updateRuleRequest" nillable="true" type="tns:UpdateRuleRequest"/>
+			<xs:element name="updateRuleResponse" nillable="true" type="tns:UpdateRuleResponse"/>
+			<xs:element name="getRuleRequest" nillable="true" type="tns:GetRuleRequest"/>
+			<xs:element name="getRuleResponse" nillable="true" type="tns:GetRuleResponse"/>
+			<xs:element name="addQualificationRequest" nillable="true" type="tns:AddQualificationRequest"/>
+			<xs:element name="addQualificationResponse" nillable="true" type="tns:AddQualificationResponse"/>
+			<xs:element name="updateQualificationRequest" nillable="true" type="tns:UpdateQualificationRequest"/>
+			<xs:element name="updateQualificationResponse" nillable="true" type="tns:UpdateQualificationResponse"/>
+			<xs:element name="getQualificationRequest" nillable="true" type="tns:GetQualificationRequest"/>
+			<xs:element name="getQualificationResponse" nillable="true" type="tns:GetQualificationResponse"/>
+			<xs:element name="addExemptionRequest" nillable="true" type="tns:AddExemptionRequest"/>
+			<xs:element name="addExemptionResponse" nillable="true" type="tns:AddExemptionResponse"/>
+			<xs:element name="updateExemptionRequest" nillable="true" type="tns:UpdateExemptionRequest"/>
+			<xs:element name="updateExemptionResponse" nillable="true" type="tns:UpdateExemptionResponse"/>
+			<xs:element name="getExemptionRequest" nillable="true" type="tns:GetExemptionRequest"/>
+			<xs:element name="getExemptionResponse" nillable="true" type="tns:GetExemptionResponse"/>
+			<xs:element name="getRulesetsRequest" nillable="true" type="tns:GetRulesetsRequest"/>
+			<xs:element name="getRulesetsResponse" nillable="true" type="tns:GetRulesetsResponse"/>
+			<xs:element name="getQualificationsRequest" nillable="true" type="tns:GetQualificationsRequest"/>
+			<xs:element name="getQualificationsResponse" nillable="true" type="tns:GetQualificationsResponse"/>			
+			<xs:element name="getRulesRequest" nillable="true" type="tns:GetRulesRequest"/>
+			<xs:element name="getRulesResponse" nillable="true" type="tns:GetRulesResponse"/>
+			<xs:element name="getExemptionsRequest" nillable="true" type="tns:GetExemptionsRequest"/>
+			<xs:element name="getExemptionsResponse" nillable="true" type="tns:GetExemptionsResponse"/>
+									
+			<!--===================================================================
+				Common List operation types
+			====================================================================-->
+			<xs:complexType name="AddTEVListRequest">
+				<xs:annotation>
+					<xs:documentation>
+					   This Request takes list Type object and creates a new list
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="list" type="tns:List"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AddTEVListResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="listId" type="xs:int"/>
+							<xs:element name="versionNumber" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetTEVListRequest">
+				<xs:annotation>
+					<xs:documentation>
+					   This Request takes list id and version as input. Version is Optional. If no version is 
+					   specified it gets the latest version list elements.
+					   You can apply DataFilter filter to get the data you requirel.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="listId" type="xs:int"/>
+					<xs:element minOccurs="0" name="versionNumber" type="xs:int"/>
+					<xs:element minOccurs="0" name="filter" type="tns:DataFilter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetTEVListResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="list" type="tns:List"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetTEVListsRequest">
+				<xs:annotation>
+					<xs:documentation>
+					   This Request takeslist of list ids as input. It gets the latest version list elements for the given listIds.
+					   You can apply DataFilter filter to get the data you require.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="filter" type="tns:DataFilter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetTEVListsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="list" type="tns:List"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateTEVListRequest">
+				<xs:annotation>
+					<xs:documentation>
+					   This Request takes list Type object and creates a new version for the  list
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="list" type="tns:List"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UpdateTEVListResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="listId" type="xs:int"/>
+							<xs:element name="versionNumber" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="DeleteTEVListRequest">
+				<xs:annotation>
+					<xs:documentation>
+					   This Request takes list id and deletes the current list version.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="listId" type="xs:int"/>
+					<xs:element name="changeComment" type="xs:string"/>
+					<xs:element name="lastModifiedBy" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DeleteTEVListResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">						
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetTEVListLatestVersionRequest">
+				<xs:annotation>
+					<xs:documentation>
+					   This Request takes list Type object and creates a ne list
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="listId" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetTEVListLatestVersionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="listId" type="xs:int"/>
+							<xs:element name="versionNumber" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseDetails">
+				<xs:annotation>
+					<xs:documentation>
+						If no boolean flags are set, the default details of data will be returned. This would be the cases for Realtime or near-Realtime calls.
+						If all the boolean flags are set, the full details of data will be returned.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="includeVersionInfoDetails" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								This flag specifies that version information details will be included in the data returned
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="includeCreationDetails" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								This flag specifies that creation details (creation date modified date) will be includeed in the data returned
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="includeChangeDetails" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								This flag specifies that change details (change comments, supporting documents etc) will be included in the data returned
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DataStatus">
+				<xs:annotation>
+					<xs:documentation>
+						If no flag is set, the data elements with default status (Active) will be returned
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="includeDeleted" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								This specifies that the data elements with status as Deleted will be included in the returned data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DataFilter">
+				<xs:sequence>
+					<xs:element name="level" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the level as one of these options:
+							&lt;dl&gt;
+							&lt;dt&gt;
+								RT
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Realtime. This is the default option if the level is omitted
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Pref
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Prefatch.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Post
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Post.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								OL
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is OffLine.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								All
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is all the levels.
+							&lt;/dd&gt;
+							&lt;/dl&gt;
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="detail" type="tns:ResponseDetails"/>
+					<xs:element name="status" type="tns:DataStatus"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="List">
+				<xs:annotation>
+					<xs:documentation>
+					This object maps to complete details of the List.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="listId" type="xs:int"/>
+					<xs:element name="versionNumber" type="xs:int"/>
+					<xs:element name="listName" type="xs:string"/>
+					<xs:element name="listType" type="xs:int"/>
+					<xs:element name="listDescription" type="xs:string"/>
+					<xs:element name="listComparisonType" type="xs:string"/>
+					<xs:element name="changeComment" type="xs:string"/>
+					<xs:element minOccurs="0" name="supportingDocs" type="xs:string"/>
+					<xs:element minOccurs="0" name="supportingDocFileName" type="xs:string"/>
+					<xs:element name="lastModifiedBy" type="xs:string"/>
+					<xs:element minOccurs="0" name="status" type="tns:DataStatus"/>
+					<xs:element name="creationDate" type="xs:dateTime"/>
+					<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:element maxOccurs="unbounded" name="listElement" type="tns:ListElement"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ListElement">
+				<xs:sequence>
+					<xs:element name="listElementChangeLogId" type="xs:long"/>
+					<xs:element name="elementId" type="xs:long"/>
+					<!--<xs:element name="operation" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								 what 'operation' has been applied to a list element. It takes these single-character values: 'I' iInsert), 'U' (update) and 'D' (delete)
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>-->
+					<xs:element name="value" type="xs:string"/>
+					<xs:element name="sortOrder" type="xs:int"/>
+					<xs:element minOccurs="0" name="creationDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!--=======================================================================
+				 Common Ruleset operation types
+			========================================================================-->
+			<xs:complexType name="AddRuleRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to load a base rule.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="rule" type="tns:BaseRule"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AddRuleResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<!-- <xs:element name="ruleId" type="xs:int"/> -->
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateRuleRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to update some properties of a base rule.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="rule" type="tns:BaseRule"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UpdateRuleResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="ruleId" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetRulesRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to retrieve a a base rule.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="filter" type="tns:DataFilter"/>
+				</xs:sequence>					
+			</xs:complexType>
+			<xs:complexType name="GetRulesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="rule" type="tns:BaseRule"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>			
+			<xs:complexType name="GetRuleRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to retrieve a a base rule.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ruleId" type="xs:int"/>
+					<xs:element name="filter" type="tns:DataFilter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetRuleResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="rule" type="tns:BaseRule"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="BaseRule">
+				<xs:sequence>
+					<xs:element name="ruleId" type="xs:int"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="description" type="xs:string"/>
+					<xs:element name="level" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the level as one of these options:
+							&lt;dl&gt;
+							&lt;dt&gt;
+								RT
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Realtime. This is the default option if the level is omitted
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Pref
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Prefatch.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Post
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Post.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								OL
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is OffLine.
+							&lt;/dd&gt;
+							&lt;/dl&gt;
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="eventType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the event type as
+							&lt;dl&gt;
+							&lt;dt&gt;
+								Impression
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the impression event type
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								Click
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the click event type
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								All
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the all event types
+							&lt;/dd&gt;							
+							&lt;/dl&gt;
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="class" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the rule class as one of these options
+							&lt;dl&gt;
+							&lt;dt&gt;
+								Invalid-Other
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specified that the rule class is Invalid-Other
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								Invalid-Bot
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specified that the rule class is Invalid-Bot
+							&lt;/dd&gt;								
+							&lt;/dl&gt;    							
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statement" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetRulesetRequest">
+				<xs:sequence>
+					<xs:element name="rulesetId" type="xs:int"/>
+					<xs:element name="versionNumber" type="xs:int"/>
+					<xs:element name="filter" type="tns:DataFilter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetRulesetResponse">
+				<xs:annotation>
+					<xs:documentation>
+                    This is a common ruleset response object. What detail of data returned is determined by
+                    the "filter" in the RulesetRequestType.
+                </xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="ruleset" type="tns:Ruleset"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetRulesetsRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="channel" type="xs:int"/>
+					<xs:element minOccurs="0" name="filter" type="tns:DataFilter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetRulesetsResponse">
+				<xs:annotation>
+					<xs:documentation>
+                    This is a common ruleset response object. What detail of data returned is determined by
+                    the "filter" in the RulesetRequestType.
+                </xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="ruleset" type="tns:Ruleset"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateRulesetRequest">
+				<xs:sequence>
+					<xs:element name="ruleset" type="tns:Ruleset"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UpdateRulesetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="rulesetId" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="DeleteRulesetRequest">
+				<xs:sequence>
+					<xs:element name="rulesetId" type="xs:int"/>
+					<xs:element name="changeComment" type="xs:string"/>
+					<xs:element name="lastModifiedBy" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DeleteRulesetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AddRulesetRequest">
+				<xs:sequence>
+					<xs:element name="ruleset" type="tns:Ruleset"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AddRulesetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="rulesetId" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="Ruleset">
+				<xs:sequence>
+					<xs:element name="rulesetId" type="xs:int"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="description" type="xs:string"/>
+					<xs:element name="channel" type="xs:int"/>
+					<xs:element name="eventType" type="xs:string"/>
+					<xs:element name="level" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the level as one of these options:
+							&lt;dl&gt;
+							&lt;dt&gt;
+								RT
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Realtime. This is the default option if the level is omitted
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Pref
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Prefatch.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Post
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Post.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								OL
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is OffLine.
+							&lt;/dd&gt;
+							&lt;/dl&gt;
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="site" type="tns:RulesetSite"/>
+					<xs:element name="versionInfo" type="tns:RulesetVersion"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="element" type="tns:RulesetElement"/>
+					<xs:element name="creationDate" type="xs:dateTime"/>
+					<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RulesetSite">
+				<xs:sequence>
+					<xs:element name="globalId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The site upon which the item is listed. Returns a Global ID, which is a
+								unique identifier for combinations of site, language, and territory.
+								&lt;br&gt;&lt;br&gt;
+								For a list of possible enumeration values and how they map to eBay sites,
+								see &lt;a href="Enums/GlobalIdList.html"&gt;Global ID Values&lt;/a&gt;.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="changeComment" type="xs:string"/>
+					<xs:element name="creationDate" type="xs:dateTime"/>
+					<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RulesetVersion">
+				<xs:sequence>
+					<xs:element name="versionNumber" type="xs:int"/>
+					<xs:element name="status" type="tns:DataStatus"/>
+					<xs:element name="changeComment" type="xs:string"/>
+					<xs:element minOccurs="0" name="supportingDocs" type="xs:string"/>
+					<xs:element minOccurs="0" name="supportingDocFileName" type="xs:string"/>
+					<xs:element name="createdBy" type="xs:string"/>
+					<xs:element name="creationDate" type="xs:dateTime"/>
+					<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RuleSetAttribute">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" name="type" type="xs:int"/>
+					<xs:element minOccurs="0" name="value" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RulesetElement">
+				<xs:sequence>
+					<xs:element name="ruleId" type="xs:int"/>
+					<xs:element minOccurs="0" name="sequenceNumber" type="xs:int"/>
+					<xs:element minOccurs="0" name="action" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the action to be taken when a rule is evaluated as true or false.
+							&lt;dl&gt;
+							&lt;dt&gt;
+								Flag
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specified that the action is to flag the event.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								Filter
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specified that the action is to filter the event.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								Block
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specified that the action is to block the event.
+							&lt;/dd&gt;							
+							&lt;/dl&gt;    							
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="priority" type="xs:int"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="tns:RuleSetAttribute"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="property" type="tns:RuleSetAttribute"/>
+					<xs:element minOccurs="0" name="changeComment" type="xs:string"/>
+					<xs:element minOccurs="0" name="flagWhenResultEquals" type="xs:boolean"/>
+					<xs:element name="creationDate" type="xs:dateTime"/>
+					<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="qualification" type="tns:RuleQualification">
+						<xs:annotation>
+							<xs:documentation>
+            				This contains a list of rule qualfications that are associated to this base rule
+            			</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="exemption" type="tns:RuleExemption">
+						<xs:annotation>
+							<xs:documentation>
+            				this contains a list of rule Exemptions that are associated to the base rule. Currently, the list
+            				will only contains one element. It might have more in the future.
+            			</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RuleQualification">
+				<xs:sequence>
+					<xs:element name="qualificationId" type="xs:int"/>
+					<xs:element name="qualifyWhenResultEquals" type="xs:boolean"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="tns:RuleSetAttribute"/>
+					<xs:element name="changeComment" type="xs:string"/>
+					<xs:element name="creationDate" type="xs:dateTime"/>
+					<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RuleExemption">
+				<xs:sequence>
+					<xs:element name="exemptionId" type="xs:int"/>
+					<xs:element name="exemptWhenResultEquals" type="xs:boolean"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="tns:RuleSetAttribute"/>
+					<xs:element minOccurs="0" name="changeComment" type="xs:string"/>
+					<xs:element name="creationDate" type="xs:dateTime"/>
+					<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AddQualificationRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to load a base qualification.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="qualification" type="tns:Qualification"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AddQualificationResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<!-- <xs:element name="qualificationId" type="xs:int"/>  -->
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateQualificationRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to update some properties of a base qualification.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="qualification" type="tns:Qualification"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UpdateQualificationResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="qualificationId" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetQualificationsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to retrieve a base qualification.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="filter" type="tns:DataFilter"/>
+				</xs:sequence>					
+			</xs:complexType>
+			<xs:complexType name="GetQualificationsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="qualification" type="tns:Qualification"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>			
+			<xs:complexType name="GetQualificationRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to retrieve a base qualification.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="qualificationId" type="xs:int"/>
+					<xs:element name="filter" type="tns:DataFilter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetQualificationResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="qualification" type="tns:Qualification"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="Qualification">
+				<xs:sequence>
+					<xs:element name="qualificationId" type="xs:int"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="description" type="xs:string"/>
+					<xs:element name="level" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the level as one of these options:
+							&lt;dl&gt;
+							&lt;dt&gt;
+								RT
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Realtime. This is the default option if the level is omitted
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Pref
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Prefatch.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Post
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Post.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								OL
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is OffLine.
+							&lt;/dd&gt;
+							&lt;/dl&gt;
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="eventType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the event type as
+							&lt;dl&gt;
+							&lt;dt&gt;
+								Impression
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the impression event type
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								Click
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the click event type
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								All
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the all event types
+							&lt;/dd&gt;							
+							&lt;/dl&gt;
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statement" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AddExemptionRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to load a base exemption.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="exemption" type="tns:Exemption"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AddExemptionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<!-- <xs:element name="exemptionId" type="xs:int"/>  -->
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateExemptionRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to update some properties of a  base exemption
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="exemption" type="tns:Exemption"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UpdateExemptionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="exemptionId" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetExemptionsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to retrieve a base exemption
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="filter" type="tns:DataFilter"/>
+				</xs:sequence>				
+			</xs:complexType>
+			<xs:complexType name="GetExemptionsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="exemption" type="tns:Exemption"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>			
+			<xs:complexType name="GetExemptionRequest">
+				<xs:annotation>
+					<xs:documentation>
+						this method allows to retrieve a base exemption
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="exemptionId" type="xs:int"/>
+					<xs:element name="filter" type="tns:DataFilter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GetExemptionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="exemption" type="tns:Exemption"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="Exemption">
+				<xs:sequence>
+					<xs:element name="exemptionId" type="xs:int"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="description" type="xs:string"/>
+					<xs:element name="level" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the level as one of these options:
+							&lt;dl&gt;
+							&lt;dt&gt;
+								RT
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Realtime. This is the default option if the level is omitted
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Pref
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Prefatch.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								NRT-Post
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is Near-Realtime-Post.
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								OL
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the level is OffLine.
+							&lt;/dd&gt;
+							&lt;/dl&gt;
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="eventType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							Specifies the event type as
+							&lt;dl&gt;
+							&lt;dt&gt;
+								Impression
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the impression event type
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								Click
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the click event type
+							&lt;/dd&gt;
+							&lt;dt&gt;
+								All
+							&lt;/dt&gt;
+							&lt;dd&gt;
+								It specifies that the all event types
+							&lt;/dd&gt;							
+							&lt;/dl&gt;
+						</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statement" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<!--============================================
+					SOA service common types (generated)
+			============================================-->
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+			Base response container for all service operations. Contains error information
+			associated with the request.</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+					Information for an error or warning that occurred when eBay processed the
+					request.</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+			Indicates whether the error is a severe error (causing the request to fail)
+			or an informational error (a warning) that should be communicated to the
+			user.</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+					The request was processed successfully, but something occurred that may
+					affect your application or the user.				
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+					The request that triggered the error was not processed successfully.
+					When a serious application-level error occurs, the error is returned
+					instead of the business data.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+					The request that triggered the error was processed successfully but with some warnings.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+					The request that triggered the error was processed successfully but with some warnings.				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+			ErrorMessage to indicate any Error/Warning occured as part of service call.
+			Any run time error will not be reported here, but will be reported aspart of
+			soap fault.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+					Details about a single error.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+			This represents error details.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+					A unique code that identifies the particular error condition that occurred.
+					Your application can use error codes as identifiers in your customized
+					error-handling algorithms.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Name of the domain upon which the error occurred. 
+					&lt;dl&gt;
+					&lt;lh&gt;Domains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Marketplace
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						A business or validation error occurred for the Merchandising Service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						SOA
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						An exception occurred in the Service Oriented Architecture (SOA) framework.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+					Indicates whether the error caused the request to fail (Error) or not
+					(Warning).
+					&lt;br&gt;&lt;br&gt;
+					If the request fails and the source of the problem is within the application
+					(such as a missing required element), please change the application before you
+					retry the request. If the problem is due to end-user input data, please alert
+					the end-user to the problem and provide the means for them to correct the data.
+					Once the problem in the application or data is resolved, you can attempt to re-
+					send the request to eBay.
+					&lt;br&gt;&lt;br&gt;
+					If the source of the problem is on eBay's side, you can retry the request as-is
+					a reasonable number of times (eBay recommends twice). If the error persists,
+					contact Developer Technical Support. Once the problem has been resolved, the
+					request may be resent in its original form.
+					&lt;br&gt;&lt;br&gt;
+					When a warning occurs, the error is returned in addition to the business data.
+					In this case, you do not need to retry the request (as the original request was
+					successful). However, depending on the cause or nature of the warning, you
+					might need to contact either the end user or eBay to effect a long term
+					solution to the problem to prevent it from reoccurring in the future.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+					There are three categories of errors: request errors, application errors, and
+					system errors.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					A detailed description of the condition that resulted in the error.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+					Name of the subdomain upon which the error occurred. 
+					&lt;dl&gt;
+					&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Merchandising
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is specific to the Merchandising service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						MarketplaceCommon
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is common to all Marketplace services.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+					Unique identifier for an exception associated with an error.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+					Some warning and error messages return one or more variables that contain
+					contextual information about the error. This is often the field or value that
+					triggered the error.
+				</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+			Contextual information associated with an error.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+						The name of the parameter in the list of parameter types returned
+						within the error type.
+					</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>Conditionally</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+			Indicates whether the error is a severe error (causing the request to fail)
+			or an informational error (a warning) that should be communicated to the
+			user.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+					The request that triggered the error was not processed successfully.
+					When a serious application-level error occurs, the error is returned
+					instead of the business data.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+					The request was processed successfully, but something occurred that may
+					affect your application or the user. For example, eBay may have changed a
+					value the user sent in. In this case, eBay returns a normal, successful
+					response and also returns the warning.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+			There are three categories of error: request errors, application errors,
+			and system errors. Request and application errors are caused primarily by
+			invalid data passed in the request. System errors are caused primarily by
+			application failures and cannot be corrected by changing request values.
+		</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+					Indicates that an error has occurred on the eBay system side, such as a
+					database or server down. An application can retry the request as-is a
+					reasonable number of times (eBay recommends twice). If the error
+					persists, contact Developer Technical Support. Once the problem has been
+					resolved, the request may be resent in its original form.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+					An error occurred due to a problem with the request, such as missing or
+					invalid fields. The problem must be corrected before the request can be
+					made again. If the problem is due to something in the application (such
+					as a missing required field), the application must be changed. Once the
+					problem in the application or data is resolved, resend the corrected
+					request to eBay.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+					An error occurred due to a problem with the request, such as invalid or
+					missing data. The problem must be corrected before the request can be
+					made again. If the problem is a result of end-user data, the application
+					must alert the end-user to the problem and provide the means for the
+					end-user to correct the data. Once the problem in the data is resolved,
+					resend the request to eBay with the corrected data.
+				</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getTEVListResponse">
+		<wsdl:part element="tns:getTEVListResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTEVListLatestVersionResponse">
+		<wsdl:part element="tns:getTEVListLatestVersionResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteTEVListResponse">
+		<wsdl:part element="tns:deleteTEVListResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateTEVListRequest">
+		<wsdl:part element="tns:updateTEVListRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteTEVListRequest">
+		<wsdl:part element="tns:deleteTEVListRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTEVListLatestVersionRequest">
+		<wsdl:part element="tns:getTEVListLatestVersionRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addTEVListResponse">
+		<wsdl:part element="tns:addTEVListResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateTEVListResponse">
+		<wsdl:part element="tns:updateTEVListResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addTEVListRequest">
+		<wsdl:part element="tns:addTEVListRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTEVListRequest">
+		<wsdl:part element="tns:getTEVListRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTEVListsRequest">
+		<wsdl:part element="tns:getTEVListsRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTEVListsResponse">
+		<wsdl:part element="tns:getTEVListsResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addRulesetRequest">
+		<wsdl:part element="tns:addRulesetRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addRulesetResponse">
+		<wsdl:part element="tns:addRulesetResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRulesetRequest">
+		<wsdl:part element="tns:getRulesetRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRulesetResponse">
+		<wsdl:part element="tns:getRulesetResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateRulesetRequest">
+		<wsdl:part element="tns:updateRulesetRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateRulesetResponse">
+		<wsdl:part element="tns:updateRulesetResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteRulesetRequest">
+		<wsdl:part element="tns:deleteRulesetRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteRulesetResponse">
+		<wsdl:part element="tns:deleteRulesetResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addRuleRequest">
+		<wsdl:part element="tns:addRuleRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addRuleResponse">
+		<wsdl:part element="tns:addRuleResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateRuleRequest">
+		<wsdl:part element="tns:updateRuleRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateRuleResponse">
+		<wsdl:part element="tns:updateRuleResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRuleRequest">
+		<wsdl:part element="tns:getRuleRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRuleResponse">
+		<wsdl:part element="tns:getRuleResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addQualificationRequest">
+		<wsdl:part element="tns:addQualificationRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addQualificationResponse">
+		<wsdl:part element="tns:addQualificationResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateQualificationRequest">
+		<wsdl:part element="tns:updateQualificationRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateQualificationResponse">
+		<wsdl:part element="tns:updateQualificationResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getQualificationRequest">
+		<wsdl:part element="tns:getQualificationRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getQualificationResponse">
+		<wsdl:part element="tns:getQualificationResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addExemptionRequest">
+		<wsdl:part element="tns:addExemptionRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addExemptionResponse">
+		<wsdl:part element="tns:addExemptionResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateExemptionRequest">
+		<wsdl:part element="tns:updateExemptionRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateExemptionResponse">
+		<wsdl:part element="tns:updateExemptionResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getExemptionRequest">
+		<wsdl:part element="tns:getExemptionRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getExemptionResponse">
+		<wsdl:part element="tns:getExemptionResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRulesetsRequest">
+		<wsdl:part element="tns:getRulesetsRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRulesetsResponse">
+		<wsdl:part element="tns:getRulesetsResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getQualificationsRequest">
+		<wsdl:part element="tns:getQualificationsRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getQualificationsResponse">
+		<wsdl:part element="tns:getQualificationsResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRulesRequest">
+		<wsdl:part element="tns:getRulesRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRulesResponse">
+		<wsdl:part element="tns:getRulesResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>	
+	<wsdl:message name="getExemptionsRequest">
+		<wsdl:part element="tns:getExemptionsRequest" name="parameters">
+    </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getExemptionsResponse">
+		<wsdl:part element="tns:getExemptionsResponse" name="parameters">
+    </wsdl:part>
+	</wsdl:message>		
+	<wsdl:portType name="TrackingEventValidationServicePort">
+		<wsdl:operation name="addTEVList">
+			<wsdl:documentation>this operation adds a new list and associated its associated elements</wsdl:documentation>
+			<wsdl:input message="tns:addTEVListRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:addTEVListResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVList">
+			<wsdl:documentation>This operation allows to retrieve a list type info and its elements as follows:
+1) if 'listId' is given, it retrieves the list type info and its elements of the latest version
+2) if 'listId' and 'versionNumber' are given, it retrieves the list type info and its elements of a particular list with specificversion number.
+		</wsdl:documentation>
+			<wsdl:input message="tns:getTEVListRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:getTEVListResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVListLatestVersion">
+			<wsdl:documentation>This operation will get the current version no of all lists if no list.
+</wsdl:documentation>
+			<wsdl:input message="tns:getTEVListLatestVersionRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:getTEVListLatestVersionResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateTEVList">
+			<wsdl:documentation>This operation will create a new version for the list</wsdl:documentation>
+			<wsdl:input message="tns:updateTEVListRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:updateTEVListResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteTEVList">
+			<wsdl:documentation>This operation will delete the list</wsdl:documentation>
+			<wsdl:input message="tns:deleteTEVListRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:deleteTEVListResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVLists">
+			<wsdl:documentation>This operation will create a new version for the list</wsdl:documentation>
+			<wsdl:input message="tns:getTEVListsRequest">
+    </wsdl:input>
+			<wsdl:output message="tns:getTEVListsResponse">
+    </wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addRuleset">
+			<wsdl:documentation>This method adds one RULESET record.</wsdl:documentation>
+			<wsdl:input message="tns:addRulesetRequest"/>
+			<wsdl:output message="tns:addRulesetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getRuleset">
+			<wsdl:documentation>It retrieve an active ruleset or multiple active rulesets with all related information, such as included base rules, and rule qualifications 
+and Exemption of each base rule in short format (meaning all optional elements will be missing). This method is for realtime and near-realtime pool 
+to use to retrieve the ruleset(s), not for UI service.
+
+It returns the rulesets as follows
+1) the input "level" parameter is required. it can be one of these: 
+	0: all the levels, 1=Realtime, 2=Near-Realtime-Prefetch,3=Near-Realtime-Postfetch,4=Offline
+2) if any of the following input parameters are supplied, it returns the ruleset(s) that associates with that parameter. Otherwise, it returns all the possible
+ruleset(s) for that parameter:
+	- rulesetId
+	- versionNumber
+	- site
+	- channel
+		</wsdl:documentation>
+			<wsdl:input message="tns:getRulesetRequest"/>
+			<wsdl:output message="tns:getRulesetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateRuleset">
+			<wsdl:documentation>This method updates a ruleset and create a new version</wsdl:documentation>
+			<wsdl:input message="tns:updateRulesetRequest"/>
+			<wsdl:output message="tns:updateRulesetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="deleteRuleset">
+			<wsdl:documentation>This method marks a ruleset as deleted</wsdl:documentation>
+			<wsdl:input message="tns:deleteRulesetRequest"/>
+			<wsdl:output message="tns:deleteRulesetResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addRule">
+			<wsdl:documentation>This method loads a base rule</wsdl:documentation>
+			<wsdl:input message="tns:addRuleRequest"/>
+			<wsdl:output message="tns:addRuleResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateRule">
+			<wsdl:documentation>This method updates some properties of a base rule</wsdl:documentation>
+			<wsdl:input message="tns:updateRuleRequest"/>
+			<wsdl:output message="tns:updateRuleResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRule">
+			<wsdl:documentation>This method retrieves a base rule</wsdl:documentation>
+			<wsdl:input message="tns:getRuleRequest"/>
+			<wsdl:output message="tns:getRuleResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addQualification">
+			<wsdl:documentation>This method loads a base qualification</wsdl:documentation>
+			<wsdl:input message="tns:addQualificationRequest"/>
+			<wsdl:output message="tns:addQualificationResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateQualification">
+			<wsdl:documentation>This method updates some properties of a qualification</wsdl:documentation>
+			<wsdl:input message="tns:updateQualificationRequest"/>
+			<wsdl:output message="tns:updateQualificationResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getQualification">
+			<wsdl:documentation>This method retrieves a base qualification</wsdl:documentation>
+			<wsdl:input message="tns:getQualificationRequest"/>
+			<wsdl:output message="tns:getQualificationResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addExemption">
+			<wsdl:documentation>This method loads a base exemption</wsdl:documentation>
+			<wsdl:input message="tns:addExemptionRequest"/>
+			<wsdl:output message="tns:addExemptionResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateExemption">
+			<wsdl:documentation>This method updates some properties of a base exemption</wsdl:documentation>
+			<wsdl:input message="tns:updateExemptionRequest"/>
+			<wsdl:output message="tns:updateExemptionResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getExemption">
+			<wsdl:documentation>This method retrieves a base exemption</wsdl:documentation>
+			<wsdl:input message="tns:getExemptionRequest"/>
+			<wsdl:output message="tns:getExemptionResponse">
+    		</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRulesets">
+			<wsdl:documentation>
+		</wsdl:documentation>
+			<wsdl:input message="tns:getRulesetsRequest"/>
+			<wsdl:output message="tns:getRulesetsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getExemptions">
+			<wsdl:documentation>This method retrieves all base exemptions</wsdl:documentation>
+			<wsdl:input message="tns:getExemptionsRequest"/>
+			<wsdl:output message="tns:getExemptionsResponse">
+    		</wsdl:output>		
+		</wsdl:operation>    	
+		<wsdl:operation name="getQualifications">
+			<wsdl:documentation>This method retrieves all base qualifications</wsdl:documentation>
+			<wsdl:input message="tns:getQualificationsRequest"/>
+			<wsdl:output message="tns:getQualificationsResponse">
+    		</wsdl:output>
+		</wsdl:operation>		
+		<wsdl:operation name="getRules">
+			<wsdl:documentation>This method retrieves all base rules</wsdl:documentation>
+			<wsdl:input message="tns:getRulesRequest"/>
+			<wsdl:output message="tns:getRulesResponse">
+    		</wsdl:output>
+		</wsdl:operation>			
+	</wsdl:portType>
+	<wsdl:binding name="TrackingEventValidationServiceSOAPBinding" type="tns:TrackingEventValidationServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="addTEVList">
+			<soap12:operation soapAction="urn:addTEVList" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVList">
+			<soap12:operation soapAction="urn:getTEVList" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVListLatestVersion">
+			<soap12:operation soapAction="urn:getTEVListLatestVersion" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateTEVList">
+			<soap12:operation soapAction="urn:updateTEVList" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteTEVList">
+			<soap12:operation soapAction="urn:deleteTEVList" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVLists">
+			<soap12:operation soapAction="urn:getTEVLists" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addRuleset">
+			<soap12:operation soapAction="urn:addRuleset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRuleset">
+			<soap12:operation soapAction="urn:getRuleset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateRuleset">
+			<soap12:operation soapAction="urn:updateRuleset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteRuleset">
+			<soap12:operation soapAction="urn:deleteRuleset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addRule">
+			<soap12:operation soapAction="urn:addRule" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateRule">
+			<soap12:operation soapAction="urn:updateRule" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRule">
+			<soap12:operation soapAction="urn:getRule" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addQualification">
+			<soap12:operation soapAction="urn:addQualification" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateQualification">
+			<soap12:operation soapAction="urn:updateQualification" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getQualification">
+			<soap12:operation soapAction="urn:getQualification" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addExemption">
+			<soap12:operation soapAction="urn:addExemption" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateExemption">
+			<soap12:operation soapAction="urn:updateExemption" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getExemption">
+			<soap12:operation soapAction="urn:getExemption" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRulesets">
+			<soap12:operation soapAction="urn:getRulesets" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getExemptions">
+			<soap12:operation soapAction="urn:getExemptions" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>		
+		<wsdl:operation name="getQualifications">
+			<soap12:operation soapAction="urn:getQualifications" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>		
+		<wsdl:operation name="getRules">
+			<soap12:operation soapAction="urn:getRules" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>		
+	</wsdl:binding>
+	<wsdl:binding name="TrackingEventValidationServiceHttpBinding" type="tns:TrackingEventValidationServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="addTEVList">
+			<http:operation location="TrackingEventValidationService/addTEVList"/>
+			<wsdl:output>
+				<mime:content part="addTEVList" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVList">
+			<http:operation location="TrackingEventValidationService/getTEVList"/>
+			<wsdl:output>
+				<mime:content part="getTEVList" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVListLatestVersion">
+			<http:operation location="TrackingEventValidationService/getTEVListLatestVersion"/>
+			<wsdl:output>
+				<mime:content part="getTEVListLatestVersion" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateTEVList">
+			<http:operation location="TrackingEventValidationService/updateTEVList"/>
+			<wsdl:output>
+				<mime:content part="updateTEVList" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteTEVList">
+			<http:operation location="TrackingEventValidationService/deleteTEVList"/>
+			<wsdl:output>
+				<mime:content part="deleteTEVList" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTEVLists">
+			<http:operation location="TrackingEventValidationService/getTEVLists"/>
+			<wsdl:output>
+				<mime:content part="getTEVLists" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addRuleset">
+			<http:operation location="TrackingEventValidationService/addRuleset"/>
+			<wsdl:output>
+				<mime:content part="addRuleset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRuleset">
+			<http:operation location="TrackingEventValidationService/getRuleset"/>
+			<wsdl:output>
+				<mime:content part="getRuleset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateRuleset">
+			<http:operation location="TrackingEventValidationService/updateRuleset"/>
+			<wsdl:output>
+				<mime:content part="updateRuleset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteRuleset">
+			<http:operation location="TrackingEventValidationService/deleteRuleset"/>
+			<wsdl:output>
+				<mime:content part="deleteRuleset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addRule">
+			<http:operation location="TrackingEventValidationService/addRule"/>
+			<wsdl:output>
+				<mime:content part="addRule" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateRule">
+			<http:operation location="TrackingEventValidationService/updateRule"/>
+			<wsdl:output>
+				<mime:content part="updateRule" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRule">
+			<http:operation location="TrackingEventValidationService/getRule"/>
+			<wsdl:output>
+				<mime:content part="getRule" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addQualification">
+			<http:operation location="TrackingEventValidationService/addQualification"/>
+			<wsdl:output>
+				<mime:content part="addQualification" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateQualification">
+			<http:operation location="TrackingEventValidationService/updateQualification"/>
+			<wsdl:output>
+				<mime:content part="updateQualification" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getQualification">
+			<http:operation location="TrackingEventValidationService/getQualification"/>
+			<wsdl:output>
+				<mime:content part="getQualification" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addExemption">
+			<http:operation location="TrackingEventValidationService/addExemption"/>
+			<wsdl:output>
+				<mime:content part="addExemption" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateExemption">
+			<http:operation location="TrackingEventValidationService/updateExemption"/>
+			<wsdl:output>
+				<mime:content part="updateExemption" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getExemption">
+			<http:operation location="TrackingEventValidationService/getExemption"/>
+			<wsdl:output>
+				<mime:content part="getExemption" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getRulesets">
+			<http:operation location="TrackingEventValidationService/getRulesetst"/>
+			<wsdl:output>
+				<mime:content part="getRulesets" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getQualifications">
+			<http:operation location="TrackingEventValidationService/getQualifications"/>
+			<wsdl:output>
+				<mime:content part="getQualifications" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getExemptions">
+			<http:operation location="TrackingEventValidationService/getExemptions"/>
+			<wsdl:output>
+				<mime:content part="getExemptions" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>		
+		<wsdl:operation name="getRules">
+			<http:operation location="TrackingEventValidationService/getRules"/>
+			<wsdl:output>
+				<mime:content part="getRules" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>			
+	</wsdl:binding>
+	<wsdl:service name="TrackingEventValidationService">
+		<wsdl:port binding="tns:TrackingEventValidationServiceSOAPBinding" name="TrackingEventValidationServiceSOAP">
+			<soap12:address location="http://svcs.ebay.com/TrackingEventValidationService"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:TrackingEventValidationServiceHttpBinding" name="TrackingEventValidationServiceHttp">
+			<http:address location="http://svcs.ebay.com/TrackingEventValidationService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

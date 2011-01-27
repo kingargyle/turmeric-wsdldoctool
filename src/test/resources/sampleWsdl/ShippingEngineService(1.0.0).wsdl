@@ -1,0 +1,2553 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="ShippingEngineService" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:element name="calculateShippingCostRequest" type="tns:ShippingEngineServiceRequest">
+			</xs:element>
+			<xs:element name="calculateShippingCostResponse" type="tns:ShippingEngineServiceResponse">
+			</xs:element>
+			<xs:complexType name="ShippingEngineServiceRequest">
+				<xs:annotation/>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="orders" type="tns:ShippingOrder">
+								<xs:annotation/>
+							</xs:element>
+							<xs:element minOccurs="1" name="version" type="xs:string">
+								<xs:annotation/>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation/>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Amount">
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="currencyID" type="xs:string" use="required">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:complexType name="Address">
+				<xs:annotation/>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="street1" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="street2" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="city" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="county" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="stateOrProvince" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="country" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="postalCode" type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="DiscountRule">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>Discount Rule</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="ruleId" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								String. Required. Unique Id of the rule.
+								This rule Id will be used to identify
+								the rule used in ItemInfo. For MQ items,
+								addlQtyFee can be defined through a
+								rule. For half items, addl qty can be
+								defined through rule.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="discountOption" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								FLAT_ADDL_AMOUNT - Highest for first $x
+								(=FLAT_ADDL_AMOUNT) for each
+								additional.FLAT_ADDL_FREE = Highest for
+								first and each additional is
+								freeFLAT_ADDL_OFF_AMOUNT = Highest for
+								first and $x (=FLAT_ADDL_OFF_AMOUNT) off
+								for each additionalFLAT_PERCENT_OFF =
+								Flat - Highest for first and %x
+								(=FLAT_PERCENT_OFF) off for each
+								additionalCALC_DO_NOT_COMBINE_WEIGHT =
+								Use Individual Item
+								weight.CACL_COMBINE_WEIGHT = Calc - Use
+								Combined item
+								weight.CALC_WEIGHT_OFF_VALUE = Calc -
+								Highest for first and x oz
+								(=CALC_WEIGHT_OFF_VALUE)off for each
+								additionalFLAT and CALC rule id should
+								be specified in TxnInfo. PROMO and
+								HANDLING_RULE id is global (forced) and
+								should not be specified in
+								TxnInfo.PROMO_SHIPPING_COST_FOR_ITEM_TOTAL
+								= Promo - Charge a shipping cost of $x
+								(=PROMOTIONAL_SHIPPING_COST) for
+								multiple purchases totaling over
+								$y.PROMO_SHIPPING_COST_FOR_ITEM_COUNT =
+								Promo - Charge a shipping cost of $x
+								(=PROMOTIONAL_SHIPPING_COST) for
+								purchases of y or more
+								itemsPROMO_MAX_SHIPPING_COST = Promo -
+								Do not charge more than $x
+								(=PROMOTIONAL_SHIPPING_COST) for
+								shipping for multiple purchases on a
+								single order.HANDLING_RULE = Calculated
+								Handling Type
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DiscountRulesContainer">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="flatDiscountRules" type="tns:FlatAdditionalAmountRule">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								FLAT_ADDL_AMOUNT - Highest for first $x
+								(=FLAT_ADDL_AMOUNT) for each additional.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="mqDiscountRules" type="tns:MQAdditionalAmountRule">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								List of MQAdditionalAmountRule.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="itemCountPromoRules" type="tns:ItemCountPromoRule">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								PROMO_SHIPPING_COST_FOR_ITEM_COUNT =
+								Promo - Charge a shipping cost of $x
+								(=PROMOTIONAL_SHIPPING_COST) for
+								purchases of y or more items.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="givenTotalPromoRules" type="tns:GivenTotalPromoRule">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								PROMO_SHIPPING_COST_FOR_ITEM_TOTAL =
+								Promo - Charge a shipping cost of $x
+								(=PROMOTIONAL_SHIPPING_COST) for
+								multiple purchases totaling over $y.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="packageHandlingRules" type="tns:PackageHandlingRule">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								List of PackageHandlingRule.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="itemAddlCostHandlingRules" type="tns:ItemAddlCostHandlingRule">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								List of ItemAddlCostHandlingRule.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="FlatAdditionalAmountRule">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Flat Additional Amount Rule
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:DiscountRule">
+						<xs:sequence>
+							<xs:element name="addlAmount" type="xs:double">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Required if discountOption is
+										FLAT_ADDL_AMOUNT
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GivenTotalPromoRule">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Given Total Promo Rule
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:PromoRule">
+						<xs:sequence>
+							<xs:element name="subTotal" type="xs:double">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Required if discountOption is
+										PROMO_SHIPPING_COST_FOR_GIVEN_TOTAL.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="HandlingRule">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>Handling Rule</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:DiscountRule">
+						<xs:sequence>
+							<xs:element name="orderHandlingCost" type="xs:double">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Required if discountOption is
+										HANDLING_RULE.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ItemAddlCostHandlingRule">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Item Additional Cost Handling Rule
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:HandlingRule">
+						<xs:sequence>
+							<xs:element name="addlAmount" type="xs:double">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Required if discountOption is
+										CALC_ADDL_HANDLING_AMOUNT.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ItemCountPromoRule">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Item Count Promo Rule
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:PromoRule">
+						<xs:sequence>
+							<xs:element name="itemCount" type="xs:integer">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										tbd
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="MQAdditionalAmountRule">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:DiscountRule">
+						<xs:sequence>
+							<xs:element name="addlAmount" type="xs:double">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Required if discountOption is
+										FLAT_ADDL_AMOUNT
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PackageHandlingRule">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Package Handling Rule
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:HandlingRule">
+						<xs:sequence>
+							<xs:element name="packageHandlingCost" type="xs:double">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Package Handling Cost
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PromoRule">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>Promo Rule</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:DiscountRule">
+						<xs:sequence>
+							<xs:element name="promoShippingCost" type="xs:double">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Required if discountOption is
+										PROMO_SHIPPING_COST_FOR_GIVEN_TOTAL
+										or
+										PROMO_SHIPPING_COST_FOR_ITEMS_COUNT
+										or PROMO_MAX_SHIPPING_COST.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="ShippingDeliveryType">
+				<xs:annotation>
+					<xs:documentation>
+						Shipping Delivery Type, set to Residential all
+						the time.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Residential"/>
+					<xs:enumeration value="Commercial"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ShippingOrder">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<Summary>
+							Occurrences one or more. These are list of
+							orders for which shipping cost info is
+							required. There will be no relationship
+							between each order while processing. Each
+							order will be processed indpendently.
+							Support for muliple order is provided for
+							optimum performance of client/server
+							especially in case of calculated items.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="id" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Unique id for every order.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="evaluationType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								One of the following - COMMON_ONLY,
+								DEFAULT_SELECTED, SELECTED, CHEAPEST,
+								FASTEST. COMMON_ONLY applicable for RYP.
+								DEFAULT_SELECTED applicable for NGXO
+								first time call. SELECTED applicable for
+								subsequent NGXO call. CHEAPEST, FASTESET
+								applicable for new cart.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="txnInfo" type="tns:TransactionInfo">
+						<xs:annotation>
+							<xs:documentation>
+								Required for calculated service
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="effectiveTime" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								Optional. Unix time in GMT. Default -
+								Current Unix time in GMT. Get rate for
+								specific time.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="fromAddress" type="tns:Address">
+						<xs:annotation>
+							<xs:documentation>
+								Country specified in fromAddress should
+								match country for the siteId.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="toAddress" type="tns:Address">
+						<xs:annotation>
+							<xs:documentation>
+								Buyer's destination address.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="discountRulesContainer" type="tns:DiscountRulesContainer">
+						<xs:annotation>
+							<xs:documentation>
+								DiscountRulesContainer.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="sellerId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Optional. If passed, eBay can store the
+								stats. Not used in any business logic.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>
+										Conditionally
+									</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="currencyId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Currency Id
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="insuranceOption" type="tns:InsuranceOption">
+						<xs:annotation>
+							<xs:documentation>
+								Package Level Insurance Option,
+								calculated only.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ShippingServiceDetail">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<Summary/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="0" name="deliveryConfirmation" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Delivery Confirmation
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="shippingType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Valid string values - FLAT, CALCULATED.
+								No FREIGHT support.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingFee" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Required for calculateShippingCost
+								service. Required for shippingType FLAT.
+								Represents the cost for 1st qty of the
+								item.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="shippingMethod" type="tns:ShippingMethod">
+						<xs:annotation>
+							<xs:documentation>
+								List of valid shipping method
+								nameshttp://developer.ebay.com/DevZone/XML/docs/Reference/eBay/types/ShippingServiceCodeType.html.
+								No validation of service will be done
+								except for calculated. For calculated,
+								eBay service string to be specified.
+								eBay will map calculated service to
+								pitney id for passing to search eBay
+								shipping calculator. Validation with
+								siteId or buyer/seller country will not
+								be done. Half service will be FLAT
+								service.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="isSelected" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>tbd</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="deliveryType" type="tns:ShippingDeliveryType">
+						<xs:annotation>
+							<xs:documentation>
+								Delivery Type
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="rateType" type="tns:ShippingRateType">
+						<xs:annotation>
+							<xs:documentation>
+								Default. On demand rates for UPS. Valid
+								string values - OnDemand, Daily. FedEx
+								not supported.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="signatureRequired" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Signature Required
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="codFee" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								For Italy services. TODO:Fill out the
+								requirement.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ruleUsed" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Required if discount rule is to be used.
+								ruleId from discount rule will be used
+								here.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="TransactionInfo">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<Summary>
+							Occurrences one or more. These are list of
+							orders for which shipping cost info is
+							required. There will be no relationship
+							between each order while processing. Each
+							order will be processed indpendently.
+							Support for muliple order is provided for
+							optimum performance of client/server
+							especially in case of calculated items.
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="id" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								required. Not an item_id. Unique id for
+								every itemInfo passed in request. Caller
+								generated. eBay client should not pass
+								item_id, since multiple txns exists for
+								single item. eBay will validate for
+								uniqueness of this id across
+								TransactionInfo within an order. For
+								cart multi SKU packages from same item
+								will be different txns with different
+								id.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="itemSalePricePerQty" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Money. Optional. Required if order-cost
+								promotional rule is used.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="quantity" type="xs:integer">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="itemSpecifics" type="tns:ItemSpecifics">
+						<xs:annotation>
+							<xs:documentation>
+								Optional. Required if any of the service
+								is CALC.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="shippingServiceData" type="tns:ShippingServiceDetail">
+						<xs:annotation>
+							<xs:documentation>
+								Required. Occurrences - One or more.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="addlId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Optional. Can be passed for eBay
+								transaction. Itemid:txnId for txn or
+								0:orderId for order.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="txnHandlingCost" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>tbd.</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="txnHandlingRuleId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>tbd.</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="participateInPromo" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Participate In Promo.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="combinableWithOtherTxns" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								Combinable With Other Txns.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="surcharge" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Surcharge, MQ items count only once, for
+								UPS flat only.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="insuranceOption" type="tns:InsuranceOption">
+						<xs:annotation>
+							<xs:documentation>
+								Transaction Level Insurance Option,
+								calculated only.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ShippingRateType">
+				<xs:annotation>
+					<xs:documentation>
+						Shipping Rate Type.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OnDemand"/>
+					<xs:enumeration value="DailyPickup"/>
+					<xs:enumeration value="FedexStandardList"/>
+					<xs:enumeration value="FedexCounter"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ItemSpecifics">
+				<xs:annotation>
+					<xs:appinfo>
+						<Summary>
+							Optional. Required if any of the service is
+							CALC..
+						</Summary>
+					</xs:appinfo>
+					<xs:documentation>Item Specifics</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="weightMajor" type="tns:WeightMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="weightMinor" type="tns:WeightMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="packageType" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="irregular" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="packageLength" type="tns:LinearMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="packageWidth" type="tns:LinearMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="packageDepth" type="tns:LinearMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="declaredValue" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LinearMeasure">
+				<xs:annotation/>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="unit" type="tns:linearMeasurementUnit" use="required">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="linearMeasurementUnit">
+				<xs:annotation/>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="cm"/>
+					<xs:enumeration value="mm"/>
+					<xs:enumeration value="inches"/>
+					<xs:enumeration value="ft"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation/>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation/>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation/>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation/>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CostCalculation">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="effectivePkgType" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="effectivePkgWeightMajor" type="tns:WeightMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="effectivePkgWeightMinor" type="tns:WeightMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="discountOutputs" type="tns:DiscountOutput">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DiscountOutput">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="ruleId" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								String. Required. Unique Id of the rule.
+								This rule Id will be used to identify
+								the rule used in ItemInfo. For MQ items,
+								addlQtyFee can be defined through a
+								rule. For half items, addl qty can be
+								defined through rule.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="discountOption" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								FLAT_ADDL_AMOUNT - Highest for first $x
+								(=FLAT_ADDL_AMOUNT) for each and each
+								additional is freeFLAT_ADDL_OFF_AMOUNT =
+								Highest for first and $x
+								(=FLAT_ADDL_OFF_AMOUNT) off for each
+								additionalFLAT_PERCENT_OFF = Flat -
+								Highest for first and %x
+								(=FLAT_PERCENT_OFF) off for each
+								additionalCALC_DO_NOT_COMBINE_WEIGHT =
+								Use Individual Item
+								weight.CACL_COMBINE_WEIGHT = Calc - Use
+								Combined item
+								weight.CALC_WEIGHT_OFF_VALUE = Calc -
+								Highest for first and x oz
+								(=CALC_WEIGHT_OFF_VALUE)off for each
+								additionalFLAT and CALC rule id should
+								be specified in TxnInfo. PROMO and
+								HANDLING_RULE id is global (forced) and
+								should not be specified in
+								TxnInfo.PROMO_SHIPPING_COST_FOR_ITEM_TOTAL
+								= Promo - Charge a shipping cost of $x
+								(=PROMOTIONAL_SHIPPING_COST) for
+								multiple purchases totaling over
+								$y.PROMO_SHIPPING_COST_FOR_ITEM_COUNT =
+								Promo - Charge a shipping cost of $x
+								(=PROMOTIONAL_SHIPPING_COST) for
+								purchases of y or more
+								itemsPROMO_MAX_SHIPPING_COST = Promo -
+								Do not charge more than $x
+								(=PROMOTIONAL_SHIPPING_COST) for
+								shipping for multiple purchases on a
+								single order.HANDLING_RULE = Calculated
+								Handling Type
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="txns" type="tns:PackageDiscountTxnInfo">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="pkgHandlingCost" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+								Package level handing cost, it could
+								either come from the global insurance if
+								it is defined, or from the sum of the
+								individual insurance cost if the global
+								insurance is not defined.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+					</xs:element>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="InsuranceOption">
+				<xs:annotation>
+					<xs:documentation>
+						For Calculated Item only.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Required"/>
+					<xs:enumeration value="Optional"/>
+					<xs:enumeration value="Included"/>
+					<xs:enumeration value="Not Offered"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="OrderShippingCostResult">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Order Shipping Cost Result
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="evaluationType" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="txns" type="tns:TransactionResult">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="packageResult" type="tns:Packaging">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Package">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>Package.</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="packageId" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								eBay created. Starting with value 1.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="shippingMethod" type="tns:ShippingMethod">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								List of valid shipping method
+								nameshttp://developer.ebay.com/DevZone/XML/docs/Reference/eBay/types/ShippingServiceCodeType.html.
+								No validation of service will be done
+								except for calculated. For calculated,
+								eBay service string to be specified.
+								eBay will map calculated service to
+								pitney id for passing to search eBay
+								shipping calculator. Validation with
+								siteId or buyer/seller country will not
+								be done. Half service will be FLAT
+								service.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="packageTransactionInfo" type="tns:PackageTransactionInfo">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Comma separated itemid,startIndex,Qty
+								list - Ex - 1_0,2;2_0_1
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="shippingServiceResult" type="tns:PackageCostResult">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Comma separated itemid,startIndex,Qty
+								list - Ex - 1_0,2;2_0_1
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="costCalculation" type="tns:CostCalculation">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Details about how the discount is
+								calculated.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="isPromoPackage" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Default - False. If promo is triggered,
+								will be TRUE. ShippingMethod will be
+								promotional shipping service.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="promoDiscountInfo" type="tns:PromotionalRuleResultInfo">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Required if promotional specified for
+								any transaction..
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PackageCostResult">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Package Cost Result
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="costWithDiscount" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								If promo is triggered, this cost will be
+								prom shipping cost.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="savings" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								For promo, compare with default
+								packaging.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="pkgHandlingCost" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Package level handing cost, it could
+								either come from the global insurance if
+								it is defined, or from the sum of the
+								individual insurance cost if the global
+								insurance is not defined.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="insuranceOption" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Package level insurance option,
+								calculated only.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="insuranceCost" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Package level insurance cost, calculated
+								only.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PackageDiscountTxnInfo">
+				<xs:annotation>
+					<xs:documentation>
+						Package transaction list for a particular
+						discount, all transactions in the this type
+						belong to the same discount ID.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="id" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Item id.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="quantity" type="xs:integer">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Qty of the item in the package.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="shippingFeePerQty" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Shipping Fee Per Quantity.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="addlFee" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Additional shipping fee.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="txnHandlingCost" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Transaction level handing cost.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PackageTransactionInfo">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Package Transaction Info
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="id" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Item id.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="addlId" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Additional ID.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="quantity" type="xs:integer">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Qty of the item in the package.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Packaging">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>Packaging</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="packages" type="tns:Package">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="hasPromoPackage" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Default - False. If promo is triggered, will be TRUE and one of the packages will be using promo shipping service.</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateShippingCost</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="insuranceOption" type="tns:InsuranceOption">
+						<xs:annotation>
+							<xs:documentation>Package Level Insurance Option, calculated only.</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateShippingCost</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="insuranceCost" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Package level insurance cost, calculated only.</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateShippingCost</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PromotionalRuleResultInfo">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="promoRuleId" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="promoTriggered" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Default - False. promoTriggered (yes implies the promo rule was satisfied but the actual output may or may not use the promo cost, no implies we give the delta)</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateShippingCost</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="promoApplied" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Default - False. We actually used the promo rule for the output.</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateShippingCost</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="promoDeltaCost" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Applicable only if the following - promoEligible is TRUE, promoTriggered is FALSE and promo rule is 'buy $x item subtotal' rule. If promo shipping cost is expensive than cheapest service cost, then this tag will not emitted.</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateShippingCost</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+								<xs:element minOccurs="0" name="promoDeltaItems" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Applicable only if the following - promoEligible is TRUE, promoTriggered is FALSE and promo rule is 'N item' rule. If promo shipping cost is expensive than cheapest service cost, then this tag will not emitted.</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<CallName>CalculateShippingCost</CallName>
+							<RequiredInput>No</RequiredInput>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ShippingEngineServiceResponse">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Shipping Engine Service Response
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="orderShippingCosts" type="tns:OrderShippingCostResult">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="creationTime" type="xs:dateTime">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Time in MM/DD/YYYY HH:MM:SS
+										format. Request time.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation/>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ShippingMethod">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>Shipping Method</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="serviceName" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								List of valid shipping method
+								nameshttp://developer.ebay.com/DevZone/XML/docs/Reference/eBay/types/ShippingServiceCodeType.html.
+								No validation of service will be done
+								except for calculated. For calculated,
+								eBay service string to be specified.
+								eBay will map calculated service to
+								pitney id for passing to search eBay
+								shipping calculator. Validation with
+								siteId or buyer/seller country will not
+								be done. Half service will be FLAT
+								service.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="TransactionResult">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Transaction Result
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="id" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="addlId" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Optional. Can be passed for eBay
+								transaction. Itemid:txnId for txn or
+								0:orderId for order.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="quantity" type="xs:integer">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="shippingServiceResult" type="tns:TransactionShippingServiceResult">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="txnHandlingCost" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="TransactionShippingServiceResult">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="shippingMethod" type="tns:ShippingMethod">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="costPerQty" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="isSelected" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="insuranceOption" type="tns:InsuranceOption">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="insuranceCost" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="WeightMeasure">
+				<xs:annotation/>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="unit" type="tns:weightMeasurementUnit" use="required">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="weightMeasurementUnit">
+				<xs:annotation/>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="kg"/>
+					<xs:enumeration value="gm"/>
+					<xs:enumeration value="lbs"/>
+					<xs:enumeration value="oz"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="calculateShippingCostRequest">
+		<wsdl:part element="tns:calculateShippingCostRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="calculateShippingCostResponse">
+		<wsdl:part element="tns:calculateShippingCostResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="ShippingEngineServicePort">
+		<wsdl:operation name="calculateShippingCost">
+			<wsdl:input message="tns:calculateShippingCostRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:calculateShippingCostResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ShippingEngineServiceHttpBinding" type="tns:ShippingEngineServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="calculateShippingCost">
+			<http:operation location="/calculateShippingCost"/>
+			<wsdl:input>
+				<mime:content part="calculateShippingCost" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="calculateShippingCost" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ShippingEngineServiceSOAPBinding" type="tns:ShippingEngineServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="calculateShippingCost">
+			<soap12:operation soapAction="urn:calculateShippingCost" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ShippingEngineService">
+		<wsdl:port binding="tns:ShippingEngineServiceHttpBinding" name="ShippingEngineServiceHttp">
+			<http:address location="http://webservices.ebay.com/ShippingEngineService"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:ShippingEngineServiceSOAPBinding" name="ShippingEngineServiceSOAP">
+			<soap12:address location="http://webservices.ebay.com/ShippingEngineService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

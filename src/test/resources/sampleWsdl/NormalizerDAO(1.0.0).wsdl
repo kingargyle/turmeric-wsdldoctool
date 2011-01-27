@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services"> 						
+			<xs:complexType name="Sample">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="metricName" type="xs:string"/>
+					<xs:element minOccurs="0" name="key" type="xs:string"/>
+					<xs:element minOccurs="0" name="value" type="xs:double"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="SampleList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfSample" nillable="true" type="tns:Sample"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="NormalizerResult">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="outlierList" type="tns:OutlierList"/>
+					<xs:element minOccurs="0" name="mean" type="xs:double"/>
+					<xs:element minOccurs="0" name="metricName" type="xs:string"/>
+					<xs:element minOccurs="0" name="stdDev" type="xs:double"/>
+					<xs:element minOccurs="0" name="error" type="tns:ErrorInfo"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="Outlier">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="key" type="xs:string"/>
+					<xs:element minOccurs="0" name="value" type="xs:double"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="NormalizerResultList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfNormalizerResult" nillable="true" type="tns:NormalizerResult"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="OutlierList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfOutlier" nillable="true" type="tns:Outlier"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="ErrorInfo">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorData" type="xs:string"/>
+					<xs:element minOccurs="0" name="errorDesc" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="NormalizerInput">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="lowerBound" type="xs:int"/>
+					<xs:element minOccurs="0" name="sampleList" type="tns:SampleList"/>
+					<xs:element minOccurs="0" name="upperBound" type="xs:int"/>					
+				</xs:sequence>				
+			</xs:complexType>						
+			<xs:complexType name="getSDMeanOutliersRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="inputStatistics" type="tns:NormalizerInput"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSDMeanOutliersResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:NormalizerResult"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getSDMeanOutliersByMetricRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="inputStatistics" type="tns:NormalizerInput"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSDMeanOutliersByMetricResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:NormalizerResultList"/>
+				</xs:sequence>
+			</xs:complexType>						
+			<xs:element name="getSDMeanOutliers" type="tns:getSDMeanOutliersRequest"/>
+			<xs:element name="getSDMeanOutliersResponse" nillable="true" type="tns:getSDMeanOutliersResponse"/>			
+			<xs:element name="getSDMeanOutliersByMetric" type="tns:getSDMeanOutliersByMetricRequest"/>
+			<xs:element name="getSDMeanOutliersByMetricResponse" nillable="true" type="tns:getSDMeanOutliersByMetricResponse"/>			
+		</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getSDMeanOutliersByMetricResponse">
+    <wsdl:part element="tns:getSDMeanOutliersByMetricResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSDMeanOutliersResponse">
+    <wsdl:part element="tns:getSDMeanOutliersResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSDMeanOutliersRequest">
+    <wsdl:part element="tns:getSDMeanOutliers" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSDMeanOutliersByMetricRequest">
+    <wsdl:part element="tns:getSDMeanOutliersByMetric" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="NormalizerDAOPortType">
+    <wsdl:operation name="getSDMeanOutliers">
+      <wsdl:input message="tns:getSDMeanOutliersRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getSDMeanOutliersResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSDMeanOutliersByMetric">
+      <wsdl:input message="tns:getSDMeanOutliersByMetricRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getSDMeanOutliersByMetricResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NormalizerDAOSoap11Binding" type="tns:NormalizerDAOPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getSDMeanOutliers">
+      <soap:operation soapAction="urn:getSDMeanOutliers" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSDMeanOutliersByMetric">
+      <soap:operation soapAction="urn:getSDMeanOutliersByMetric" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NormalizerDAOSoap12Binding" type="tns:NormalizerDAOPortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getSDMeanOutliers">
+      <soap12:operation soapAction="urn:getSDMeanOutliers" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSDMeanOutliersByMetric">
+      <soap12:operation soapAction="urn:getSDMeanOutliersByMetric" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NormalizerDAOHTTPBinding" type="tns:NormalizerDAOPortType">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="getSDMeanOutliers">
+      <http:operation location="NormalizerDAO/getSDMeanOutliers"/>
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSDMeanOutliersByMetric">
+      <http:operation location="NormalizerDAO/getSDMeanOutliersByMetric"/>
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="NormalizerDAO">
+    <wsdl:port binding="tns:NormalizerDAOHTTPBinding" name="NormalizerDAOHttpEndpoint">
+      <http:address location="http://localhost:8080/NormalizerDAO"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:NormalizerDAOSoap12Binding" name="NormalizerDAOHttpSoap12Endpoint">
+      <soap12:address location="http://localhost:8080/NormalizerDAO"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:NormalizerDAOSoap11Binding" name="NormalizerDAOHttpSoap11Endpoint">
+      <soap:address location="http://localhost:8080/NormalizerDAO"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

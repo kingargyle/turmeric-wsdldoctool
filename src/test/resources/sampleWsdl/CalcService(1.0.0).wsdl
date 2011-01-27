@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.arajmony.sirpum.com/services/test" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.arajmony.sirpum.com/services/test">
+  <wsdl:documentation>A WebService for the calculation of prime factors.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.arajmony.sirpum.com/services/test">
+      <s:element name="CalcPrimeFactors">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="inputText" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CalcPrimeFactorsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CalcPrimeFactorsResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string"/>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CalcPrimeFactorsSoapIn">
+    <wsdl:part element="tns:CalcPrimeFactors" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="CalcPrimeFactorsSoapOut">
+    <wsdl:part element="tns:CalcPrimeFactorsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="CalcPrimeFactorsHttpGetIn">
+    <wsdl:part name="inputText" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CalcPrimeFactorsHttpGetOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:portType name="CalcServiceSoap">
+    <wsdl:operation name="CalcPrimeFactors">
+      <wsdl:documentation>Calculate all prime factors of a given number.</wsdl:documentation>
+      <wsdl:input message="tns:CalcPrimeFactorsSoapIn"/>
+      <wsdl:output message="tns:CalcPrimeFactorsSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="CalcServiceHttpGet">
+    <wsdl:operation name="CalcPrimeFactors">
+      <wsdl:documentation>Calculate all prime factors of a given number.</wsdl:documentation>
+      <wsdl:input message="tns:CalcPrimeFactorsHttpGetIn"/>
+      <wsdl:output message="tns:CalcPrimeFactorsHttpGetOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CalcServiceSoap" type="tns:CalcServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CalcPrimeFactors">
+      <soap:operation soapAction="http://www.arajmony.sirpum.com/services/testCalcPrimeFactors" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CalcServiceSoap12" type="tns:CalcServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CalcPrimeFactors">
+      <soap12:operation soapAction="http://www.arajmony.sirpum.com/services/testCalcPrimeFactors" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CalcServiceHttpGet" type="tns:CalcServiceHttpGet">
+    <http:binding verb="GET"/>
+    <wsdl:operation name="CalcPrimeFactors">
+      <http:operation location="/CalcPrimeFactors"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CalcService">
+    <wsdl:documentation>A WebService for the calculation of prime factors.</wsdl:documentation>
+    <wsdl:port binding="tns:CalcServiceSoap" name="CalcServiceSoap">
+      <soap:address location="https://svcs.ebay.com/services/CalcService/v1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

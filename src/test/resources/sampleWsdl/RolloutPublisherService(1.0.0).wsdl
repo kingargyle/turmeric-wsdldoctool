@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:impl="urn:wsmanager.turboroller.ebay.com" xmlns:intf="urn:wsmanager.turboroller.ebay.com" xmlns:tns1="http://to.common.turboroller.ebay.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="urn:wsmanager.turboroller.ebay.com">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="urn:wsmanager.turboroller.ebay.com">
+   <import namespace="http://to.common.turboroller.ebay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="Authentication">
+    <sequence>
+     <element name="applicationName" nillable="true" type="xsd:string"/>
+     <element name="ip" nillable="true" type="xsd:string"/>
+     <element name="password" nillable="true" type="xsd:string"/>
+     <element name="userId" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://to.common.turboroller.ebay.com">
+   <import namespace="urn:wsmanager.turboroller.ebay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="RollbackDetailsTo">
+    <sequence>
+     <element name="rollback_Code_Value" nillable="true" type="xsd:string"/>
+     <element name="rollback_ID" nillable="true" type="xsd:string"/>
+     <element name="rollback_XSL_Value" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="createRollbackForPoolV2Request">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="calPoolName" type="xsd:string"/>
+
+      <wsdl:part name="notes" type="xsd:string"/>
+
+      <wsdl:part name="template" type="xsd:string"/>
+
+      <wsdl:part name="listOfExcludedMachines" type="xsd:string"/>
+
+      <wsdl:part name="rollbackOptions" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOriginalIDForPoolRollbackResponse">
+
+      <wsdl:part name="getOriginalIDForPoolRollbackReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createRollbackForPoolRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="calPoolName" type="xsd:string"/>
+
+      <wsdl:part name="notes" type="xsd:string"/>
+
+      <wsdl:part name="template" type="xsd:string"/>
+
+      <wsdl:part name="listOfExcludedMachines" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createRollbackToPreviousTrainResponse">
+
+      <wsdl:part name="createRollbackToPreviousTrainReturn" type="tns1:RollbackDetailsTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="rollOneMoreBoxRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+      <wsdl:part name="notes" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createRollbackForPoolV2Response">
+
+      <wsdl:part name="createRollbackForPoolV2Return" type="tns1:RollbackDetailsTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOriginalIDForPoolRollbackRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="calPoolName" type="xsd:string"/>
+
+      <wsdl:part name="notes" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCertificationBuildsInfoRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="odbName" type="xsd:string"/>
+
+      <wsdl:part name="code_type" type="xsd:string"/>
+
+      <wsdl:part name="typeOfRollout" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createRollbackRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+      <wsdl:part name="notes" type="xsd:string"/>
+
+      <wsdl:part name="template" type="xsd:string"/>
+
+      <wsdl:part name="listOfExcludedMachines" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createRollbackResponse">
+
+      <wsdl:part name="createRollbackReturn" type="tns1:RollbackDetailsTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="rollOneMoreBoxResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="changeConductorRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+      <wsdl:part name="newConductorLogin" type="xsd:string"/>
+
+      <wsdl:part name="notes" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createRollbackForPoolResponse">
+
+      <wsdl:part name="createRollbackForPoolV2Return" type="tns1:RollbackDetailsTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeConductorResponse">
+
+      <wsdl:part name="changeConductorReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCertificationBuildsInfoResponse">
+
+      <wsdl:part name="getCertificationBuildsInfoReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createRollbackToPreviousTrainRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="rolloutId" type="xsd:string"/>
+
+      <wsdl:part name="notes" type="xsd:string"/>
+
+      <wsdl:part name="template" type="xsd:string"/>
+
+      <wsdl:part name="listOfExcludedMachines" type="xsd:string"/>
+
+      <wsdl:part name="rollbackOptions" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="RolloutPublisher">
+
+      <wsdl:operation name="createRollbackToPreviousTrain" parameterOrder="auth rolloutId notes template listOfExcludedMachines rollbackOptions">
+
+         <wsdl:input message="impl:createRollbackToPreviousTrainRequest" name="createRollbackToPreviousTrainRequest"/>
+
+         <wsdl:output message="impl:createRollbackToPreviousTrainResponse" name="createRollbackToPreviousTrainResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createRollback" parameterOrder="auth rolloutId notes template listOfExcludedMachines">
+
+         <wsdl:input message="impl:createRollbackRequest" name="createRollbackRequest"/>
+
+         <wsdl:output message="impl:createRollbackResponse" name="createRollbackResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCertificationBuildsInfo" parameterOrder="auth odbName code_type typeOfRollout">
+
+         <wsdl:input message="impl:getCertificationBuildsInfoRequest" name="getCertificationBuildsInfoRequest"/>
+
+         <wsdl:output message="impl:getCertificationBuildsInfoResponse" name="getCertificationBuildsInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="rollOneMoreBox" parameterOrder="auth rolloutId notes">
+
+         <wsdl:input message="impl:rollOneMoreBoxRequest" name="rollOneMoreBoxRequest"/>
+
+         <wsdl:output message="impl:rollOneMoreBoxResponse" name="rollOneMoreBoxResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createRollbackForPool" parameterOrder="auth calPoolName notes template listOfExcludedMachines">
+
+         <wsdl:input message="impl:createRollbackForPoolRequest" name="createRollbackForPoolRequest"/>
+
+         <wsdl:output message="impl:createRollbackForPoolResponse" name="createRollbackForPoolResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createRollbackForPoolV2" parameterOrder="auth calPoolName notes template listOfExcludedMachines rollbackOptions">
+
+         <wsdl:input message="impl:createRollbackForPoolV2Request" name="createRollbackForPoolV2Request"/>
+
+         <wsdl:output message="impl:createRollbackForPoolV2Response" name="createRollbackForPoolV2Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOriginalIDForPoolRollback" parameterOrder="auth calPoolName notes">
+
+         <wsdl:input message="impl:getOriginalIDForPoolRollbackRequest" name="getOriginalIDForPoolRollbackRequest"/>
+
+         <wsdl:output message="impl:getOriginalIDForPoolRollbackResponse" name="getOriginalIDForPoolRollbackResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeConductor" parameterOrder="auth rolloutId newConductorLogin notes">
+
+         <wsdl:input message="impl:changeConductorRequest" name="changeConductorRequest"/>
+
+         <wsdl:output message="impl:changeConductorResponse" name="changeConductorResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="RolloutPublisherSoapBinding" type="impl:RolloutPublisher">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="createRollbackToPreviousTrain">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createRollbackToPreviousTrainRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createRollbackToPreviousTrainResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createRollback">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createRollbackRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createRollbackResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCertificationBuildsInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCertificationBuildsInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCertificationBuildsInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="rollOneMoreBox">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="rollOneMoreBoxRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="rollOneMoreBoxResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createRollbackForPool">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createRollbackForPoolRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createRollbackForPoolResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createRollbackForPoolV2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createRollbackForPoolV2Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createRollbackForPoolV2Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOriginalIDForPoolRollback">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getOriginalIDForPoolRollbackRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getOriginalIDForPoolRollbackResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeConductor">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="changeConductorRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="changeConductorResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="RolloutPublisherService">
+
+      <wsdl:port binding="impl:RolloutPublisherSoapBinding" name="RolloutPublisher">
+
+         <wsdlsoap:address location="http://tr2api.vip.ebay.com/TurboRoller/services/RolloutPublisher"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

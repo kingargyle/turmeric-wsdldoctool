@@ -1,0 +1,1281 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ebay.com/marketplace/marketplacecatalog/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/marketplacecatalog/v1/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="ProductService" targetNamespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+    <wsdl:documentation/>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <xs:element name="findProductsResponse" type="tns:FindProductsResponse">
+                <xs:annotation>
+                    <xs:documentation>
+						Response object for Find Product operation
+					</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="getProductDetailsResponse" type="tns:GetProductDetailsResponse"/>
+            <xs:element name="findProductsRequest" type="tns:FindProductsRequest"/>
+            <xs:complexType name="FindProductsRequest">
+                <xs:annotation>
+                    <xs:documentation>
+						This is a request object containing input for
+						the find product operation
+					</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseServiceRequest">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="productSearch" type="tns:ProductRequest">
+                                <xs:annotation>
+                                    <xs:documentation>
+										User can findproducts for one
+										catalog at a time or batch up to
+										10 catalogs.
+									</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:element name="getProductDetailsRequest" type="tns:GetProductDetailsRequest"/>
+            <xs:complexType name="GetProductDetailsRequest">
+                <xs:annotation>
+                    <xs:documentation>
+						This is the request object for getProductDetails
+						operation
+					</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseServiceRequest">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="productDetailsRequest" type="tns:ProductDetailsRequestType"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GetProductDetailsResponse">
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseServiceResponse">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="product" type="tns:Product"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="FindProductsResponse">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseServiceResponse">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="productSearchResult" type="tns:ProductResponse"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+
+
+
+            <xs:element name="findProductsByCompatibilityResponse" type="tns:FindProductsResponse"/>
+            <xs:element name="findProductsByCompatibilityRequest" type="tns:FindProductsByCompatibilityRequest"/>
+            <xs:complexType name="FindProductsByCompatibilityRequest">
+                <xs:annotation>
+                    <xs:documentation>
+						This is a request object containing input for
+						findProductsInCatalogByFitment operation. caller
+						can find products by fitment using this
+						operation. Keywords will further refine the
+						query with containing keywords.
+
+						Example:
+
+						Get me all products, given
+
+						SiteID=1 CategoryID=2345 (mapped to tires
+						catalog)
+
+						Namespace: Interface
+
+						Name:Value pair#1: Tire Width=185
+
+						Namespace: Compatibility
+
+						Name:Value pair #1: Make=BMW
+
+						Name:Value pair #2: Year=2007
+
+					</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseServiceRequest">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="productByCompatibilitySearch" type="tns:ProductByCompatibilityRequest"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:element name="getProductCompatibilitiesRequest" type="tns:GetProductCompatibilitiesRequest"/>
+            <xs:element name="getProductCompatibilitiesResponse" type="tns:GetProductCompatiblitiesResponse"/>
+            <xs:complexType name="GetProductBaseResponse">
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseServiceResponse">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="productDetails" type="tns:BaseProductDetails"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GetProductCompatibilitiesRequest">
+                <xs:annotation>
+                    <xs:documentation>
+						Request object for getProductFitmentDetails
+						operation.
+					</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseServiceRequest">
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="productIdentifier" type="tns:ProductIdentifier">
+                                <xs:annotation>
+                                    <xs:documentation>
+										The ProductIdentifierType and a
+										value for one of the supported
+										ProductIdentifierTypes which are
+										unique across all sites (ePID,
+										MementoString)
+									</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="paginationInput" type="tns:PaginationInput"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="applicationPropertyFilter" type="tns:PropertyValue"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="dataset" type="xs:token"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="sortOrder" type="tns:CompatibilitySort">
+                                <xs:annotation>
+                                    <xs:documentation>
+										We need to allow multiple sort
+										orders. This is very specific to
+										fitment. We allow the caller
+										sorty by Make + Model + year. To
+										start with we will only allow 5
+										sorts
+									</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="disabledProductFilter" type="tns:ProductStatus"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" name="datasetPropertyName" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GetProductCompatiblitiesResponse">
+                <xs:annotation>
+                    <xs:documentation>
+						Response object for getProductFitmentDetails
+						operation.
+					</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseServiceResponse">
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="paginationOutput" type="tns:PaginationOutput">
+                                <xs:annotation>
+                                    <xs:documentation>
+										Indicates the pagination of the
+										result set. Child elements
+										indicate the maximum number of
+										item listings returned per
+										response and which page of data
+										has been returned.
+									</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="compatibilityDetails" type="tns:Product"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="BaseProductDetails">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="product" type="tns:Product">
+                        <xs:annotation>
+                            <xs:documentation>
+								All products as per the given input
+								parameters. For each product, all
+								properties and their respective values
+								are returned as N:V pairs.
+							</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="StockPhotoURL">
+                <xs:annotation>
+                	<xs:appinfo>
+						<typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						Thumbnail and Standard stockphoto URL's
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="thumbnail" type="tns:URIValue"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="standard" type="tns:URIValue"/>
+                    <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CompatibilityPropertyFilter">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="propertyFilter" type="tns:PropertyValue"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="AAIA" type="xs:string"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="HSNTSN" type="xs:string"/>
+                        <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:complexType>
+
+
+            <xs:complexType name="ProductRequest">
+                <xs:sequence>
+                	<xs:element maxOccurs="1" minOccurs="1" name="invocationId" type="xs:string">
+                		<xs:annotation>
+                			<xs:documentation>
+                				Invocation id will help the user to
+                				match the request to response for batch
+                				operations
+                			</xs:documentation>
+                		</xs:annotation>
+                	</xs:element>
+                	<xs:element maxOccurs="1" minOccurs="0" name="categoryId" type="xs:string"/>
+                	<xs:element maxOccurs="1" minOccurs="0" name="keywords" type="xs:string">
+                		<xs:annotation>
+                			<xs:documentation>
+                				Keywords will be used to further refine
+                				the query. products whose catalog
+                				searchable property value contain this
+                				keyword will be returned for
+                				findProductsInCatalog. This keyword will
+                				be AND in the constraint with the N:V
+                				pairs
+                			</xs:documentation>
+                		</xs:annotation>
+                	</xs:element>
+                	<xs:element maxOccurs="unbounded" minOccurs="0" name="propertyFilter" type="tns:PropertyValue"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="sortOrder" type="tns:SortOrder">
+                		<xs:annotation>
+                			<xs:documentation>
+                				Sort Order for the result set. Any of
+                				the searchable property can be used to
+                				specify the sort order. If no sort order
+                				is specified then default sort
+                				order(popularity descending) will be
+                				applied.
+                			</xs:documentation>
+                		</xs:annotation>
+                	</xs:element>
+                	<xs:element maxOccurs="unbounded" minOccurs="0" name="dataset" type="xs:token">
+                		<xs:annotation>
+                			<xs:documentation>
+                				This will define what are properties
+                				that will be returned for the catalog
+                				that this category belongs to. We will
+                				document the view sets that are exposed
+                				and what will come out of each view set
+                			</xs:documentation>
+                		</xs:annotation>
+                	</xs:element>
+                	<xs:element maxOccurs="unbounded" minOccurs="0" name="datasetPropertyName" type="xs:string">
+                		<xs:annotation>
+                			<xs:documentation>
+                				User can either enter dataset name or
+                				enter individual property names from the
+                				dataset. Only one should be preset at a
+                				time.
+                			</xs:documentation>
+                		</xs:annotation>
+                	</xs:element>
+                	<xs:element maxOccurs="1" minOccurs="0" name="paginationInput" type="tns:PaginationInput"/>
+                	<xs:element maxOccurs="1" minOccurs="0" name="productStatusFilter" type="tns:ProductStatus">
+                		<xs:annotation>
+                			<xs:documentation>
+                				User can specify if he wants to filter
+                				out the products which are disabled for
+                				sell/review/half.
+                			</xs:documentation>
+                		</xs:annotation>
+                	</xs:element>
+                	<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ProductResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="products" type="tns:Product"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="paginationOutput" type="tns:PaginationOutput"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="invocationId" type="xs:string"/>
+                    <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ProductByCompatibilityRequest">
+                <xs:sequence>
+                	<xs:element maxOccurs="1" minOccurs="0" name="applicationPropertyFilter" type="tns:CompatibilityPropertyFilter">
+                		<xs:annotation>
+                			<xs:documentation>
+                				This will contain the property name
+                				value pairs of the application (for
+                				example : cars). Applicaiton property
+                				N:V pairs can be specified by using
+                				property filter or in the form AAIA XML
+                				or HSNTSN format.
+                			</xs:documentation>
+                		</xs:annotation>
+                	</xs:element>
+
+                    <xs:element maxOccurs="1" minOccurs="1" name="productSearch" type="tns:ProductRequest"/>
+                	<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="DatasetValue">
+				<xs:annotation>
+                	<xs:appinfo>
+						<typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="Searchable"/>
+                    <xs:enumeration value="Sortable"/>
+                    <xs:enumeration value="DisplayableSmall"/>
+                    <xs:enumeration value="DisplayableMedium"/>
+                    <xs:enumeration value="DisplayableLarge"/>
+                    <xs:enumeration value="DisplayableAll"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+
+
+
+
+
+
+
+            <xs:complexType name="ProductDetailsRequestType">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="productIdentifier" type="tns:ProductIdentifier">
+                        <xs:annotation>
+                            <xs:documentation>
+								The ProductIdentifierType and a value
+								for one of the supported
+								ProductIdentifierTypes which are unique
+								across all sites (ePID, MementoString
+								etc)
+							</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="datasetPropertyName" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="dataset" type="xs:token">
+                        <xs:annotation>
+                            <xs:documentation/>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="productStatusFilter" type="tns:ProductStatus"/>
+                    <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xsd:complexType abstract="true" name="BaseServiceRequest">
+                <xsd:annotation>
+                	<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="AckValue">
+                <xsd:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Success">
+                        <xsd:annotation>
+                            <xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="Failure">
+                        <xsd:annotation>
+                            <xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="Warning">
+                        <xsd:annotation>
+                            <xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="PartialFailure">
+                        <xsd:annotation>
+                            <xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType abstract="true" name="BaseServiceResponse">
+                <xsd:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="ack" type="tns:AckValue">
+                        <xsd:annotation>
+                            <xs:appinfo>
+                                <CallInfo>
+                                    <AllCalls/>
+                                    <Returned>Always</Returned>
+                                </CallInfo>
+                            </xs:appinfo>
+                            <xs:documentation/>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+                        <xsd:annotation>
+                            <xs:appinfo>
+                                <CallInfo>
+                                    <AllCalls/>
+                                    <Returned>Conditionally</Returned>
+                                </CallInfo>
+                            </xs:appinfo>
+                            <xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="version" type="xsd:string">
+                        <xsd:annotation>
+                            <xs:appinfo>
+                                <CallInfo>
+                                    <AllCalls/>
+                                    <Returned>Always</Returned>
+                                </CallInfo>
+                            </xs:appinfo>
+                            <xs:documentation/>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="timestamp" type="xsd:dateTime">
+                        <xsd:annotation>
+                            <xs:appinfo>
+                                <CallInfo>
+                                    <AllCalls/>
+                                    <Returned>Always</Returned>
+                                </CallInfo>
+                            </xs:appinfo>
+                            <xs:documentation/>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="ErrorCategory">
+                <xsd:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                    <xsd:enumeration value="System"/>
+                    <xsd:enumeration value="Application"/>
+                    <xsd:enumeration value="Request"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="ErrorData">
+                <xsd:annotation>
+                    <xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="errorId" type="xsd:long"/>
+                    <xsd:element name="domain" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="subdomain" type="xsd:string"/>
+                    <xsd:element name="severity" type="tns:ErrorSeverity"/>
+                    <xsd:element name="category" type="tns:ErrorCategory"/>
+                    <xsd:element name="message" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="exceptionId" type="xsd:token"/>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ErrorMessage">
+                <xsd:annotation>
+                    <xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ErrorParameter">
+                <xsd:annotation>
+                    <xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                        <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:simpleType name="ErrorSeverity">
+                <xsd:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+                    <xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                    <xsd:enumeration value="Error"/>
+                    <xsd:enumeration value="Warning"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="PaginationInput">
+				<xsd:annotation>			
+					<xsd:appinfo>
+						<xsd:typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="pageNumber" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="entriesPerPage" type="xsd:int"/>
+                    <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="PaginationOutput">
+                <xsd:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="totalPages" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="totalEntries" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="pageNumber" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="entriesPerPage" type="xsd:int"/>
+                    <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        <xs:complexType name="CompatibilitySort">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+        <xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="sortOrder" type="tns:SortOrder">
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="1" name="sortPriority" type="tns:SortPriority"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="NumericValue">
+		<xs:annotation>
+			<xs:documentation>
+				This class holds a numeric value
+			</xs:documentation>
+		<xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+		<xs:sequence>
+			<xs:element name="value" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>a number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="unitOfMeasurement" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>
+						UOM of this value. List of valid values are:
+						bps, kbps, bit, byte, kb, MB, mW, W, Hz, kHz, m,
+						mm, rph, hr, min, ms, ns, sec, g, lbs This is
+						optional b/c UOM may not apply to all numeric
+						values (e.g. number of doors)
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType><xs:simpleType name="OrderType">
+		<xs:annotation>
+			<xs:documentation>
+				Defines the order type as Ascending or Descending
+			</xs:documentation>
+		<xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Ascending"/>
+			<xs:enumeration value="Descending"/>
+		</xs:restriction>
+	</xs:simpleType><xs:complexType name="Product">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+        <xs:sequence>
+			<xs:element minOccurs="0" name="productIdentifier" type="tns:ProductIdentifier"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="stockPhotoURL" type="tns:StockPhotoURL"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="productDetails" type="tns:PropertyValue"/>
+			<xs:element minOccurs="0" name="productStatus" type="tns:ProductStatus"/>
+			<xs:element minOccurs="0" name="compatibilityCount" type="xs:int"/>
+			<xs:element minOccurs="0" name="type" type="xs:string"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="ProductIdentifier">
+		<xs:annotation>
+			<xs:documentation>
+				Type could be ePID, MementoString as well as ISBN, UPC,
+				EAN, Brand_MPN.
+			</xs:documentation>
+		<xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="ePID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Ebay Product Reference Id
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ISBN" type="xs:string">
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="UPC" type="xs:string">
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="EAN" type="xs:string">
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="productId" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						MementoString
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+			</xs:any>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="ProductStatus">
+		<xs:annotation>
+			<xs:documentation>
+				This will indicate if the product is disabled for the
+				specific application like selling flow, review flow or
+				half sell flow.
+			</xs:documentation>
+		<xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="excludeForeBaySelling" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="excludeForeBayReviews" type="xs:boolean">
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="excludeForHalfSelling" type="xs:boolean">
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="Properties">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+        <xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="metadataVersion" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Version information reflects the latest update
+						of the properties or values.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="propertyName" type="tns:Property">
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="1" name="dataset" type="xs:token"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="Property">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+        <xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="propertyName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						This is the canonical name of the property. Used
+						to identify a property within a catalog that
+						this category belongs to.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="propertyNameMetadata" type="tns:PropertyNameMetadata">
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="propertyDisplayName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						This will be the display name of the property
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="PropertyNameMetadata">
+		<xs:annotation>
+			<xs:documentation>
+				This will contain any metadata about the propert name.
+			</xs:documentation>
+		<xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="displaySequence" type="xs:int">
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="PropertyNameValue">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+        <xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="propertyName" type="xs:string">
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="value" type="tns:Value">
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="childPropertyNameValue" type="tns:PropertyNameValue"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="PropertyValue">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+        <xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="propertyName" type="xs:string">
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="tns:Value">
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="SortOrder">
+		<xs:annotation>
+			<xs:documentation>
+				Sort order input for the result set. Any of the
+				searchable proerty can be used for property name and
+				order can be either ascending or descending.
+			</xs:documentation>
+		<xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="propertyName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						This will be one of the properties returned from
+						getProperties call.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="1" name="order" type="tns:OrderType">
+				<xs:annotation>
+					<xs:documentation>
+						Order of the sort, either Ascending or
+						Descending
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+
+	</xs:complexType><xs:simpleType name="SortPriority">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+        <xs:restriction base="xs:token">
+					<xs:enumeration value="Sort1"/>
+					<xs:enumeration value="Sort2"/>
+					<xs:enumeration value="Sort3"/>
+					<xs:enumeration value="Sort4"/>
+					<xs:enumeration value="Sort5"/>
+				</xs:restriction>
+			</xs:simpleType><xs:complexType name="StringValue">
+				<xs:annotation>
+					<xs:documentation>
+						This class holds a String value
+					</xs:documentation>
+				<xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+				<xs:sequence>
+					<xs:element name="value" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								a string value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType><xs:complexType name="URIValue">
+		<xs:annotation>
+			<xs:documentation>
+				This class holds a URL value
+			</xs:documentation>
+		<xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+		<xs:sequence>
+			<xs:element name="value" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>
+						as part of request, this will be the URL to
+						download media file as part of response, this
+						will be the URL where the media file is stored
+						on EPS
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType><xs:complexType name="Value">
+        <xs:annotation><xs:appinfo><typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/></xs:appinfo></xs:annotation>
+        <xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>
+						A value can be one of the types given below.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:element name="text" type="tns:StringValue">
+					<xs:annotation>
+						<xs:documentation>
+							For string value type.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="number" type="tns:NumericValue">
+					<xs:annotation>
+						<xs:documentation>
+							For numeric value type.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="URL" type="tns:URIValue">
+					<xs:annotation>
+						<xs:documentation>
+							For URL value type.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+        	<xs:element name="findCompatibilitiesBySpecificationRequest" type="tns:FindCompatibilitiesBySpecificationRequest">
+                <xs:annotation>
+                	<xs:documentation>
+                		Input for the Compatibility by specification
+                		operation.
+                	</xs:documentation>
+                </xs:annotation>
+        	</xs:element>
+        	<xs:element name="findCompatibilitiesBySpecificationResponse" type="tns:FindCompatibilitiesBySpecificationResponse">
+
+                <xs:annotation>
+                	<xs:documentation>
+                		Output for the Compatibility by specification
+                		operation.
+                	</xs:documentation>
+                </xs:annotation>
+        	</xs:element>
+        	<xs:complexType name="FindCompatibilitiesBySpecificationRequest">
+        		<xs:annotation>
+        			<xs:documentation>
+        				Container for the Compatibility by specification
+        				operation input.
+        			</xs:documentation>
+        		</xs:annotation>
+        		<xs:complexContent>
+        			<xs:extension base="tns:BaseServiceRequest">
+        				<xs:sequence>
+
+                            <xs:element maxOccurs="1" minOccurs="1" name="categoryId" type="xs:string">
+        						<xs:annotation>
+        							<xs:documentation>
+        								Category Id for which we want to
+        								find out the compatibility
+        								details
+        							</xs:documentation>
+        						</xs:annotation>
+        					</xs:element>
+
+        					<xs:element maxOccurs="unbounded" minOccurs="0" name="compatibilityPropertyFilter" type="tns:PropertyValue">
+        						<xs:annotation>
+        							<xs:documentation>
+        								This filter is used to restrict
+        								the number of compatible
+        								vehicles that can be returned.
+        								Properties that can be used here
+        								include Make, Model, Year and
+        								Trim
+        							</xs:documentation>
+        						</xs:annotation>
+        					</xs:element>
+        					<xs:element maxOccurs="unbounded" minOccurs="0" name="specification" type="tns:PropertyValue">
+        						<xs:annotation>
+        							<xs:documentation>
+        								The specifications for which we
+        								need the compatibility. Examples
+        								include Aspect Ratio, Section
+        								Width etc.
+        							</xs:documentation>
+        						</xs:annotation>
+        					</xs:element>
+        					<xs:element maxOccurs="unbounded" minOccurs="0" name="dataSet" type="xs:token">
+        						<xs:annotation>
+        							<xs:documentation>
+        								This will define what are
+        								properties that will be returned
+        								for the catalog that this
+        								category belongs to. We will
+        								document the view sets that are
+        								exposed and what will come out
+        								of each view set
+        							</xs:documentation>
+        						</xs:annotation>
+        					</xs:element>
+        					<xs:element maxOccurs="unbounded" minOccurs="0" name="datasetPropertyName" type="xs:string">
+        						<xs:annotation>
+        							<xs:documentation>
+        								User can either enter dataset
+        								name or enter individual
+        								property names from the dataset.
+        								Only one should be preset at a
+        								time.
+        							</xs:documentation>
+        						</xs:annotation>
+        					</xs:element>
+
+        					<xs:element maxOccurs="1" minOccurs="0" name="exactMatch" type="xs:boolean">
+        						<xs:annotation>
+        							<xs:documentation>
+        								For certain specification
+        								properties the compatibility is
+        								defined not by an exact match
+        								but by an expanded match on the
+        								input value by greater or lesser
+        								values as well. E.g For Load
+        								Index a compatible vehicle is
+        								the one which has a load index
+        								requirement which is less than
+        								or equal to the input. By
+        								default we will do an expanded
+        								compatibility match whenever it
+        								applies. However if you need to
+        								do only exact match then you can
+        								specify that using this input.
+        							</xs:documentation>
+        						</xs:annotation>
+        					</xs:element>
+        					<xs:element maxOccurs="1" minOccurs="0" name="paginationInput" type="tns:PaginationInput">
+        					</xs:element>
+        					<xs:element maxOccurs="unbounded" minOccurs="0" name="sortOrder" type="tns:CompatibilitySort">
+        						<xs:annotation>
+        							<xs:documentation>
+        								Sort Order for the result set.
+        								Any of the searchable property
+        								can be used to specify the sort
+        								order. If no sort order is
+        								specified then default sort
+        								order(popularity descending)
+        								will be applied.
+        							</xs:documentation>
+        						</xs:annotation>
+        					</xs:element>
+
+        				</xs:sequence>
+
+        			</xs:extension>
+        		</xs:complexContent>
+        	</xs:complexType>
+        	<xs:complexType name="FindCompatibilitiesBySpecificationResponse">
+        		<xs:annotation>
+        			<xs:documentation>
+        				Container for the Compatibility by specification
+        				operation output.
+        			</xs:documentation>
+        		</xs:annotation>
+        		<xs:complexContent>
+        			<xs:extension base="tns:BaseServiceResponse">
+        				<xs:sequence>
+
+        					<xs:element maxOccurs="1" minOccurs="1" name="paginationOutput" type="tns:PaginationOutput">
+        					</xs:element>
+        					<xs:element maxOccurs="unbounded" minOccurs="0" name="compatibilityDetails" type="tns:CompatibilityDetails">
+        						<xs:annotation>
+        							<xs:documentation>
+        								List of compatibilties.
+        							</xs:documentation>
+        						</xs:annotation>
+        					</xs:element>
+
+        				</xs:sequence>
+
+        			</xs:extension>
+        		</xs:complexContent>
+        	</xs:complexType>
+
+        	<xs:complexType name="CompatibilityDetails">
+                <xs:annotation>
+                	<xs:documentation>
+                		Name-Value pairs for each compatiblility
+                		property.
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="compatibilityProperty" type="tns:PropertyValue">
+						<xs:annotation>
+							<xs:documentation>
+								Name-Value pairs for each compatiblility
+								property.
+							</xs:documentation>
+						</xs:annotation></xs:element>
+						<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="findProductsByCompatibilityRequest">
+        <wsdl:part element="ns0:findProductsByCompatibilityRequest" name="parameters">
+            <wsdl:documentation>
+				Request object for findProductsInCatalogByFitment
+				operation
+			</wsdl:documentation>
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProductDetailsRequest">
+        <wsdl:part element="ns0:getProductDetailsRequest" name="parameters">
+            <wsdl:documentation>
+				Request object for getProductDetails operation
+			</wsdl:documentation>
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findProductsResponse">
+        <wsdl:part element="ns0:findProductsResponse" name="parameters">
+            <wsdl:documentation>
+				response object for findProductInCatalog operation
+			</wsdl:documentation>
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProductDetailsResponse">
+        <wsdl:part element="ns0:getProductDetailsResponse" name="parameters">
+            <wsdl:documentation>
+				response object for getProductDetails operation
+			</wsdl:documentation>
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findProductsRequest">
+        <wsdl:part element="ns0:findProductsRequest" name="parameters">
+            <wsdl:documentation>
+				request object for findProductsInCatalog operation
+			</wsdl:documentation>
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProductCompatibilitiesRequest">
+        <wsdl:part element="ns0:getProductCompatibilitiesRequest" name="parameters">
+            <wsdl:documentation>
+				Request object for getProductFitmentDetails operation.
+			</wsdl:documentation>
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findProductsByCompatibilityResponse">
+        <wsdl:part element="ns0:findProductsByCompatibilityResponse" name="parameters">
+            <wsdl:documentation>
+				Response object for findProductsInCatalogByFitment
+				operation
+			</wsdl:documentation>
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProductCompatibilitiesResponse">
+        <wsdl:part element="ns0:getProductCompatibilitiesResponse" name="parameters">
+            <wsdl:documentation>
+				Response object for getProductFitmentDetails operation.
+			</wsdl:documentation>
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findCompatibilitiesBySpecificationRequest">
+    	<wsdl:part element="ns0:findCompatibilitiesBySpecificationRequest" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="findCompatibilitiesBySpecificationResponse">
+    	<wsdl:part element="ns0:findCompatibilitiesBySpecificationResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:portType name="ProductServicePortType">
+        <wsdl:operation name="findProducts">
+            <wsdl:documentation>
+				This opertion will find the products for the given
+				catalog to which the input category to belongs to and
+				catalog property N:V pairs and optional keyword
+
+				For example
+
+				Get me all products, given Parts category id
+
+				Name:Value pair #1: &amp;quot;Manufacturer &amp;quot;=
+				&amp;quot;Brembo &amp;quot;
+
+				Name:Value pair #2: &amp;quot;Part type &amp;quot;=
+				&amp;quot;Brake disc &amp;quot;
+
+				Returns all products which are of part type
+				&amp;quot;brake discs &amp;quot; and manufactured by
+				&amp;quot;Brembo &amp;quot;
+
+			</wsdl:documentation>
+            <wsdl:input message="ns0:findProductsRequest" name="findProductsInCatalogRequest">
+                <wsdl:documentation/>
+            </wsdl:input>
+            <wsdl:output message="ns0:findProductsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="findProductsByCompatibility">
+            <wsdl:documentation>
+				This opertion will find the products for the given
+				category and catalog property N:V pairs and comatibility
+				property N:V Pairs
+
+				Example
+
+				Given Tires category id, get me all products, property
+				Filter 
+				Name:Value pair #1: &amp;quot;Tire Width
+				&amp;quot;= &amp;quot;185 &amp;quot;
+
+				Application Filter
+
+				Name:Value pair #1: &amp;quot;Make &amp;quot;=
+				&amp;quot;BMW &amp;quot;
+
+				Name:Value pair #2: &amp;quot;Year &amp;quot;=
+				&amp;quot;2007 &amp;quot;
+
+				Returns all products (in tires category) which have a
+				tire width of &amp;quot;185 &amp;quot; and fit any 2007
+				BMW
+			</wsdl:documentation>
+            <wsdl:input message="ns0:findProductsByCompatibilityRequest"/>
+            <wsdl:output message="ns0:findProductsByCompatibilityResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getProductDetails">
+            <wsdl:documentation>
+				Given the product reference id, this operation will get
+				the product details. This operation will indicate if the
+				product has fitment information or not.
+			</wsdl:documentation>
+            <wsdl:input message="ns0:getProductDetailsRequest"/>
+            <wsdl:output message="ns0:getProductDetailsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getProductCompatibilities">
+            <wsdl:documentation>
+				This operation returns all available fitment details for
+				a given product reference id. The caller would know if a
+				product has fitment data or not, by calling the
+				getProductDetails operation.
+			</wsdl:documentation>
+            <wsdl:input message="ns0:getProductCompatibilitiesRequest"/>
+            <wsdl:output message="ns0:getProductCompatibilitiesResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="findCompatibilitiesBySpecification">
+        	<wsdl:documentation>	This operation returns all the compatiblilities for a given specification. User can constrain the output further by specifiying the compatibility propertiesthat they are interested in.</wsdl:documentation>
+        	<wsdl:input message="ns0:findCompatibilitiesBySpecificationRequest"/>
+        	<wsdl:output message="ns0:findCompatibilitiesBySpecificationResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ProductServiceSOAP12Binding" type="ns0:ProductServicePortType">
+        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="findProducts">
+            <soap12:operation soapAction="urn:findProducts" style="document"/>
+            <wsdl:input name="findProductsInCatalogRequest">
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProductDetails">
+            <soap12:operation soapAction="urn:getProductDetails" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="findProductsByCompatibility">
+            <soap12:operation soapAction="urn:findProductsByCompatibility" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProductCompatibilities">
+            <soap12:operation soapAction="urn:getProductCompatibilities" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="findCompatibilitiesBySpecification">
+			<soap12:operation soapAction="urn:findCompatibilitiesBySpecification" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ProductService">
+        <xsd:annotation>
+    		<xsd:appinfo>
+    			<tns:version>1.2</tns:version>
+    		</xsd:appinfo>
+    		<wsdl:documentation>
+				This service provides the ability to find products, get
+				product details and get compatibility details for a product.
+				<Version>1.2.0</Version>
+        	</wsdl:documentation>
+    	</xsd:annotation> 
+        <wsdl:port binding="ns0:ProductServiceSOAP12Binding" name="ProductServiceSOAP12port_http">
+            <soap12:address location="http://svcs.ebay.com/services/marketplacecatalog/ProductService/v1"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

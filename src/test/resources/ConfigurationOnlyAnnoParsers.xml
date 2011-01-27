@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<annoparsers>
+		<parser>
+			<tagname>TestAnno</tagname>
+			<parserclass>org.ebayopensource.turmeric.tools.annoparser.customparser.impl.TestAnnoParserClass
+			</parserclass>
+		</parser>
+	</annoparsers>
+</config>

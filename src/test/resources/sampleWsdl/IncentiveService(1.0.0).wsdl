@@ -1,0 +1,2019 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:element name="addCampaignRequest" nillable="true" type="tns:AddCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation allows the user to create a new
+						campaign in the system by specifying the
+						required attributes of a campaign in the
+						request. Upon success, the campaignId,
+						creationTime and campaignStatus are returned to
+						the user for confirmation. The campaignStatus
+						will always be inactive, but is returned for
+						visual confirmation. If the externalId already
+						exists in the system, then a Campaign Already
+						Exists error is returned
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="AddCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the addCampaign
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<!-- The default value for both maxOccurs and minOccurs is "1", so if these attributes are not specified the element must be present exactly once.-->
+						<xs:sequence>
+							<xs:element name="campaign" type="tns:Campaign"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="addCampaignResponse" nillable="true" type="tns:AddCampaignResponse"/>
+			<xs:complexType name="AddCampaignResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						addCampaignt operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="campaignId" type="xs:long"/>
+							<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setCampaignStatusRequest" nillable="true" type="tns:SetCampaignStatusRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will update the campaingn's
+						status
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="SetCampaignStatusRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						setCampaignStatus operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="campaignId" type="xs:long"/>
+							<xs:element name="campaignStatus" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: Inactive, Active, Suspend, Cancelled, Expired, Deleted.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setCampaignStatusResponse" nillable="true" type="tns:SetCampaignStatusResponse"/>
+			<xs:complexType name="SetCampaignStatusResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						setCampaignStatus operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getCampaignRequest" nillable="true" type="tns:GetCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will get the campaign details
+						given a campaignId. If a campaign is not found
+						in the system, it will return a Campaign Not
+						Found Exception
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the getCampaign
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="campaignId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getCampaignResponse" nillable="true" type="tns:GetCampaignResponse"/>
+			<xs:complexType name="GetCampaignResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the getCampaign
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="campaign" type="tns:Campaign"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getCampaignsRequest" nillable="true" type="tns:GetCampaignsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will return all campaigns in the
+						system. The possible filter values are country,
+						adjecency, incentiveType, incentiveValue,
+						category, expirationTime range and
+						startTimeRange. If no campaign is found, then
+						the No Campaign Found Error is returned
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetCampaignsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						getCampaigns operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="country" type="xs:string"/>
+							<xs:element minOccurs="0" name="currency" type="xs:string"/>
+							<xs:element name="adjacencyId" type="xs:string"/>
+							<xs:element name="programCode" type="xs:string"/>
+							<xs:element minOccurs="0" name="incentiveType" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: GiftCertificate, Voucher, GiftCard, Coupon, Reward.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="campaignDiscountType" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: Percent, Amount.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="incentiveValue" type="xs:int"/>
+							<xs:element minOccurs="0" name="minIncentiveValue" type="xs:int"/>
+							<xs:element minOccurs="0" name="maxIncentiveValue" type="xs:int"/>
+							<xs:element minOccurs="0" name="categoryIdList" type="tns:CategoryIdList"/>
+							<xs:element minOccurs="0" name="campaignOverallStatus" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: Active, Inactive.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="campaignExpirationTimeFrom" type="xs:dateTime"/>
+							<xs:element minOccurs="0" name="campaignExpirationTimeTo" type="xs:dateTime"/>
+							<xs:element minOccurs="0" name="campaignStartTimeFrom" type="xs:dateTime"/>
+							<xs:element minOccurs="0" name="campaignStartTimeTo" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getCampaignsResponse" nillable="true" type="tns:GetCampaignsResponse"/>
+			<xs:complexType name="GetCampaignsResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						getCampaigns operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="campaignList" type="tns:Campaign"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="addIncentiveRequest" nillable="true" type="tns:AddIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will add an incentive to the
+						system. The only error can be that the campaign
+						against which the incentive is being added is
+						not there in the system already. Otherwise,
+						there is no unique qualifier for the incentive
+						which can be violated resulting in an error.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="AddIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the addIncentive
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="incentive" type="tns:Incentive"/>
+							<xs:element minOccurs="0" name="requestSource" type="xs:string">
+								<xs:annotation>
+								<xs:documentation>Find the requester source.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="addIncentiveResponse" nillable="true" type="tns:AddIncentiveResponse"/>
+			<xs:complexType name="AddIncentiveResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						addIncentive operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="addIncentivesRequest" nillable="true" type="tns:AddIncentivesRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a bulk operation for the addIncentive
+						primitive operation. It will take in a list of
+						Incentives and return a list of response objects
+						back. Every response object will contain its own
+						errormessage object in case of a failure. The
+						request and response objects will be corelated
+						through the correlationId being passed in with
+						the individual request objects. The caller will
+						generate the random numbers for this purpose.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="AddIncentivesRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						addIncentives operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="addIncentiveRequestContainer" type="tns:AddIncentiveRequestContainer"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AddIncentiveRequestContainer">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						addIncentives operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="addIncentiveRequest" type="tns:AddIncentiveRequest"/>
+					<xs:element name="correlationId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="addIncentivesResponse" nillable="true" type="tns:AddIncentivesResponse"/>
+			<xs:complexType name="AddIncentivesResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						addIncentives operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="addIncentiveResponseContainer" type="tns:AddIncentiveResponseContainer"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AddIncentiveResponseContainer">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						addIncentives operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="addIncentiveResponse" type="tns:AddIncentiveResponse"/>
+					<xs:element minOccurs="0" name="correlationId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getIncentiveRequest" nillable="true" type="tns:GetIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will get the details of an
+						incentive given the incentiveId. If the
+						incentiveId is not found, it will return an
+						Incentive Not Found Error
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the getIncentive
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getIncentiveResponse" nillable="true" type="tns:GetIncentiveResponse"/>
+			<xs:complexType name="GetIncentiveResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						getIncentive operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentive" type="tns:Incentive"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getUserIncentivesRequest" nillable="true" type="tns:GetUserIncentivesRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation allows the caller to search for
+						all the incentives for a particular user. The
+						results can be filtered by incentiveType and
+						incentiveStatus
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetUserIncentivesRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						getUserIncentives operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveType" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: GiftCertificate, Voucher, GiftCard, Coupon, Reward.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="userId" type="xs:string"/>
+							<xs:element minOccurs="0" name="country" type="xs:string"/>
+							<xs:element minOccurs="0" name="incentiveStatus" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: Requalified, Active, Redeemed, Deleted.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="includeCampaigns" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getUserIncentivesResponse" nillable="true" type="tns:GetUserIncentivesResponse"/>
+			<xs:complexType name="GetUserIncentivesResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						getUserIncentives operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element name="incentiveList" type="tns:IncentiveList"/>
+							<xs:element name="campaignList" type="tns:CampaignList"/>
+							<xs:element minOccurs="0" name="totalIncentives" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setIncentiveStatusRequest" nillable="true" type="tns:SetIncentiveStatusRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation allows the caller to set the
+						incentiveStatus of a particular incentive to the
+						provided value
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="SetIncentiveStatusRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						setIncentiveStatus operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="incentiveId" type="xs:long"/>
+							<xs:element name="incentiveStatus" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: Requalified, Active, Redeemed, Deleted.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="requestSource" type="xs:string">
+								<xs:annotation>
+								<xs:documentation>Find the requester source.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setIncentiveStatusResponse" nillable="true" type="tns:SetIncentiveStatusResponse"/>
+			<xs:complexType name="SetIncentiveStatusResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						setIncentiveStatus operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="redeemIncentiveRequest" nillable="true" type="tns:RedeemIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation allows the redemption of an
+						incentive
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="RedeemIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						redeemIncentive operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="incentiveId" type="xs:long"/>
+							<xs:element minOccurs="0" name="externalRedemptionTransactionId" type="xs:string"/>
+							<xs:element minOccurs="0" name="usdConversionRate" type="xs:double"/>
+							<xs:element name="amount" type="tns:Amount"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="redeemIncentiveResponse" nillable="true" type="tns:RedeemIncentiveResponse"/>
+			<xs:complexType name="RedeemIncentiveResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						redeemIncentive operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveId" type="xs:long"/>
+							<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="refundIncentiveRequest" nillable="true" type="tns:RefundIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation allows the refund of an incentive
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="RefundIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						refundIncentive operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="incentiveId" type="xs:long"/>
+							<xs:element minOccurs="0" name="usdConversionRate" type="xs:double"/>
+							<xs:element minOccurs="0" name="externalRedemptionTransactionId" type="xs:string"/>
+							<xs:element name="amount" type="tns:Amount"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="refundIncentiveResponse" nillable="true" type="tns:RefundIncentiveResponse"/>
+			<xs:complexType name="RefundIncentiveResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						refundIncentive operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveId" type="xs:long"/>
+							<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setIncentiveRequest" nillable="true" type="tns:SetIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will allow the user to modify the
+						incentive by passing in the entire Bo. In case
+						an element is left as null, the field will be
+						ignored, and in case we explicitely want it to
+						be set to null, it needs to be put in the
+						deletedFields list
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="SetIncentiveRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the setIncentive
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="incentive" type="tns:Incentive"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="deletedFields" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setIncentiveResponse" nillable="true" type="tns:SetIncentiveResponse"/>
+			<xs:complexType name="SetIncentiveResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						setIncentive operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setCampaignRequest" nillable="true" type="tns:SetCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will allow the user to modify the
+						campaign by passing in the entire Bo. In case an
+						element is left as null, the field will be
+						ignored, and in case we explicitely want it to
+						be set to null, it needs to be put in the
+						deletedFields list
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="SetCampaignRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the setCampaign
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="campaign" type="tns:Campaign"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="deletedFields" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setCampaignResponse" nillable="true" type="tns:SetCampaignResponse"/>
+			<xs:complexType name="SetCampaignResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the setCampaign
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:element name="getUserIncentivesForCategoryRequest" nillable="true" type="tns:GetUserIncentivesForCategoryRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will find all the incentives for
+						a user for a particular category
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetUserIncentivesForCategoryRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						getUserIncentivesForCategory operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="userId" type="xs:string"/>
+							<xs:element minOccurs="0" name="categoryIdList" type="tns:CategoryIdList"/>
+							<xs:element name="includeCampaigns" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getUserIncentivesForCategoryResponse" nillable="true" type="tns:GetUserIncentivesForCategoryResponse"/>
+			<xs:complexType name="GetUserIncentivesForCategoryResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						getUserIncentivesForCategory operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element name="incentiveList" type="tns:IncentiveList"/>
+							<xs:element name="campaignList" type="tns:CampaignList"/>
+							<xs:element minOccurs="0" name="totalIncentives" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getIncentivesForUserRequest" nillable="true" type="tns:GetIncentivesForUserRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will find all the incentives for
+						a user based on a combination of userId,
+						categoryId and price.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetIncentivesForUserRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						getIncentivesForUser operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="userId" type="xs:string"/>
+							<xs:element minOccurs="0" name="categoryIdList" type="tns:CategoryIdList"/>
+							<xs:element minOccurs="0" name="price" type="tns:Amount"/>
+							<xs:element minOccurs="0" name="incentiveApplicationType" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: SingleItem, SubTotal, EntireTransaction, Shipping.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="includeCampaigns" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getIncentivesForUserResponse" nillable="true" type="tns:GetIncentivesForUserResponse"/>
+			<xs:complexType name="GetIncentivesForUserResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						getIncentivesForUser operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element name="incentiveList" type="tns:IncentiveList"/>
+							<xs:element name="campaignList" type="tns:CampaignList"/>
+							<xs:element minOccurs="0" name="totalIncentives" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="validateIncentiveApplicabilityRequest" nillable="true" type="tns:ValidateIncentiveApplicabilityRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will determine whether an
+						incentive is applicable to a particular
+						combination of user, category, price and coupon.
+						If the incentive does not apply, then an error
+						will be thrown out, otherwise an Ack Success
+						will be returned
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ValidateIncentiveApplicabilityRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						validateIncentiveApplicability operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="userId" type="xs:string"/>
+							<xs:element minOccurs="0" name="categoryIdList" type="tns:CategoryIdList"/>
+							<xs:element minOccurs="0" name="price" type="tns:Amount"/>
+							<xs:element minOccurs="0" name="incentiveApplicationType" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: SingleItem, SubTotal, EntireTransaction, Shipping.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="redemptionCode" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="validateIncentiveApplicabilityResponse" nillable="true" type="tns:ValidateIncentiveApplicabilityResponse"/>
+			<xs:complexType name="ValidateIncentiveApplicabilityResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						validateIncentiveApplicability operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveApplicable" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getIncentiveCountRequest" nillable="true" type="tns:GetIncentiveCountRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will count the number of
+						incentives for a given user, type and status.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetIncentiveCountRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						getIncentiveCount operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveType" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: GiftCertificate, Voucher, GiftCard, Coupon, Reward.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="userId" type="xs:string"/>
+							<xs:element minOccurs="0" name="incentiveStatus" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possible values: Requalified, Active, Redeemed, Deleted.</xs:documentation> 
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getIncentiveCountResponse" nillable="true" type="tns:GetIncentiveCountResponse"/>
+			<xs:complexType name="GetIncentiveCountResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						getIncentiveCount operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="totalIncentives" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="setIncentivesStatusRequest" nillable="true" type="tns:SetIncentivesStatusRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation is the bulk version for the
+						setIncentivesStatus, to support the bulk delete
+						use case. In this case, the argument reference
+						incentiveId is used for the correlation because
+						it is available.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="SetIncentivesStatusRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						setIncentivesStatus operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="setIncentivesStatusRequestContainer" type="tns:SetIncentivesStatusRequestContainer"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+				<xs:complexType name="SetIncentivesStatusRequestContainer">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						setIncentivesStatus operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="setIncentiveStatusRequest" type="tns:SetIncentiveStatusRequest"/>
+					<xs:element minOccurs="0" name="correlationId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:element name="setIncentivesStatusResponse" nillable="true" type="tns:SetIncentivesStatusResponse"/>
+			<xs:complexType name="SetIncentivesStatusResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						setMultipleIncentivesStatus operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="setIncentivesStatusResponseContainer" type="tns:SetIncentivesStatusResponseContainer"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+				<xs:complexType name="SetIncentivesStatusResponseContainer">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						setIncentivesStatus operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="setIncentiveStatusResponse" type="tns:SetIncentiveStatusResponse"/>
+					<xs:element minOccurs="0" name="correlationId" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>			
+			
+			<xs:element name="getCampaignByExternalIdAndAdjacencyIdRequest" nillable="true" type="tns:GetCampaignByExternalIdAndAdjacencyIdRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will get the campaign details
+						given an adjacencyId and externalId. If a
+						campaign is not found in the system, it will
+						return a Campaign Not Found Exception
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetCampaignByExternalIdAndAdjacencyIdRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						getCampaignByExternalIdAndAdjacencyId operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="adjacencyId" type="xs:string"/>
+							<xs:element name="programCode" type="xs:string"/>
+							<xs:element name="externalId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getCampaignByExternalIdAndAdjacencyIdResponse" nillable="true" type="tns:GetCampaignByExternalIdAndAdjacencyIdResponse"/>
+			<xs:complexType name="GetCampaignByExternalIdAndAdjacencyIdResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						getCampaignByExternalIdAndAdjacencyId operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="campaign" type="tns:Campaign"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="redeemIncentiveByRedemptionCodeAndAdjacencyIdRequest" nillable="true" type="tns:RedeemIncentiveByRedemptionCodeAndAdjacencyIdRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation allows the redemption of an
+						incentive
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="RedeemIncentiveByRedemptionCodeAndAdjacencyIdRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						redeemIncentiveByRedemptionCodeAndAdjacencyId
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="userId" type="xs:string"/>
+							<xs:element name="redemptionCode" type="xs:string"/>
+							<xs:element name="adjacencyId" type="xs:string"/>
+							<xs:element minOccurs="0" name="externalRedemptionTransactionId" type="xs:string"/>
+							<xs:element name="amount" type="tns:Amount"/>
+							<xs:element minOccurs="0" name="usdConversionRate" type="xs:double"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="redeemIncentiveByRedemptionCodeAndAdjacencyIdResponse" nillable="true" type="tns:RedeemIncentiveByRedemptionCodeAndAdjacencyIdResponse"/>
+			<xs:complexType name="RedeemIncentiveByRedemptionCodeAndAdjacencyIdResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						redeemIncentiveByRedemptionCodeAndAdjacencyId
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveId" type="xs:long"/>
+							<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="refundIncentiveByRedemptionCodeAndAdjacencyIdRequest" nillable="true" type="tns:RefundIncentiveByRedemptionCodeAndAdjacencyIdRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation allows the refund of an incentive
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="RefundIncentiveByRedemptionCodeAndAdjacencyIdRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						refundIncentiveByRedemptionCodeAndAdjacencyId
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element name="userId" type="xs:string"/>
+							<xs:element name="redemptionCode" type="xs:string"/>
+							<xs:element minOccurs="0" name="externalRedemptionTransactionId" type="xs:string"/>
+							<xs:element minOccurs="0" name="usdConversionRate" type="xs:double"/>
+							<xs:element name="adjacencyId" type="xs:string"/>
+							<xs:element name="amount" type="tns:Amount"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="refundIncentiveByRedemptionCodeAndAdjacencyIdResponse" nillable="true" type="tns:RefundIncentiveByRedemptionCodeAndAdjacencyIdResponse"/>
+			<xs:complexType name="RefundIncentiveByRedemptionCodeAndAdjacencyIdResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						refundIncentiveByRedemptionCodeAndAdjacencyId
+						operation
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentiveId" type="xs:long"/>
+							<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			
+
+			<xs:element name="getBestIncentiveForUserRequest" nillable="true" type="tns:GetBestIncentiveForUserRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This operation will find the best incentive for a user based on a combination of userId, categoryId and price.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="GetBestIncentiveForUserRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is a request container for the
+						getBestIncentiveForUser
+						operation. 
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="saleEndTime" type="xs:dateTime"/>
+							<xs:element minOccurs="0" name="shippingFee" type="tns:Amount"/>
+							<xs:element minOccurs="0" name="itemFixedPriceFormat" type="xs:boolean"/>							
+							<xs:element name="itemPrice" type="tns:Amount"/>
+							<xs:element minOccurs="0" name="uniqueOfferCount" type="xs:int"/>
+							<xs:element minOccurs="0" name="categoryIdList" type="tns:CategoryIdList"/>
+							<xs:element minOccurs="0" name="binAvailable" type="xs:boolean"/>
+							<xs:element minOccurs="0" name="secondChanceOffer" type="xs:boolean"/>
+							<xs:element minOccurs="0" name="URL" type="xs:string"/>
+							<xs:element minOccurs="0" name="country" type="xs:string"/>
+							<xs:element minOccurs="0" name="language" type="xs:string"/>
+							<xs:element name="userId" type="xs:string"/>
+							<xs:element name="includeCampaigns" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:element name="getBestIncentiveForUserResponse" nillable="true" type="tns:GetBestIncentiveForUserResponse"/>
+			<xs:complexType name="GetBestIncentiveForUserResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the
+						getBestIncentiveForUser
+						operation. 
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseIncentiveServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="incentive" type="tns:Incentive"/>
+							<xs:element minOccurs="0" name="discountAmount" type="tns:Amount"/>
+							<xs:element minOccurs="0" name="incentiveDisplayMessage" type="xs:string"/>							
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+	
+			<xs:element name="issueIncentiveIfQualifiedRequest" nillable="true" type="tns:IssueIncentiveIfQualifiedRequest">
+						<xs:annotation>
+								<xs:documentation>
+										This operation will issue an incentive for a user
+										if the site activity of this user is qualified for the issuance
+										of a new incentive.
+								</xs:documentation>
+						</xs:annotation>
+			</xs:element>
+			<xs:complexType name="IssueIncentiveIfQualifiedRequest">
+						<xs:annotation>
+								<xs:documentation>
+										This is a request container for the 
+										issueIncentiveIfQualified operation
+								</xs:documentation>
+						</xs:annotation>
+						<xs:complexContent>
+								<xs:extension base="tns:BaseIncentiveServiceRequest">
+										<xs:sequence>
+												<xs:element name="dynamicIssuanceContext" type="tns:DynamicIssuanceContext">
+												</xs:element>
+										</xs:sequence>
+								</xs:extension>
+						</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="issueIncentiveIfQualifiedResponse" nillable="true" type="tns:IssueIncentiveIfQualifiedResponse"/>
+			<xs:complexType name="IssueIncentiveIfQualifiedResponse">
+						<xs:annotation>
+								<xs:documentation>
+											This is a response container for the
+											issueIncentiveIfQualified operation
+								</xs:documentation>
+						</xs:annotation>
+						<xs:complexContent>
+								<xs:extension base="tns:BaseIncentiveServiceResponse">
+									<xs:sequence>
+											<xs:element minOccurs="0" name="incentive" type="tns:Incentive"/>
+									</xs:sequence>
+								</xs:extension>
+						</xs:complexContent>
+	       </xs:complexType>
+			
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseIncentiveServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all operations in Incentive Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+							<xs:sequence>
+									<xs:element name="logId" type="xs:string">
+									</xs:element>
+							</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseIncentiveServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations in Incentive Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+							<xs:sequence>
+									<xs:element name="logId" type="xs:string">
+									</xs:element>
+							</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning
+						occured as part of service call. Any run time
+						error will not be reported here, but will be
+						reported aspart of soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						represent contextual data associated with an
+						error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Reprents the level of error. E.g. Error/Warning
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Reprents the error catagorization. Request and
+						Application Error are mostly occured due to
+						invalid data passed in request. System Error
+						cannot be fixed by changing request values and
+						mostly occured due to application failure.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Campaign">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="country" type="xs:string"/>
+					<xs:element name="adjacencyId" type="xs:string"/>
+					<xs:element name="programCode" type="xs:string"/>
+					<xs:element name="incentiveType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Possible values: GiftCertificate, Voucher, GiftCard, Coupon, Reward.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="externalId" type="xs:long"/>
+					<xs:element minOccurs="0" name="displayMessage" type="xs:string"/>
+					<xs:element name="language" type="xs:string"/>
+					<xs:element minOccurs="0" name="FAQURL" type="xs:string"/>
+					<xs:element name="campaignStatus" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Possible values: Inactive, Active, Suspend, Cancelled, Expired, Deleted.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="campaignStartTime" type="xs:dateTime"/>
+					<xs:element name="campaignExpirationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="budgetAmount" type="tns:Amount"/>
+					<xs:element minOccurs="0" name="redeemedTotalAmount" type="tns:Amount"/>
+					<xs:element minOccurs="0" name="redeemedTotalCount" type="xs:long"/>
+					<xs:element name="currency" type="xs:string"/>
+					<xs:element minOccurs="0" name="maxUsageCount" type="xs:int"/>
+					<xs:element minOccurs="0" name="campaignId" type="xs:long"/>
+					<xs:element minOccurs="0" name="campaignCreationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="campaignLastModifiedTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="campaignDeletionTime" type="xs:dateTime"/>
+					<xs:element name="campaignDiscountType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Possible values: Percent, Amount.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="campaignDiscountPercent" type="xs:double"/>
+					<xs:element minOccurs="0" name="campaignDiscountAmount" type="tns:Amount"/>
+					<xs:element name="campaignValueType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Possible values: Inflow, Targeted_Fixed, Targeted_Variable.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="campaignMinPurchaseAmount" type="tns:Amount"/>
+					<xs:element minOccurs="0" name="campaignMaxDiscountAmount" type="tns:Amount"/>
+
+					<xs:element minOccurs="0" name="categoryIdList" type="tns:CategoryIdList"/>
+					<xs:element name="incentiveApplicationType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Possible values: SingleItem, SubTotal, EntireTransaction, Shipping.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Incentive">
+
+				<xs:annotation>
+					<xs:documentation/>
+
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="campaignId" type="xs:long"/>
+					<xs:element name="userId" type="xs:string"/>
+					<xs:element minOccurs="0" name="incentiveId" type="xs:long"/>
+					<xs:element name="incentiveStatus" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Possible values: Prequalified, Active, Redeemed, Deleted, Cancelled</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="incentiveExpirationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="userUsedCount" type="xs:int"/>
+					<xs:element minOccurs="0" name="userMaxUsageCount" type="xs:int"/>
+					<xs:element name="redemptionCode" type="xs:string"/>
+					<xs:element name="isoCurrencyCode" type="xs:string"/>
+					<xs:element name="isoCountryCode" type="xs:string"/>
+					<xs:element minOccurs="0" name="incentiveDiscountPercent" type="xs:int"/>
+					<xs:element minOccurs="0" name="incentiveDiscountAmount" type="tns:Amount"/>
+					<xs:element minOccurs="0" name="incentiveDiscountType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Possible values: Percent, Amount.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="incentiveMinPurchaseAmount" type="tns:Amount"/>
+					<xs:element minOccurs="0" name="incentiveMaxDiscountAmount" type="tns:Amount"/>
+					<xs:element minOccurs="0" name="displayMessage" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Only for output.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="incentiveCreationTime" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Only for output.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="incentiveLastModifiedTime" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Only for output.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="incentiveDeletionTime" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Only for output.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+					
+					<!--Based on interface definition table, the reqired is not clear-->
+					<xs:element minOccurs="0" name="parentCampaign" type="tns:Campaign">
+						<xs:annotation>
+							<xs:documentation>Only for output.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Amount">
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="currencyId" type="xs:string" use="required"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:complexType name="IncentiveIDStatus">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="incentiveId" type="xs:long"/>
+					<xs:element minOccurs="0" name="incentiveStatus" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Possible values: Requalified, Active, Redeemed, Deleted.</xs:documentation> 
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CategoryIdList">
+				<xs:annotation>
+					<xs:documentation/> 
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="categoryId" type="xs:string"/> 
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CampaignList">
+				<xs:annotation>
+					<xs:documentation/> 
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="campaign" type="tns:Campaign"/> 
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="IncentiveList">
+				<xs:annotation>
+					<xs:documentation/> 
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="incentive" type="tns:Incentive"/> 
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ItemContext">
+					<xs:annotation>
+						<xs:documentation>
+								This data type contains the context for an item which 
+								is listed/sold/viewed in eBay.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:sequence>
+						<xs:element name="itemId" type="xs:string"/>
+						<xs:element minOccurs="0" name="itemContextFlagList" type="tns:ItemContextFlagList"/>
+						<xs:element minOccurs="0" name="categoryIdList" type="tns:CategoryIdList"/>
+						<xs:element minOccurs="0" name="itemPrice" type="tns:Amount"/>
+					</xs:sequence>
+	       </xs:complexType>
+	      			<xs:complexType name="ItemContextFlagList">
+				<xs:annotation>
+					<xs:documentation> 
+								This data type contains the boolean flag for the context of an item which 
+								is listed/sold/viewed in eBay.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="itemContextFlag" type="xs:string"/> 
+				</xs:sequence>
+    	   </xs:complexType>
+		   <xs:complexType name="DynamicIssuanceContext">
+					<xs:annotation>
+							<xs:documentation>
+								This data type contains the client context for a 
+								registered eBay user.
+							</xs:documentation>
+					</xs:annotation>
+					<xs:sequence>
+							<xs:element name="userId" type="xs:string"/>
+							<xs:element name="contextId" type="xs:int"/>
+							<xs:element name="programCode" type="xs:string"/>
+							<xs:element name="segmentName" type="xs:string"/>
+							<xs:element name="country" type="xs:string"/>
+							<xs:element name="language" type="xs:string"/>
+							<xs:element name="adjacencyId" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="itemContexts" type="tns:ItemContext"/>
+							</xs:sequence>
+	      </xs:complexType>
+			
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="validateIncentiveApplicabilityRequest">
+		<wsdl:part element="ns0:validateIncentiveApplicabilityRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="validateIncentiveApplicabilityResponse">
+		<wsdl:part element="ns0:validateIncentiveApplicabilityResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="addCampaignRequest">
+		<wsdl:part element="ns0:addCampaignRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="addCampaignResponse">
+		<wsdl:part element="ns0:addCampaignResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setCampaignStatusRequest">
+		<wsdl:part element="ns0:setCampaignStatusRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setCampaignStatusResponse">
+		<wsdl:part element="ns0:setCampaignStatusResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCampaignRequest">
+		<wsdl:part element="ns0:getCampaignRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCampaignResponse">
+		<wsdl:part element="ns0:getCampaignResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCampaignsRequest">
+		<wsdl:part element="ns0:getCampaignsRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCampaignsResponse">
+		<wsdl:part element="ns0:getCampaignsResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="addIncentiveRequest">
+		<wsdl:part element="ns0:addIncentiveRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="addIncentiveResponse">
+		<wsdl:part element="ns0:addIncentiveResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="addIncentivesRequest">
+		<wsdl:part element="ns0:addIncentivesRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="addIncentivesResponse">
+		<wsdl:part element="ns0:addIncentivesResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getIncentiveRequest">
+		<wsdl:part element="ns0:getIncentiveRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getIncentiveResponse">
+		<wsdl:part element="ns0:getIncentiveResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getUserIncentivesRequest">
+		<wsdl:part element="ns0:getUserIncentivesRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getUserIncentivesResponse">
+		<wsdl:part element="ns0:getUserIncentivesResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setIncentiveStatusRequest">
+		<wsdl:part element="ns0:setIncentiveStatusRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setIncentiveStatusResponse">
+		<wsdl:part element="ns0:setIncentiveStatusResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="redeemIncentiveRequest">
+		<wsdl:part element="ns0:redeemIncentiveRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="redeemIncentiveResponse">
+		<wsdl:part element="ns0:redeemIncentiveResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="refundIncentiveRequest">
+		<wsdl:part element="ns0:refundIncentiveRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="refundIncentiveResponse">
+		<wsdl:part element="ns0:refundIncentiveResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setIncentiveRequest">
+		<wsdl:part element="ns0:setIncentiveRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setIncentiveResponse">
+		<wsdl:part element="ns0:setIncentiveResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setCampaignRequest">
+		<wsdl:part element="ns0:setCampaignRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setCampaignResponse">
+		<wsdl:part element="ns0:setCampaignResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getBestIncentiveForUserRequest">
+		<wsdl:part element="ns0:getBestIncentiveForUserRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getBestIncentiveForUserResponse">
+		<wsdl:part element="ns0:getBestIncentiveForUserResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getUserIncentivesForCategoryRequest">
+		<wsdl:part element="ns0:getUserIncentivesForCategoryRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getUserIncentivesForCategoryResponse">
+		<wsdl:part element="ns0:getUserIncentivesForCategoryResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getIncentivesForUserRequest">
+		<wsdl:part element="ns0:getIncentivesForUserRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getIncentivesForUserResponse">
+		<wsdl:part element="ns0:getIncentivesForUserResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getIncentiveCountRequest">
+		<wsdl:part element="ns0:getIncentiveCountRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getIncentiveCountResponse">
+		<wsdl:part element="ns0:getIncentiveCountResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setIncentivesStatusRequest">
+		<wsdl:part element="ns0:setIncentivesStatusRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="setIncentivesStatusResponse">
+		<wsdl:part element="ns0:setIncentivesStatusResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCampaignByExternalIdAndAdjacencyIdRequest">
+		<wsdl:part element="ns0:getCampaignByExternalIdAndAdjacencyIdRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCampaignByExternalIdAndAdjacencyIdResponse">
+		<wsdl:part element="ns0:getCampaignByExternalIdAndAdjacencyIdResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="redeemIncentiveByRedemptionCodeAndAdjacencyIdRequest">
+		<wsdl:part element="ns0:redeemIncentiveByRedemptionCodeAndAdjacencyIdRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="redeemIncentiveByRedemptionCodeAndAdjacencyIdResponse">
+		<wsdl:part element="ns0:redeemIncentiveByRedemptionCodeAndAdjacencyIdResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="refundIncentiveByRedemptionCodeAndAdjacencyIdRequest">
+		<wsdl:part element="ns0:refundIncentiveByRedemptionCodeAndAdjacencyIdRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="refundIncentiveByRedemptionCodeAndAdjacencyIdResponse">
+		<wsdl:part element="ns0:refundIncentiveByRedemptionCodeAndAdjacencyIdResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="issueIncentiveIfQualifiedRequest">
+		<wsdl:part element="ns0:issueIncentiveIfQualifiedRequest" name="messageParameters"/>
+    </wsdl:message>
+    <wsdl:message name="issueIncentiveIfQualifiedResponse">
+		<wsdl:part element="ns0:issueIncentiveIfQualifiedResponse" name="messageParameters"/>
+    </wsdl:message>
+
+	
+	<wsdl:portType name="IncentiveServicePortType">
+		<wsdl:operation name="validateIncentiveApplicability">
+			<wsdl:input message="ns0:validateIncentiveApplicabilityRequest"/>
+			<wsdl:output message="ns0:validateIncentiveApplicabilityResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addCampaign">
+			<wsdl:input message="ns0:addCampaignRequest"/>
+			<wsdl:output message="ns0:addCampaignResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setCampaignStatus">
+			<wsdl:input message="ns0:setCampaignStatusRequest"/>
+			<wsdl:output message="ns0:setCampaignStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaign">
+			<wsdl:input message="ns0:getCampaignRequest"/>
+			<wsdl:output message="ns0:getCampaignResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaigns">
+			<wsdl:input message="ns0:getCampaignsRequest"/>
+			<wsdl:output message="ns0:getCampaignsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addIncentive">
+			<wsdl:input message="ns0:addIncentiveRequest"/>
+			<wsdl:output message="ns0:addIncentiveResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addIncentives">
+			<wsdl:input message="ns0:addIncentivesRequest"/>
+			<wsdl:output message="ns0:addIncentivesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getIncentive">
+			<wsdl:input message="ns0:getIncentiveRequest"/>
+			<wsdl:output message="ns0:getIncentiveResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getUserIncentives">
+			<wsdl:input message="ns0:getUserIncentivesRequest"/>
+			<wsdl:output message="ns0:getUserIncentivesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setIncentiveStatus">
+			<wsdl:input message="ns0:setIncentiveStatusRequest"/>
+			<wsdl:output message="ns0:setIncentiveStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="redeemIncentive">
+			<wsdl:input message="ns0:redeemIncentiveRequest"/>
+			<wsdl:output message="ns0:redeemIncentiveResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="refundIncentive">
+			<wsdl:input message="ns0:refundIncentiveRequest"/>
+			<wsdl:output message="ns0:refundIncentiveResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setIncentive">
+			<wsdl:input message="ns0:setIncentiveRequest"/>
+			<wsdl:output message="ns0:setIncentiveResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setCampaign">
+			<wsdl:input message="ns0:setCampaignRequest"/>
+			<wsdl:output message="ns0:setCampaignResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getBestIncentiveForUser">
+			<wsdl:input message="ns0:getBestIncentiveForUserRequest"/>
+			<wsdl:output message="ns0:getBestIncentiveForUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getUserIncentivesForCategory">
+			<wsdl:input message="ns0:getUserIncentivesForCategoryRequest"/>
+			<wsdl:output message="ns0:getUserIncentivesForCategoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getIncentivesForUser">
+			<wsdl:input message="ns0:getIncentivesForUserRequest"/>
+			<wsdl:output message="ns0:getIncentivesForUserResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getIncentiveCount">
+			<wsdl:input message="ns0:getIncentiveCountRequest"/>
+			<wsdl:output message="ns0:getIncentiveCountResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="setIncentivesStatus">
+			<wsdl:input message="ns0:setIncentivesStatusRequest"/>
+			<wsdl:output message="ns0:setIncentivesStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaignByExternalIdAndAdjacencyId">
+			<wsdl:input message="ns0:getCampaignByExternalIdAndAdjacencyIdRequest"/>
+			<wsdl:output message="ns0:getCampaignByExternalIdAndAdjacencyIdResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="redeemIncentiveByRedemptionCodeAndAdjacencyId">
+			<wsdl:input message="ns0:redeemIncentiveByRedemptionCodeAndAdjacencyIdRequest"/>
+			<wsdl:output message="ns0:redeemIncentiveByRedemptionCodeAndAdjacencyIdResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="refundIncentiveByRedemptionCodeAndAdjacencyId">
+			<wsdl:input message="ns0:refundIncentiveByRedemptionCodeAndAdjacencyIdRequest"/>
+			<wsdl:output message="ns0:refundIncentiveByRedemptionCodeAndAdjacencyIdResponse"/>
+		</wsdl:operation>
+        <wsdl:operation name="issueIncentiveIfQualified">
+			<wsdl:input message="ns0:issueIncentiveIfQualifiedRequest"/>
+			<wsdl:output message="ns0:issueIncentiveIfQualifiedResponse"/>
+        </wsdl:operation>
+
+
+	</wsdl:portType>
+	<wsdl:binding name="IncentiveServiceSOAP12Binding" type="ns0:IncentiveServicePortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="addCampaign">
+			<soap12:operation soapAction="urn:addCampaign" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="validateIncentiveApplicability">
+			<soap12:operation soapAction="urn:validateIncentiveApplicability" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setCampaignStatus">
+			<soap12:operation soapAction="urn:setCampaignStatus" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaign">
+			<soap12:operation soapAction="urn:getCampaign" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaigns">
+			<soap12:operation soapAction="urn:getCampaigns" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addIncentive">
+			<soap12:operation soapAction="urn:addIncentive" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addIncentives">
+			<soap12:operation soapAction="urn:addIncentives" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getIncentive">
+			<soap12:operation soapAction="urn:getIncentive" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getUserIncentives">
+			<soap12:operation soapAction="urn:getUserIncentives" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setIncentiveStatus">
+			<soap12:operation soapAction="urn:setIncentiveStatus" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="redeemIncentive">
+			<soap12:operation soapAction="urn:redeemIncentive" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="refundIncentive">
+			<soap12:operation soapAction="urn:refundIncentive" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setIncentive">
+			<soap12:operation soapAction="urn:setIncentive" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setCampaign">
+			<soap12:operation soapAction="urn:setCampaign" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBestIncentiveForUser">
+			<soap12:operation soapAction="urn:getBestIncentiveForUser" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getUserIncentivesForCategory">
+			<soap12:operation soapAction="urn:getUserIncentivesForCategory" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getIncentivesForUser">
+			<soap12:operation soapAction="urn:getIncentivesForUser" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getIncentiveCount">
+			<soap12:operation soapAction="urn:getIncentiveCount" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setIncentivesStatus">
+			<soap12:operation soapAction="urn:setIncentivesStatus" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCampaignByExternalIdAndAdjacencyId">
+			<soap12:operation soapAction="urn:getCampaignByExternalIdAndAdjacencyId" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="redeemIncentiveByRedemptionCodeAndAdjacencyId">
+			<soap12:operation soapAction="urn:redeemIncentiveByRedemptionCodeAndAdjacencyId" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="refundIncentiveByRedemptionCodeAndAdjacencyId">
+			<soap12:operation soapAction="urn:refundIncentiveByRedemptionCodeAndAdjacencyId" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>				
+		
+       <wsdl:operation name="issueIncentiveIfQualified">
+			<soap12:operation soapAction="urn:issueIncentiveIfQualified" style="document"/>
+			<wsdl:input>
+			<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+				</wsdl:output>
+       </wsdl:operation>
+		
+	</wsdl:binding>
+	<wsdl:service name="IncentiveService">
+		<wsdl:port binding="ns0:IncentiveServiceSOAP12Binding" name="IncentiveServiceSOAP12port_http">
+			<soap12:address location="http://svcs.ebay.com/IncentiveService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

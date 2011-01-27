@@ -1,0 +1,226 @@
+<html>
+<body>
+<b>Doc Gen Tool FAQ</b>
+<ul>
+<li><a href="#Prerequisites">What are the Prerequisites for using this tool? </a><br></li>
+<li><a href="#SampleInvocation">I want to generate Javadoc out of my wsdl. How do i do it?</a><br></li>
+<li><a href="#SampleInvocation">I want to generate API Reference doc out of my wsdl. How do I do it?</a><br></li>
+<li><a href="#ConfigureParser">I want to configure my own custom parser. How do I do it?</a><br></li>
+<li><a href="#ConfigureOutput">I want to configure my own output formatter. How do I do it?</a><br></li>
+</ul>
+<br>
+<table>
+<tr>
+<td>
+<a name="Usage">Usage:</a>
+This tool is used for Annotation parsing and Documentation Generation.<br>
+<br>
+<br>The Parameters to the tool can be passed in 3 ways,<br><br>
+<br>
+1. <a href="#env">Through System Environment variables</a><br>
+2. <a href="#config">Through Configuration xml</a><br>
+3. <a href="#cli">Through Command line arguments.</a><br>
+<br>
+<br>
+ <a name="env"><b>Through System Environment Variables</b></a><br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;         ANNOPARSER_OUTPUT_DIR = &lt;Complete Output Directory Path&gt;<br>
+   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;        ANNOPARSER_CONFIG = &lt;Configuration file Path&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;       ANNOPARSER_CSS = &lt;CSS file Path&gt;<br>
+<br>
+<br>
+ <a name="config"><b>Through Configuration xml file</b></a><br>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Sample basic config: <a href=".\sampleconfig\Configuration.xml">Configuration.xml</a><br>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Sample detailed config: <a href=".\sampleconfig\ebayConfiguration.xml">ebayConfiguration.xml</a><br>
+<br>
+<br>
+ <a name="cli"><b>The Command line Arguments should be passed as follows,</b></a><br>
+<br>
+   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;        output_dir = &lt;Complete Output Directory Path&gt;<br>
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;      config = &lt;Configuration file Path&gt;<br>
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;      css = &lt;CSS file Path&gt;<br>
+<br>
+<br>
+<b>The precedence from low to high is as follows:</b><br>
+<br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1. System Environment variables.<br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2. Configuration xml.<br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3. Command line arguments.<br>
+</td>
+</tr>
+<tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/><tr/>
+
+<td>
+<a name="Prerequisites"><b>Prerequisites:</b></a>
+<br>
+<br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1. Make sure the TURMERIC-721-1.0.jar, wsdl4j.jar and ebayAnnotationParser.jar are in classpath. These jar files are available in the jars folder in the distribution<br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2. JRE 1.5 or above is configured in the PATH
+<br>
+<br>
+<br>
+<b><a name="SampleInvocation">Sample Invocations:</a></b><br>
+<br>
+<br>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Invoking using Command-line Option:</b> <br>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;java org.ebayopensource.turmeric.tools.annoparsr.Main documents=..\wsdls\FindingService(1.8.0).wsdl output_dir=c:\temp\<br>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Invoking using Config file:</b><br>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;java org.ebay.tools.annoparser.Main documents=..\wsdls\FindingService(1.8.0).wsdl output_dir=c:\temp\ config=..\sampleconfig\Configuration.xml<br>
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<b><a name="ConfigureParser">Configuring your own Custom Parser</a></b> <br>
+
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Lets try out adding a HelloWorld Custom Annotation to the wsdl and write a Custom Annotation Parser. 
+We will demonstrate the steps involved in plugging in this parser. <br>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Step1:</b> Create a Java Class which implements AnnotationParser interface as shown <br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		package samples.parser;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    import java.util.logging.Level;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		import org.w3c.dom.Element;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		import org.w3c.dom.Node;<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		import org.ebayopensource.turmeric.tools.annoparser.parser.*;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		import org.ebayopensource.turmeric.tools.annoparser.dataobjects.*;<br>
+<br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		public class SanityParser implements AnnotationParser {<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			public ParsedAnnotationTag parseAnnotation(final Element elem) {<br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ParsedAnnotationTag tag = new ParsedAnnotationTag();<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tag.setTagName(elem.getNodeName());<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  				return tag;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			}<br>
+
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		}<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <b>Step2:</b>  Compile the above java code and package it into a jar file <br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <b>Step3:</b>  Create another Java Class which implements OutputGenerator interface <br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		package samples.OutputFormatter;<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		import org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		import org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		import org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		import org.ebayopensource.turmeric.tools.annoparser.outputformatter.OutputGenerator;<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		/**<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		 * The Class TestOpGenClass is just a test implementation to check if Custom Class is getting  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   Instantiated.<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		 */<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		public class SanityOutputFormatter implements OutputGenerator {<br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			public void generateWsdlOutput(WSDLDocInterface wsdlDoc, OutputGenaratorParam   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  outputGenaratorParam) {<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  				wsdlDoc.print();<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  				System.out.println(" Hello World Output Generator");<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			}<br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			public void generateXsdOutput(XSDDocInterface xsdDoc, OutputGenaratorParam outputGenaratorParam) {<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  				System.out.println(" IN Handle XSD Doc");<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			}<br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			public void completeProcessing() {<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  				// TODO Auto-generated method stub<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			}<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		}<br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  	<b>Step4:</b> Package OutputGenerator into a Jar file <br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  	<b>Step5:</b> Configure the default parser class by specifying the defaultParser element in the Configuration file as shown <br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;defaultparser&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			    	&lt;class&gt;samples.parser.SanityParser&lt;/class&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		        &lt;/defaultparser&gt;><br>
+<br>
+<b><a name="ConfigureOutput"></a></b> <br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;         <b>Step6:</b> Configure the OutputGenerator Class as follows <br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		   &lt;outputgenerators&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;outputgenerator name="DefaultDocToolOutput"&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  				&lt;class&gt;samples.OutputFormatter.SanityOutputFormatter&lt;/class&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;parameters&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			    	&lt;parameter&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			    		&lt;name&gt;outputMode&lt;/name&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			    		&lt;value&gt;normal&lt;/value&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		    		&lt;/parameter&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;/parameters&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		   &lt;/outputgenerator&gt;<br>	
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  	&lt;/outputgenerators&gt;	<br>
+      <br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  	<b>Step7:</b> Configure the Output dir as follows <br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		 &lt;outputdir&gt;C:\srini\projects\temp&lt;/outputdir&gt;<br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  	<b>Step8:</b> Configure the input wsdl documents as follows<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;documents&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;document&gt;C:\srini\projects\ebaySvc.wsdl&lt;/document&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;/documents&gt;<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  	<b>Step9:</b> The complete config file is as follows <br>
+<br>
+<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		<?xml version="1.0" encoding="UTF-8"?&gt;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;config&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;defaultparser&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     			&lt;class&gt;samples.parser.SanityParser&lt;/class&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;/defaultparser&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  	        &lt;outputgenerators&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;outputgenerator name="DefaultDocToolOutput"&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;class&gt;samples.OutputFormatter.SanityOutputFormatter&lt;/class&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;parameters&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		    		&lt;parameter&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		    			&lt;name&gt;outputMode&lt;/name&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			    		&lt;value&gt;normal&lt;/value&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			    	&lt;/parameter&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;/parameters&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;/outputgenerator&gt;	<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;/outputgenerators&gt;	<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  	        &lt;outputdir&gt;C:\srini\projects\temp&lt;/outputdir&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;documents&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  			&lt;document&gt;C:\srini\projects\ebaySvc.wsdl&lt;/document&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;/documents&gt;<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  		&lt;/config&gt;<br>
+<br>
+<br>
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;        <b>Step10:</b> set the jar files for parser and output formatter in the system CLASSPATH and make sure library dependency wsdl4j jar is in classpath. <br>
+<br>
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   <b>Step11:</b> Invoke the tool using java org.ebayopensource.turmeric.tools.annoparser.Main config=&lt;path to above config xml file&gt;<br>
+<br>
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   <b>Step12:</b> Examine the output and verify if it prints the "Hello World Output Generator");<br>
+<br>
+	   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <b>Step13:</b> Congratulations!!!!!! You have successfully configured the custom annotation parser and  OutputGenerator <br>
+</td><br>
+</tr><br>
+<tr><br>
+<td><br>
+
+</td><br>
+</tr><br>
+</body>
+</html>
+
+
+	   

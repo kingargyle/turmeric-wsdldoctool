@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebaypartnernetwork.com/adcommerce/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="CreativeService" targetNamespace="http://www.ebaypartnernetwork.com/adcommerce/v1/services">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebaypartnernetwork.com/adcommerce/v1/services">
+      <xs:complexType name="BaseCreativeResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:BaseAdCommerceResponse"/>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="CreativeResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:BaseCreativeResponse">
+            <xs:sequence>
+              <xs:element name="creative" type="tns:Creative"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="BulkCreativeResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:BaseCreativeResponse">
+            <xs:sequence>
+              <xs:element maxOccurs="1" minOccurs="0" name="creativeList" type="tns:CreativeList"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="CreativeList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="creative" type="tns:Creative"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Creative">
+        <xs:sequence>
+          <xs:element maxOccurs="1" minOccurs="0" name="creativeId" type="xs:long"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="headline" type="xs:string"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="description1" type="xs:string"/>
+          <xs:element minOccurs="0" name="description2" type="xs:string"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="displayUrl" type="xs:anyURI"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="destinationUrl" type="xs:anyURI"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="image" type="xs:base64Binary"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="status" type="xs:token"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getAdGroupCreativesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="adGroupId" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getAdGroupCreativesResponse" type="tns:BulkCreativeResponse"/>
+      <xs:element name="addCreativeRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="adGroupId" type="xs:long"/>
+            <xs:element name="creative" type="tns:Creative"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addCreativeResponse" type="tns:CreativeResponse"/>
+      <xs:element name="updateCreativeRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="creative" type="tns:Creative"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="updateCreativeResponse" type="tns:BaseCreativeResponse"/>
+      <xs:element name="deleteCreativeRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="creativeId" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="deleteCreativeResponse" type="tns:BaseCreativeResponse"/>
+      <xs:element name="getCreativeRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="creativeId" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getCreativeResponse" type="tns:CreativeResponse"/>
+      <!--  common types  -->
+      <xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+      <xs:complexType name="GetVersionResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:BaseServiceResponse"/>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="BaseAdCommerceResponse">
+        <xs:annotation>
+          <xs:documentation>
+							Base response container for all AdCommerce
+							operations.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+          <xs:extension base="tns:BaseServiceResponse">
+            <xs:sequence>
+              <xs:element maxOccurs="1" minOccurs="0" name="control" type="tns:Control"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="Control">
+        <xs:sequence>
+          <xs:element maxOccurs="1" minOccurs="0" name="requestId" type="xs:string"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="totalProcessedCount" type="xs:int"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="totalSuccessCount" type="xs:int"/>
+          <xs:element maxOccurs="1" minOccurs="0" name="quotaRemaining" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <!--  standard framework response types  -->
+      <xs:complexType abstract="true" name="BaseServiceRequest">
+        <xs:annotation>
+          <xs:documentation>
+							This is the base class for request container
+							for all service operations.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="BaseServiceResponse">
+        <xs:annotation>
+          <xs:documentation>
+							Base response container for all service
+							operations. Contains error information
+							associated with the request.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="ack" type="tns:AckValue">
+            <xs:annotation>
+              <xs:documentation/>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+            <xs:annotation>
+              <xs:documentation>
+									Information for an error or warning
+									that occurred when eBay processed
+									the request.
+								</xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="version" type="xs:string">
+            <xs:annotation>
+              <xs:documentation/>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation/>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="AckValue">
+        <xs:annotation>
+          <xs:documentation>
+							Indicates whether the error is a severe
+							error (causing the request to fail) or an
+							informational error (a warning) that should
+							be communicated to the user.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Success">
+            <xs:annotation>
+              <xs:documentation>
+									The request was processed
+									successfully, but something occurred
+									that may affect your application or
+									the user.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Failure">
+            <xs:annotation>
+              <xs:documentation>
+									The request that triggered the error
+									was not processed successfully. When
+									a serious application-level error
+									occurs, the error is returned
+									instead of the business data.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Warning">
+            <xs:annotation>
+              <xs:documentation>
+									The request that triggered the error
+									was processed successfully but with
+									some warnings.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PartialFailure">
+            <xs:annotation>
+              <xs:documentation>
+									The request that triggered the error
+									was processed successfully but with
+									some warnings.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="ErrorMessage">
+        <xs:annotation>
+          <xs:documentation>
+							ErrorMessage to indicate any Error/Warning
+							occured as part of service call. Any run
+							time error will not be reported here, but
+							will be reported aspart of soap fault.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+            <xs:annotation>
+              <xs:documentation>
+									Details about a single error.
+								</xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ErrorData">
+        <xs:annotation>
+          <xs:documentation>
+							This represents error details.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="errorId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>
+									A unique code that identifies the
+									particular error condition that
+									occurred. Your application can use
+									error codes as identifiers in your
+									customized error-handling
+									algorithms.
+								</xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="domain" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Name of the domain upon which the
+									error occurred.
+                <dl>
+                  <lh>Domains include:</lh>
+                  <dt>Marketplace</dt>
+                  <dd>
+											A business or validation
+											error occurred for the
+											Merchandising Service.
+										</dd>
+                  <dt>SOA</dt>
+                  <dd>
+											An exception occurred in the
+											Service Oriented
+											Architecture (SOA)
+											framework.
+										</dd>
+                </dl>
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="severity" type="tns:ErrorSeverity">
+            <xs:annotation>
+              <xs:documentation>
+									Indicates whether the error caused
+									the request to fail (Error) or not
+									(Warning).
+
+									If the request fails and the source
+									of the problem is within the
+									application (such as a missing
+									required element), please change the
+									application before you retry the
+									request. If the problem is due to
+									end-user input data, please alert
+									the end-user to the problem and
+									provide the means for them to
+									correct the data. Once the problem
+									in the application or data is
+									resolved, you can attempt to re-
+									send the request to eBay.
+
+									If the source of the problem is on
+									eBay's side, you can retry the
+									request as-is a reasonable number of
+									times (eBay recommends twice). If
+									the error persists, contact
+									Developer Technical Support. Once
+									the problem has been resolved, the
+									request may be resent in its
+									original form.
+
+									When a warning occurs, the error is
+									returned in addition to the business
+									data. In this case, you do not need
+									to retry the request (as the
+									original request was successful).
+									However, depending on the cause or
+									nature of the warning, you might
+									need to contact either the end user
+									or eBay to effect a long term
+									solution to the problem to prevent
+									it from reoccurring in the future.
+								</xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="category" type="tns:ErrorCategory">
+            <xs:annotation>
+              <xs:documentation>
+									There are three categories of
+									errors: request errors, application
+									errors, and system errors.
+								</xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="message" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+									A detailed description of the
+									condition that resulted in the
+									error.
+								</xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="subdomain" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Name of the subdomain upon which the
+									error occurred.
+                <dl>
+                  <lh>Subdomains include:</lh>
+                  <dt>Merchandising</dt>
+                  <dd>
+											The error is specific to the
+											Merchandising service.
+										</dd>
+                  <dt>MarketplaceCommon</dt>
+                  <dd>
+											The error is common to all
+											Marketplace services.
+										</dd>
+                </dl>
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="exceptionId" type="xs:token">
+            <xs:annotation>
+              <xs:documentation>
+									Unique identifier for an exception
+									associated with an error.
+								</xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+            <xs:annotation>
+              <xs:documentation>
+									Some warning and error messages
+									return one or more variables that
+									contain contextual information about
+									the error. This is often the field
+									or value that triggered the error.
+								</xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>
+											Conditionally
+										</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ErrorParameter">
+        <xs:annotation>
+          <xs:documentation>
+							Contextual information associated with an
+							error.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+          <xs:extension base="xs:string">
+            <xs:attribute name="name" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>
+										The name of the parameter in the
+										list of parameter types returned
+										within the error type.
+									</xs:documentation>
+                <xs:appinfo>
+                  <CallInfo>
+                    <AllCalls/>
+                    <Returned>
+												Conditionally
+											</Returned>
+                  </CallInfo>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:extension>
+        </xs:simpleContent>
+      </xs:complexType>
+      <xs:simpleType name="ErrorSeverity">
+        <xs:annotation>
+          <xs:documentation>
+							Indicates whether the error is a severe
+							error (causing the request to fail) or an
+							informational error (a warning) that should
+							be communicated to the user.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Error">
+            <xs:annotation>
+              <xs:documentation>
+									The request that triggered the error
+									was not processed successfully. When
+									a serious application-level error
+									occurs, the error is returned
+									instead of the business data.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Warning">
+            <xs:annotation>
+              <xs:documentation>
+									The request was processed
+									successfully, but something occurred
+									that may affect your application or
+									the user. For example, eBay may have
+									changed a value the user sent in. In
+									this case, eBay returns a normal,
+									successful response and also returns
+									the warning.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ErrorCategory">
+        <xs:annotation>
+          <xs:documentation>
+							There are three categories of error: request
+							errors, application errors, and system
+							errors. Request and application errors are
+							caused primarily by invalid data passed in
+							the request. System errors are caused
+							primarily by application failures and cannot
+							be corrected by changing request values.
+						</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="System">
+            <xs:annotation>
+              <xs:documentation>
+									Indicates that an error has occurred
+									on the eBay system side, such as a
+									database or server down. An
+									application can retry the request
+									as-is a reasonable number of times
+									(eBay recommends twice). If the
+									error persists, contact Developer
+									Technical Support. Once the problem
+									has been resolved, the request may
+									be resent in its original form.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Application">
+            <xs:annotation>
+              <xs:documentation>
+									An error occurred due to a problem
+									with the request, such as missing or
+									invalid fields. The problem must be
+									corrected before the request can be
+									made again. If the problem is due to
+									something in the application (such
+									as a missing required field), the
+									application must be changed. Once
+									the problem in the application or
+									data is resolved, resend the
+									corrected request to eBay.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Request">
+            <xs:annotation>
+              <xs:documentation>
+									An error occurred due to a problem
+									with the request, such as invalid or
+									missing data. The problem must be
+									corrected before the request can be
+									made again. If the problem is a
+									result of end-user data, the
+									application must alert the end-user
+									to the problem and provide the means
+									for the end-user to correct the
+									data. Once the problem in the data
+									is resolved, resend the request to
+									eBay with the corrected data.
+								</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCreativeResponse">
+    <wsdl:part element="tns:getCreativeResponse" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="updateCreativeRequest">
+    <wsdl:part element="tns:updateCreativeRequest" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="deleteCreativeRequest">
+    <wsdl:part element="tns:deleteCreativeRequest" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="getVersionResponse">
+    <wsdl:part element="tns:getVersionResponse" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="addCreativeResponse">
+    <wsdl:part element="tns:addCreativeResponse" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="addCreativeRequest">
+    <wsdl:part element="tns:addCreativeRequest" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="getCreativeRequest">
+    <wsdl:part element="tns:getCreativeRequest" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="deleteCreativeResponse">
+    <wsdl:part element="tns:deleteCreativeResponse" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="updateCreativeResponse">
+    <wsdl:part element="tns:updateCreativeResponse" name="messageParameters"/>
+  </wsdl:message>
+  <wsdl:message name="getAdGroupCreativesRequest">
+    <wsdl:part element="tns:getAdGroupCreativesRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getAdGroupCreativesResponse">
+    <wsdl:part element="tns:getAdGroupCreativesResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="CreativeServicePortType">
+    <wsdl:operation name="getVersion">
+      <wsdl:output message="tns:getVersionResponse" name="getVersion"/>
+    </wsdl:operation>
+    <wsdl:operation name="addCreative">
+      <wsdl:input message="tns:addCreativeRequest"/>
+      <wsdl:output message="tns:addCreativeResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="updateCreative">
+      <wsdl:input message="tns:updateCreativeRequest"/>
+      <wsdl:output message="tns:updateCreativeResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCreative">
+      <wsdl:input message="tns:deleteCreativeRequest"/>
+      <wsdl:output message="tns:deleteCreativeResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCreative">
+      <wsdl:input message="tns:getCreativeRequest"/>
+      <wsdl:output message="tns:getCreativeResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getAdGroupCreatives">
+      <wsdl:input message="tns:getAdGroupCreativesRequest"/>
+      <wsdl:output message="tns:getAdGroupCreativesResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CreativeServiceSOAP12Binding" type="tns:CreativeServicePortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getVersion">
+      <soap12:operation soapAction="urn:getVersion" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addCreative">
+      <soap12:operation soapAction="urn:addCreative" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCreative">
+      <soap12:operation soapAction="urn:deleteCreative" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateCreative">
+      <soap12:operation soapAction="urn:updateCreative" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCreative">
+      <soap12:operation soapAction="urn:getCreative" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAdGroupCreatives">
+      <soap12:operation soapAction="urn:getAdGroupCreatives" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CreativeService">
+    <wsdl:port binding="tns:CreativeServiceSOAP12Binding" name="CreativeServiceSOAP12port_http">
+      <soap12:address location="https://svcs.ebaypartnernetwork.com/adcommerce/v1/CreativeService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

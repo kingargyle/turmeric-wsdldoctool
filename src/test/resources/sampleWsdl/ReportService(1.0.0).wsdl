@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebaypartnernetwork.com/adcommerce/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="ReportService" targetNamespace="http://www.ebaypartnernetwork.com/adcommerce/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebaypartnernetwork.com/adcommerce/v1/services">
+
+			<xs:element name="scheduleReportJobRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="filter" type="tns:ReportJobFilter">
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+
+			<xs:complexType name="ReportJobResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAdCommerceResponse">
+						<xs:sequence>
+							<xs:element name="reportJob" type="tns:ReportJob">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="ReportJob">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="jobId" type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="status" type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="reportUrl" type="xs:anyURI">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="filter" type="tns:ReportJobFilter">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ReportJobFilter">
+				<xs:sequence>
+					<xs:element name="reportType" type="xs:token">
+					</xs:element>
+					<xs:element name="reportDate" type="xs:date">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="campaigns" type="tns:CampaignIdList">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="CampaignIdList">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="campaignId" type="xs:long">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:element name="scheduleReportJobResponse" type="tns:ReportJobResponse"/>
+
+			<xs:element name="getReportJobStatusRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="jobId" type="xs:token">
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="getReportJobStatusResponse" type="tns:ReportJobResponse"/>
+
+
+			<!--  common types -->
+			<xs:element name="getVersionResponse" nillable="true" type="tns:BaseAdCommerceResponse"/>
+
+
+			<xs:complexType abstract="true" name="BaseAdCommerceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all AdCommerce
+						operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="control" type="tns:Control"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="Control">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="requestId" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="totalProcessedCount" type="xs:int"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="totalSuccessCount" type="xs:int"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="quotaRemaining" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<!--  standard framework response types  -->
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether or not errors or warnings were generated
+								during the processing of the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information associated an error or warning that occurred when
+								eBay processed the request. Not returned when the ack value is
+								Success. Run-time errors are not reported here, but are instead
+								reported as part of a SOAP fault.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The release version of the service that eBay used to
+								process the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								This value represents the date and time when eBay processed the
+								request. The time zone of this value is &lt;a href=
+								"http://developer.ebay.com/DevZone/shopping/docs/CallRef/types/simpleTypes.html#dateTime"
+								&gt;GMT&lt;/a&gt;, and is returned in the ISO 8601 date and time
+								format (YYYY-MM-DDTHH:MM:SS.SSSZ). See the "dateTime" type for
+								information about the time format and for details on converting
+								to and from the GMT time zone.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a fatal error (causing the request
+						to fail) or a less severe error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								eBay successfully processed the request and the business data is
+								returned in the response. Note that it is possible for a response
+								to return Success, but still not contain the expected data in the
+								result.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during the processing of the
+								request, causing the request to fail. When a serious
+								application-level error occurs, the error is returned instead
+								of the business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was successfully processed, but eBay encountered a
+								non-fatal error during the processing. For best results, requests
+								should return without warnings. Inspect the warning details and
+								resolve the problem before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								eBay successfully processed the request, but one or more
+								non-fatal errors occurred during the processing. For best
+								results, requests should return without warning messages.
+								Inspect the message details and resolve any problems before
+								resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Information regarding an error or warning that occurred when eBay
+						processed the request. Not returned when the ack value is Success.
+						Run-time errors are not reported here, but are instead reported as
+						part of a SOAP fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Container for error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the particular error condition that
+								occurred. Your application can use error codes as identifiers in
+								your customized error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain in which the error occurred.
+								&lt;dl&gt;
+								&lt;dt&gt;
+									&lt;strong&gt;domain values:&lt;/strong&gt;
+								&lt;/dt&gt;
+								&lt;dt&gt;
+									ebaypartnernetwork [Check??]
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									A business or validation error occurred in the respective
+									AdCommerce Service.
+								&lt;/dd&gt;
+								&lt;dt&gt;
+									SOA
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									An exception occurred in the Service Oriented Architecture
+									(SOA) framework.
+								&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the reported problem is fatal (an error) or is
+								less-severe (a warning). Review the error message details for
+								information on the cause. &lt;br /&gt;
+								&lt;br /&gt;
+								If the request fails and the application is the source of the
+								error (for example, a required element is missing), update the
+								application before you retry the request. If the problem is due
+								to incorrect user data, alert the end-user to the problem and
+								provide the means for them to correct the data. Once the problem
+								in the application or data is resolved, re-send the request to
+								eBay. &lt;br /&gt;
+								&lt;br /&gt;
+								If the source of the problem is on eBay's side, you can retry the
+								request a reasonable number of times (eBay recommends you try the
+								request twice). If the error persists, contact Developer
+								Technical Support. Once the problem has been resolved, you can
+								resend the request in its original form. &lt;br /&gt;
+								&lt;br /&gt;
+								If a warning occurs, warning information is returned in addition
+								to the business data. Normally, you do not need to resend the
+								request (as the original request was successful). However,
+								depending on the cause of the warning, you might need to contact
+								the end user, or eBay, to effect a long term solution to the
+								problem.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors: request errors,
+								application errors, and system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition that caused in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain in which the error occurred.
+								&lt;dl&gt;
+								&lt;dt&gt;
+									&lt;strong&gt;subdomain values:&lt;/strong&gt;
+								&lt;/dt&gt;
+								&lt;dt&gt;
+									AdCommerce [Check??]
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									The error is specific to the AdCommerce service.
+								&lt;/dd&gt;
+								&lt;dt&gt;
+									ebaypartnernetwork [Check??]
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									The error is common to all AdCommerce services.
+								&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Various warning and error messages return one or more variables that
+								contain contextual information about the error. This is often the
+								field or value that triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the input parameter returned with the error.
+									Inspecting the parameter (or its input value) will often aid in
+									understanding the cause of the error. Not all error messages
+									contain this value.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>Conditionally</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a fatal error (causing the request to fail)
+						or a less severe error (a warning) that should be communicated to the
+						user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during the processing of the request,
+								causing the request to fail. When eBay encounters an error, it returns
+								error data instead of the requested business data. Inspect the error
+								details and resolve the problem before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was successfully processed, but eBay encountered a
+								non-fatal error during the processing that could affect the data
+								returned. For example, eBay might have changed the value of an
+								input field. In this case, eBay returns a successful response,
+								but it also returns a warning. For best results, requests should
+								return without warnings. Inspect the warning details and resolve
+								the problem before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request errors, application errors,
+						and system errors. Request and application errors are often caused by
+						passing invalid data in the request. System errors are primarily caused by
+						application failures and cannot be corrected by changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on the eBay system side. For
+								example, a database or server could be down. Inspect the error message
+								to find the cause of the problem. If the problem is on the eBay side,
+								an application can retry the request as-is a reasonable number of
+								times (eBay recommends twice). If the error persists, contact
+								Developer Technical Support. Once the problem has been resolved, the
+								request may be resent in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with the request, with the most
+								likely source being the application sending the request. For example,
+								the request is missing a required data element or it contains an
+								invalid field. The problem must be corrected before the request can be
+								resent. Inspect the error message to find the cause of the problem. If
+								the problem is due to an application error, modify the application and
+								resend the request. If the error is due to invalid data, the source of
+								the data must be corrected before you resend the resend request to
+								eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with the request, with the most
+								likely source being missing or invalid data in the request. The
+								problem must be corrected before the request can be retried. Inspect
+								the error message to find the cause of the problem. If the problem is
+								a result of end-user data, alert the end-user to the problem and
+								provide the means for them to correct the problem. Once the problem is
+								resolved, resend the request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="tns:getVersionResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="scheduleReportJobRequest">
+		<wsdl:part element="tns:scheduleReportJobRequest" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="scheduleReportJobResponse">
+		<wsdl:part element="tns:scheduleReportJobResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getReportJobStatusRequest">
+		<wsdl:part element="tns:getReportJobStatusRequest" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getReportJobStatusResponse">
+		<wsdl:part element="tns:getReportJobStatusResponse" name="messageParameters">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:portType name="ReportServicePortType">
+		<wsdl:operation name="getVersion">
+			<wsdl:output message="tns:getVersionResponse" name="getVersion">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="scheduleReportJob">
+			<wsdl:input message="tns:scheduleReportJobRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:scheduleReportJobResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getReportJobStatus">
+			<wsdl:input message="tns:getReportJobStatusRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:getReportJobStatusResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="ReportServiceSOAP12Binding" type="tns:ReportServicePortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getVersion">
+			<soap12:operation soapAction="urn:getVersion" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="scheduleReportJob">
+			<soap12:operation soapAction="urn:scheduleReportJob" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getReportJobStatus">
+			<soap12:operation soapAction="urn:getReportJobStatus" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="ReportService">
+		<wsdl:port binding="tns:ReportServiceSOAP12Binding" name="ReportServiceSOAP12port_http">
+			<soap12:address location="https://svcs.ebaypartnernetwork.com/services/adcommerce/v1/ReportService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

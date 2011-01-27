@@ -1,0 +1,2142 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:complexType name="OpeneBayPrincipalIdentifierType">
+				<xs:attribute name="appId" type="xs:string"/>
+			</xs:complexType>
+			<xs:simpleType name="OpeneBayEventType">
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Event"/>
+					<xs:enumeration value="Alert"/>
+					<xs:enumeration value="Notification"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="OpeneBayAcceptType">
+				<xs:attribute default="Value" name="by" type="tns:OpeneBayTokenType" use="optional"/>
+			</xs:complexType>
+			<xs:simpleType name="OpeneBayApplicationOperationalStateType">
+				<xs:annotation>
+					<xs:documentation>
+						defines possible application states
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="MarkedUp"/>
+					<xs:enumeration value="MarkedDown"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="OpeneBayApplicationLifeCycleStateType">
+				<xs:annotation>
+					<xs:documentation>
+						defines possible application life cycle states
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Stored"/>
+					<xs:enumeration value="Submitted"/>
+					<xs:enumeration value="InReview"/>
+					<xs:enumeration value="ChangeRequested"/>
+					<xs:enumeration value="Approved"/>
+					<xs:enumeration value="Suspended"/>
+					<xs:enumeration value="Deactivated"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="OpeneBayApplicationAccessStateType">
+				<xs:annotation>
+					<xs:documentation>
+						defines possible application access states
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Public"/>
+					<xs:enumeration value="Private"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="OpeneBaySubscriptionStateType">
+				<xs:annotation>
+					<xs:documentation>
+						defines possible subscription states
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Created"/>
+					<xs:enumeration value="Pending"/>
+					<xs:enumeration value="Active"/>
+					<xs:enumeration value="Suspended"/>
+					<xs:enumeration value="Cancelled"/>
+					<xs:enumeration value="Rejected"/>
+					<xs:enumeration value="CancelledPending"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="OpeneBayResultSetType">
+				<xs:annotation>
+					<xs:documentation>
+						defines possible result sets
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Summary"/>
+					<xs:enumeration value="Detail"/>
+					<xs:enumeration value="DetailAndHistory"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="OpeneBaySubscriberType">
+				<xs:sequence>
+					<xs:element name="ebayUserId" type="xs:string"/>
+					<xs:element minOccurs="0" name="devId" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subscriptionInfo" type="tns:OpeneBayBaseSubscriptionType"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayApplicationQueryFilterType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="applicationOperationalState" type="tns:OpeneBayApplicationOperationalStateType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="applicationLifeCycleState" type="tns:OpeneBayApplicationLifeCycleStateType"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="resource" type="tns:OpeneBayResourceType"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySubscriberQueryFilterType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="applicationOperationalState" type="tns:OpeneBayApplicationOperationalStateType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="applicationLifeCycleState" type="tns:OpeneBayApplicationLifeCycleStateType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subscriptionState" type="tns:OpeneBaySubscriptionStateType"/>
+					<xs:element minOccurs="0" name="subscriptionStartDateFrom" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="subscriptionStartDateTo" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="subscriptionEndDateFrom" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="subscriptionEndDateTo" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayApplicationAdminQueryFilterType">
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayApplicationQueryFilterType">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="applicationAccessState" type="tns:OpeneBayApplicationAccessStateType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayResourceType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="images" type="tns:OpeneBayImageType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="links" type="tns:OpeneBayLinkType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="messages" type="tns:OpeneBayMessageType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayImageType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:string"/>
+					<xs:element minOccurs="0" name="url" type="xs:anyURI"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayMessageType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:string"/>
+					<xs:element minOccurs="0" name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayLinkType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:string"/>
+					<xs:element minOccurs="0" name="url" type="xs:anyURI"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayDeveloperInformationType">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="developerName" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayApplicationType">
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseApplicationType">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="developerInformation" type="tns:OpeneBayDeveloperInformationType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subscriptionPlan" type="tns:OpeneBaySubscriptionPlanType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayBaseApplicationType">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="oeApplicationId" type="xs:long"/>
+					<xs:element name="appId" type="xs:string"/>
+					<xs:element name="containerName" type="xs:string"/>
+					<xs:element name="uri" type="xs:string"/>
+					<xs:element name="operationalState" type="tns:OpeneBayApplicationOperationalStateType"/>
+					<xs:element name="lifeCycleState" type="tns:OpeneBayApplicationLifeCycleStateType"/>
+					<xs:element minOccurs="0" name="resource" type="tns:OpeneBayResourceType"/>
+					<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedTime" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayAdminApplicationType">
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayApplicationType">
+						<xs:sequence>
+							<xs:element name="devId" type="xs:string"/>
+							<xs:element name="platformId" type="xs:long"/>
+							<xs:element name="accessState" type="tns:OpeneBayApplicationAccessStateType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayAdminApplicationListType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="application" type="tns:OpeneBayAdminApplicationType"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayBaseSubscriptionType">
+				<xs:sequence>
+					<xs:element name="subscriptionId" type="xs:long"/>
+					<xs:element minOccurs="0" name="subscriberId" type="xs:long"/>
+					<xs:element minOccurs="0" name="oeApplicationId" type="xs:long"/>
+					<xs:element minOccurs="0" name="appId" type="xs:string"/>
+					<xs:element minOccurs="0" name="planId" type="xs:long"/>
+					<xs:element minOccurs="0" name="subscriptionState" type="tns:OpeneBaySubscriptionStateType"/>
+					<xs:element minOccurs="0" name="subscriptionStartDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="subscriptionEndDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="subscriptionBillDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="reasonCode" type="xs:token"/>
+					<xs:element minOccurs="0" name="note" type="xs:string"/>
+					<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedTime" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySubscriberListType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subscriber" type="tns:OpeneBaySubscriberType"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<!-- Open eBay Billing Types Start -->
+			<xs:simpleType name="OpeneBaySubscriptionPlanTypeType">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Billable"/>
+					<xs:enumeration value="NonBillable"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="OpeneBaySubscriptionPlanType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="planId" type="xs:long"/>
+					<xs:element minOccurs="0" name="oeApplicationId" type="xs:long"/>
+					<xs:element minOccurs="0" name="planType" type="tns:OpeneBaySubscriptionPlanTypeType"/>
+					<xs:element minOccurs="0" name="externalPlanId" type="xs:string"/>
+					<xs:element minOccurs="0" name="planName" type="xs:string"/>
+					<xs:element minOccurs="0" name="siteId" type="xs:int"/>
+					<xs:element minOccurs="0" name="visible" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedTime" type="xs:dateTime"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="planVersion" type="tns:OpeneBaySubscriptionPlanVersionType"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySubscriptionPlanListType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="plan" type="tns:OpeneBaySubscriptionPlanType"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySubscriptionPlanQueryFilterType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subscriptionPlanLifeCycleState" type="tns:OpeneBaySubscriptionPlanLifeCycleStateType"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySubscriptionPlanVersionType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="planVersionId" type="xs:long"/>
+					<xs:element minOccurs="0" name="planId" type="xs:long"/>
+					<xs:element minOccurs="0" name="planVersion" type="xs:int"/>
+					<xs:element minOccurs="0" name="planDescription" type="xs:string"/>
+					<xs:element minOccurs="0" name="lifeCycleState" type="tns:OpeneBaySubscriptionPlanLifeCycleStateType"/>
+					<xs:element minOccurs="0" name="pcrTicketId" type="xs:string"/>
+					<xs:element minOccurs="0" name="planStartDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="planEndDate" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="billingEnabled" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedTime" type="xs:dateTime"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="planVersionDetail" type="tns:OpeneBaySubscriptionPlanVersionDetailType"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySubscriptionPlanVersionDetailType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="planVersionDetailId" type="xs:long"/>
+					<xs:element minOccurs="0" name="planVersionId" type="xs:long"/>
+					<xs:element minOccurs="0" name="chargeType" type="tns:OpeneBaySubscriptionChargeType"/>
+					<xs:element minOccurs="0" name="chargeTerm" type="xs:int"/>
+					<xs:element minOccurs="0" name="chargeTermUnit" type="tns:OpeneBaySubscriptionChargeTermUnitType"/>
+					<xs:element minOccurs="0" name="chargeAmount" type="xs:double"/>
+					<xs:element minOccurs="0" name="extendedDescription" type="xs:string"/>
+					<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedTime" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="OpeneBaySubscriptionPlanLifeCycleStateType">
+				<xs:annotation>
+					<xs:documentation>
+						defines possible subscription plan version life
+						cycle states
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Stored"/>
+					<xs:enumeration value="Submitted"/>
+					<xs:enumeration value="Pending"/>
+					<xs:enumeration value="ChangeRequested"/>
+					<xs:enumeration value="Active"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="OpeneBaySubscriptionChargeType">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="FreeTrial"/>
+					<xs:enumeration value="NRC"/>
+					<xs:enumeration value="NRCSetup"/>
+					<xs:enumeration value="Recurring"/>
+					<xs:enumeration value="RecurringProRateEnd"/>
+					<xs:enumeration value="Usage"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="OpeneBaySubscriptionChargeTermUnitType">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Day"/>
+					<xs:enumeration value="Month"/>
+					<xs:enumeration value="Week"/>
+					<xs:enumeration value="Quarter"/>
+					<xs:enumeration value="Year"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="OpeneBayLegalEntityType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="legalEntityId" type="xs:long"/>
+					<xs:element minOccurs="0" name="devLegalName" type="xs:string"/>
+					<xs:element minOccurs="0" name="legalForm" type="xs:string"/>
+					<xs:element minOccurs="0" name="registrationNumber" type="xs:string"/>
+					<xs:element minOccurs="0" name="licenseNumber" type="xs:string"/>
+					<xs:element minOccurs="0" name="vatNumber" type="xs:string"/>
+					<xs:element minOccurs="0" name="assetAmount" type="xs:string"/>
+					<xs:element minOccurs="0" name="addressLine1" type="xs:string"/>
+					<xs:element minOccurs="0" name="addressLine2" type="xs:string"/>
+					<xs:element minOccurs="0" name="city" type="xs:string"/>
+					<xs:element minOccurs="0" name="stateProvince" type="xs:string"/>
+					<xs:element minOccurs="0" name="zipCode" type="xs:string"/>
+					<xs:element minOccurs="0" name="country" type="xs:string"/>
+					<xs:element minOccurs="0" name="customerServicePhone" type="xs:string"/>
+					<xs:element minOccurs="0" name="customerServiceEmail" type="xs:string"/>
+					<xs:element minOccurs="0" name="invoiceAnnouncement" type="xs:string"/>
+					<xs:element minOccurs="0" name="invoiceNotice" type="xs:string"/>
+					<xs:element minOccurs="0" name="linkUrl1" type="xs:string"/>
+					<xs:element minOccurs="0" name="linkText1" type="xs:string"/>
+					<xs:element minOccurs="0" name="linkUrl2" type="xs:string"/>
+					<xs:element minOccurs="0" name="linkText2" type="xs:string"/>
+					<xs:element minOccurs="0" name="linkUrl3" type="xs:string"/>
+					<xs:element minOccurs="0" name="linkText3" type="xs:string"/>
+					<xs:element minOccurs="0" name="logoUrl" type="xs:string"/>
+					<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedTime" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayPreApprovalInfoType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="preApprovalId" type="xs:long"/>
+					<xs:element minOccurs="0" name="currency" type="xs:string"/>
+					<xs:element minOccurs="0" name="termMonth" type="xs:int"/>
+					<xs:element minOccurs="0" name="maxTotalPaymentAmt" type="xs:double"/>
+					<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedTime" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayBillingAccountType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="accountId" type="xs:long"/>
+					<xs:element minOccurs="0" name="paypalAccount" type="xs:string"/>
+					<xs:element minOccurs="0" name="ebayUseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="creationTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="lastModifiedTime" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySubscriptionPlanToBeTransited">
+				<xs:sequence>
+					<xs:element name="planId" type="xs:long"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="planVersion" type="tns:OpeneBaySubscriptionPlanVersionToBeTransited"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySubscriptionPlanVersionToBeTransited">
+				<xs:sequence>
+					<xs:element name="planVersionId" type="xs:long"/>
+					<xs:element name="state" type="tns:OpeneBaySubscriptionPlanLifeCycleStateType"/>
+					<xs:element name="reason" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<!-- Open eBay Billing Types End -->
+
+			<xs:complexType name="PaginationInput">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="pageNumber" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of the page for the
+								resultsdisplay if the response has more
+								than one page
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="entriesPerPage" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Number of entries per page expected in
+								the response
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="PaginationOutput">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="totalPages" type="xs:int"/>
+					<xs:element minOccurs="0" name="totalEntries" type="xs:int"/>
+					<xs:element minOccurs="0" name="pageNumber" type="xs:int"/>
+					<xs:element minOccurs="0" name="entriesPerPage" type="xs:int"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayLoginCredentialsType">
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayPrincipalIdentifierType">
+						<xs:sequence>
+							<xs:element name="certId" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="OpeneBayTokenType">
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Reference"/>
+					<xs:enumeration value="Value"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="OpeneBaySecurityTokenReferenceType">
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseSecurityTokenType">
+						<xs:attribute name="tokenref"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBaySecurityTokenType">
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseSecurityTokenType">
+						<xs:sequence>
+							<xs:element name="tokenValue" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The value of a token.
+									</xs:documentation>
+									<xs:appinfo>
+										<MaxLength>2000</MaxLength>
+										<CallInfo>
+											<CallName>
+												addSubscriber
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+										<CallInfo>
+											<CallName>
+												removeSubscriber
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="signature" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayBaseSecurityTokenType">
+				<xs:attribute name="type" type="tns:OpeneBayTokenType"/>
+				<xs:attribute name="issuingAuthority" type="xs:string" use="required"/>
+				<xs:attribute name="expirationDate" type="xs:dateTime" use="required"/>
+			</xs:complexType>
+
+			<!-- Base Request Types -->
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:sequence>
+					<xs:any/>
+				</xs:sequence>
+			</xs:complexType>
+			<!-- ****************************************************************************** -->
+			<!-- Base Response Types -->
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning
+						occured as part of service call. Any run time
+						error will not be reported here, but will be
+						reported aspart of soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								ActivityProfile about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain upon which the error
+								occurred. &lt;dl&gt; &lt;lh&gt;Domains
+								include:&lt;/lh&gt; &lt;dt&gt;
+								Marketplace &lt;/dt&gt; &lt;dd&gt; A
+								business or validation error occurred
+								for the UserProfile Service. &lt;/dd&gt;
+								&lt;dt&gt; SOA &lt;/dt&gt; &lt;dd&gt; An
+								exception occurred in the Service
+								Oriented Architecture (SOA) framework.
+								&lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the
+								request to fail (Error) or not
+								(Warning). &lt;br&gt;&lt;br&gt; If the
+								request fails and the source of the
+								problem is within the application (such
+								as a missing required element), please
+								change the application before you retry
+								the request. If the problem is due to
+								end-user input data, please alert the
+								end-user to the problem and provide the
+								means for them to correct the data. Once
+								the problem in the application or data
+								is resolved, you can attempt to re- send
+								the request to eBay.
+								&lt;br&gt;&lt;br&gt; If the source of
+								the problem is on eBay's side, you can
+								retry the request as-is a reasonable
+								number of times (eBay recommends twice).
+								If the error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+								&lt;br&gt;&lt;br&gt; When a warning
+								occurs, the error is returned in
+								addition to the business data. In this
+								case, you do not need to retry the
+								request (as the original request was
+								successful). However, depending on the
+								cause or nature of the warning, you
+								might need to contact either the end
+								user or eBay to effect a long term
+								solution to the problem to prevent it
+								from reoccurring in the future.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors:
+								request errors, application errors, and
+								system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition
+								that resulted in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain upon which the
+								error occurred. &lt;dl&gt;
+								&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+								&lt;dt&gt; UserProfile &lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								UserProfile service. &lt;/dd&gt;
+								&lt;dt&gt; MarketplaceCommon &lt;/dt&gt;
+								&lt;dd&gt; The error is common to all
+								Marketplace services. &lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some warning and error messages return
+								one or more variables that contain
+								contextual information about the error.
+								This is often the field or value that
+								triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the
+									list of parameter types returned
+									within the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<!-- Types specific to the service -->
+			<xs:complexType name="OpeneBayBaseRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for deployApplication
+						operation in the Admin Service. application
+						identity and token are to be sent in HTTP/S
+						header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="appId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										appId of the 3P application that
+										this operation belogs to.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayGetApplicationsBySubscriberRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for
+						getApplicationsBySubscriber operation in the
+						Admin Service. application identity and token
+						are to be sent in HTTP/S header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="ebayUserId" type="xs:string"/>
+							<xs:element name="applicationQueryFilter" type="tns:OpeneBayApplicationAdminQueryFilterType"/>
+							<xs:element name="resultSet" type="tns:OpeneBayResultSetType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayGetApplicationsBySubscriberResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for
+						getApplicationsBySubscriber operation in the
+						Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="totalApplications" type="xs:long"/>
+							<xs:element name="applicationList" type="tns:OpeneBayAdminApplicationListType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBaySyncIDPCredentialsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for syncIDPCredentials
+						operation in the Admin Service. application
+						identity and token are to be sent in HTTP/S
+						header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="appId" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="devId" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBaySyncIDPCredentialsResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for syncIDPCredentials
+						operation in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayDeployApplicationRequestType">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for deployApplication
+						operation in the Admin Service. application
+						identity and token are to be sent in HTTP/S
+						header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element name="deploymentDescriptorData" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayDeployApplicationResponseType">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for deployApplication
+						operation in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayDeploymentDescriptorType">
+				<xs:sequence>
+					<xs:element name="appId" type="xs:string"/>
+					<xs:element name="creationTime" type="xs:dateTime"/>
+					<xs:element name="lastModifiedTime" type="xs:dateTime"/>
+					<xs:element name="version" type="xs:string"/>
+					<xs:element name="deploymentData" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayGetDeploymentDescriptorRequestType">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for getDeploymentDescriptor
+						operation in the Admin Service. application
+						identity and token are to be sent in HTTP/S
+						header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayGetDeploymentDescriptorResponseType">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for getDeploymentDescriptor
+						operation in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="deploymentDescriptor" type="tns:OpeneBayDeploymentDescriptorType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayUpdateDeploymentDescriptorRequestType">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for updateDeploymentDescriptor
+						operation in the Admin Service. application
+						identity and token are to be sent in HTTP/S
+						header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element name="deploymentDescriptorData" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayUpdateDeploymentDescriptorResponseType">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for
+						updateDeploymentDescriptor operation in the
+						Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayGetSubscribersRequestType">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for getSubscribers operation
+						in the Admin Service. application identity and
+						token are to be sent in HTTP/S header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="appId" type="xs:string"/>
+							<xs:element minOccurs="0" name="ebayUserId" type="xs:string"/>
+							<xs:element minOccurs="0" name="subscriberQueryFilter" type="tns:OpeneBaySubscriberQueryFilterType"/>
+							<xs:element name="resultSet" type="tns:OpeneBayResultSetType"/>
+							<xs:element name="paginationInput" type="tns:PaginationInput">
+								<xs:annotation>
+									<xs:documentation>
+										Object that has the details
+										based on which the response is
+										to be paginated
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayGetSubscribersResponseType">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for getSubscribers operation
+						in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="totalSubscribers" type="xs:long"/>
+							<xs:element name="subscriberList" type="tns:OpeneBaySubscriberListType"/>
+							<xs:element name="paginationOutput" type="tns:PaginationOutput">
+								<xs:annotation>
+									<xs:documentation>
+										Pagination details for the
+										result
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayTransitionApplicationOperationalStateRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for
+						transitionApplicationOperationalState operation
+						in the Admin Service. application identity and
+						token are to be sent in HTTP/S header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element name="state" type="tns:OpeneBayApplicationOperationalStateType"/>
+							<xs:element name="reason" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayTransitionApplicationOperationalStateResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for
+						transitionApplicationOperationalState operation
+						in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayTransitionApplicationStateRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for
+						transitionApplicationLifeCycleState operation in
+						the Admin Service. application identity and
+						token are to be sent in HTTP/S header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element name="state" type="tns:OpeneBayApplicationLifeCycleStateType"/>
+							<xs:element name="reason" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayTransitionApplicationStateResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for
+						transitionApplicationLifeCycleState operation in
+						the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayTransitionSubscriptionStateRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for
+						transitionSubscriptionState operation in the
+						Admin Service. application identity and token
+						are to be sent in HTTP/S header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element name="ebayUserId" type="xs:string"/>
+							<xs:element name="planId" type="xs:long"/>
+							<xs:element name="state" type="tns:OpeneBaySubscriptionStateType"/>
+							<xs:element name="reason" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayTransitionSubscriptionStateResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for
+						transitionSubscriptionState operation in the
+						Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayAdminGetOpeneBayApplicationsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for getOpeneBayApplications
+						operation in the Admin Service. application
+						identity and token are to be sent in HTTP/S
+						header
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="appId" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="devId" type="xs:string"/>
+							<xs:element name="applicationQueryFilter" type="tns:OpeneBayApplicationAdminQueryFilterType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayAdminGetOpeneBayApplicationsResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for getOpeneBayApplications
+						operation in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="applicationList" type="tns:OpeneBayAdminApplicationListType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySetSubscriptionPlansRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for setSubscriptionPlans
+						operation in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element name="subscriptionPlanList" type="tns:OpeneBaySubscriptionPlanListType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBaySetSubscriptionPlansResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for setSubscriptionPlans
+						operation in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayGetSubscriptionPlansRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for getSubscriptionPlans
+						operation in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="subscriptionPlanQueryFilter" type="tns:OpeneBaySubscriptionPlanQueryFilterType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayGetSubscriptionPlansResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for getSubscriptionPlans
+						operation in the Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="subscriptionPlan" type="tns:OpeneBaySubscriptionPlanListType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayTransitionSubscriptionPlanStateRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for
+						transitionSubscriptionPlanState operation in the
+						Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="plan" type="tns:OpeneBaySubscriptionPlanToBeTransited"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayTransitionSubscriptionPlanStateResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for
+						transitionSubscriptionPlanState operation in the
+						Admin Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayGetBillingAccountRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for getBillingAccount
+						operation.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="devId" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayGetBillingAccountResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for getBillingAccount
+						operation.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="legalEntity" type="tns:OpeneBayLegalEntityType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="preApproval" type="tns:OpeneBayPreApprovalInfoType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="account" type="tns:OpeneBayBillingAccountType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBayGetBillingAccountMappingRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for getBillingAccountMapping
+						operation.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="siteId" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBayGetBillingAccountMappingResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for getBillingAccountMapping
+						operation.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="ebayAppId" type="xs:long"/>
+							<xs:element name="siteId" type="xs:int"/>
+							<xs:element minOccurs="0" name="revenueSharePercent" type="xs:double"/>
+							<xs:element name="legalEntity" type="tns:OpeneBayLegalEntityType"/>
+							<xs:element name="preApproval" type="tns:OpeneBayPreApprovalInfoType"/>
+							<xs:element name="account" type="tns:OpeneBayBillingAccountType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySetBillingAccountRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for setBillingAccount
+						operation.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="devId" type="xs:string"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="legalEntity" type="tns:OpeneBayLegalEntityType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="preApproval" type="tns:OpeneBayPreApprovalInfoType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="account" type="tns:OpeneBayBillingAccountType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBaySetBillingAccountResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for setBillingAccount
+						operation .
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OpeneBaySetBillingAccountMappingRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request container for setBillingAccount
+						operation.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:OpeneBayBaseRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="siteId" type="xs:int"/>
+							<xs:element minOccurs="0" name="revenueSharePercent" type="xs:double"/>
+							<xs:element minOccurs="0" name="legalEntityId" type="xs:long"/>
+							<xs:element minOccurs="0" name="preApprovalId" type="xs:long"/>
+							<xs:element minOccurs="0" name="accountId" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OpeneBaySetBillingAccountMappingResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response container for setBillingAccountMapping
+						operation .
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="deployApplicationRequest" type="tns:OpeneBayDeployApplicationRequestType"/>
+			<xs:element name="deployApplicationResponse" type="tns:OpeneBayDeployApplicationResponseType"/>
+			<xs:element name="getDeploymentDescriptorRequest" type="tns:OpeneBayGetDeploymentDescriptorRequestType"/>
+			<xs:element name="getDeploymentDescriptorResponse" type="tns:OpeneBayGetDeploymentDescriptorResponseType"/>
+			<xs:element name="updateDeploymentDescriptorRequest" type="tns:OpeneBayUpdateDeploymentDescriptorRequestType"/>
+			<xs:element name="updateDeploymentDescriptorResponse" type="tns:OpeneBayUpdateDeploymentDescriptorResponseType"/>
+			<xs:element name="getSubscribersRequest" type="tns:OpeneBayGetSubscribersRequestType"/>
+			<xs:element name="getSubscribersResponse" type="tns:OpeneBayGetSubscribersResponseType"/>
+			<xs:element name="transitionApplicationOperationalStateRequest" type="tns:OpeneBayTransitionApplicationOperationalStateRequest"/>
+			<xs:element name="transitionApplicationOperationalStateResponse" type="tns:OpeneBayTransitionApplicationOperationalStateResponse"/>
+			<xs:element name="transitionApplicationLifeCycleStateRequest" type="tns:OpeneBayTransitionApplicationStateRequest"/>
+			<xs:element name="transitionApplicationLifeCycleStateResponse" type="tns:OpeneBayTransitionApplicationStateResponse"/>
+			<xs:element name="transitionSubscriptionStateRequest" type="tns:OpeneBayTransitionSubscriptionStateRequest"/>
+			<xs:element name="transitionSubscriptionStateResponse" type="tns:OpeneBayTransitionSubscriptionStateResponse"/>
+			<xs:element name="getOpeneBayApplicationsRequest" type="tns:OpeneBayAdminGetOpeneBayApplicationsRequest"/>
+			<xs:element name="getOpeneBayApplicationsResponse" type="tns:OpeneBayAdminGetOpeneBayApplicationsResponse"/>
+			<xs:element name="getApplicationsBySubscriberRequest" type="tns:OpeneBayGetApplicationsBySubscriberRequest"/>
+			<xs:element name="getApplicationsBySubscriberResponse" type="tns:OpeneBayGetApplicationsBySubscriberResponse"/>
+			<xs:element name="syncIDPCredentialsRequest" type="tns:OpeneBaySyncIDPCredentialsRequest"/>
+			<xs:element name="syncIDPCredentialsResponse" type="tns:OpeneBaySyncIDPCredentialsResponse"/>
+			<xs:element name="setSubscriptionPlansRequest" type="tns:OpeneBaySetSubscriptionPlansRequest"/>
+			<xs:element name="setSubscriptionPlansResponse" type="tns:OpeneBaySetSubscriptionPlansResponse"/>
+			<xs:element name="getSubscriptionPlansRequest" type="tns:OpeneBayGetSubscriptionPlansRequest"/>
+			<xs:element name="getSubscriptionPlansResponse" type="tns:OpeneBayGetSubscriptionPlansResponse"/>
+			<xs:element name="transitionSubscriptionPlanStateRequest" type="tns:OpeneBayTransitionSubscriptionPlanStateRequest"/>
+			<xs:element name="transitionSubscriptionPlanStateResponse" type="tns:OpeneBayTransitionSubscriptionPlanStateResponse"/>
+			<xs:element name="getBillingAccountRequest" type="tns:OpeneBayGetBillingAccountRequest"/>
+			<xs:element name="getBillingAccountResponse" type="tns:OpeneBayGetBillingAccountResponse"/>
+			<xs:element name="setBillingAccountRequest" type="tns:OpeneBaySetBillingAccountRequest"/>
+			<xs:element name="setBillingAccountResponse" type="tns:OpeneBaySetBillingAccountResponse"/>
+			<xs:element name="getBillingAccountMappingRequest" type="tns:OpeneBayGetBillingAccountMappingRequest"/>
+			<xs:element name="getBillingAccountMappingResponse" type="tns:OpeneBayGetBillingAccountMappingResponse"/>
+			<xs:element name="setBillingAccountMappingRequest" type="tns:OpeneBaySetBillingAccountMappingRequest"/>
+			<xs:element name="setBillingAccountMappingResponse" type="tns:OpeneBaySetBillingAccountMappingResponse"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="deployApplicationRequest">
+		<wsdl:part element="ns0:deployApplicationRequest" name="DeployApplicationRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeploymentDescriptorRequest">
+		<wsdl:part element="ns0:getDeploymentDescriptorRequest" name="GetDeploymentDescriptorRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="transitionSubscriptionStateRequest">
+		<wsdl:part element="ns0:transitionSubscriptionStateRequest" name="TransitionSubscriptionStateRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getOpeneBayApplicationsRequest">
+		<wsdl:part element="ns0:getOpeneBayApplicationsRequest" name="GetOpeneBayApplicationsRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getOpeneBayApplicationsResponse">
+		<wsdl:part element="ns0:getOpeneBayApplicationsResponse" name="GetOpeneBayApplicationsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="transitionSubscriptionStateResponse">
+		<wsdl:part element="ns0:transitionSubscriptionStateResponse" name="TransitionSubscriptionStateResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSubscribersRequest">
+		<wsdl:part element="ns0:getSubscribersRequest" name="GetSubscribersRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeploymentDescriptorResponse">
+		<wsdl:part element="ns0:getDeploymentDescriptorResponse" name="GetDeploymentDescriptorResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="transitionApplicationLifeCycleStateResponse">
+		<wsdl:part element="ns0:transitionApplicationLifeCycleStateResponse" name="TransitionApplicationStateResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateDeploymentDescriptorResponse">
+		<wsdl:part element="ns0:updateDeploymentDescriptorResponse" name="UpdateDeploymentDescriptorResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="transitionApplicationOperationalStateResponse">
+		<wsdl:part element="ns0:transitionApplicationOperationalStateResponse" name="TransitionApplicationOperationalStateResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deployApplicationResponse">
+		<wsdl:part element="ns0:deployApplicationResponse" name="DeployApplicationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateDeploymentDescriptorRequest">
+		<wsdl:part element="ns0:updateDeploymentDescriptorRequest" name="UpdateDeploymentDescriptorRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSubscribersResponse">
+		<wsdl:part element="ns0:getSubscribersResponse" name="GetSubscribersResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="transitionApplicationOperationalStateRequest">
+		<wsdl:part element="ns0:transitionApplicationOperationalStateRequest" name="TransitionApplicationOperationalStateRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="transitionApplicationLifeCycleStateRequest">
+		<wsdl:part element="ns0:transitionApplicationLifeCycleStateRequest" name="TransitionApplicationStateRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getApplicationsBySubscriberRequest">
+		<wsdl:part element="ns0:getApplicationsBySubscriberRequest" name="GetApplicationsBySubscriberRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getApplicationsBySubscriberResponse">
+		<wsdl:part element="ns0:getApplicationsBySubscriberResponse" name="GetApplicationsBySubscriberResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="syncIDPCredentialsRequest">
+		<wsdl:part element="ns0:syncIDPCredentialsRequest" name="SyncIDPCredentialsRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="syncIDPCredentialsResponse">
+		<wsdl:part element="ns0:syncIDPCredentialsResponse" name="SyncIDPCredentialsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setSubscriptionPlansRequest">
+		<wsdl:part element="ns0:setSubscriptionPlansRequest" name="SetSubscriptionPlansRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setSubscriptionPlansResponse">
+		<wsdl:part element="ns0:setSubscriptionPlansResponse" name="SetSubscriptionPlansResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSubscriptionPlansRequest">
+		<wsdl:part element="ns0:getSubscriptionPlansRequest" name="GetSubscriptionPlansRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSubscriptionPlansResponse">
+		<wsdl:part element="ns0:getSubscriptionPlansResponse" name="GetSubscriptionPlansResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="transitionSubscriptionPlanStateRequest">
+		<wsdl:part element="ns0:transitionSubscriptionPlanStateRequest" name="TransitionSubscriptionPlanStateRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="transitionSubscriptionPlanStateResponse">
+		<wsdl:part element="ns0:transitionSubscriptionPlanStateResponse" name="TransitionSubscriptionPlanStateResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getBillingAccountRequest">
+		<wsdl:part element="ns0:getBillingAccountRequest" name="GetBillingAccountRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getBillingAccountResponse">
+		<wsdl:part element="ns0:getBillingAccountResponse" name="GetBillingAccountResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setBillingAccountRequest">
+		<wsdl:part element="ns0:setBillingAccountRequest" name="SetBillingAccountRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setBillingAccountResponse">
+		<wsdl:part element="ns0:setBillingAccountResponse" name="SetBillingAccountResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getBillingAccountMappingRequest">
+		<wsdl:part element="ns0:getBillingAccountMappingRequest" name="GetBillingAccountMappingRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getBillingAccountMappingResponse">
+		<wsdl:part element="ns0:getBillingAccountMappingResponse" name="GetBillingAccountMappingResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setBillingAccountMappingRequest">
+		<wsdl:part element="ns0:setBillingAccountMappingRequest" name="SetBillingAccountMappingRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setBillingAccountMappingResponse">
+		<wsdl:part element="ns0:setBillingAccountMappingResponse" name="SetBillingAccountMappingResponse">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:portType name="OpeneBayAdminServicePort">
+		<wsdl:operation name="deployApplication">
+			<wsdl:input message="ns0:deployApplicationRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:deployApplicationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOpeneBayApplications">
+			<wsdl:input message="ns0:getOpeneBayApplicationsRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:getOpeneBayApplicationsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeploymentDescriptor">
+			<wsdl:input message="ns0:getDeploymentDescriptorRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:getDeploymentDescriptorResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateDeploymentDescriptor">
+			<wsdl:input message="ns0:updateDeploymentDescriptorRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:updateDeploymentDescriptorResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionApplicationLifeCycleState">
+			<wsdl:input message="ns0:transitionApplicationLifeCycleStateRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:transitionApplicationLifeCycleStateResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionApplicationOperationalState">
+			<wsdl:input message="ns0:transitionApplicationOperationalStateRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:transitionApplicationOperationalStateResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionSubscriptionState">
+			<wsdl:input message="ns0:transitionSubscriptionStateRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:transitionSubscriptionStateResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscribers">
+			<wsdl:input message="ns0:getSubscribersRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:getSubscribersResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getApplicationsBySubscriber">
+			<wsdl:input message="ns0:getApplicationsBySubscriberRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:getApplicationsBySubscriberResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="syncIDPCredentials">
+			<wsdl:input message="ns0:syncIDPCredentialsRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:syncIDPCredentialsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setSubscriptionPlans">
+			<wsdl:input message="ns0:setSubscriptionPlansRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:setSubscriptionPlansResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriptionPlans">
+			<wsdl:input message="ns0:getSubscriptionPlansRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:getSubscriptionPlansResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionSubscriptionPlanState">
+			<wsdl:input message="ns0:transitionSubscriptionPlanStateRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:transitionSubscriptionPlanStateResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBillingAccount">
+			<wsdl:input message="ns0:getBillingAccountRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:getBillingAccountResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setBillingAccount">
+			<wsdl:input message="ns0:setBillingAccountRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:setBillingAccountResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBillingAccountMapping">
+			<wsdl:input message="ns0:getBillingAccountMappingRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:getBillingAccountMappingResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setBillingAccountMapping">
+			<wsdl:input message="ns0:setBillingAccountMappingRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:setBillingAccountMappingResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="OpeneBayAdminServiceSOAPBinding" type="ns0:OpeneBayAdminServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="deployApplication">
+			<soap12:operation soapAction="urn:deployApplication" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOpeneBayApplications">
+			<soap12:operation soapAction="urn:getOpeneBayApplications" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeploymentDescriptor">
+			<soap12:operation soapAction="urn:getDeploymentDescriptor" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateDeploymentDescriptor">
+			<soap12:operation soapAction="urn:updateDeploymentDescriptor" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionApplicationLifeCycleState">
+			<soap12:operation soapAction="urn:transitionApplicationLifeCycleState" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionApplicationOperationalState">
+			<soap12:operation soapAction="urn:transitionApplicationOperationalState" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionSubscriptionState">
+			<soap12:operation soapAction="urn:transitionSubscriptionState" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscribers">
+			<soap12:operation soapAction="urn:getSubscribers" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getApplicationsBySubscriber">
+			<soap12:operation soapAction="urn:getApplicationsBySubscriber" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="syncIDPCredentials">
+			<soap12:operation soapAction="urn:syncIDPCredentials" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setSubscriptionPlans">
+			<soap12:operation soapAction="urn:setSubscriptionPlans" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriptionPlans">
+			<soap12:operation soapAction="urn:getSubscriptionPlans" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionSubscriptionPlanState">
+			<soap12:operation soapAction="urn:transitionSubscriptionPlanState" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBillingAccount">
+			<soap12:operation soapAction="urn:getBillingAccount" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setBillingAccount">
+			<soap12:operation soapAction="urn:setBillingAccount" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBillingAccountMapping">
+			<soap12:operation soapAction="urn:getBillingAccountMapping" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setBillingAccountMapping">
+			<soap12:operation soapAction="urn:setBillingAccountMapping" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:binding name="OpeneBayAdminServiceHttpBinding" type="ns0:OpeneBayAdminServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="deployApplication">
+			<http:operation location="OpeneBayAdminService/deployApplication"/>
+			<wsdl:input>
+				<mime:content part="DeployApplicationRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="DeployApplicationResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOpeneBayApplications">
+			<http:operation location="OpeneBayAdminService/getOpeneBayApplications"/>
+			<wsdl:input>
+				<mime:content part="GetOpeneBayApplicationsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetOpeneBayApplicationsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeploymentDescriptor">
+			<http:operation location="OpeneBayAdminService/getDeploymentDescriptor"/>
+			<wsdl:input>
+				<mime:content part="GetDeploymentDescriptorRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetDeploymentDescriptorResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateDeploymentDescriptor">
+			<http:operation location="OpeneBayAdminService/updateDeploymentDescriptor"/>
+			<wsdl:input>
+				<mime:content part="UpdateDeploymentDescriptorRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="UpdateDeploymentDescriptorResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionApplicationLifeCycleState">
+			<http:operation location="OpeneBayAdminService/transitionApplicationLifeCycleState"/>
+			<wsdl:input>
+				<mime:content part="TransitionApplicationStateRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="TransitionApplicationStateResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionApplicationOperationalState">
+			<http:operation location="OpeneBayAdminService/transitionApplicationOperationalState"/>
+			<wsdl:input>
+				<mime:content part="TransitionApplicationOperationalStateRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="TransitionApplicationOperationalStateResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionSubscriptionState">
+			<http:operation location="OpeneBayAdminService/transitionSubscriptionState"/>
+			<wsdl:input>
+				<mime:content part="TransitionSubscriptionStateRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="TransitionSubscriptionStateResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscribers">
+			<http:operation location="OpeneBayAdminService/getSubscribers"/>
+			<wsdl:input>
+				<mime:content part="GetSubscribersRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetSubscribersResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getApplicationsBySubscriber">
+			<http:operation location="OpeneBayAdminService/getApplicationsBySubscriber"/>
+			<wsdl:input>
+				<mime:content part="GetApplicationsBySubscriberRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetApplicationsBySubscriberResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="syncIDPCredentials">
+			<http:operation location="OpeneBayAdminService/syncIDPCredentials"/>
+			<wsdl:input>
+				<mime:content part="SyncIDPCredentialsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="SyncIDPCredentialsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setSubscriptionPlans">
+			<http:operation location="OpeneBayAdminService/setSubscriptionPlans"/>
+			<wsdl:input>
+				<mime:content part="SetSubscriptionPlansRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="SetSubscriptionPlansResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriptionPlans">
+			<http:operation location="OpeneBayAdminService/getSubscriptionPlans"/>
+			<wsdl:input>
+				<mime:content part="GetSubscriptionPlansRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetSubscriptionPlansResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="transitionSubscriptionPlanState">
+			<http:operation location="OpeneBayAdminService/transitionSubscriptionPlanState"/>
+			<wsdl:input>
+				<mime:content part="TransitionSubscriptionPlanStateRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="TransitionSubscriptionPlanStateResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBillingAccount">
+			<http:operation location="OpeneBayAdminService/getBillingAccount"/>
+			<wsdl:input>
+				<mime:content part="GetBillingAccountRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetBillingAccountResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setBillingAccount">
+			<http:operation location="OpeneBayAdminService/setBillingAccount"/>
+			<wsdl:input>
+				<mime:content part="SetBillingAccountRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="SetBillingAccountResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBillingAccountMapping">
+			<http:operation location="OpeneBayAdminService/getBillingAccountMapping"/>
+			<wsdl:input>
+				<mime:content part="GetBillingAccountMappingRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetBillingAccountMappingResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setBillingAccountMapping">
+			<http:operation location="OpeneBayAdminService/setBillingAccountMapping"/>
+			<wsdl:input>
+				<mime:content part="SetBillingAccountMappingRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="SetBillingAccountMappingResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="OpeneBayAdminService">
+		<wsdl:documentation>
+			<Version>1.2.0</Version>
+		</wsdl:documentation>
+		<wsdl:port binding="ns0:OpeneBayAdminServiceSOAPBinding" name="OpeneBayAdminServiceSOAP">
+			<soap12:address location="http://svcs.ebay.com/OpeneBayAdminService"/>
+		</wsdl:port>
+		<wsdl:port binding="ns0:OpeneBayAdminServiceHttpBinding" name="OpeneBayAdminServiceHttp">
+			<http:address location="http://svcs.ebay.com/OpeneBayAdminService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

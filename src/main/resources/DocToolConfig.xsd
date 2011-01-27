@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!-- Sample Schema for supplying configuration for DocTool-->
+<xs:schema id="DocToolConfiguration" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+  <xs:element name="config">
+    <xs:complexType>
+      <xs:sequence>
+        <!-- This Element is the output Directory where JavaDoc is written, this also acts as a default directory in
+        case output directory is not specified for any output generator -->
+        <xs:element name="outputdir" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <!-- This is the Default Annotation parser which is used used to parse any Annotations for which Annotation Parser is not specified  -->
+        <xs:element name="defaultparser" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="class" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!-- This Element can be used to Configure all the Annotation parsers. -->
+        <xs:element name="annoparsers" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="parser" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="tagname" type="xs:string" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="parserclass" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!-- This element is used to configure the output generators if Any-->
+        <xs:element name="outputgenerators" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="outputgenerator" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="class" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="outputdir" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="parameters" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="parameter" minOccurs="1" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+                                <xs:element name="value" type="xs:string" minOccurs="1" maxOccurs="1" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" use="required" />
+                   <xs:attribute name="disabled" type="xs:string" use="optional" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="documents" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="document" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType mixed="false">
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

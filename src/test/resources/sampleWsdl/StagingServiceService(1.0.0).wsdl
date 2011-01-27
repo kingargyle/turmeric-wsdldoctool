@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:impl="urn:tr2services.turboroller.ebay.com" xmlns:intf="urn:tr2services.turboroller.ebay.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="urn:tr2services.turboroller.ebay.com">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="urn:tr2services.turboroller.ebay.com">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="StagingData">
+    <sequence>
+     <element name="buildNumber" nillable="true" type="xsd:string"/>
+     <element name="poolListStr" nillable="true" type="xsd:string"/>
+     <element name="timeoutMinStr" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="createStagingReqRequest">
+
+      <wsdl:part name="stagingData" type="impl:StagingData"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createStagingReqResponse">
+
+      <wsdl:part name="createStagingReqReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="StagingService">
+
+      <wsdl:operation name="createStagingReq" parameterOrder="stagingData">
+
+         <wsdl:input message="impl:createStagingReqRequest" name="createStagingReqRequest"/>
+
+         <wsdl:output message="impl:createStagingReqResponse" name="createStagingReqResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="StagingServiceSoapBinding" type="impl:StagingService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="createStagingReq">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createStagingReqRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createStagingReqResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:tr2services.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="StagingServiceService">
+
+      <wsdl:port binding="impl:StagingServiceSoapBinding" name="StagingService">
+
+         <wsdlsoap:address location="http://tr2api.vip.ebay.com/TurboRoller/services/StagingService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

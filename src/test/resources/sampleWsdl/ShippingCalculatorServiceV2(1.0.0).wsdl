@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="ShippingCalculatorServiceV2" targetNamespace="http://www.ebay.com/marketplace/services">
+
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+
+			<xs:element name="calculateRates">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="in" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="calculateRatesResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="out" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="shippingCalculatorBatchResponse" nillable="true" type="tns:ShippingCalculatorBatchResponse"/>
+			<xs:complexType name="ShippingCalculatorBatchResponse">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="shippingCalculatorResponses" nillable="true" type="tns:ShippingCalculatorResponse">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="Address">
+				<xs:annotation/>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="street1" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="street2" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="city" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="county" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="stateOrProvince" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="country" type="xs:string">
+					</xs:element>
+					<xs:element minOccurs="0" name="postalCode" type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="shippingCalculatorBatchRequest" nillable="true" type="tns:ShippingCalculatorBatchRequest"/>
+			<xs:complexType name="ShippingCalculatorBatchRequest">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="shippingCalculatorRequests" type="tns:ShippingCalculatorRequest">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="shippingCalculatorRequest" nillable="true" type="tns:ShippingCalculatorRequest"/>
+			<xs:complexType name="ShippingCalculatorRequest">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="sourceAddress" type="tns:Address">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateRates
+											</CallName>
+											<CallName>
+												CalculateBatchRates
+											</CallName>
+											<RequiredInput>
+												Conditionally
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Buyer's source address.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="destAddress" type="tns:Address">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateRates
+											</CallName>
+											<CallName>
+												CalculateBatchRates
+											</CallName>
+											<RequiredInput>
+												Conditionally
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Buyer's destination address.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="id" type="xs:string">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateRates
+											</CallName>
+											<CallName>
+												CalculateBatchRates
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										id
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="shippingDate" type="xs:dateTime">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateRates
+											</CallName>
+											<CallName>
+												CalculateBatchRates
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Time in MM/DD/YYYY HH:MM:SS
+										format.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="declaredValue" type="xs:double">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateRates
+											</CallName>
+											<CallName>
+												CalculateBatchRates
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Decalred Value.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="shippingPackageInfo" type="tns:ItemSpecifics">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateRates
+											</CallName>
+											<CallName>
+												CalculateBatchRates
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Item Specifics.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="shippingServiceData" type="tns:ShippingServiceData">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateRates
+											</CallName>
+											<CallName>
+												CalculateBatchRates
+											</CallName>
+											<RequiredInput>
+												No
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										ShippingServiceData.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="1" name="currencyId" type="xs:string">
+								<xs:annotation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>
+												CalculateShippingCost
+											</CallName>
+											<RequiredInput>
+												Yes
+											</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+									<xs:documentation>
+										Currency Id
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="ShippingDeliveryType">
+				<xs:annotation>
+					<xs:documentation>
+						Shipping Delivery Type, set to Residential all
+						the time.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Residential"/>
+					<xs:enumeration value="Commercial"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ShippingRateType">
+				<xs:annotation>
+					<xs:documentation>
+						Shipping Rate Type.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OnDemand"/>
+					<xs:enumeration value="DailyPickup"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ShippingServiceData">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+
+					<xs:element minOccurs="0" name="deliveryConfirmation" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateRates</CallName>
+									<CallName>
+										CalculateBatchRates
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Delivery Confirmation
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="shippingService" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateRates</CallName>
+									<CallName>
+										CalculateBatchRates
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								List of valid shipping method
+								nameshttp://developer.ebay.com/DevZone/XML/docs/Reference/eBay/types/ShippingServiceCodeType.html.
+								No validation of service will be done
+								except for calculated. For calculated,
+								eBay service string to be specified.
+								eBay will map calculated service to
+								pitney id for passing to search eBay
+								shipping calculator. Validation with
+								siteId or buyer/seller country will not
+								be done. Half service will be FLAT
+								service.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="deliveryType" type="tns:ShippingDeliveryType">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateRates</CallName>
+									<CallName>
+										CalculateBatchRates
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Delivery Type
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="rateType" type="tns:ShippingRateType">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateRates</CallName>
+									<CallName>
+										CalculateBatchRates
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Default. On demand rates for UPS. Valid
+								string values - OnDemand, Daily. FedEx
+								not supported.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="signatureRequired" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateRates</CallName>
+									<CallName>
+										CalculateBatchRates
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Signature Required
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="shippingCalculatorResponse" nillable="true" type="tns:ShippingCalculatorResponse"/>
+			<xs:complexType name="ItemSpecifics">
+				<xs:annotation>
+					<xs:appinfo>
+						<Summary>
+							Optional. Required if any of the service is
+							CALC..
+						</Summary>
+					</xs:appinfo>
+					<xs:documentation>Item Specifics</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="1" name="weightMajor" type="tns:WeightMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="weightMinor" type="tns:WeightMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="packageType" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="irregular" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="packageLength" type="tns:LinearMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="packageWidth" type="tns:LinearMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="packageDepth" type="tns:LinearMeasure">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="declaredValue" type="xs:double">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>
+										CalculateShippingCost
+									</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LinearMeasure">
+				<xs:annotation/>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="unit" type="tns:linearMeasurementUnit" use="required">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:complexType name="WeightMeasure">
+				<xs:annotation/>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="unit" type="tns:weightMeasurementUnit" use="required">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="linearMeasurementUnit">
+				<xs:annotation/>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="cm"/>
+					<xs:enumeration value="mm"/>
+					<xs:enumeration value="inches"/>
+					<xs:enumeration value="ft"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="weightMeasurementUnit">
+				<xs:annotation/>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="kg"/>
+					<xs:enumeration value="gm"/>
+					<xs:enumeration value="lbs"/>
+					<xs:enumeration value="oz"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation/>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation/>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation/>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation/>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Amount">
+				<xs:annotation/>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="currencyID" type="xs:string" use="required">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+					</xs:element>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:appinfo/>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ServiceCostResponse">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="shippingService" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>CalculateRates</CallName>
+									<CallName>
+										CalculateBatchRates
+									</CallName>
+									<RequiredInput>Yes</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+							<xs:documentation>
+								List of valid shipping method
+								nameshttp://developer.ebay.com/DevZone/XML/docs/Reference/eBay/types/ShippingServiceCodeType.html.
+								No validation of service will be done
+								except for calculated. For calculated,
+								eBay service string to be specified.
+								eBay will map calculated service to
+								pitney id for passing to search eBay
+								shipping calculator. Validation with
+								siteId or buyer/seller country will not
+								be done. Half service will be FLAT
+								service.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+					<xs:element minOccurs="0" name="errorCode" type="tns:ErrorMessage">
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingInsuranceCost" type="tns:Amount">
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingServiceCost" type="tns:Amount">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ShippingCalculatorResponse">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="errorDataList" nillable="true" type="tns:ErrorData">
+							</xs:element>
+							<xs:element name="id" type="xs:int"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="shippingServiceResponses" nillable="true" type="tns:ServiceCostResponse">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="calculateRatesRequest">
+		<wsdl:part element="tns:shippingCalculatorRequest" name="calculateRatesRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="calculateRatesResponse">
+		<wsdl:part element="tns:shippingCalculatorResponse" name="calculateRatesResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="calculateBatchRatesRequest">
+		<wsdl:part element="tns:shippingCalculatorBatchRequest" name="calculateBatchRatesRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="calculateBatchRatesResponse">
+		<wsdl:part element="tns:shippingCalculatorBatchResponse" name="calculateBatchRatesResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="ShippingCalculatorServiceV2Port">
+
+		<wsdl:operation name="calculateRates">
+			<wsdl:input message="tns:calculateRatesRequest"/>
+			<wsdl:output message="tns:calculateRatesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="calculateBatchRates">
+			<wsdl:input message="tns:calculateBatchRatesRequest"/>
+			<wsdl:output message="tns:calculateBatchRatesResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ShippingCalculatorServiceV2HttpBinding" type="tns:ShippingCalculatorServiceV2Port">
+
+
+		<http:binding verb="POST"/>
+		<wsdl:operation name="calculateRates">
+			<http:operation location="/calculateRates"/>
+			<wsdl:input>
+				<mime:content part="calculateRates" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="calculateRates" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="calculateBatchRates">
+			<http:operation location="/calculateBatchRates"/>
+			<wsdl:input>
+				<mime:content part="calculateBatchRates" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="calculateBatchRates" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ShippingCalculatorServiceV2SOAPBinding" type="tns:ShippingCalculatorServiceV2Port">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="calculateRates">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/calculateRates"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="calculateBatchRates">
+			<soap:operation soapAction="http://www.ebay.com/marketplace/services/calculateBatchRates"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ShippingCalculatorServiceV2">
+		<wsdl:port binding="tns:ShippingCalculatorServiceV2HttpBinding" name="ShippingCalculatorServiceV2Http">
+			<http:address location="http://svcs.ebay.com/ShippingCalculatorServiceV2"/>
+		</wsdl:port>
+		<wsdl:port binding="tns:ShippingCalculatorServiceV2SOAPBinding" name="ShippingCalculatorServiceV2SOAP">
+			<soap12:address location="http://svcs.ebay.com/ShippingCalculatorServiceV2"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

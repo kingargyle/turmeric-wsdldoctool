@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<annoparsers>
+		<parser>
+			<tagname>addToDefaultAreas</tagname>
+			<parserclass>org.ebayopensource.turmeric.tools.annoparser.customparser.impl.EbayAnnotationParser1
+			</parserclass>
+		</parser>
+</annoparsers>

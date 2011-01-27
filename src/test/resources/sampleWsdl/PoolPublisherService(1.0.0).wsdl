@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:impl="urn:wsmanager.turboroller.ebay.com" xmlns:intf="urn:wsmanager.turboroller.ebay.com" xmlns:tns1="http://to.common.turboroller.ebay.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns2="http://sql.java" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="urn:wsmanager.turboroller.ebay.com">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="urn:wsmanager.turboroller.ebay.com">
+   <import namespace="http://to.common.turboroller.ebay.com"/>
+   <import namespace="http://sql.java"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="Authentication">
+    <sequence>
+     <element name="applicationName" nillable="true" type="xsd:string"/>
+     <element name="ip" nillable="true" type="xsd:string"/>
+     <element name="password" nillable="true" type="xsd:string"/>
+     <element name="userId" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_tns2_WireOnPoolResultTo2">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:WireOnPoolResultTo2[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_RolloutDetailToV2">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:RolloutDetailToV2[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://to.common.turboroller.ebay.com">
+   <import namespace="urn:wsmanager.turboroller.ebay.com"/>
+   <import namespace="http://sql.java"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ResultTo">
+    <sequence>
+     <element name="errorMessage" nillable="true" type="xsd:string"/>
+     <element name="success" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
+   <complexType name="BuildPoolResultTo">
+    <complexContent>
+     <extension base="tns1:ResultTo">
+      <sequence>
+       <element name="buildData" nillable="true" type="xsd:string"/>
+       <element name="codeTagCount" type="xsd:int"/>
+       <element name="machineCountPerTag" type="xsd:int"/>
+       <element name="totalMachineCount" type="xsd:int"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="WireOnPoolResultTo2">
+    <sequence>
+     <element name="lastModifiedTime" nillable="true" type="xsd:anyType"/>
+     <element name="pcData" nillable="true" type="xsd:string"/>
+     <element name="poolName" nillable="true" type="xsd:string"/>
+     <element name="rolloutStatus" nillable="true" type="xsd:string"/>
+     <element name="tcFirstName" nillable="true" type="xsd:string"/>
+     <element name="tcLastName" nillable="true" type="xsd:string"/>
+     <element name="trainNumber" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="RolloutDetailToV2">
+    <sequence>
+     <element name="creationDT" nillable="true" type="xsd:string"/>
+     <element name="rolloutId" nillable="true" type="xsd:string"/>
+     <element name="tcId" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getWireOnsByDateResponse">
+
+      <wsdl:part name="getWireOnsByDateReturn" type="impl:ArrayOf_tns2_WireOnPoolResultTo2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWireOnsForAllPoolsByDateResponse">
+
+      <wsdl:part name="getWireOnsForAllPoolsByDateReturn" type="impl:ArrayOf_tns2_WireOnPoolResultTo2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWireOnsForPoolByDateResponse">
+
+      <wsdl:part name="getWireOnsForPoolByDateReturn" type="impl:ArrayOf_tns2_WireOnPoolResultTo2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolSplitTypeResponse">
+
+      <wsdl:part name="getPoolSplitTypeReturn" type="tns1:BuildPoolResultTo"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPoolSplitTypeRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getActiveRolloutsByPoolNameResponse">
+
+      <wsdl:part name="getActiveRolloutsByPoolNameReturn" type="impl:ArrayOf_tns2_RolloutDetailToV2"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWireOnsByDateRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+      <wsdl:part name="startDate" type="xsd:dateTime"/>
+
+      <wsdl:part name="endDate" type="xsd:dateTime"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWireOnsForAllPoolsByDateRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="startDate" type="xsd:dateTime"/>
+
+      <wsdl:part name="endDate" type="xsd:dateTime"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWireOnsForPoolByDateRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+      <wsdl:part name="startDate" type="xsd:dateTime"/>
+
+      <wsdl:part name="endDate" type="xsd:dateTime"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getActiveRolloutsByPoolNameRequest">
+
+      <wsdl:part name="auth" type="impl:Authentication"/>
+
+      <wsdl:part name="poolName" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="PoolPublisher">
+
+      <wsdl:operation name="getPoolSplitType" parameterOrder="auth poolName">
+
+         <wsdl:input message="impl:getPoolSplitTypeRequest" name="getPoolSplitTypeRequest"/>
+
+         <wsdl:output message="impl:getPoolSplitTypeResponse" name="getPoolSplitTypeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWireOnsForPoolByDate" parameterOrder="auth poolName startDate endDate">
+
+         <wsdl:input message="impl:getWireOnsForPoolByDateRequest" name="getWireOnsForPoolByDateRequest"/>
+
+         <wsdl:output message="impl:getWireOnsForPoolByDateResponse" name="getWireOnsForPoolByDateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWireOnsForAllPoolsByDate" parameterOrder="auth startDate endDate">
+
+         <wsdl:input message="impl:getWireOnsForAllPoolsByDateRequest" name="getWireOnsForAllPoolsByDateRequest"/>
+
+         <wsdl:output message="impl:getWireOnsForAllPoolsByDateResponse" name="getWireOnsForAllPoolsByDateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWireOnsByDate" parameterOrder="auth poolName startDate endDate">
+
+         <wsdl:input message="impl:getWireOnsByDateRequest" name="getWireOnsByDateRequest"/>
+
+         <wsdl:output message="impl:getWireOnsByDateResponse" name="getWireOnsByDateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getActiveRolloutsByPoolName" parameterOrder="auth poolName">
+
+         <wsdl:input message="impl:getActiveRolloutsByPoolNameRequest" name="getActiveRolloutsByPoolNameRequest"/>
+
+         <wsdl:output message="impl:getActiveRolloutsByPoolNameResponse" name="getActiveRolloutsByPoolNameResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="PoolPublisherSoapBinding" type="impl:PoolPublisher">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPoolSplitType">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPoolSplitTypeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPoolSplitTypeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWireOnsForPoolByDate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getWireOnsForPoolByDateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getWireOnsForPoolByDateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWireOnsForAllPoolsByDate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getWireOnsForAllPoolsByDateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getWireOnsForAllPoolsByDateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWireOnsByDate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getWireOnsByDateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getWireOnsByDateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getActiveRolloutsByPoolName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getActiveRolloutsByPoolNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getActiveRolloutsByPoolNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:wsmanager.turboroller.ebay.com" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="PoolPublisherService">
+
+      <wsdl:port binding="impl:PoolPublisherSoapBinding" name="PoolPublisher">
+
+         <wsdlsoap:address location="http://tr2api.vip.ebay.com/TurboRoller/services/PoolPublisher"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,1092 @@
+<?xml version="1.0" encoding="UTF-8"?><!--- B''H --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services"> 						
+			<xs:complexType name="TransactionStatisticsList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfTransactionStatistics" nillable="true" type="tns:TransactionStatistics"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="UrlSqlErrorStatsResponse">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorInfo" type="tns:ErrorInfo"/>
+					<xs:element minOccurs="0" name="urlSqlErrorStatistics" type="tns:UrlSqlErrorStatisticsList"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="ErrorInfo">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorData" type="xs:string"/>
+					<xs:element minOccurs="0" name="errorDesc" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="URLStatisticsResponse">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorInfo" type="tns:ErrorInfo"/>
+					<xs:element minOccurs="0" name="urlStatistics" type="tns:URLStatisticsList"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="URLStatistics">				
+				<xs:complexContent><xs:extension base="tns:MachineStatistics">				
+				<xs:sequence>					
+				</xs:sequence>				
+				</xs:extension></xs:complexContent>				
+			</xs:complexType>			
+			<xs:complexType name="SQLStatisticsResponse">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorInfo" type="tns:ErrorInfo"/>
+					<xs:element minOccurs="0" name="SQLStatistics" type="tns:SQLStatisticsList"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="SQLStatistics">				
+				<xs:complexContent><xs:extension base="tns:MachineStatistics">				
+				<xs:sequence>					
+				</xs:sequence>				
+				</xs:extension></xs:complexContent>				
+			</xs:complexType>			
+			<xs:complexType name="URLStatisticsList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfURLStatistics" nillable="true" type="tns:URLStatistics"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="UrlSqlErrorStatistics">				
+				<xs:complexContent><xs:extension base="tns:MachineStatistics">				
+				<xs:sequence>					
+				</xs:sequence>				
+				</xs:extension></xs:complexContent>				
+			</xs:complexType>			
+			<xs:complexType name="MachineStatsUsageStatistics">				
+				<xs:complexContent><xs:extension base="tns:MachineStatistics">				
+				<xs:sequence>					
+				</xs:sequence>				
+				</xs:extension></xs:complexContent>				
+			</xs:complexType>			
+			<xs:complexType name="SQLStatisticsList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfSQLStatistics" nillable="true" type="tns:SQLStatistics"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="ErrorStatisticsResponse">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorInfo" type="tns:ErrorInfo"/>
+					<xs:element minOccurs="0" name="errStatistics" type="tns:ErrorStatisticsList"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="ErrorStatistics">				
+				<xs:complexContent><xs:extension base="tns:MachineStatistics">				
+				<xs:sequence>					
+				</xs:sequence>				
+				</xs:extension></xs:complexContent>				
+			</xs:complexType>			
+			<xs:complexType name="MachineStatsUsageResponse">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorInfo" type="tns:ErrorInfo"/>
+					<xs:element minOccurs="0" name="machineStatsUsageStatistics" type="tns:MachineStatsUsageStatisticsList"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MachineStatistics">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="id" type="xs:long"/>
+					<xs:element minOccurs="0" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" name="machineName" type="xs:string"/>
+					<xs:element minOccurs="0" name="value" type="xs:double"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="UrlSqlErrorStatisticsList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfUrlSqlErrorStatistics" nillable="true" type="tns:UrlSqlErrorStatistics"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MachineStatsUsageStatisticsList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfMachineStatsUsageStatistics" nillable="true" type="tns:MachineStatsUsageStatistics"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="ErrorStatisticsList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfErrorStatistics" nillable="true" type="tns:ErrorStatistics"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MachineStatisticsRequest">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="poolName" type="xs:string"/>
+					<xs:element minOccurs="0" name="startTime" type="xs:long"/>
+					<xs:element minOccurs="0" name="step" type="xs:int"/>
+					<xs:element minOccurs="0" name="machineNames" type="xs:string"/>
+					<xs:element minOccurs="0" name="topNval" type="xs:long"/>
+					<xs:element minOccurs="0" name="endTime" type="xs:long"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="TransactionStatisticsResponse">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="trnStatistics" type="tns:TransactionStatisticsList"/>
+					<xs:element minOccurs="0" name="errorInfo" type="tns:ErrorInfo"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="NewStatisticsByMachineRequest">				
+				<xs:complexContent><xs:extension base="tns:MachineStatisticsRequest">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="refMachineNames" type="xs:string"/>					
+				</xs:sequence>				
+				</xs:extension></xs:complexContent>				
+			</xs:complexType>			
+			<xs:complexType name="TransactionStatistics">				
+				<xs:complexContent><xs:extension base="tns:MachineStatistics">				
+				<xs:sequence>					
+				</xs:sequence>				
+				</xs:extension></xs:complexContent>				
+			</xs:complexType>						
+			<xs:complexType name="getAverageURLTimeByURLNameRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAverageURLTimeByURLNameResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:URLStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalURLCountByURLNameRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalURLCountByURLNameResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:URLStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalURLCountByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalURLCountByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:URLStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAvgURLTimeByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAvgURLTimeByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:URLStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalSQLCountByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalSQLCountByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:SQLStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAvgSQLTimeByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAvgSQLTimeByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:SQLStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTotalErrorCountByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTotalErrorCountByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:ErrorStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getNewErrorCountByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:NewStatisticsByMachineRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getNewErrorCountByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:ErrorStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTransactionCountByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTransactionCountByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:TransactionStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAverageTransactionTimeByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAverageTransactionTimeByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:TransactionStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getCPUUsageByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCPUUsageByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:MachineStatsUsageResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getMemoryUsageByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getMemoryUsageByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:MachineStatsUsageResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getURLErrorRatioByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getURLErrorRatioByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:UrlSqlErrorStatsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getSQLErrorRatioByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSQLErrorRatioByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:UrlSqlErrorStatsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getURLSQLRatioByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getURLSQLRatioByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:UrlSqlErrorStatsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getURLErrorCountByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getURLErrorCountByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:UrlSqlErrorStatsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getSQLErrorCountByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSQLErrorCountByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:UrlSqlErrorStatsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTransactionErrorCountByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTransactionErrorCountByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:TransactionStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getTransactionErrorRatioByMachineRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineStatsReq" type="tns:MachineStatisticsRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTransactionErrorRatioByMachineResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:TransactionStatisticsResponse"/>
+				</xs:sequence>
+			</xs:complexType>						
+			<xs:element name="getAverageURLTimeByURLName" type="tns:getAverageURLTimeByURLNameRequest"/>
+			<xs:element name="getAverageURLTimeByURLNameResponse" nillable="true" type="tns:getAverageURLTimeByURLNameResponse"/>			
+			<xs:element name="getTotalURLCountByURLName" type="tns:getTotalURLCountByURLNameRequest"/>
+			<xs:element name="getTotalURLCountByURLNameResponse" nillable="true" type="tns:getTotalURLCountByURLNameResponse"/>			
+			<xs:element name="getTotalURLCountByMachine" type="tns:getTotalURLCountByMachineRequest"/>
+			<xs:element name="getTotalURLCountByMachineResponse" nillable="true" type="tns:getTotalURLCountByMachineResponse"/>			
+			<xs:element name="getAvgURLTimeByMachine" type="tns:getAvgURLTimeByMachineRequest"/>
+			<xs:element name="getAvgURLTimeByMachineResponse" nillable="true" type="tns:getAvgURLTimeByMachineResponse"/>			
+			<xs:element name="getTotalSQLCountByMachine" type="tns:getTotalSQLCountByMachineRequest"/>
+			<xs:element name="getTotalSQLCountByMachineResponse" nillable="true" type="tns:getTotalSQLCountByMachineResponse"/>			
+			<xs:element name="getAvgSQLTimeByMachine" type="tns:getAvgSQLTimeByMachineRequest"/>
+			<xs:element name="getAvgSQLTimeByMachineResponse" nillable="true" type="tns:getAvgSQLTimeByMachineResponse"/>			
+			<xs:element name="getTotalErrorCountByMachine" type="tns:getTotalErrorCountByMachineRequest"/>
+			<xs:element name="getTotalErrorCountByMachineResponse" nillable="true" type="tns:getTotalErrorCountByMachineResponse"/>			
+			<xs:element name="getNewErrorCountByMachine" type="tns:getNewErrorCountByMachineRequest"/>
+			<xs:element name="getNewErrorCountByMachineResponse" nillable="true" type="tns:getNewErrorCountByMachineResponse"/>			
+			<xs:element name="getTransactionCountByMachine" type="tns:getTransactionCountByMachineRequest"/>
+			<xs:element name="getTransactionCountByMachineResponse" nillable="true" type="tns:getTransactionCountByMachineResponse"/>			
+			<xs:element name="getAverageTransactionTimeByMachine" type="tns:getAverageTransactionTimeByMachineRequest"/>
+			<xs:element name="getAverageTransactionTimeByMachineResponse" nillable="true" type="tns:getAverageTransactionTimeByMachineResponse"/>			
+			<xs:element name="getCPUUsageByMachine" type="tns:getCPUUsageByMachineRequest"/>
+			<xs:element name="getCPUUsageByMachineResponse" nillable="true" type="tns:getCPUUsageByMachineResponse"/>			
+			<xs:element name="getMemoryUsageByMachine" type="tns:getMemoryUsageByMachineRequest"/>
+			<xs:element name="getMemoryUsageByMachineResponse" nillable="true" type="tns:getMemoryUsageByMachineResponse"/>			
+			<xs:element name="getURLErrorRatioByMachine" type="tns:getURLErrorRatioByMachineRequest"/>
+			<xs:element name="getURLErrorRatioByMachineResponse" nillable="true" type="tns:getURLErrorRatioByMachineResponse"/>			
+			<xs:element name="getSQLErrorRatioByMachine" type="tns:getSQLErrorRatioByMachineRequest"/>
+			<xs:element name="getSQLErrorRatioByMachineResponse" nillable="true" type="tns:getSQLErrorRatioByMachineResponse"/>			
+			<xs:element name="getURLSQLRatioByMachine" type="tns:getURLSQLRatioByMachineRequest"/>
+			<xs:element name="getURLSQLRatioByMachineResponse" nillable="true" type="tns:getURLSQLRatioByMachineResponse"/>			
+			<xs:element name="getURLErrorCountByMachine" type="tns:getURLErrorCountByMachineRequest"/>
+			<xs:element name="getURLErrorCountByMachineResponse" nillable="true" type="tns:getURLErrorCountByMachineResponse"/>			
+			<xs:element name="getSQLErrorCountByMachine" type="tns:getSQLErrorCountByMachineRequest"/>
+			<xs:element name="getSQLErrorCountByMachineResponse" nillable="true" type="tns:getSQLErrorCountByMachineResponse"/>			
+			<xs:element name="getTransactionErrorCountByMachine" type="tns:getTransactionErrorCountByMachineRequest"/>
+			<xs:element name="getTransactionErrorCountByMachineResponse" nillable="true" type="tns:getTransactionErrorCountByMachineResponse"/>			
+			<xs:element name="getTransactionErrorRatioByMachine" type="tns:getTransactionErrorRatioByMachineRequest"/>
+			<xs:element name="getTransactionErrorRatioByMachineResponse" nillable="true" type="tns:getTransactionErrorRatioByMachineResponse"/>			
+		</xs:schema>
+	</wsdl:types>			
+	<wsdl:message name="getAverageURLTimeByURLNameRequest">
+		<wsdl:part element="tns:getAverageURLTimeByURLName" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAverageURLTimeByURLNameResponse">
+		<wsdl:part element="tns:getAverageURLTimeByURLNameResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalURLCountByURLNameRequest">
+		<wsdl:part element="tns:getTotalURLCountByURLName" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalURLCountByURLNameResponse">
+		<wsdl:part element="tns:getTotalURLCountByURLNameResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalURLCountByMachineRequest">
+		<wsdl:part element="tns:getTotalURLCountByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalURLCountByMachineResponse">
+		<wsdl:part element="tns:getTotalURLCountByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAvgURLTimeByMachineRequest">
+		<wsdl:part element="tns:getAvgURLTimeByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAvgURLTimeByMachineResponse">
+		<wsdl:part element="tns:getAvgURLTimeByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalSQLCountByMachineRequest">
+		<wsdl:part element="tns:getTotalSQLCountByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalSQLCountByMachineResponse">
+		<wsdl:part element="tns:getTotalSQLCountByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAvgSQLTimeByMachineRequest">
+		<wsdl:part element="tns:getAvgSQLTimeByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAvgSQLTimeByMachineResponse">
+		<wsdl:part element="tns:getAvgSQLTimeByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTotalErrorCountByMachineRequest">
+		<wsdl:part element="tns:getTotalErrorCountByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTotalErrorCountByMachineResponse">
+		<wsdl:part element="tns:getTotalErrorCountByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getNewErrorCountByMachineRequest">
+		<wsdl:part element="tns:getNewErrorCountByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getNewErrorCountByMachineResponse">
+		<wsdl:part element="tns:getNewErrorCountByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTransactionCountByMachineRequest">
+		<wsdl:part element="tns:getTransactionCountByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTransactionCountByMachineResponse">
+		<wsdl:part element="tns:getTransactionCountByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAverageTransactionTimeByMachineRequest">
+		<wsdl:part element="tns:getAverageTransactionTimeByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAverageTransactionTimeByMachineResponse">
+		<wsdl:part element="tns:getAverageTransactionTimeByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getCPUUsageByMachineRequest">
+		<wsdl:part element="tns:getCPUUsageByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCPUUsageByMachineResponse">
+		<wsdl:part element="tns:getCPUUsageByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getMemoryUsageByMachineRequest">
+		<wsdl:part element="tns:getMemoryUsageByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getMemoryUsageByMachineResponse">
+		<wsdl:part element="tns:getMemoryUsageByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getURLErrorRatioByMachineRequest">
+		<wsdl:part element="tns:getURLErrorRatioByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getURLErrorRatioByMachineResponse">
+		<wsdl:part element="tns:getURLErrorRatioByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getSQLErrorRatioByMachineRequest">
+		<wsdl:part element="tns:getSQLErrorRatioByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getSQLErrorRatioByMachineResponse">
+		<wsdl:part element="tns:getSQLErrorRatioByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getURLSQLRatioByMachineRequest">
+		<wsdl:part element="tns:getURLSQLRatioByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getURLSQLRatioByMachineResponse">
+		<wsdl:part element="tns:getURLSQLRatioByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getURLErrorCountByMachineRequest">
+		<wsdl:part element="tns:getURLErrorCountByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getURLErrorCountByMachineResponse">
+		<wsdl:part element="tns:getURLErrorCountByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getSQLErrorCountByMachineRequest">
+		<wsdl:part element="tns:getSQLErrorCountByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getSQLErrorCountByMachineResponse">
+		<wsdl:part element="tns:getSQLErrorCountByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTransactionErrorCountByMachineRequest">
+		<wsdl:part element="tns:getTransactionErrorCountByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTransactionErrorCountByMachineResponse">
+		<wsdl:part element="tns:getTransactionErrorCountByMachineResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getTransactionErrorRatioByMachineRequest">
+		<wsdl:part element="tns:getTransactionErrorRatioByMachine" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getTransactionErrorRatioByMachineResponse">
+		<wsdl:part element="tns:getTransactionErrorRatioByMachineResponse" name="parameters"/>
+	</wsdl:message>	
+	<wsdl:portType name="MachineMetricDataServicePortType">		
+		<wsdl:operation name="getAverageURLTimeByURLName">
+			<wsdl:input message="tns:getAverageURLTimeByURLNameRequest"/>
+			<wsdl:output message="tns:getAverageURLTimeByURLNameResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalURLCountByURLName">
+			<wsdl:input message="tns:getTotalURLCountByURLNameRequest"/>
+			<wsdl:output message="tns:getTotalURLCountByURLNameResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalURLCountByMachine">
+			<wsdl:input message="tns:getTotalURLCountByMachineRequest"/>
+			<wsdl:output message="tns:getTotalURLCountByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAvgURLTimeByMachine">
+			<wsdl:input message="tns:getAvgURLTimeByMachineRequest"/>
+			<wsdl:output message="tns:getAvgURLTimeByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalSQLCountByMachine">
+			<wsdl:input message="tns:getTotalSQLCountByMachineRequest"/>
+			<wsdl:output message="tns:getTotalSQLCountByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAvgSQLTimeByMachine">
+			<wsdl:input message="tns:getAvgSQLTimeByMachineRequest"/>
+			<wsdl:output message="tns:getAvgSQLTimeByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTotalErrorCountByMachine">
+			<wsdl:input message="tns:getTotalErrorCountByMachineRequest"/>
+			<wsdl:output message="tns:getTotalErrorCountByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getNewErrorCountByMachine">
+			<wsdl:input message="tns:getNewErrorCountByMachineRequest"/>
+			<wsdl:output message="tns:getNewErrorCountByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTransactionCountByMachine">
+			<wsdl:input message="tns:getTransactionCountByMachineRequest"/>
+			<wsdl:output message="tns:getTransactionCountByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAverageTransactionTimeByMachine">
+			<wsdl:input message="tns:getAverageTransactionTimeByMachineRequest"/>
+			<wsdl:output message="tns:getAverageTransactionTimeByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getCPUUsageByMachine">
+			<wsdl:input message="tns:getCPUUsageByMachineRequest"/>
+			<wsdl:output message="tns:getCPUUsageByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getMemoryUsageByMachine">
+			<wsdl:input message="tns:getMemoryUsageByMachineRequest"/>
+			<wsdl:output message="tns:getMemoryUsageByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getURLErrorRatioByMachine">
+			<wsdl:input message="tns:getURLErrorRatioByMachineRequest"/>
+			<wsdl:output message="tns:getURLErrorRatioByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getSQLErrorRatioByMachine">
+			<wsdl:input message="tns:getSQLErrorRatioByMachineRequest"/>
+			<wsdl:output message="tns:getSQLErrorRatioByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getURLSQLRatioByMachine">
+			<wsdl:input message="tns:getURLSQLRatioByMachineRequest"/>
+			<wsdl:output message="tns:getURLSQLRatioByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getURLErrorCountByMachine">
+			<wsdl:input message="tns:getURLErrorCountByMachineRequest"/>
+			<wsdl:output message="tns:getURLErrorCountByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getSQLErrorCountByMachine">
+			<wsdl:input message="tns:getSQLErrorCountByMachineRequest"/>
+			<wsdl:output message="tns:getSQLErrorCountByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTransactionErrorCountByMachine">
+			<wsdl:input message="tns:getTransactionErrorCountByMachineRequest"/>
+			<wsdl:output message="tns:getTransactionErrorCountByMachineResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getTransactionErrorRatioByMachine">
+			<wsdl:input message="tns:getTransactionErrorRatioByMachineRequest"/>
+			<wsdl:output message="tns:getTransactionErrorRatioByMachineResponse"/>
+		</wsdl:operation>		
+	</wsdl:portType>	
+	<wsdl:binding name="MachineMetricDataServiceSoap11Binding" type="tns:MachineMetricDataServicePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>		
+			<wsdl:operation name="getAverageURLTimeByURLName">
+				<soap:operation soapAction="urn:getAverageURLTimeByURLName" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalURLCountByURLName">
+				<soap:operation soapAction="urn:getTotalURLCountByURLName" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalURLCountByMachine">
+				<soap:operation soapAction="urn:getTotalURLCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgURLTimeByMachine">
+				<soap:operation soapAction="urn:getAvgURLTimeByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalSQLCountByMachine">
+				<soap:operation soapAction="urn:getTotalSQLCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgSQLTimeByMachine">
+				<soap:operation soapAction="urn:getAvgSQLTimeByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalErrorCountByMachine">
+				<soap:operation soapAction="urn:getTotalErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getNewErrorCountByMachine">
+				<soap:operation soapAction="urn:getNewErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionCountByMachine">
+				<soap:operation soapAction="urn:getTransactionCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAverageTransactionTimeByMachine">
+				<soap:operation soapAction="urn:getAverageTransactionTimeByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCPUUsageByMachine">
+				<soap:operation soapAction="urn:getCPUUsageByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMemoryUsageByMachine">
+				<soap:operation soapAction="urn:getMemoryUsageByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLErrorRatioByMachine">
+				<soap:operation soapAction="urn:getURLErrorRatioByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSQLErrorRatioByMachine">
+				<soap:operation soapAction="urn:getSQLErrorRatioByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLSQLRatioByMachine">
+				<soap:operation soapAction="urn:getURLSQLRatioByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLErrorCountByMachine">
+				<soap:operation soapAction="urn:getURLErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSQLErrorCountByMachine">
+				<soap:operation soapAction="urn:getSQLErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionErrorCountByMachine">
+				<soap:operation soapAction="urn:getTransactionErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionErrorRatioByMachine">
+				<soap:operation soapAction="urn:getTransactionErrorRatioByMachine" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:binding name="MachineMetricDataServiceSoap12Binding" type="tns:MachineMetricDataServicePortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>		
+			<wsdl:operation name="getAverageURLTimeByURLName">
+				<soap12:operation soapAction="urn:getAverageURLTimeByURLName" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalURLCountByURLName">
+				<soap12:operation soapAction="urn:getTotalURLCountByURLName" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalURLCountByMachine">
+				<soap12:operation soapAction="urn:getTotalURLCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgURLTimeByMachine">
+				<soap12:operation soapAction="urn:getAvgURLTimeByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalSQLCountByMachine">
+				<soap12:operation soapAction="urn:getTotalSQLCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgSQLTimeByMachine">
+				<soap12:operation soapAction="urn:getAvgSQLTimeByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalErrorCountByMachine">
+				<soap12:operation soapAction="urn:getTotalErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getNewErrorCountByMachine">
+				<soap12:operation soapAction="urn:getNewErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionCountByMachine">
+				<soap12:operation soapAction="urn:getTransactionCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAverageTransactionTimeByMachine">
+				<soap12:operation soapAction="urn:getAverageTransactionTimeByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCPUUsageByMachine">
+				<soap12:operation soapAction="urn:getCPUUsageByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMemoryUsageByMachine">
+				<soap12:operation soapAction="urn:getMemoryUsageByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLErrorRatioByMachine">
+				<soap12:operation soapAction="urn:getURLErrorRatioByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSQLErrorRatioByMachine">
+				<soap12:operation soapAction="urn:getSQLErrorRatioByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLSQLRatioByMachine">
+				<soap12:operation soapAction="urn:getURLSQLRatioByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLErrorCountByMachine">
+				<soap12:operation soapAction="urn:getURLErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSQLErrorCountByMachine">
+				<soap12:operation soapAction="urn:getSQLErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionErrorCountByMachine">
+				<soap12:operation soapAction="urn:getTransactionErrorCountByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionErrorRatioByMachine">
+				<soap12:operation soapAction="urn:getTransactionErrorRatioByMachine" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:binding name="MachineMetricDataServiceHTTPBinding" type="tns:MachineMetricDataServicePortType">
+		<http:binding verb="POST"/>		
+			<wsdl:operation name="getAverageURLTimeByURLName">
+				<http:operation location="MachineMetricDataService/getAverageURLTimeByURLName"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalURLCountByURLName">
+				<http:operation location="MachineMetricDataService/getTotalURLCountByURLName"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalURLCountByMachine">
+				<http:operation location="MachineMetricDataService/getTotalURLCountByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgURLTimeByMachine">
+				<http:operation location="MachineMetricDataService/getAvgURLTimeByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalSQLCountByMachine">
+				<http:operation location="MachineMetricDataService/getTotalSQLCountByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAvgSQLTimeByMachine">
+				<http:operation location="MachineMetricDataService/getAvgSQLTimeByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTotalErrorCountByMachine">
+				<http:operation location="MachineMetricDataService/getTotalErrorCountByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getNewErrorCountByMachine">
+				<http:operation location="MachineMetricDataService/getNewErrorCountByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionCountByMachine">
+				<http:operation location="MachineMetricDataService/getTransactionCountByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAverageTransactionTimeByMachine">
+				<http:operation location="MachineMetricDataService/getAverageTransactionTimeByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getCPUUsageByMachine">
+				<http:operation location="MachineMetricDataService/getCPUUsageByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getMemoryUsageByMachine">
+				<http:operation location="MachineMetricDataService/getMemoryUsageByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLErrorRatioByMachine">
+				<http:operation location="MachineMetricDataService/getURLErrorRatioByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSQLErrorRatioByMachine">
+				<http:operation location="MachineMetricDataService/getSQLErrorRatioByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLSQLRatioByMachine">
+				<http:operation location="MachineMetricDataService/getURLSQLRatioByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getURLErrorCountByMachine">
+				<http:operation location="MachineMetricDataService/getURLErrorCountByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getSQLErrorCountByMachine">
+				<http:operation location="MachineMetricDataService/getSQLErrorCountByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionErrorCountByMachine">
+				<http:operation location="MachineMetricDataService/getTransactionErrorCountByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getTransactionErrorRatioByMachine">
+				<http:operation location="MachineMetricDataService/getTransactionErrorRatioByMachine"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:service name="MachineMetricDataService">	
+		<wsdl:port binding="tns:MachineMetricDataServiceSoap11Binding" name="MachineMetricDataServiceHttpSoap11Endpoint">
+			<soap:address location="http://localhost:8080/MachineMetricDataService"/>
+		</wsdl:port>		
+		<wsdl:port binding="tns:MachineMetricDataServiceSoap12Binding" name="MachineMetricDataServiceHttpSoap12Endpoint">
+			<soap12:address location="http://localhost:8080/MachineMetricDataService"/>
+		</wsdl:port>		
+		<wsdl:port binding="tns:MachineMetricDataServiceHTTPBinding" name="MachineMetricDataServiceHttpEndpoint">
+			<http:address location="http://localhost:8080/MachineMetricDataService"/>
+		</wsdl:port>		
+	</wsdl:service>
+</wsdl:definitions>

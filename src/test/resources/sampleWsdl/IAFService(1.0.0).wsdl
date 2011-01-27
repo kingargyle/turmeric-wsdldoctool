@@ -1,0 +1,1093 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:iaf="http://www.ebay.com/marketplace/iaf/v1/services" name="IAFService" targetNamespace="http://www.ebay.com/marketplace/iaf/v1/services">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+				
+		
+			<!--  standard framework response types  -->
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service operations. Contains error
+						information associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="ns0:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether or not errors or warnings were generated during the
+								processing of the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="ns0:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Description of an error or warning that occurred when eBay processed the
+								request. Not returned if the ack value is Success.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The release version that eBay used to process the request. Developer
+								Technical Support may ask you for the version value if you work with them
+								to troubleshoot issues.
+								&lt;br /&gt;&lt;br /&gt;
+								&lt;span class="tablenote"&gt;&lt;strong&gt;Note:&lt;/strong&gt;
+									The version in use is normally the latest release version, as specified
+									in the release notes. Note that eBay releases the API to international
+									sites about a week after the API version is released to the US site.
+								&lt;/span&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								This value represents the date and time when eBay processed the request.
+								This value is returned in GMT, the ISO 8601 date and time format (YYYY-
+								MM- DDTHH:MM:SS.SSSZ). See the "dateTime" type for information about the
+								time format, and for details on converting to and from the GMT time zone.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+				<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Information regarding an error or warning that occurred when eBay processed
+						the request. Not returned when the ack value is Success. Run-time errors are
+						not reported here, but are instead reported as part of a SOAP fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="ns0:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						A container for error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the particular error condition that
+								occurred. Your application can use error codes as identifiers in your
+								customized error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain in which the error occurred.
+								&lt;dl&gt;
+								&lt;dt&gt;
+									&lt;strong&gt;domain values:&lt;/strong&gt;
+								&lt;/dt&gt;
+								&lt;dt&gt;
+									Marketplace
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									A business or validation error occurred in the Merchandising Service.
+								&lt;/dd&gt;
+								&lt;dt&gt;
+									SOA
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									An exception occurred in the Service Oriented Architecture (SOA) 
+									framework.
+								&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="ns0:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the reported problem is fatal (an error) or is less-
+								severe (a warning). Review the error message details for information on
+								the cause.
+								&lt;br&gt;&lt;br&gt;
+								If the request fails and the application is the source of the error (for
+								example, a required element is missing), update the application before
+								you retry the request. If the problem is due to incorrect user data,
+								alert the end-user to the problem and provide the means for them to
+								correct the data. Once the problem in the application or data is
+								resolved, re-send the request to eBay.
+								&lt;br&gt;&lt;br&gt;
+								If the source of the problem is on eBay's side, you can retry the request
+								a reasonable number of times (eBay recommends you try the request twice).
+								If the error persists, contact Developer Technical Support. Once the
+								problem has been resolved, you can resend the request in its original
+								form.
+								&lt;br&gt;&lt;br&gt;
+								If a warning occurs, warning information is returned in addition to the
+								business data. Normally, you do not need to resend the request (as the
+								original request was successful). However, depending on the cause of the
+								warning, you might need to contact the end user, or eBay, to effect a
+								long term solution to the problem.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="ns0:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors: request errors, application 
+								errors, and system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition that caused in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain in which the error occurred.
+								&lt;dl&gt;
+								&lt;dt&gt;
+									&lt;strong&gt;subdomain values:&lt;/strong&gt;
+								&lt;/dt&gt;
+								&lt;dt&gt;
+									Finding
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									The error is specific to the Finding service.
+								&lt;/dd&gt;
+								&lt;dt&gt;
+									MarketplaceCommon
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									The error is common to all Marketplace services.
+								&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="ns0:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Various warning and error messages return one or more variables that 
+								contain contextual information about the error. This is often the 
+								field or value that triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Details>outputSelector: none</Details>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual data associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the input parameter returned with the error.
+									Inspecting the parameter (or its input value) will often aid in
+									understanding the cause of the error. Not all error messages
+									contain this value.
+								</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<AllCalls/>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a fatal error (causing the request to fail)
+						or a less severe error (a warning) that should be communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								eBay successfully processed the request and the business data is returned
+								in the response. Note that it is possible for a response to return
+								Success, but still not contain the expected data in the result.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during the processing of the request,
+								causing the request to fail. When a serious application-level error
+								occurs, the error is returned instead of the business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was successfully processed, but eBay encountered a non-fatal
+								error during the processing. For best results, requests should return
+								without warnings. Inspect the warning details and resolve the problem
+								before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								eBay successfully processed the request, but one or more non-fatal errors
+								occurred during the processing. For best results, requests should return
+								without warning messages. Inspect the message details and resolve any
+								problems before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a fatal error (causing the request to fail)
+						or a less severe error (a warning) that should be communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								eBay encountered a fatal error during the processing of the request,
+								causing the request to fail. When eBay encounters an error, it returns
+								error data instead of the requested business data. Inspect the error
+								details and resolve the problem before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was successfully processed, but eBay encountered a non-fatal
+								error during the processing that could affect the data returned. For
+								example, eBay might have changed the value of an input field. In this
+								case, eBay returns a successful response, but it also returns a warning.
+								For best results, requests should return without warnings. Inspect the
+								warning details and resolve the problem before resubmitting the request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request errors, application errors,
+						and system errors. Request and application errors are often caused by
+						passing invalid data in the request. System errors are primarily caused by
+						application failures and cannot be corrected by changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on the eBay system side. For
+								example, a database or server could be down. Inspect the error message to
+								find the cause of the problem. If the problem is on the eBay side, an
+								application can retry the request as-is a reasonable number of times
+								(eBay recommends twice). If the error persists, contact Developer
+								Technical Support. Once the problem has been resolved, the request may be
+								resent in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with the request, with the most likely
+								source being the application sending the request. For example, the
+								request is missing a required data element or it contains an invalid
+								field. The problem must be corrected before the request can be resent.
+								Inspect the error message to find the cause of the problem. If the
+								problem is due to an application error, modify the application and resend
+								the request. If the error is due to invalid data, the source of the data
+								must be corrected before you resend the resend request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with the request, with the most likely
+								source being missing or invalid data in the request. The problem must be
+								corrected before the request can be retried. Inspect the error message to
+								find the cause of the problem. If the problem is a result of end-user
+								data, alert the end-user to the problem and provide the means for them to
+								correct the problem. Once the problem is resolved, resend the request to
+								eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class container for all service operation requests.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+				
+	</xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:SAML:2.0:assertion">
+	
+	
+
+		<xs:complexType name="ConditionsType">
+				<xs:choice maxOccurs="unbounded" minOccurs="0">
+					<xs:element ref="saml:Condition"/>
+					<xs:element ref="saml:AudienceRestriction"/>
+					<xs:element ref="saml:OneTimeUse"/>
+					<xs:element ref="saml:ProxyRestriction"/>
+				</xs:choice>
+				<xs:attribute name="NotBefore" type="xs:dateTime" use="optional"/>
+				<xs:attribute name="NotOnOrAfter" type="xs:dateTime" use="optional"/>
+			</xs:complexType>
+			<xs:element name="Condition" type="saml:ConditionAbstractType"/>
+			<xs:complexType abstract="true" name="ConditionAbstractType"/>
+			<xs:element name="AudienceRestriction" type="saml:AudienceRestrictionType"/>
+			<xs:complexType name="AudienceRestrictionType">
+				<xs:complexContent>
+					<xs:extension base="saml:ConditionAbstractType">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" ref="saml:Audience"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="Audience" type="xs:anyURI"/>
+			<xs:element name="OneTimeUse" type="saml:OneTimeUseType"/>
+			<xs:complexType name="OneTimeUseType">
+				<xs:complexContent>
+					<xs:extension base="saml:ConditionAbstractType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ProxyRestriction" type="saml:ProxyRestrictionType"/>
+			<xs:complexType name="ProxyRestrictionType">
+				<xs:complexContent>
+					<xs:extension base="saml:ConditionAbstractType">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" ref="saml:Audience"/>
+						</xs:sequence>
+						<xs:attribute name="Count" type="xs:nonNegativeInteger" use="optional"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			
+		<xs:complexType name="AttributeType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="saml:AttributeValue"/>
+		</xs:sequence>
+		<xs:attribute name="Name" type="xs:string" use="required"/>
+		<xs:attribute name="NameFormat" type="xs:anyURI" use="optional"/>
+		<xs:attribute name="FriendlyName" type="xs:string" use="optional"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="AttributeValue" nillable="true" type="xs:anyType"/>
+	</xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/iaf/v1/services">
+				 	<xs:import namespace="http://www.ebay.com/marketplace/services"/>
+				 	<xs:import namespace="urn:oasis:names:tc:SAML:2.0:assertion"/>
+				 		<xs:element name="getVersionResponse" nillable="true" type="iaf:GetVersionResponse"/>
+				 				<xs:complexType name="GetVersionResponse">
+				<xs:annotation>
+					<xs:documentation/>
+
+					<xs:appinfo/>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="version" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+			<xs:element name="getTokenRequest" type="iaf:GetTokenRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request to get an IAF token from the
+						IAF service.
+					</xs:documentation>
+				</xs:annotation>
+
+			</xs:element>
+			<xs:element name="getTokenResponse" type="iaf:GetTokenResponse">
+					<xs:annotation>
+										<xs:documentation>
+											Returns a response containing IAF token
+										</xs:documentation>
+									</xs:annotation>
+
+			</xs:element>
+			<xs:element name="processTokenRequest" type="iaf:ProcessTokenRequest">
+					<xs:annotation>
+										<xs:documentation>
+											Request for validating a token generated by IAF.
+										</xs:documentation>
+									</xs:annotation>
+
+			</xs:element>
+			<xs:element name="processTokenResponse" type="iaf:ProcessTokenResponse">
+					<xs:annotation>
+										<xs:documentation>
+											Returns a response containing subject and domain in the form  authentication_domain/subject_id
+										</xs:documentation>
+									</xs:annotation>
+
+			</xs:element>
+
+			<xs:complexType name="Identifier">
+				<xs:sequence>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+				<xs:attribute name="format" type="xs:string"/>
+				<xs:anyAttribute/>
+			</xs:complexType>
+
+
+
+
+			<xs:complexType name="Secret">
+				<xs:sequence>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+				<xs:attribute name="type">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="HASHED"/>
+							<xs:enumeration value="HASHED-SIGNED"/>
+							<xs:enumeration value="PLAINTEXT"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="encoding">
+								<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="BASE64"/>
+					</xs:restriction>
+				</xs:simpleType>
+				</xs:attribute>
+			</xs:complexType>
+
+
+
+			<xs:element name="loginRequest" type="iaf:LoginRequest">
+			</xs:element>
+
+			<xs:complexType name="LoginRequest">
+			<xs:complexContent>
+				<xs:extension base="ns0:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="subject" type="iaf:Subject">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="secret" type="iaf:Secret"/>
+				</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="loginResponse" type="iaf:LoginResponse">
+			</xs:element>
+
+			<xs:complexType name="LoginResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+
+							<xs:element name="securityToken" type="iaf:SecurityToken">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="Subject">
+				<xs:sequence>
+
+					<xs:element name="identifier" type="iaf:Identifier"/>
+				</xs:sequence>
+				<xs:attribute name="identityDomain" type="xs:string"/>
+			</xs:complexType>
+
+
+			<xs:complexType name="SecurityToken">
+				<xs:sequence>
+					<xs:element name="token" type="xs:string"/>
+				</xs:sequence>
+				<xs:attribute name="type" use="required">
+					<xs:annotation>
+						<xs:documentation>
+							Indicates token type issued by IAF, examples
+							are SAML 2.0, AUTHandAUTH or identifier for
+							any proprietary token type that we may come
+							up with in the future.
+						</xs:documentation>
+					</xs:annotation>
+						<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="SAML20"/>
+							<xs:enumeration value="AUTHNAUTH"/>
+										</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="issuingAuthority" type="xs:string">
+				</xs:attribute>
+				<xs:anyAttribute/>
+			</xs:complexType>
+
+
+			<xs:complexType name="AuthenticateRequest">
+			<xs:complexContent>
+			<xs:extension base="ns0:BaseServiceRequest">
+				<xs:sequence>
+
+					<xs:element maxOccurs="1" minOccurs="1" name="subject" type="iaf:Subject">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="secret" type="iaf:Secret">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="requestSecurityTokenRequest" type="iaf:RequestSecurityTokenRequest"/>
+				</xs:sequence>
+			</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="requestSecurityTokenRequest" type="iaf:RequestSecurityTokenRequest">
+			</xs:element>
+
+			<xs:complexType name="RequestSecurityTokenRequest">
+			<xs:complexContent>
+			<xs:extension base="ns0:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="subject" type="iaf:Subject"/>
+					<xs:element minOccurs="0" name="conditions" type="saml:ConditionsType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeRequest" type="saml:AttributeType">
+				<xs:annotation>
+					<xs:documentation>Attributes that the requestor would like to be included in the token, notice that the requestor does not provide value for Attributes, just name. Values are provided by the IAF</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeAssertion" type="saml:AttributeType">
+				<xs:annotation>
+					<xs:documentation>Attributes Assertions that the requestor would like to be included in the token, notice that the requestor DOES provide value for Attributes. Values are NOT provided by the IAF</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+				</xs:sequence>
+				</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="AuthenticateResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+
+							<xs:element name="securityToken" type="iaf:SecurityToken">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="RequestSecurityTokenResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="securityToken" type="iaf:SecurityToken">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetSecurityTokenByRefRequest">
+			<xs:complexContent>
+			<xs:extension base="ns0:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="securityTokenRef" type="iaf:SecurityTokenRef">
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+			</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="SecurityTokenRef">
+				<xs:anyAttribute/>
+				
+			</xs:complexType>
+
+
+			<xs:complexType name="GetSecurityTokenByRefResponse">
+				<xs:complexContent>
+					<xs:extension base="ns0:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="securityToken" type="iaf:SecurityToken">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<!-- ExchangeRequestSecurityTokenByRef -->
+			<!-- OAuthRequestRequestToken -->
+			<!-- OAuthRequestAuthorization -->
+			<!-- OAuthRequestAccessToken -->
+			<!-- Core and Common Types-->
+
+
+
+			<xs:element name="authenticateRequest" type="iaf:AuthenticateRequest">
+			</xs:element>
+
+			<xs:element name="authenticateResponse" type="iaf:AuthenticateResponse">
+			</xs:element>
+
+
+			<xs:element name="requestSecurityTokenResponse" type="iaf:RequestSecurityTokenResponse">
+			</xs:element>
+
+			<xs:element name="getSecurityTokenByRefRequest" type="iaf:GetSecurityTokenByRefRequest">
+			</xs:element>
+
+			<xs:element name="getSecurityTokenByRefResponse" type="iaf:GetSecurityTokenByRefResponse">
+			</xs:element>
+
+
+
+
+
+
+		
+
+
+
+		
+		
+		
+	<xs:complexType name="GetTokenResponse">
+		<xs:complexContent>
+			<xs:extension base="ns0:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="token" type="xs:string">
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetTokenRequest">
+		<xs:complexContent>
+			<xs:extension base="ns0:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="domain" type="xs:string">
+						<xs:annotation/>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="id" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="secret" type="xs:string">
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProcessTokenRequest">
+		<xs:complexContent>
+			<xs:extension base="ns0:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="token" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="returnType" type="xs:int"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProcessTokenResponse">
+		<xs:complexContent>
+			<xs:extension base="ns0:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element name="processedToken" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+				 
+	</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getTokenRequest">
+    <wsdl:part element="iaf:getTokenRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginRequest">
+    <wsdl:part element="iaf:loginRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSecurityTokenByRefResponse">
+    <wsdl:part element="iaf:getSecurityTokenByRefResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="processTokenRequest">
+    <wsdl:part element="iaf:processTokenRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authenticateRequest">
+    <wsdl:part element="iaf:authenticateRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSecurityTokenByRefRequest">
+    <wsdl:part element="iaf:getSecurityTokenByRefRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTokenResponse">
+    <wsdl:part element="iaf:getTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authenticateResponse">
+    <wsdl:part element="iaf:authenticateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="requestSecurityTokenResponse">
+    <wsdl:part element="iaf:requestSecurityTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="requestSecurityTokenRequest">
+    <wsdl:part element="iaf:requestSecurityTokenRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part element="iaf:loginResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="processTokenResponse">
+    <wsdl:part element="iaf:processTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getVersionResponse">
+    <wsdl:part element="iaf:getVersionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IAFServicePort">
+    <wsdl:operation name="getVersion">
+      <wsdl:output message="iaf:getVersionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getToken">
+      <wsdl:input message="iaf:getTokenRequest">
+    </wsdl:input>
+      <wsdl:output message="iaf:getTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="processToken">
+      <wsdl:input message="iaf:processTokenRequest">
+    </wsdl:input>
+      <wsdl:output message="iaf:processTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="iaf:loginRequest">
+    </wsdl:input>
+      <wsdl:output message="iaf:loginResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="authenticate">
+      <wsdl:input message="iaf:authenticateRequest">
+    </wsdl:input>
+      <wsdl:output message="iaf:authenticateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSecurityTokenByRef">
+      <wsdl:input message="iaf:getSecurityTokenByRefRequest">
+    </wsdl:input>
+      <wsdl:output message="iaf:getSecurityTokenByRefResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="requestSecurityToken">
+      <wsdl:input message="iaf:requestSecurityTokenRequest">
+    </wsdl:input>
+      <wsdl:output message="iaf:requestSecurityTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IAFServiceSOAPBinding" type="iaf:IAFServicePort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getVersion">
+      <soap:operation soapAction="urn:getVersion"/>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getToken">
+      <soap:operation soapAction="urn:getToken"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="processToken">
+      <soap:operation soapAction="urn:processToken"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="urn:login"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="authenticate">
+      <soap:operation soapAction="urn:authenticate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSecurityTokenByRef">
+      <soap:operation soapAction="urn:getSecurityTokenByRef"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="requestSecurityToken">
+      <soap:operation soapAction="urn:requestSecurityToken"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IAFServiceHttpBinding" type="iaf:IAFServicePort">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="getVersion">
+      <http:operation location="/getVersion"/>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getToken">
+      <http:operation location="/getToken"/>
+      <wsdl:input>
+        <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="processToken">
+      <http:operation location="/processToken"/>
+      <wsdl:input>
+        <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <http:operation location="/login"/>
+      <wsdl:input>
+        <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="authenticate">
+      <http:operation location="/authenticate"/>
+      <wsdl:input>
+        <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSecurityTokenByRef">
+      <http:operation location="/getSecurityTokenByRef"/>
+      <wsdl:input>
+        <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="requestSecurityToken">
+      <http:operation location="/requestSecurityToken"/>
+      <wsdl:input>
+        <mime:content part="parameters" type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IAFService">
+    <wsdl:port binding="iaf:IAFServiceHttpBinding" name="IAFServiceHttp">
+      <http:address location="https://svcs.ebay.com/services/iaf/IAFService/v1"/>
+    </wsdl:port>
+    <wsdl:port binding="iaf:IAFServiceSOAPBinding" name="IAFServiceSOAP">
+      <soap12:address location="https://svcs.ebay.com/services/iaf/IAFService/v1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

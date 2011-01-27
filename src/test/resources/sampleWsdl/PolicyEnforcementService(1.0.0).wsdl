@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/security/v1/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/security/v1/services">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://www.ebay.com/marketplace/security/v1/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/security/v1/services">
+	
+	 		<xs:complexType abstract="true" name="BaseRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="extension" type="tns:ExtensionType">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType abstract="true" name="BaseResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				
+				<xs:sequence>
+					
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="extension" type="tns:ExtensionType">
+					</xs:element>					
+				</xs:sequence>
+			</xs:complexType>	
+
+
+			<xs:complexType name="VerifyAccessRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest">
+						<xs:sequence>
+							<xs:element minOccurs="1" name="operationKey" type="tns:OperationKey"/>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="policyType" type="tns:PolicyType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="credential" type="tns:KeyValuePair"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="subject" type="tns:SubjectType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="extendedInfo" type="tns:KeyValuePair"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="OperationKey">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="operationId" type="xs:long"/>
+					<xs:element minOccurs="0" name="operationName" type="xs:token"/>
+					<xs:element minOccurs="0" name="resourceName" type="xs:token"/>
+					<xs:element name="resourceType" type="tns:ResourceType"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="ResourceType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SERVICE"/>
+					<xs:enumeration value="WEB"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="PolicyType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AUTHN"/>
+					<xs:enumeration value="RL"/>
+					<xs:enumeration value="AUTHZ"/>
+					<xs:enumeration value="BLACKLIST"/>
+					<xs:enumeration value="WHITELIST"/>
+					<xs:enumeration value="GLOBAL_WHITELIST"/>
+					<xs:enumeration value="GLOBAL_BLACKLIST"/>
+					<!--xs:enumeration value="ALERT"/-->
+					<!--xs:enumeration value="EXCEPTION"/-->
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="VerifyAccessResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="authenticatedSubject" type="tns:SubjectType"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="resolvedSubjectGroup" type="tns:SubjectGroupType"/>
+							<xs:element minOccurs="0" name="rateLimiterStatus" type="tns:RateLimiterStatus"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="extendedInfo" type="tns:KeyValuePair"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="KeyValuePair">
+				<xs:sequence>
+					<xs:element name="key" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="SubjectType">
+				<xs:sequence>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="RateLimiterStatus">
+				<xs:annotation>
+					<xs:documentation>
+						return the Rate Limiter Status
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SERVE_OK">
+						<xs:annotation>
+							<xs:documentation>
+								No Block from Rate Limiter
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="FLAG">
+						<xs:annotation>
+							<xs:documentation>
+								Flaged by Rate Limiter
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="SERVE_GIF">
+						<xs:annotation>
+							<xs:documentation>
+								Server Gif by Rate Limiter
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BLOCK">
+						<xs:annotation>
+							<xs:documentation>
+								Block by Rate Limiter
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="RequestHasBeenServed">
+						<xs:annotation>
+							<xs:documentation>
+								Request Has Been Served by Rate Limiter
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Invalid">
+						<xs:annotation>
+							<xs:documentation>Invalid</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="SubjectGroupType">
+				<xs:sequence>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="name" type="xs:string"/>
+				</xs:sequence>
+				<xs:attribute name="calculator" type="xs:string" use="optional"/>
+			</xs:complexType>
+
+			<xs:complexType name="GetVersionRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseRequest"/>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetVersionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+		
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<!-- 
+					<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+					processContents="lax" />
+					</xs:sequence>
+				-->
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="ExtensionType">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="id" type="xs:positiveInteger"/>
+					<xs:element name="version" type="xs:string"/>
+					<xs:element name="contentType" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:element name="getVersionRequest" nillable="true" type="tns:GetVersionRequest"/>
+			<xs:element name="getVersionResponse" nillable="true" type="tns:GetVersionResponse"/>
+			<xs:element name="verifyAccessRequest" nillable="true" type="tns:VerifyAccessRequest"/>
+			<xs:element name="verifyAccessResponse" nillable="true" type="tns:VerifyAccessResponse"/>
+			
+		</xs:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="verifyAccessRequest">
+		<wsdl:part element="ns0:verifyAccessRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="verifyAccessResponse">
+		<wsdl:part element="ns0:verifyAccessResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getVersionRequest">
+		<wsdl:part element="ns0:getVersionRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part element="ns0:getVersionResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="PolicyEnforcementServicePort">
+		<wsdl:operation name="verifyAccess">
+			<wsdl:input message="ns0:verifyAccessRequest"/>
+			<wsdl:output message="ns0:verifyAccessResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="ns0:getVersionRequest"/>
+			<wsdl:output message="ns0:getVersionResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PolicyEnforcementServiceSOAPBinding" type="ns0:PolicyEnforcementServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="verifyAccess">
+			<soap12:operation soapAction="urn:verifyAccess" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<soap12:operation soapAction="urn:getVersion" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="PolicyEnforcementServiceHttpBinding" type="ns0:PolicyEnforcementServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="verifyAccess">
+			<http:operation location="PolicyEnforcementService/verifyAccess"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<http:operation location="PolicyEnforcementService/getVersion"/>
+			<wsdl:input>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="parameters" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PolicyEnforcementService">
+		<xs:annotation>
+			<xs:appinfo>
+				<ns0:version>1.0</ns0:version>
+			</xs:appinfo>
+			<wsdl:documentation>
+				This service provides the ability to enforce security
+				policies.
+				<Version>1.0.0</Version>
+			</wsdl:documentation>
+		</xs:annotation>
+		<wsdl:port binding="ns0:PolicyEnforcementServiceHttpBinding" name="PolicyEnforcementServiceHttpPort">
+			<http:address location="https://svcs.ebay.com/services/security/v1/PolicyEnforcementService"/>
+		</wsdl:port>
+		<wsdl:port binding="ns0:PolicyEnforcementServiceSOAPBinding" name="PolicyEnforcementServiceSOAPPort">
+			<soap12:address location="https://svcs.ebay.com/services/security/v1/PolicyEnforcementService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

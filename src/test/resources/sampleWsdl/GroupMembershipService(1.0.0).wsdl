@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+	    	<xs:complexType abstract="true" name="BaseServiceRequestType">
+			<xs:annotation>
+				<xs:documentation>
+					This is the base class for request container for all service operations.
+				</xs:documentation>
+			</xs:annotation>
+		    	<xs:sequence>
+				<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		    	</xs:sequence>
+            	</xs:complexType>
+            
+            	<xs:complexType abstract="true" name="BaseServiceResponseType">
+			<xs:annotation>
+				<xs:documentation>
+					Base response container for all service operations. error ( boolean ) value indicate if there is any error in the errorMessage List. The error in errorMessage could be an 
+					error or a warning.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+			    	<xs:element name="ack" type="tns:AckValue"/>
+			    	<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage"/>
+			    	<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+			</xs:sequence>
+            	</xs:complexType>
+            
+            	<xs:complexType abstract="true" name="BaseGroupMembershipServiceRequestType">
+	    		<xs:annotation>
+				<xs:documentation>
+					This is the base class for request container for all operations in GroupMembership Service.
+				</xs:documentation>
+			</xs:annotation>
+		    	<xs:complexContent>
+				<xs:extension base="tns:BaseServiceRequestType">
+				</xs:extension>
+		    	</xs:complexContent>
+            	</xs:complexType>
+            	
+            	<xs:complexType abstract="true" name="BaseGroupMembershipServiceResponseType">
+			<xs:annotation>
+				<xs:documentation>
+					Base response container for all service operations in GroupMembership Service.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:complexContent>
+			    <xs:extension base="tns:BaseServiceResponseType">
+			    </xs:extension>
+			</xs:complexContent>
+            	</xs:complexType>
+            
+            	<xs:complexType name="IsMemberOfRequestType">
+			<xs:complexContent>
+			    	<xs:extension base="tns:BaseGroupMembershipServiceRequestType">
+				<xs:sequence>
+                    			<xs:element maxOccurs="1" minOccurs="0" name="subject" type="tns:SubjectType"/>
+                    			<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectgroup" type="tns:SubjectGroupType"/>
+				</xs:sequence>
+			    </xs:extension>
+			</xs:complexContent>
+            	</xs:complexType>
+            
+            <xs:complexType name="IsMemberOfResponseType">
+			<xs:complexContent>
+			    	<xs:extension base="tns:BaseGroupMembershipServiceResponseType">
+				
+				<xs:sequence>
+                    <xs:element name="isMember" type="xs:boolean" use="required"/>
+				    <xs:element maxOccurs="unbounded" minOccurs="0" name="subjectgroup" type="tns:SubjectGroupType"/>
+				</xs:sequence>
+			    </xs:extension>
+			</xs:complexContent>
+            </xs:complexType>     
+            
+            <xs:complexType name="GetGroupMembersRequestType">
+			<xs:complexContent>
+			    	<xs:extension base="tns:BaseGroupMembershipServiceRequestType">
+				<xs:sequence>
+                    			<xs:element maxOccurs="unbounded" minOccurs="0" name="subjectgroupKey" type="tns:SubjectGroupKeyType"/>
+				</xs:sequence>
+			    </xs:extension>
+			</xs:complexContent>
+            	</xs:complexType>
+            
+            <xs:complexType name="GetGroupMembersResponseType">
+			<xs:complexContent>
+			    	<xs:extension base="tns:BaseGroupMembershipServiceResponseType">
+				
+				<xs:sequence>
+				    <xs:element maxOccurs="unbounded" minOccurs="0" name="subjectgroupMembers" type="tns:GroupMembersType"/>
+				</xs:sequence>
+			    </xs:extension>
+			</xs:complexContent>
+            </xs:complexType>       
+                                    
+           
+		<xs:complexType name="SubjectType">
+			<xs:sequence>
+			    <xs:element name="domain" type="xs:string"/>
+			    <xs:element name="value" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+		
+       	<xs:complexType name="SubjectGroupType">
+			<xs:sequence>
+			    <xs:element name="domain" type="xs:string"/>
+			    <xs:element name="name" type="xs:string"/>
+			</xs:sequence>
+           	<xs:attribute name="calculator" type="xs:string" use="optional"/>
+       	</xs:complexType>
+       	
+       	<xs:complexType name="SubjectGroupKeyType">
+			<xs:sequence>
+			    <xs:element name="id" type="xs:long"/>
+			    <xs:element name="name" type="xs:string"/>
+			</xs:sequence>
+       	</xs:complexType>
+
+	<xs:complexType name="GroupMembersType">
+			<xs:sequence>
+			    <xs:element maxOccurs="unbounded" minOccurs="0" name="memberSubjects" type="tns:SubjectType"/>
+			    <xs:element maxOccurs="1" minOccurs="0" name="subjectGroup" type="tns:SubjectGroupType"/>
+			</xs:sequence>
+       	</xs:complexType>
+       	
+                <xs:simpleType name="AckValue">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the error is a severe error (causing the request to fail)
+					or an informational error (a warning) that should be communicated to the
+					user.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="Success">
+					<xs:annotation>
+						<xs:documentation>
+							The request was processed successfully, but something occurred that may
+							affect your application or the user.				
+						</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="Failure">
+					<xs:annotation>
+						<xs:documentation>
+							The request that triggered the error was not processed successfully.
+							When a serious application-level error occurs, the error is returned
+							instead of the business data.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="Warning">
+					<xs:annotation>
+						<xs:documentation>
+							The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="PartialFailure">
+					<xs:annotation>
+						<xs:documentation>
+							The request that triggered the error was processed successfully but with some warnings.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+
+	    	<xs:complexType name="ErrorMessage">
+			<xs:annotation>
+				<xs:documentation>
+					ErrorMessage to indicate any Error/Warning occured as part of service call.
+					Any run time error will not be reported here, but will be reported aspart of
+					soap fault.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+			    <xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData"/>
+			</xs:sequence>
+            	</xs:complexType>
+            
+            	<xs:complexType name="ErrorData">
+			<xs:annotation>
+				<xs:documentation>
+					This represents error details.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+			    <xs:element name="errorId" type="xs:long"/>
+			    <xs:element name="domain" type="xs:string"/>
+			    <xs:element name="severity" type="tns:ErrorSeverity"/>
+			    <xs:element name="category" type="tns:ErrorCategory"/>
+			    <xs:element name="message" type="xs:string"/>
+			    <xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+			    <xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+			    <xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter"/>
+			</xs:sequence>
+            	</xs:complexType>
+            
+            	<xs:complexType name="ErrorParameter">
+			<xs:annotation>
+				<xs:documentation>
+					represent contextual data associated with an error.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:simpleContent>
+			    <xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string"/>
+			    </xs:extension>
+			</xs:simpleContent>
+            	</xs:complexType>
+            
+            	<xs:simpleType name="ErrorSeverity">
+			<xs:annotation>
+				<xs:documentation>
+					Reprents the level of error. E.g. Error/Warning
+				</xs:documentation>
+			</xs:annotation>
+			<xs:restriction base="xs:string">
+			    <xs:enumeration value="Error"/>
+			    <xs:enumeration value="Warning"/>
+			</xs:restriction>
+            	</xs:simpleType>
+            
+            	<xs:simpleType name="ErrorCategory">
+			<xs:annotation>
+				<xs:documentation>
+					Reprents the error catagorization. Request and Application Error are mostly occured due to 
+					invalid data passed in request. System Error cannot be fixed by changing request values and 
+					mostly occured due to application failure.						 
+				</xs:documentation>
+			</xs:annotation>
+                	<xs:restriction base="xs:string">
+			    <xs:enumeration value="System"/>
+			    <xs:enumeration value="Application"/>
+			    <xs:enumeration value="Request"/>
+			</xs:restriction>
+            	</xs:simpleType>
+            
+		<xs:element name="isMemberOfRequest" nillable="true" type="tns:IsMemberOfRequestType"/>
+		<xs:element name="isMemberOfResponse" nillable="true" type="tns:IsMemberOfResponseType"/>
+		<xs:element name="getGroupMembersRequest" nillable="true" type="tns:GetGroupMembersRequestType"/>
+		<xs:element name="getGroupMembersResponse" nillable="true" type="tns:GetGroupMembersResponseType"/>
+        </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="isMemberOfRequest">
+    <wsdl:part element="ns0:isMemberOfRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="isMemberOfResponse">
+    <wsdl:part element="ns0:isMemberOfResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getGroupMembersRequest">
+    <wsdl:part element="ns0:getGroupMembersRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getGroupMembersResponse">
+    <wsdl:part element="ns0:getGroupMembersResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="GroupMembershipServicePortType">
+    <wsdl:operation name="isMemberOf">
+      <wsdl:input message="ns0:isMemberOfRequest"/>
+      <wsdl:output message="ns0:isMemberOfResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getGroupMembers">
+      <wsdl:input message="ns0:getGroupMembersRequest"/>
+      <wsdl:output message="ns0:getGroupMembersResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GroupMembershipServiceHttpBinding" type="ns0:GroupMembershipServicePortType">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="isMemberOf">
+      <http:operation location="GroupMembershipService/isMemberOf"/>
+      <wsdl:input>
+        <mime:content part="isMemberOfRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="isMemberOfResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGroupMembers">
+      <http:operation location="GroupMembershipService/getGroupMembers"/>
+      <wsdl:input>
+        <mime:content part="getGroupMembersRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getGroupMembersResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GroupMembershipServiceSOAP11Binding" type="ns0:GroupMembershipServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="isMemberOf">
+      <soap:operation soapAction="urn:isMemberOf" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGroupMembers">
+      <soap:operation soapAction="urn:getGroupMembers" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GroupMembershipServiceSOAP12Binding" type="ns0:GroupMembershipServicePortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="isMemberOf">
+    <soap12:operation soapAction="urn:isMemberOf" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGroupMembers">
+    <soap12:operation soapAction="urn:getGroupMembers" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GroupMembershipService">
+    <wsdl:port binding="ns0:GroupMembershipServiceSOAP11Binding" name="GroupMembershipServiceSOAP11port_http">
+      <soap:address location="http://localhost:8080/GroupMembershipService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:GroupMembershipServiceSOAP12Binding" name="GroupMembershipServiceSOAP12port_http">
+    <soap12:address location="http://localhost:8080/GroupMembershipService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:GroupMembershipServiceHttpBinding" name="GroupMembershipServiceHttpport">
+      <http:address location="http://localhost:8080/GroupMembershipService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

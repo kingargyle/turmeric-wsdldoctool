@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><!--- B''H --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services"> 						
+			<xs:complexType name="AnalysisResponse">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="ignoredCategories" type="tns:IgnoredCategoryList"/>
+					<xs:element minOccurs="0" name="analysisResponses" type="tns:CategoryAnalysisResponseList"/>
+					<xs:element minOccurs="0" name="errorInfo" type="tns:ErrorInfo"/>
+					<xs:element minOccurs="0" name="totalMachineConfidenceList" type="tns:TotalMachineConfidenceList"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="CategoryAnalysisResponse">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorInfo" type="tns:ErrorInfo"/>
+					<xs:element minOccurs="0" name="catergoryName" type="xs:string"/>
+					<xs:element minOccurs="0" name="categoryAnalysisDetails" type="tns:CategoryAnalysisList"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="CategoryAnalysis">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineConfidenceList" type="tns:MachineConfidenceList"/>
+					<xs:element minOccurs="0" name="outlierList" type="tns:OutlierList"/>
+					<xs:element minOccurs="0" name="mean" type="xs:double"/>
+					<xs:element minOccurs="0" name="metricName" type="xs:string"/>
+					<xs:element minOccurs="0" name="stddev" type="xs:double"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="CategoryAnalysisResponseList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfCategoryAnalysisResponse" nillable="true" type="tns:CategoryAnalysisResponse"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="Outlier">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="key" type="xs:string"/>
+					<xs:element minOccurs="0" name="value" type="xs:double"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="ErrorInfo">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorData" type="xs:string"/>
+					<xs:element minOccurs="0" name="errorDesc" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="CategoryAnalysisRequest">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="startTime" type="xs:long"/>
+					<xs:element minOccurs="0" name="candMacNames" type="xs:string"/>
+					<xs:element minOccurs="0" name="refMacNames" type="xs:string"/>
+					<xs:element minOccurs="0" name="step" type="xs:int"/>
+					<xs:element minOccurs="0" name="endTime" type="xs:long"/>
+					<xs:element minOccurs="0" name="topNval" type="xs:int"/>
+					<xs:element minOccurs="0" name="poolName" type="xs:string"/>
+					<xs:element minOccurs="0" name="machineMetric" type="xs:string"/>
+					<xs:element minOccurs="0" name="groupByMetric" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="TotalMachineConfidenceList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfTotalMachineConfidence" nillable="true" type="tns:TotalMachineConfidence"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="AnalysisRequest">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="startTime" type="xs:long"/>
+					<xs:element minOccurs="0" name="candMacNames" type="xs:string"/>
+					<xs:element minOccurs="0" name="step" type="xs:int"/>
+					<xs:element minOccurs="0" name="refMacNames" type="xs:string"/>
+					<xs:element minOccurs="0" name="topNval" type="xs:int"/>
+					<xs:element minOccurs="0" name="endTime" type="xs:long"/>
+					<xs:element minOccurs="0" name="poolName" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MachineConfidence">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineName" type="xs:string"/>
+					<xs:element minOccurs="0" name="confidence" type="xs:double"/>
+					<xs:element minOccurs="0" name="metricValue" type="xs:double"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="IgnoredCategory">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="categoryName" type="xs:string"/>
+					<xs:element minOccurs="0" name="reason" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="TotalMachineConfidence">				
+				<xs:sequence>
+					<xs:element minOccurs="0" name="machineName" type="xs:string"/>
+					<xs:element minOccurs="0" name="machineConfidence" type="xs:double"/>
+					<xs:element minOccurs="0" name="machineStatus" type="xs:string"/>					
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="OutlierList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfOutlier" nillable="true" type="tns:Outlier"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="MachineConfidenceList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfMachineConfidence" nillable="true" type="tns:MachineConfidence"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="IgnoredCategoryList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfIgnoredCategory" nillable="true" type="tns:IgnoredCategory"/>
+				</xs:sequence>				
+			</xs:complexType>			
+			<xs:complexType name="CategoryAnalysisList">				
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="elementsOfCategoryAnalysis" nillable="true" type="tns:CategoryAnalysis"/>
+				</xs:sequence>				
+			</xs:complexType>						
+			<xs:complexType name="getCategoryAnalysisRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="categoryAnalysisRequest" type="tns:CategoryAnalysisRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCategoryAnalysisResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:CategoryAnalysisResponse"/>
+				</xs:sequence>
+			</xs:complexType>			
+			<xs:complexType name="getAnalysisRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="analysisRequest" type="tns:AnalysisRequest"/>					
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAnalysisResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="returnData" type="tns:AnalysisResponse"/>
+				</xs:sequence>
+			</xs:complexType>						
+			<xs:element name="getCategoryAnalysis" type="tns:getCategoryAnalysisRequest"/>
+			<xs:element name="getCategoryAnalysisResponse" nillable="true" type="tns:getCategoryAnalysisResponse"/>			
+			<xs:element name="getAnalysis" type="tns:getAnalysisRequest"/>
+			<xs:element name="getAnalysisResponse" nillable="true" type="tns:getAnalysisResponse"/>			
+		</xs:schema>
+	</wsdl:types>			
+	<wsdl:message name="getCategoryAnalysisRequest">
+		<wsdl:part element="tns:getCategoryAnalysis" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getCategoryAnalysisResponse">
+		<wsdl:part element="tns:getCategoryAnalysisResponse" name="parameters"/>
+	</wsdl:message>			
+	<wsdl:message name="getAnalysisRequest">
+		<wsdl:part element="tns:getAnalysis" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAnalysisResponse">
+		<wsdl:part element="tns:getAnalysisResponse" name="parameters"/>
+	</wsdl:message>	
+	<wsdl:portType name="MachineMetricAnalyzerServicePortType">		
+		<wsdl:operation name="getCategoryAnalysis">
+			<wsdl:input message="tns:getCategoryAnalysisRequest"/>
+			<wsdl:output message="tns:getCategoryAnalysisResponse"/>
+		</wsdl:operation>		
+		<wsdl:operation name="getAnalysis">
+			<wsdl:input message="tns:getAnalysisRequest"/>
+			<wsdl:output message="tns:getAnalysisResponse"/>
+		</wsdl:operation>		
+	</wsdl:portType>	
+	<wsdl:binding name="MachineMetricAnalyzerServiceSoap11Binding" type="tns:MachineMetricAnalyzerServicePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>		
+			<wsdl:operation name="getCategoryAnalysis">
+				<soap:operation soapAction="urn:getCategoryAnalysis" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAnalysis">
+				<soap:operation soapAction="urn:getAnalysis" style="document"/>
+				<wsdl:input>
+					<soap:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:binding name="MachineMetricAnalyzerServiceSoap12Binding" type="tns:MachineMetricAnalyzerServicePortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>		
+			<wsdl:operation name="getCategoryAnalysis">
+				<soap12:operation soapAction="urn:getCategoryAnalysis" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAnalysis">
+				<soap12:operation soapAction="urn:getAnalysis" style="document"/>
+				<wsdl:input>
+					<soap12:body use="literal"/>
+				</wsdl:input>
+				<wsdl:output>
+					<soap12:body use="literal"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:binding name="MachineMetricAnalyzerServiceHTTPBinding" type="tns:MachineMetricAnalyzerServicePortType">
+		<http:binding verb="POST"/>		
+			<wsdl:operation name="getCategoryAnalysis">
+				<http:operation location="MachineMetricAnalyzerService/getCategoryAnalysis"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>		
+			<wsdl:operation name="getAnalysis">
+				<http:operation location="MachineMetricAnalyzerService/getAnalysis"/>
+				<wsdl:input>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:input>
+				<wsdl:output>
+					<mime:content part="parameters" type="text/xml"/>
+				</wsdl:output>
+			</wsdl:operation>			
+	</wsdl:binding>	
+	<wsdl:service name="MachineMetricAnalyzerService">	
+		<wsdl:port binding="tns:MachineMetricAnalyzerServiceSoap11Binding" name="MachineMetricAnalyzerServiceHttpSoap11Endpoint">
+			<soap:address location="http://localhost:8080/MachineMetricAnalyzerService"/>
+		</wsdl:port>		
+		<wsdl:port binding="tns:MachineMetricAnalyzerServiceSoap12Binding" name="MachineMetricAnalyzerServiceHttpSoap12Endpoint">
+			<soap12:address location="http://localhost:8080/MachineMetricAnalyzerService"/>
+		</wsdl:port>		
+		<wsdl:port binding="tns:MachineMetricAnalyzerServiceHTTPBinding" name="MachineMetricAnalyzerServiceHttpEndpoint">
+			<http:address location="http://localhost:8080/MachineMetricAnalyzerService"/>
+		</wsdl:port>		
+	</wsdl:service>
+</wsdl:definitions>

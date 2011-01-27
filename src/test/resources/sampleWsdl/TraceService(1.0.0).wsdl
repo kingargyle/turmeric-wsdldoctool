@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:types="http://trace.vip.ebay.com/schemas/services/tickets" xmlns:tns="http://trace.vip.ebay.com/schemas/services/tickets/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://trace.vip.ebay.com/schemas/services/tickets/wsdl">
+
+	<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="http://trace.vip.ebay.com/schemas/services/tickets" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://trace.vip.ebay.com/schemas/services/tickets">
+
+		<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+		<xsd:complexType name="parameter">
+			<xsd:sequence>
+				<xsd:element name="name" type="xsd:string"/>
+				<xsd:element name="type" type="xsd:string"/>
+				<xsd:element name="required" type="xsd:boolean"/>
+				<xsd:element name="isField" type="xsd:boolean"/>
+				<xsd:element name="defaultValue" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+
+		<xsd:complexType name="arrayOfParameter">
+			<xsd:complexContent>
+				<xsd:restriction base="soapenc:Array">
+					<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="parameter[]"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+
+		<xsd:complexType name="field">
+			<xsd:sequence>
+				<xsd:element name="returnName" type="xsd:string"/>
+				<xsd:element name="fieldId" type="xsd:long"/>
+				<xsd:element name="type" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+
+		<xsd:complexType name="arrayOfField">
+			<xsd:complexContent>
+				<xsd:restriction base="soapenc:Array">
+					<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="field[]"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+
+		<xsd:complexType name="keyValue">
+			<xsd:sequence>
+				<xsd:element name="key" type="xsd:string"/>
+				<xsd:element name="value" nillable="true" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+
+		<xsd:complexType name="arrayOfKeyValue">
+			<xsd:complexContent>
+				<xsd:restriction base="soapenc:Array">
+					<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="keyValue[]"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+
+		<xsd:complexType name="twoDimArrayOfKeyValue">
+			<xsd:complexContent>
+				<xsd:restriction base="soapenc:Array">
+					<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="arrayOfKeyValue[]"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+
+		<xsd:element name="createTicket">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="serviceName" type="xsd:string"/>
+					<xsd:element name="keyValues" type="arrayOfKeyValue"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:element>
+
+		<xsd:element name="createTicketResponse">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="entry" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:element>
+
+		<xsd:element name="updateTicket">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="serviceName" type="xsd:string"/>
+					<xsd:element name="keyValues" type="arrayOfKeyValue"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:element>
+
+		<xsd:element name="updateTicketResponse">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="entryId" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:element>
+
+		<xsd:element name="findTicket">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="serviceName" type="xsd:string"/>
+					<xsd:element name="keyValues" type="arrayOfKeyValue"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:element>
+
+		<xsd:element name="findTicketResponse">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="result" type="twoDimArrayOfKeyValue"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:element>
+
+	</xsd:schema>
+
+    <message name="createTicketReq">
+	    <part element="types:createTicket" name="parameters"/>
+	</message>
+	<message name="createTicketResp">
+		<part element="types:createTicketResponse" name="parameters"/>
+	</message>
+
+    <message name="updateTicketReq">
+	    <part element="types:updateTicket" name="parameters"/>
+	</message>
+	<message name="updateTicketResp">
+		<part element="types:updateTicketResponse" name="parameters"/>
+	</message>
+
+    <message name="findTicketReq">
+	    <part element="types:findTicket" name="parameters"/>
+	</message>
+	<message name="findTicketResp">
+		<part element="types:findTicketResponse" name="parameters"/>
+	</message>
+
+	<portType name="TraceServicePortType">
+		<operation name="createTicket">
+			<input message="tns:createTicketReq"/>
+			<output message="tns:createTicketResp"/>
+		</operation>
+		<operation name="updateTicket">
+			<input message="tns:updateTicketReq"/>
+			<output message="tns:updateTicketResp"/>
+		</operation>
+		<operation name="findTicket">
+			<input message="tns:findTicketReq"/>
+			<output message="tns:findTicketResp"/>
+		</operation>
+	</portType>
+	
+	<binding name="TraceServiceSOAPBinding" type="tns:TraceServicePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="createTicket">
+			<soap:operation soapAction="createTicket" style="document"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="updateTicket">
+			<soap:operation soapAction="updateTicket" style="document"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="findTicket">
+			<soap:operation soapAction="findTicket" style="document"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	
+	<service name="TraceService">
+		<port binding="tns:TraceServiceSOAPBinding" name="TraceServiceSOAPPort">
+			<soap:address location="http://trace.vip.ebay.com/arsys/services/TraceServiceSOAPPort"/>
+		</port>
+	</service>
+</definitions>

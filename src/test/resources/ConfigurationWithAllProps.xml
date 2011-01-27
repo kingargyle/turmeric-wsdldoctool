@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<outputcss>test_case.css</outputcss>
+	<annoparsers>
+	<parser>
+		    <tagname>TestAnno</tagname>
+			<parserclass>org.ebayopensource.turmeric.tools.annoparser.customparser.impl.TestAnnoParserClass</parserclass>
+		</parser>
+	</annoparsers>
+	<outputgenerators>
+		<outputgenerator>
+			<class>org.ebayopensource.turmeric.tools.annoparser.outputgenerator.impl.TestOpGenClass</class>
+			<mode>debug</mode>
+		</outputgenerator>
+	</outputgenerators>
+	<outputdir>C:\annoParser\temp\Documents</outputdir>
+</config>

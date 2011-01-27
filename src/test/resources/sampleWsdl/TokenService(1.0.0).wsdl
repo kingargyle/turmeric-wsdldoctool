@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service operations. error ( boolean ) value indicate if there is any error in the errorMessage List. The error in errorMessage could be an 
+						error or a warning.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue"/>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="BaseTokenServiceRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="BaseTokenServiceResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error (causing the request to fail)
+						or an informational error (a warning) that should be communicated to the
+						user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully, but something occurred that may
+								affect your application or the user.				
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was not processed successfully.
+								When a serious application-level error occurs, the error is returned
+								instead of the business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was processed successfully but with some warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was processed successfully but with some warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning occured as part of service call.
+						Any run time error will not be reported here, but will be reported aspart of
+						soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						represent contextual data associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Reprents the level of error. E.g. Error/Warning
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Reprents the error catagorization. Request and Application Error are mostly occured due to 
+						invalid data passed in request. System Error cannot be fixed by changing request values and 
+						mostly occured due to application failure.						 
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="GetAdminTokenRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseTokenServiceRequest">
+					<xs:sequence>
+					</xs:sequence>
+				    </xs:extension>
+				</xs:complexContent>
+            		</xs:complexType>
+			<xs:complexType name="GetAdminTokenResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseTokenServiceResponse">
+					<xs:sequence>
+						<xs:element minOccurs="0" name="token" type="xs:string"/>
+					</xs:sequence>
+				    </xs:extension>
+				</xs:complexContent>
+			</xs:complexType> 
+			<xs:element name="getAdminTokenRequest" nillable="false" type="tns:GetAdminTokenRequest"/>
+   			<xs:element name="getAdminTokenResponse" nillable="false" type="tns:GetAdminTokenResponse"/>
+		</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getAdminTokenRequest">
+    <wsdl:part element="ns0:getAdminTokenRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getAdminTokenResponse">
+    <wsdl:part element="ns0:getAdminTokenResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="TokenServicePortType">
+    <wsdl:operation name="getAdminToken">
+      <wsdl:input xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" message="ns0:getAdminTokenRequest" wsaw:Action="urn:getAdminTokenRequest"/>
+      <wsdl:output xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" message="ns0:getAdminTokenResponse" wsaw:Action="urn:getAdminTokenResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TokenServiceSOAP11Binding" type="ns0:TokenServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAdminToken">
+      <soap:operation soapAction="urn:getAdminToken" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TokenServiceSOAP12Binding" type="ns0:TokenServicePortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAdminToken">
+    <soap12:operation soapAction="urn:getAdminToken" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TokenServiceHttpBinding" type="ns0:TokenServicePortType">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="getAdminToken">
+      <http:operation location="TokenService/getAdminToken"/>
+      <wsdl:input>
+        <mime:content part="getAdminTokenRequest" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getAdminTokenResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TokenService">
+    <wsdl:port binding="ns0:TokenServiceSOAP11Binding" name="TokenServiceSOAP11port_http">
+      <soap:address location="http://localhost:8080/TokenService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:TokenServiceSOAP12Binding" name="TokenServiceSOAP12port_http">
+    <soap12:address location="http://localhost:8080/TokenService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:TokenServiceHttpBinding" name="TokenServiceHttpport">
+      <http:address location="http://localhost:8080/TokenService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,4372 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="RepositoryService" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+			<xs:element name="createServiceRequest" nillable="true" type="tns:CreateServiceRequest"/>
+			<xs:element name="createServiceResponse" nillable="true" type="tns:CreateServiceResponse"/>
+				
+			<xs:element name="createCompleteAssetRequest" nillable="true" type="tns:CreateCompleteAssetRequest"/>
+			<xs:element name="createCompleteAssetResponse" nillable="true" type="tns:CreateCompleteAssetResponse"/>
+				
+			<xs:element name="createAndSubmitAssetRequest" nillable="true" type="tns:CreateAndSubmitAssetRequest"/>
+			<xs:element name="createAndSubmitAssetResponse" nillable="true" type="tns:CreateAndSubmitAssetResponse"/>
+				
+			<xs:element name="updateCompleteAssetRequest" nillable="true" type="tns:UpdateCompleteAssetRequest"/>
+			<xs:element name="updateCompleteAssetResponse" nillable="true" type="tns:UpdateCompleteAssetResponse"/>
+
+			<xs:element name="updateServiceRequest" nillable="true" type="tns:UpdateServiceRequest"/>
+			<xs:element name="updateServiceResponse" nillable="true" type="tns:UpdateServiceResponse"/>
+
+			<xs:element name="createAssetRequest" nillable="true" type="tns:CreateAssetRequest"/>
+			<xs:element name="createAssetResponse" nillable="true" type="tns:CreateAssetResponse"/>
+
+			<xs:element name="updateAssetRequest" nillable="true" type="tns:UpdateAssetRequest"/>
+			<xs:element name="updateAssetResponse" nillable="true" type="tns:UpdateAssetResponse"/>
+
+			<xs:element name="getAssetStatusRequest" nillable="true" type="tns:GetAssetStatusRequest"/>
+			<xs:element name="getAssetStatusResponse" nillable="true" type="tns:GetAssetStatusResponse"/>
+
+			<xs:element name="updateAssetArtifactsRequest" nillable="true" type="tns:UpdateAssetArtifactsRequest"/>
+			<xs:element name="updateAssetArtifactsResponse" nillable="true" type="tns:UpdateAssetArtifactsResponse"/>
+
+			<xs:element name="updateAssetAttributesRequest" nillable="true" type="tns:UpdateAssetAttributesRequest"/>
+			<xs:element name="updateAssetAttributesResponse" nillable="true" type="tns:UpdateAssetAttributesResponse"/>
+
+			<xs:element name="updateAssetDependenciesRequest" nillable="true" type="tns:UpdateAssetDependenciesRequest"/>
+			<xs:element name="updateAssetDependenciesResponse" nillable="true" type="tns:UpdateAssetDependenciesResponse"/>
+
+			<xs:element name="updateAssetDependenciesByGraphRequest" nillable="true" type="tns:UpdateAssetDependenciesByGraphRequest"/>
+			<xs:element name="updateAssetDependenciesByGraphResponse" nillable="true" type="tns:UpdateAssetDependenciesByGraphResponse"/>
+
+			<xs:element name="lockAssetRequest" nillable="true" type="tns:LockAssetRequest"/>
+			<xs:element name="lockAssetResponse" nillable="true" type="tns:LockAssetResponse"/>
+
+			<xs:element name="unlockAssetRequest" nillable="true" type="tns:UnlockAssetRequest"/>
+			<xs:element name="unlockAssetResponse" nillable="true" type="tns:UnlockAssetResponse"/>
+
+
+			<xs:element name="subscribeRequest" nillable="true" type="tns:SubscribeRequest"/>
+			<xs:element name="subscribeResponse" nillable="true" type="tns:SubscribeResponse"/>
+
+			<xs:element name="unsubscribeRequest" nillable="true" type="tns:UnsubscribeRequest"/>
+			<xs:element name="unsubscribeResponse" nillable="true" type="tns:UnsubscribeResponse"/>
+
+			<xs:element name="updateSubscriptionRequest" nillable="true" type="tns:UpdateSubscriptionRequest"/>
+			<xs:element name="updateSubscriptionResponse" nillable="true" type="tns:UpdateSubscriptionResponse"/>
+
+			<xs:element name="getAssetInfoRequest" nillable="true" type="tns:GetAssetInfoRequest"/>
+			<xs:element name="getAssetInfoResponse" nillable="true" type="tns:GetAssetInfoResponse"/>
+
+			<xs:element name="getBasicAssetInfoRequest" nillable="true" type="tns:GetBasicAssetInfoRequest"/>
+			<xs:element name="getBasicAssetInfoResponse" nillable="true" type="tns:GetBasicAssetInfoResponse"/>
+
+			<xs:element name="getAllAssetsGroupedByCategoryRequest" nillable="true" type="tns:GetAllAssetsGroupedByCategoryRequest"/>
+			<xs:element name="getAllAssetsGroupedByCategoryResponse" nillable="true" type="tns:GetAllAssetsGroupedByCategoryResponse"/>
+				
+			<xs:element name="searchAssetsDetailedRequest" nillable="true" type="tns:SearchAssetsDetailedRequest"/>
+			<xs:element name="searchAssetsDetailedResponse" nillable="true" type="tns:SearchAssetsDetailedResponse"/>
+			
+			<xs:element name="searchAssetsRequest" nillable="true" type="tns:SearchAssetsRequest"/>
+			<xs:element name="searchAssetsResponse" nillable="true" type="tns:SearchAssetsResponse"/>
+
+			<xs:element name="getSubscriptionRequest" nillable="true" type="tns:GetSubscriptionRequest"/>
+			<xs:element name="getSubscriptionResponse" nillable="true" type="tns:GetSubscriptionResponse"/>
+
+			<xs:element name="getAssetDependenciesRequest" nillable="true" type="tns:GetAssetDependenciesRequest"/>
+			<xs:element name="getAssetDependenciesResponse" nillable="true" type="tns:GetAssetDependenciesResponse"/>
+
+			<xs:element name="getAssetDependenciesByGraphRequest" nillable="true" type="tns:GetAssetDependenciesByGraphRequest"/>
+			<xs:element name="getAssetDependenciesByGraphResponse" nillable="true" type="tns:GetAssetDependenciesByGraphResponse"/>
+
+			<xs:element name="getLibraryListRequest" nillable="true" type="tns:GetLibraryListRequest"/>
+			<xs:element name="getLibraryListResponse" nillable="true" type="tns:GetLibraryListResponse"/>
+
+			<xs:element name="getAssetTypesRequest" nillable="true" type="tns:GetAssetTypesRequest"/>
+			<xs:element name="getAssetTypesResponse" nillable="true" type="tns:GetAssetTypesResponse"/>
+
+			<xs:element name="getAssetLifeCycleStatesRequest" nillable="true" type="tns:GetAssetLifeCycleStatesRequest"/>
+			<xs:element name="getAssetLifeCycleStatesResponse" nillable="true" type="tns:GetAssetLifeCycleStatesResponse"/>
+
+			<xs:element name="getAssetVersionsRequest" nillable="true" type="tns:GetAssetVersionsRequest"/>
+			<xs:element name="getAssetVersionsResponse" nillable="true" type="tns:GetAssetVersionsResponse"/>
+
+			<xs:element name="rejectAssetRequest" nillable="true" type="tns:RejectAssetRequest"/>
+			<xs:element name="rejectAssetResponse" nillable="true" type="tns:RejectAssetResponse"/>
+				
+			<xs:element name="approveAssetRequest" nillable="true" type="tns:ApproveAssetRequest"/>
+			<xs:element name="approveAssetResponse" nillable="true" type="tns:ApproveAssetResponse"/>
+
+			<xs:element name="getServiceRequest" nillable="true" type="tns:GetServiceRequest"/>
+			<xs:element name="getServiceResponse" nillable="true" type="tns:GetServiceResponse"/>
+			<xs:element name="removeAssetRequest" type="tns:RemoveAssetRequest"/>
+			<xs:element name="removeAssetResponse" type="tns:RemoveAssetResponse"/>
+			<xs:element name="validateAssetRequest" nillable="true" type="tns:ValidateAssetRequest"/>
+			<xs:element name="validateAssetResponse" nillable="true" type="tns:ValidateAssetResponse"/>
+			
+			<xs:element name="getAllProjectsAndGroupsRequest" nillable="true" type="tns:GetAllProjectsAndGroupsRequest"/>
+			<xs:element name="getAllProjectsAndGroupsResponse" nillable="true" type="tns:GetAllProjectsAndGroupsResponse"/>
+			
+			<xs:element name="getUsersProjectsAndGroupsRequest" nillable="true" type="tns:GetUsersProjectsAndGroupsRequest"/>
+			<xs:element name="getUsersProjectsAndGroupsResponse" nillable="true" type="tns:GetUsersProjectsAndGroupsResponse"/>
+			
+			<xs:element name="getAssetSubmissionPropertiesRequest" nillable="true" type="tns:GetAssetSubmissionPropertiesRequest"/>
+			<xs:element name="getAssetSubmissionPropertiesResponse" nillable="true" type="tns:GetAssetSubmissionPropertiesResponse"/>
+
+			<xs:element name="getAssetTreeByAttributesRequest" nillable="true" type="tns:GetAssetTreeByAttributesRequest"/>
+			<xs:element name="getAssetTreeByAttributesResponse" nillable="true" type="tns:GetAssetTreeByAttributesResponse"/>
+				
+			<xs:element name="submitForPublishingRequest" nillable="true" type="tns:SubmitForPublishingRequest"/>
+			<xs:element name="submitForPublishingResponse" nillable="true" type="tns:SubmitForPublishingResponse"/>
+
+			<xs:complexType name="CreateServiceRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="serviceInfo" type="tns:ServiceInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="CreateServiceResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetKey" type="tns:AssetKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="CreateCompleteAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetInfo" type="tns:AssetInfo">
+								<xs:annotation>
+									<xs:documentation>
+						The assetinfo store all details needed for creating the asset.
+						The captureTemplateName store the name of the capture template to
+						be applied on the asset.
+						the groupname specified the group which will be the owner of 
+						the asset.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="captureTemplateName" type="xs:string">
+							</xs:element>
+							<xs:element name="groupName" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+				
+			</xs:complexType>
+			<xs:complexType name="CreateCompleteAssetResponse">
+                <xs:annotation>
+                	<xs:documentation/>
+                	</xs:annotation>
+                <xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetKey" type="tns:AssetKey">
+								<xs:annotation>
+								<xs:documentation>
+									The asset key of the service created by the operation
+								</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+								
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateAndSubmitAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetInfo" type="tns:AssetInfo">
+								<xs:annotation>
+									<xs:documentation>
+						The assetinfo stores all details needed for creating the asset.
+						The captureTemplateName stores the name of the capture template to
+						be applied on the asset.
+						The groupname specifies the group which will be the owner of
+						the asset.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="captureTemplateName" type="xs:string">
+							</xs:element>
+							<xs:element name="groupName" type="xs:string">
+							</xs:element>
+							<xs:element minOccurs="0" name="comment" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateAndSubmitAssetResponse">
+                <xs:annotation>
+                	<xs:documentation>
+                		The response would contain errorId - 109
+                		if only the creation of the asset is successful,
+                		but the submission fails.  
+                	</xs:documentation>
+                	</xs:annotation>
+                <xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetKey" type="tns:AssetKey">
+								<xs:annotation>
+								<xs:documentation>
+									The asset key of the asset created by the operation
+								</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="requestProperties" type="tns:CustomProperty">
+								<xs:annotation>
+								<xs:documentation>
+									The asset request properties required for submission, if any.
+								</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateCompleteAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetInfoForUpdate" type="tns:AssetInfoForUpdate">
+								<xs:annotation>
+									<xs:documentation>
+						The assetinfoForUpdate stores all details needed for updating  the asset.
+						The groupname specifies the group which will be the owner of 
+						the asset after the update.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<!-- <xs:element name="captureTemplateName"
+								type="xs:string">
+							</xs:element>  -->
+							<xs:element minOccurs="0" name="groupName" type="xs:string">
+							</xs:element>
+							<xs:element default="true" name="replaceCurrent" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										This indicates if we should
+										replace the existing attributes
+										or artifacts or other fields. If
+										it is set the false and
+										attribute/artifact/field is
+										existed already, the service
+										should give warnings without
+										doing the update
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element default="true" name="partialUpdate" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										This indicates if we allow the
+										partial update. For example, one
+										attribute/artifact/field update
+										is successful, but the other one
+										is not, should we commit the
+										first one or not will depend on
+										this flag
+										Note: for now this feature is 
+										not supported.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UpdateCompleteAssetResponse">
+                <xs:annotation>
+                	<xs:documentation/>
+                	</xs:annotation>
+                <xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetKey" type="tns:AssetKey">
+								<xs:annotation>
+								<xs:documentation>
+									The asset key of the service created by the operation
+								</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+								
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateServiceRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="serviceInfo" type="tns:ServiceInfoForUpdate"/>
+							<xs:element default="true" name="replaceCurrent" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										This indicates if we should
+										replace the existed attributes
+										or artifacts or other fields. If
+										it is set the false and
+										attribute/artifact/field is
+										existed already, the service
+										should give warnings without
+										doing the update
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element default="true" name="partialUpdate" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										This indicates if we allow the
+										partial update. For example, one
+										attribute/artifact/field update
+										is successful, but the other one
+										is not, should we commit the
+										first one or not will depend on
+										this flag
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateServiceResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="ServiceInfo" type="tns:ServiceInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="CreateAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="basicAssetInfo" type="tns:BasicAssetInfo"/>
+							<xs:element name="captureTemplateName" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="CreateAssetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetKey" type="tns:AssetKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="basicAssetInfo" type="tns:BasicAssetInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetInfo" type="tns:AssetInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetArtifactsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="artifactInfo" type="tns:ArtifactInfo"/>
+							<xs:element default="true" name="replaceCurrent" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										This indicates if we should
+										replace the existed artifact. If
+										it is set the false and
+										attribute is existed already,
+										the service should give warnings
+										without doing the update
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element default="true" name="partialUpdate" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										This indicates if we allow the
+										partial update. For example, one
+										artifact update is successful,
+										but the other one is not, should
+										we commit the first one or not
+										will depend on this flag
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetArtifactsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="artifact" type="tns:Artifact"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetAttributesRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+							<xs:element name="extendedAssetInfo" type="tns:ExtendedAssetInfo"/>
+							<xs:element default="true" name="replaceCurrent" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										This indicates if we should
+										replace the existed attributes.
+										If it is set the false and
+										attribute is existed already,
+										the service should give warnings
+										without doing the update
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element default="true" name="partialUpdate" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+										This indicates if we allow the
+										partial update. For example, one
+										attribute update is successful,
+										but the other one is not, should
+										we commit the first one or not
+										will depend on this flag
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetAttributesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeName" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="UpdateAssetDependenciesRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+							<xs:element name="flattenedRelationshipForUpdate" type="tns:FlattenedRelationshipForUpdate"/>
+							<xs:element name="replaceCurrent" type="xs:boolean">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetDependenciesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetDependenciesByGraphRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+							<xs:element name="graphRelationship" type="tns:GraphRelationship"/>
+							<xs:element name="replaceCurrent" type="xs:boolean">
+							</xs:element>
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateAssetDependenciesByGraphResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="LockAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="LockAssetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetInfo" type="tns:AssetInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UnlockAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UnlockAssetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetInfo" type="tns:AssetInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="SubscribeRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="subscription" type="tns:Subscription"/>
+							<xs:element name="library" type="tns:Library"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="SubscribeResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="subscriptionId" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UnsubscribeRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="subscriptionId" type="xs:string"/>
+							<xs:element name="library" type="tns:Library"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UnsubscribeResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="subscription" type="tns:Subscription"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateSubscriptionRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="subscription" type="tns:Subscription"/>
+							<xs:element name="library" type="tns:Library"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="UpdateSubscriptionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="subscriptionId" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetStatusRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetStatusResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetStatus" type="tns:AssetStatus"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetInfoRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+							<xs:element minOccurs="0" name="version" type="tns:Version">
+								<xs:annotation>
+									<xs:documentation>
+										This is optional
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="assetType" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+										This is optional
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetInfoResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetInfo" type="tns:AssetInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetTreeByAttributesRequest">
+                <xs:annotation>
+                	<xs:documentation>
+                		This the request for the operation
+                		getAssetTreeByAttributes.
+
+                		The attributeFilterList, mentions the parameters
+                		that would be used to filter assets before
+                		returning them back as a categorized count list.
+                		The attributeFilter list is a liost of
+                		AttributeFilter instances each containg a name
+                		value pair.
+
+                		The nextLevelAttribute defines the classifier
+                		based on which the filter attributes need to be
+                		grouped and counted.
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeFilterList" type="tns:AttributeFilter">
+								<xs:annotation>
+									<xs:documentation>
+										This is required
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="nextLevelAttribute" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										This is required as the client need pass
+										the exact asset type for this request
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="library" type="tns:Library">
+								<xs:annotation>
+									<xs:documentation>
+										LibraryId or libraryName need be provided
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>							
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetTreeByAttributesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeValueCount" type="tns:AttributeValueCount"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			
+			<xs:complexType name="SubmitForPublishingRequest">
+                <xs:annotation>
+                	<xs:documentation>
+                		
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+
+
+							<xs:element name="comment" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										LibraryId or libraryName need be
+										provided
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="assetKey" type="tns:AssetKey">
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="requestProperties" type="tns:Property">
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="publishTemplateName" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="SubmitForPublishingResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+
+							<xs:element name="assetRequestId" type="xs:int">
+							</xs:element>
+							<xs:element name="errorMessages" type="xs:string">
+                                <xs:annotation>
+                                	<xs:documentation>
+                                		The error messages field
+                                		indicates the short coming on
+                                		the asset for submission. i.e
+                                		The mandatory classifiers,
+                                		artifacts and relationships
+                                		which are not entered.
+                                	</xs:documentation>
+                                </xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetBasicAssetInfoRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+							<xs:element minOccurs="0" name="version" type="tns:Version">
+								<xs:annotation>
+									<xs:documentation>
+										This is optional
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="assetType" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+										This is optional
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetBasicAssetInfoResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="basicAssetInfo" type="tns:BasicAssetInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAllAssetsGroupedByCategoryRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetQuery" type="tns:AssetQuery"/>
+							<xs:element minOccurs="0" name="library" type="tns:Library">
+								<xs:annotation>
+									<xs:documentation>
+										If libraryId or libraryName is
+										not provided, all libraries will
+										be searched
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="categorizingClassifer" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The resultant list of assets will be categorized based on the 
+										categorizing classifier; if no categorizing classifier is present 
+										in the request, "asset_type" is used as the default 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>				
+			</xs:complexType>
+			
+			<xs:complexType name="SearchAssetsDetailedRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetQuery" type="tns:AssetQuery"/>
+							<xs:element minOccurs="0" name="library" type="tns:Library">
+								<xs:annotation>
+									<xs:documentation>
+										If libraryId or libraryName is not provided, all libraries will be searched
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="searchLevel" type="tns:SearchLevel">
+								<xs:annotation>
+									<xs:documentation>
+										The searched assets would be populated only with the requested levels of detail.
+										If nothing is specified for searchLevel, "basic" is taken as the default.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>	
+			
+			<xs:simpleType name="SearchLevel">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the level of asset detail to be included in the search result.
+						"basic" level -&gt; includes the basic AssetInfo,
+						"extended" level -&gt; includes extended AssetInfo,
+						"artifacts" level -&gt; includes artifact details,
+						"lifecycle" level -&gt; includes lifecycle details,
+						"relationships" level -&gt; includes relationship details,
+						"all" level -&gt; includes all the above details i.e. basic + extended + artifacts + lifecycle + relationship details
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="basic">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="extended">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="artifacts">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="lifecycle">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="relationships">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="all">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>		
+
+			<xs:complexType name="SearchAssetsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetQuery" type="tns:AssetQuery"/>
+							<xs:element minOccurs="0" name="library" type="tns:Library">
+								<xs:annotation>
+									<xs:documentation>
+										If libraryId or libraryName is
+										not provided, all libraries will
+										be searched
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAllAssetsGroupedByCategoryResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetsGroupedByCategory" type="tns:AssetsGroupedByCategory">
+								<xs:annotation>
+									<xs:documentation>
+										The CategorizedSearchResultAsset represents an asset in the 
+										SearchAssetsCategorized operation's response.
+										It contains the basic asset info and a list of classifiers that
+										the asset has.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="SearchAssetsDetailedResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetInfo" type="tns:AssetInfo">
+								<xs:annotation>
+									<xs:documentation>
+										The AssetInfo for an asset would be populated with only the requested level of detail.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="SearchAssetsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetBaseInfo" type="tns:AssetBaseInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetSubscriptionRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="subscriptionId" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetSubscriptionResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="subscription" type="tns:Subscription"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetDependenciesRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+							<xs:element minOccurs="0" name="depth" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetDependenciesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="flattenedRelationship" type="tns:FlattenedRelationship"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetDependenciesByGraphRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+							<xs:element minOccurs="0" name="depth" type="xs:int">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetDependenciesByGraphResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="graphRelationship" type="tns:GraphRelationship"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetLibraryListRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetLibraryListResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="library" type="tns:Library"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetTypesRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="library" type="tns:Library">
+								<xs:annotation>
+									<xs:documentation>
+										If libraryId or libraryName is
+										not provided, all libraries will
+										be searched
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetTypesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetType" type="xs:token"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetLifeCycleStatesRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetType" type="xs:token"/>
+							<xs:element minOccurs="0" name="library" type="tns:Library">
+								<xs:annotation>
+									<xs:documentation>
+										If libraryId or libraryName is
+										not provided, all libraries will
+										be searched
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetLifeCycleStatesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="libraryLifeCycleStates" type="tns:LibraryLifeCycleStates"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="LibraryLifeCycleStates">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="libraryName" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="lifeCycleState" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetVersionsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetVersionsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="basicAssetInfo" type="tns:BasicAssetInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="RejectAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="rejectionInfo" type="tns:RejectionInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="RejectAssetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="rejectionStatus" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="ApproveAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="approvalInfo" type="tns:ApprovalInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="ApproveAssetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="approvalStatus" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetServiceRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetServiceResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="serviceInfo" type="tns:ServiceInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="ServiceInfo">
+				<xs:annotation>
+					<xs:documentation>
+						ServiceInfo contains the basic required service
+						info, multiple name-value pair attributes plus
+						design and run time info, the list of artifact
+						and assetLifeCycleInfo and dependent assets
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="basicServiceInfo" type="tns:BasicServiceInfo"/>
+					<xs:element minOccurs="0" name="extendedServiceInfo" type="tns:ExtendedServiceInfo"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="artifactInfo" type="tns:ArtifactInfo"/>
+					<xs:element minOccurs="0" name="assetLifeCycleInfo" type="tns:AssetLifeCycleInfo">
+					</xs:element>
+					<xs:element minOccurs="0" name="flattenedRelationship" type="tns:FlattenedRelationship">
+						<xs:annotation>
+							<xs:documentation>
+								You can specify the dependent service or
+								data types in flattenedRelationship
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ServiceInfoForUpdate">
+				<xs:annotation>
+					<xs:documentation>
+						ServiceInfo contains the basic required service
+						info, multiple name-value pair attributes plus
+						design and run time info, the list of artifact
+						and assetLifeCycleInfo and dependent assets
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="basicServiceInfo" type="tns:BasicServiceInfo"/>
+					<xs:element minOccurs="0" name="extendedServiceInfo" type="tns:ExtendedServiceInfo"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="artifactInfo" type="tns:ArtifactInfo"/>
+					<xs:element minOccurs="0" name="assetLifeCycleInfo" type="tns:AssetLifeCycleInfo">
+					</xs:element>
+					<xs:element minOccurs="0" name="flattenedRelationshipForUpdate" type="tns:FlattenedRelationshipForUpdate">
+						<xs:annotation>
+							<xs:documentation>
+								You can specify the dependent service or
+								data types in flattenedRelationship
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssetInfo">
+				<xs:annotation>
+					<xs:documentation>
+						AssetInfo contains the basic required asset
+						info, multiple name-value pair attributes, the
+						list of artifact and assetLifeCycleInfo and
+						dependent assets
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="basicAssetInfo" type="tns:BasicAssetInfo"/>
+					<xs:element minOccurs="0" name="extendedAssetInfo" type="tns:ExtendedAssetInfo"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="artifactInfo" type="tns:ArtifactInfo"/>
+					<xs:element minOccurs="0" name="assetLifeCycleInfo" type="tns:AssetLifeCycleInfo">
+					</xs:element>
+					<xs:element minOccurs="0" name="flattenedRelationship" type="tns:FlattenedRelationship">
+						<xs:annotation>
+							<xs:documentation>
+								You can specify the dependent service or
+								data types in flattenedRelationship
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AssetInfoForUpdate">
+				<xs:annotation>
+					<xs:documentation>
+						AssetInfoForUpdate is capable of holding all information necessary to update an asset.
+						The information will include basic required asset
+						info, multiple name-value pair attributes, the
+						list of artifact, assetLifeCycleInfo and
+						dependent assets for update
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="basicAssetInfo" type="tns:BasicAssetInfo"/>
+					<xs:element minOccurs="0" name="extendedAssetInfo" type="tns:ExtendedAssetInfo"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="artifactInfo" type="tns:ArtifactInfo"/>
+					<xs:element minOccurs="0" name="assetLifeCycleInfo" type="tns:AssetLifeCycleInfo">
+					</xs:element>
+					<xs:element minOccurs="0" name="flattenedRelationshipForUpdate" type="tns:FlattenedRelationshipForUpdate">													
+						<xs:annotation>
+							<xs:documentation>
+								You can specify the dependent service or
+								data types to be updated in flattenedRelationshipForUpdate
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ExtendedServiceInfo">
+				<xs:annotation>
+					<xs:documentation>
+						ExtendedServiceInfo contains service design time
+						and runtime info besides multiple classifier
+						name-values
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:ExtendedAssetInfo">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="serviceDesignTimeInfo" type="tns:ServiceDesignTimeInfo">
+							</xs:element>
+							<xs:element minOccurs="0" name="serviceRunTimeInfo" type="tns:ServiceRunTimeInfo">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="ExtendedAssetInfo">
+				<xs:annotation>
+					<xs:documentation>
+						ExtendedAssetInfo contains additional classifier
+						name-values
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="tns:AttributeNameValue"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ServiceDesignTimeInfo">
+				<xs:sequence>
+					<xs:element name="interfaceClass" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Interface name – this is same as
+								porttype name and java interface name
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="implementationClass" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Implementation class name (This should
+								not be visible or returned to the
+								service consumer)
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="isSecured" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								A Boolean value indicating whether this
+								service requires authentication
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="serviceType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								It should be Production or Experimental
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="serviceLayer" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								It should be Business, Intermediate, or
+								Common
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="publishingStatus" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								It should be Public or Prviate
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="serviceDomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								What domain does this service belong to
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="pendingVersion" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Is there currently a newer version in
+								progress ? Is so, what is it.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ServiceRunTimeInfo">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="deployedPool" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Pool in which the service is deployed.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="productionURL" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+								What is the service production endpoint
+								URL?
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="stagingURL" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+								What is the service staging endpoint
+								URL?
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="serviceStatus" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								It should be Up, Down or Maintenance
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="serviceState" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								It should be Active or Passive. Only
+								active services will be available for
+								routing. When pushing data from staging
+								instance to production, all the services
+								will be in "passive" state by default.
+								An explicit action is then required to
+								change the state to "Active". This two
+								step rollout of the data will ensure,
+								any accidental pushing of the data
+								doesn’t cause production issues.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AssetLifeCycleInfo">
+				<xs:sequence>
+					<xs:element name="lifeCycleState" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								What is the current life cycle state for
+								the asset? It should be one of the
+								following states: Proposed, Submitted,
+								EntryReview, EntryApproval, EntryExit
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="domainOwner" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Domain owner (it should be a person or
+								DL) for this asset (these are preset
+								based on domains). This is different
+								from Service owner, which is a
+								pre-defined classifier.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="domainType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This indicates which business domain
+								this asset belongs to
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="architect" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This indicates the domain architect and
+								it should be always popolated
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="serviceArchitect" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is the service architect assigned
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="opsArchitect" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is the ops architect assigned. It
+								is optional in some cases.
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="productManager" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is the product manager. It is
+								optional in some cases.
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="projectManager" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is the project manager. It is
+								optional in some cases.
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="approver" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Who is the approver at this stage? It
+								can be changed when the state changes.
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="trackerId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								? What is the trace ticket for this
+								asset?
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="traceTicket" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								? This is the tracker project ID, if
+								there is a project.
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="nextAction" type="xs:string">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="BasicServiceInfo">
+				<xs:annotation>
+					<xs:documentation>
+						BasicServiceInfo structure contains some basic
+						typed information about the service
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="serviceName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The name of the service(String)
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="serviceDescription" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A brief description of the service
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="serviceLongDescription" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The Long description of the service
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="serviceNamespace" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+								Namespace of the service
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="serviceVersion" type="tns:Version">
+						<xs:annotation>
+							<xs:documentation>
+								The version of the service in
+								Major.Minor.Maintenance format
+							</xs:documentation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="assetKey" type="tns:AssetKey">
+						<xs:annotation>
+							<xs:documentation>
+								This is the optional as we do not have
+								asset key while creating the service or
+								asset
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="BasicAssetInfo">
+				<xs:annotation>
+					<xs:documentation>
+						BasicServiceInfo structure contains some basic
+						typed information about the service
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="assetType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The type of the asset, it should Service
+								or DataType
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The name of the asset
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetDescription" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A brief description of the service
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="assetLongDescription" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A long description of the service
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="tns:Version">
+						<xs:annotation>
+							<xs:documentation>
+								The version of the asset in
+								Major.Minor.Maintenance format
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="assetKey" type="tns:AssetKey">
+						<xs:annotation>
+							<xs:documentation>
+								This is the optional as we do not have
+								asset key while creating the service or
+								asset
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="GraphRelationship">
+				<xs:annotation>
+					<xs:documentation>
+						This is the graph representation of the
+						relationship
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="sourceAsset" type="tns:AssetKey"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="targetAsset" type="tns:TypedRelationNode"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="FlattenedRelationship">
+				<xs:annotation>
+					<xs:documentation>
+						This shows all the relationships shown in
+						flattened mode.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="sourceAsset" type="tns:AssetKey"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="relatedAsset" type="tns:Relation"/>
+					<xs:element minOccurs="0" name="depth" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								this indicates the depth of the
+								relationship in the data
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="partial" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								this indicates if all relationships for
+								the particular asset is included in the
+								data
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="FlattenedRelationshipForUpdate">
+				<xs:annotation>
+					<xs:documentation>
+						This shows all the relationships shown in
+						flattened mode.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="sourceAsset" type="tns:AssetKey"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="relatedAsset" type="tns:RelationForUpdate"/>
+					<xs:element minOccurs="0" name="depth" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								this indicates the depth of the
+								relationship in the data
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+
+			<xs:complexType name="TypedRelationNode">
+				<xs:sequence>
+					<xs:element name="assetRelationship" type="xs:string"/>
+					<xs:element name="target" type="tns:GraphRelationship"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="Relation">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="sourceAsset" type="tns:AssetKey"/>
+					<xs:element name="targetAsset" type="tns:AssetKey"/>
+					<xs:element name="assetRelationship" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The possible values are: DependsOn,
+								ProvidedBy, NextVersion,
+								PreviousVersion.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="RelationForUpdate">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="currentSourceAsset" type="tns:AssetKey"/>
+					<xs:element minOccurs="0" name="currentTargetAsset" type="tns:AssetKey"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="newRelation" type="tns:Relation">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteRelation" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AssetStatus">
+				<xs:sequence>
+					<xs:element name="state" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The possible values are same as the
+								asset life cycle states
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="reviewer" type="tns:Reviewer"/>
+					<xs:element name="lastActivity" type="xs:dateTime"/>
+					<xs:element name="lastUpdateTime" type="xs:dateTime"/>
+					<xs:element name="assetSubmissionTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="nextState" type="xs:token"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="Reviewer">
+				<xs:sequence>
+					<xs:element name="role" type="xs:string">
+						<xs:annotation/>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="username" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This should be the NT login of the
+								person
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="Subscription">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="subscriptionId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								This is the optional as we might not
+								have the subsriptionId while creating a
+								subscription
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="assetKey" type="tns:AssetKey">
+						</xs:element>
+						<xs:element name="assetQuery" type="tns:AssetQuery">
+						</xs:element>
+					</xs:choice>
+					<xs:element name="callbackEndpoint" type="xs:anyURI"/>
+					<xs:element name="subscriptionDuration" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>
+								What is the end time for this
+								subscription
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AssetChangeNotification">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="changedAsset" type="tns:AssetKey">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="deletedAsset" type="tns:AssetKey">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="addedAsset" type="tns:AssetKey">
+					</xs:element>
+					<xs:element name="notificationMsgId" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AssetQuery">
+				<xs:annotation>
+					<xs:documentation>
+						attributeCriteria decides on the search criteria 
+						to be applied on classifiers and the artifactCriteria mentions
+						the search criteria on the artifacts. the conjunction defines 
+						if both the artifact and the classifier criteria needs to be considered
+						for including an asset in the search result or either one of then 
+						satisfying is sufficient.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="attributeCriteria" type="tns:AttributeCriteria"/>
+					<xs:element name="artifactCriteria" type="tns:ArtifactCriteria"/>
+					<xs:element name="conjunction" type="tns:Conjunction"/>
+					<xs:element minOccurs="0" name="relationshipCriteria" type="tns:RelationshipCriteria"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ArtifactCriteria">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="artifact" type="tns:Artifact"/>
+					<xs:element name="conjunction" type="tns:Conjunction"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AttributeCriteria">
+				<xs:annotation>
+					<xs:documentation>
+						If two Attributes Exist with the same name 
+						a OR conjunction is introduced between them and the 
+						two values are together taken as an entity.
+						For all other attribute the conjunction is defined 
+						by the conjunction value.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="tns:Attribute"/>
+					<xs:element name="conjunction" type="tns:Conjunction"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AssetBaseInfo">
+				<xs:annotation>
+					<xs:documentation>
+						This returns the light weight asset info such as
+						AssetKey including asset name, asset version and
+						description.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="assetKey" type="tns:AssetKey">
+						<xs:annotation>
+							<xs:documentation>
+								This should be asset key or id which can
+								identify the asset with it
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetVersion" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetDescription" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Description of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AssetKey">
+				<xs:annotation>
+					<xs:documentation>
+						If only assetName is provided, the assetKey can
+						not identify the asset. It will need more info
+						such as assetType and version to identify the
+						asset.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="assetId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									This should be asset key or id which
+									can identify the asset with it
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="assetName" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									Name of the Asset.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="library" type="tns:Library"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="AssetDetail">
+				<xs:annotation>
+					<xs:documentation>
+						If only assetName is provided, we need more info
+						such as assetType and version to identify the
+						asset. AssetDetail contains these info
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="assetName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="assetType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Type of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>					
+					<xs:element name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Version of the Asset.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ApprovalInfo">
+				<xs:annotation>
+					<xs:documentation>
+						It consists of details of the asset, ApproverRole 
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>					
+					<xs:element name="approverRole" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Represents a required approver role required
+								for approving an asset request(for example, asset submission)
+								some of the roles include but not restricted to
+								"Service PCR Review Board" and "Architect"
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="comments" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Represents the comments provided by the approver at the time of approval.
+								Right now it is not supported in client APIs, have to log a ticket for this with SOA.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="library" type="tns:Library"/>
+					<xs:choice>
+						<xs:element name="assetId" type="xs:string"/>
+						<xs:element name="assetDetail" type="tns:AssetDetail"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>	
+			
+			<xs:complexType name="RejectionInfo">
+				<xs:annotation>
+					<xs:documentation>
+						It consists of details of the asset, RejectionRole
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>					
+					<xs:element name="rejectionRole" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Represents a required rejection role required
+								for rejecting an asset request(for example, asset submission)
+								some of the roles include but not restricted to
+								"Service PCR Review Board" and "Architect"
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="comments" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Represents the comments provided by the approver at the time of rejection.
+								Basically it states the reason why the asset was rejected.
+								Right now it is not supported in client APIs, have to log a ticket for this with SOA.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="library" type="tns:Library"/>
+					<xs:choice>
+						<xs:element name="assetId" type="xs:string"/>
+						<xs:element name="assetDetail" type="tns:AssetDetail"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="Library">
+				<xs:sequence>
+					<xs:element name="libraryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The library name is unique crossing the
+								system
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="libraryId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The libraryId is unique crossing the
+								system
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ArtifactInfo">
+				<xs:annotation>
+					<xs:documentation>
+						Artifact Info is something like WSDL, PRD,
+						configuration files ...
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="artifact" type="tns:Artifact"/>
+					<xs:element name="artifactDetail" type="xs:base64Binary"/> 
+					<xs:element minOccurs="0" name="contentType" type="xs:string"/>	
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="Artifact">
+				<xs:sequence>
+					<xs:element name="artifactName" type="xs:string"/>
+					<xs:element name="artifactIdentifier" type="xs:token"/>
+					<xs:element name="artifactCategory" type="tns:ArtifactCategory"/>
+					<xs:element name="artifactValueType" type="tns:ArtifactValueType"/>	
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="ArtifactValueType">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the type of value being uploaded for artifact
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="url">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="description">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="file">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="AttributeFilter">
+                <xs:annotation>
+                	<xs:documentation>
+                		The attributeFilterList is used to mention the
+                		various name value pairs based on which assets
+                		are to be filtered
+                	</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="attributeName" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="1" name="attributeValue" type="xs:string"/>
+
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AttributeValueCount">
+				<xs:sequence>
+					<xs:element name="attributeValue" type="xs:string"/>
+					<xs:element name="attributeValueCount" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="Attribute">
+				<xs:sequence>
+					<xs:element name="attributeName" type="xs:string"/>
+					<xs:element name="attributeValue" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AttributeNameValue">
+				<xs:annotation>
+                	<xs:documentation>
+                		The attributeValueLong and attributeValueBoolean
+                		functions are no longer used. 
+                		All date values are stored in the format 
+                		"yyyy-mm-dd"
+                	</xs:documentation>
+                </xs:annotation>
+				<xs:sequence>
+					<xs:element name="attributeName" type="xs:string"/>
+					<xs:choice>
+						<xs:element name="attributeValueLong" type="xs:long"/>
+						<xs:element name="attributeValueString" type="xs:string"/>
+						<xs:element name="attributeValueBoolean" type="xs:boolean"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="ArtifactCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the category of an artifact
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="external_documentation">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="internal_documentation">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="wsdl">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="currentWSDL">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="business_usecase">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="prd">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="erd">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="phd">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_definition">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_usecase">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_interface">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="service_configuration">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="authorization_policies">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="rate_limiting_policies">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="schema"/>
+					<xs:enumeration value="arch_spec">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					
+					
+					<xs:enumeration value="sla">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="message-definition">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="schema-definition">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="usage-guide">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="requirements">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="architecture">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="design-information">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="test-information">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="physical-implementation">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="implementation-source">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="documentation">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="packed-documentation">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="validation-report">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="assertion-script">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="assertion-module-script">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="Conjunction">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates the conjunction type
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AND">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="OR">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="Version">
+				<xs:annotation>
+					<xs:documentation>
+						The pattern should be MAJOR.MINOR.MAINTENANCE
+						NNN.NN.N.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-9][0-9][0-9].[0-9][0-9].[0-9]">
+					</xs:pattern>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning
+								that occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning
+						occurred as part of service call. Any run time
+						error will not be reported here, but will be
+						reported as part of soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain upon which the error
+								occurred. &lt;dl&gt; &lt;lh&gt;Domains
+								include:&lt;/lh&gt; &lt;dt&gt;
+								Marketplace &lt;/dt&gt; &lt;dd&gt; A
+								business or validation error occurred
+								for the Merchandising Service.
+								&lt;/dd&gt; &lt;dt&gt; SOA &lt;/dt&gt;
+								&lt;dd&gt; An exception occurred in the
+								Service Oriented Architecture (SOA)
+								framework. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the
+								request to fail (Error) or not
+								(Warning). &lt;br&gt;&lt;br&gt; If the
+								request fails and the source of the
+								problem is within the application (such
+								as a missing required element), please
+								change the application before you retry
+								the request. If the problem is due to
+								end-user input data, please alert the
+								end-user to the problem and provide the
+								means for them to correct the data. Once
+								the problem in the application or data
+								is resolved, you can attempt to re- send
+								the request to eBay.
+								&lt;br&gt;&lt;br&gt; If the source of
+								the problem is on eBay's side, you can
+								retry the request as-is a reasonable
+								number of times (eBay recommends twice).
+								If the error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+								&lt;br&gt;&lt;br&gt; When a Warning
+								occurs, the error is returned in
+								addition to the business data. In this
+								case, you do not need to retry the
+								request (as the original request was
+								successful). However, depending on the
+								cause or nature of the warning, you
+								might need to contact either the end
+								user or eBay to effect a long term
+								solution to the problem to prevent it
+								from reoccurring in the future.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors:
+								request errors, application errors, and
+								system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition
+								that resulted in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain upon which the
+								error occurred. &lt;dl&gt;
+								&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+								&lt;dt&gt; Merchandising &lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								Merchandising service. &lt;/dd&gt;
+								&lt;dt&gt; MarketplaceCommon &lt;/dt&gt;
+								&lt;dd&gt; The error is common to all
+								Marketplace services. &lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some warning and error messages return
+								one or more variables that contain
+								contextual information about the error.
+								This is often the field or value that
+								triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the
+									list of parameter types returned
+									within the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			
+		
+			<xs:complexType name="RemoveAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		
+			<xs:complexType name="RemoveAssetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse"/>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="ValidateAssetRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="assetInfo" type="tns:AssetInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		
+			<xs:complexType name="ValidateAssetResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					<xs:sequence>
+							<xs:element name="isValid" type="xs:boolean"/>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetAssetSubmissionPropertiesRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetKey" type="tns:AssetKey"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetAssetSubmissionPropertiesResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="customProperties" type="tns:CustomProperty"/>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="CustomProperty">
+				<xs:annotation>
+					<xs:documentation>
+						Represents the meta-data information of a custom property.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="type" type="tns:CustomPropertyType"/>
+					<xs:element name="displayName" type="xs:string"/>
+					<xs:element name="defaultValue" type="xs:string"/>
+					<xs:element name="mandatory" type="xs:boolean"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="possibleValues" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:simpleType name="CustomPropertyType">
+				<xs:annotation>
+					<xs:documentation>
+						Holds the possible types for custom properties
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="STRING">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BOOLEAN">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DECIMAL">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DATE">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:complexType name="GetAllProjectsAndGroupsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="library" type="tns:Library"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetAllProjectsAndGroupsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="groups" type="tns:Group"/>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="Group">
+				<xs:annotation>
+					<xs:documentation>
+						Represents an organizational group of Users within a library.
+						OrgGroups exist in a hierarchy and may have one parent OrgGroup 
+						and multiple child OrgGroups.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="description" type="xs:string"/>
+					<xs:element name="urn" type="xs:string"/>
+					<xs:element name="owner" type="xs:string"/>
+					<xs:element name="parent" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="children" type="tns:ChildGroup"/>
+					<xs:element name="isProject" type="xs:boolean"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="ogas" type="tns:OrgGroupAssociation"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="properties" type="tns:Property"/>
+					<xs:element name="libraryId" type="xs:string"/>
+					<xs:element name="isActive" type="xs:boolean"/>
+					<xs:element name="activeGroupOrProjectForUser" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+							Indicates whether a group/project is the active one for a user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="participants" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="projectManagers" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ChildGroup">
+				<xs:annotation>
+					<xs:documentation>
+						Represents an immediate child for a given Group.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="groupName" type="xs:string"/>
+					<xs:element name="isProject" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="OrgGroupAssociation">
+				<xs:annotation>
+					<xs:documentation>
+						Represents a role relationship between a User and an OrgGroup.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="role" type="xs:string"/>
+					<xs:element name="orgGroupURN" type="xs:string"/>
+					<xs:element name="userURN" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="Property">
+				<xs:annotation>
+					<xs:documentation>
+						Representation of any custom property.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="propertyName" type="xs:string"/>
+					<xs:element name="propertyValue" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="GetUsersProjectsAndGroupsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="library" type="tns:Library"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="username" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetUsersProjectsAndGroupsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="groups" type="tns:Group"/>
+					</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>		
+		
+			<xs:complexType name="AssetsGroupedByCategory">
+				<xs:sequence>
+					<xs:element name="classifierValue" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="assetsOfACategory" type="tns:AssetsOfACategory"/>
+				</xs:sequence>
+			</xs:complexType>
+		
+			<xs:complexType name="AssetsOfACategory">
+				<xs:sequence>
+					<xs:element name="basicAssetinfo" type="tns:BasicAssetInfo">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="extendedAssetInfo" type="tns:ExtendedAssetInfo"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+		
+			<xs:complexType name="RelationshipCriterion">
+				<xs:sequence>
+					<xs:element name="relationShipType" type="xs:string">
+					</xs:element>
+					<xs:element name="relatedAssetName" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		
+			<xs:complexType name="RelationshipCriteria">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="relationshipCriterion" type="tns:RelationshipCriterion">
+					</xs:element>
+					<xs:element name="conjunction" type="tns:Conjunction"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="getAssetStatusRequest">
+		<wsdl:part element="ns0:getAssetStatusRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetStatusResponse">
+		<wsdl:part element="ns0:getAssetStatusResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetInfoRequest">
+		<wsdl:part element="ns0:getAssetInfoRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetInfoResponse">
+		<wsdl:part element="ns0:getAssetInfoResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getBasicAssetInfoRequest">
+		<wsdl:part element="ns0:getBasicAssetInfoRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getBasicAssetInfoResponse">
+		<wsdl:part element="ns0:getBasicAssetInfoResponse" name="parameters"/>
+	</wsdl:message>
+	
+	<wsdl:message name="getAllAssetsGroupedByCategoryRequest">
+		<wsdl:part element="ns0:getAllAssetsGroupedByCategoryRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAllAssetsGroupedByCategoryResponse">
+		<wsdl:part element="ns0:getAllAssetsGroupedByCategoryResponse" name="parameters"/>
+	</wsdl:message>
+	
+	<wsdl:message name="searchAssetsDetailedRequest">
+		<wsdl:part element="ns0:searchAssetsDetailedRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="searchAssetsDetailedResponse">
+		<wsdl:part element="ns0:searchAssetsDetailedResponse" name="parameters"/>
+	</wsdl:message>
+	
+	<wsdl:message name="searchAssetsRequest">
+		<wsdl:part element="ns0:searchAssetsRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="searchAssetsResponse">
+		<wsdl:part element="ns0:searchAssetsResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getSubscriptionRequest">
+		<wsdl:part element="ns0:getSubscriptionRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getSubscriptionResponse">
+		<wsdl:part element="ns0:getSubscriptionResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetDependenciesRequest">
+		<wsdl:part element="ns0:getAssetDependenciesRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetDependenciesResponse">
+		<wsdl:part element="ns0:getAssetDependenciesResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetDependenciesByGraphRequest">
+		<wsdl:part element="ns0:getAssetDependenciesByGraphRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetDependenciesByGraphResponse">
+		<wsdl:part element="ns0:getAssetDependenciesByGraphResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getLibraryListRequest">
+		<wsdl:part element="ns0:getLibraryListRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getLibraryListResponse">
+		<wsdl:part element="ns0:getLibraryListResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetTypesRequest">
+		<wsdl:part element="ns0:getAssetTypesRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetTypesResponse">
+		<wsdl:part element="ns0:getAssetTypesResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetLifeCycleStatesRequest">
+		<wsdl:part element="ns0:getAssetLifeCycleStatesRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetLifeCycleStatesResponse">
+		<wsdl:part element="ns0:getAssetLifeCycleStatesResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetVersionsRequest">
+		<wsdl:part element="ns0:getAssetVersionsRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getAssetVersionsResponse">
+		<wsdl:part element="ns0:getAssetVersionsResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="rejectAssetRequest">
+		<wsdl:part element="ns0:rejectAssetRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="rejectAssetResponse">
+		<wsdl:part element="ns0:rejectAssetResponse" name="parameters"/>
+	</wsdl:message>
+	
+	<wsdl:message name="approveAssetRequest">
+		<wsdl:part element="ns0:approveAssetRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="approveAssetResponse">
+		<wsdl:part element="ns0:approveAssetResponse" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getServiceRequest">
+		<wsdl:part element="ns0:getServiceRequest" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="getServiceResponse">
+		<wsdl:part element="ns0:getServiceResponse" name="parameters"/>
+	</wsdl:message>
+
+
+	<wsdl:message name="createAssetRequest">
+		<wsdl:part element="ns0:createAssetRequest" name="parameters">
+		</wsdl:part>
+
+	</wsdl:message>
+	<wsdl:message name="createAssetResponse">
+		<wsdl:part element="ns0:createAssetResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetRequest">
+		<wsdl:part element="ns0:updateAssetRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="updateAssetResponse">
+		<wsdl:part element="ns0:updateAssetResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetArtifactsRequest">
+		<wsdl:part element="ns0:updateAssetArtifactsRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetArtifactsResponse">
+		<wsdl:part element="ns0:updateAssetArtifactsResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetAttributesRequest">
+		<wsdl:part element="ns0:updateAssetAttributesRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetAttributesResponse">
+		<wsdl:part element="ns0:updateAssetAttributesResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="lockAssetRequest">
+		<wsdl:part element="ns0:lockAssetRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="lockAssetResponse">
+		<wsdl:part element="ns0:lockAssetResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="unlockAssetRequest">
+		<wsdl:part element="ns0:unlockAssetRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="unlockAssetResponse">
+		<wsdl:part element="ns0:unlockAssetResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="subscribeRequest">
+		<wsdl:part element="ns0:subscribeRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="subscribeResponse">
+		<wsdl:part element="ns0:subscribeResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="unsubscribeRequest">
+		<wsdl:part element="ns0:unsubscribeRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="unsubscribeResponse">
+		<wsdl:part element="ns0:unsubscribeResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateSubscriptionRequest">
+		<wsdl:part element="ns0:updateSubscriptionRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateSubscriptionResponse">
+		<wsdl:part element="ns0:updateSubscriptionResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createServiceRequest">
+		<wsdl:part element="ns0:createServiceRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createServiceResponse">
+		<wsdl:part element="ns0:createServiceResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createCompleteAssetRequest">
+		<wsdl:part element="ns0:createCompleteAssetRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createCompleteAssetResponse">
+		<wsdl:part element="ns0:createCompleteAssetResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createAndSubmitAssetRequest">
+		<wsdl:part element="ns0:createAndSubmitAssetRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createAndSubmitAssetResponse">
+		<wsdl:part element="ns0:createAndSubmitAssetResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateCompleteAssetRequest">
+		<wsdl:part element="ns0:updateCompleteAssetRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateCompleteAssetResponse">
+		<wsdl:part element="ns0:updateCompleteAssetResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateServiceRequest">
+		<wsdl:part element="ns0:updateServiceRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateServiceResponse">
+		<wsdl:part element="ns0:updateServiceResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetDependenciesRequest">
+		<wsdl:part element="ns0:updateAssetDependenciesRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetDependenciesResponse">
+		<wsdl:part element="ns0:updateAssetDependenciesResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetDependenciesByGraphRequest">
+		<wsdl:part element="ns0:updateAssetDependenciesByGraphRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateAssetDependenciesByGraphResponse">
+		<wsdl:part element="ns0:updateAssetDependenciesByGraphResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="removeAssetRequest">
+		<wsdl:part element="ns0:removeAssetRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="removeAssetResponse">
+		<wsdl:part element="ns0:removeAssetResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="validateAssetRequest">
+		<wsdl:part element="ns0:validateAssetRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="validateAssetResponse">
+		<wsdl:part element="ns0:validateAssetResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllProjectsAndGroupsRequest">
+		<wsdl:part element="ns0:getAllProjectsAndGroupsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAllProjectsAndGroupsResponse">
+		<wsdl:part element="ns0:getAllProjectsAndGroupsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getUsersProjectsAndGroupsRequest">
+		<wsdl:part element="ns0:getUsersProjectsAndGroupsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getUsersProjectsAndGroupsResponse">
+		<wsdl:part element="ns0:getUsersProjectsAndGroupsResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAssetSubmissionPropertiesRequest">
+		<wsdl:part element="ns0:getAssetSubmissionPropertiesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAssetSubmissionPropertiesResponse">
+		<wsdl:part element="ns0:getAssetSubmissionPropertiesResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAssetTreeByAttributesRequest">
+		<wsdl:part element="ns0:getAssetTreeByAttributesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getAssetTreeByAttributesResponse">
+		<wsdl:part element="ns0:getAssetTreeByAttributesResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="submitForPublishingRequest">
+		<wsdl:part element="ns0:submitForPublishingRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="submitForPublishingResponse">
+		<wsdl:part element="ns0:submitForPublishingResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="RepositoryServicePort">
+		<wsdl:operation name="getAssetStatus">
+			<wsdl:input message="ns0:getAssetStatusRequest"/>
+			<wsdl:output message="ns0:getAssetStatusResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getAssetInfo">
+			<wsdl:input message="ns0:getAssetInfoRequest"/>
+			<wsdl:output message="ns0:getAssetInfoResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getBasicAssetInfo">
+			<wsdl:input message="ns0:getBasicAssetInfoRequest"/>
+			<wsdl:output message="ns0:getBasicAssetInfoResponse"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getAllAssetsGroupedByCategory">
+			<wsdl:input message="ns0:getAllAssetsGroupedByCategoryRequest">
+				
+				<wsdl:documentation>
+					An additional search operation for returning grouped or 
+					categorized search results.
+					The Search asset request presently only support 
+					AttributeCriteria of the AssetQuery Object used.
+					ArtifactCriteria and Conjunction are not supported due to 
+					limitations in the Logidex API. 
+					The default Conjunction is AND.
+					The categorizing classifier defines the classifier on which 
+					grouping or categorization is to be done.  
+				</wsdl:documentation>
+			</wsdl:input>
+			<wsdl:output message="ns0:getAllAssetsGroupedByCategoryResponse">
+				<wsdl:documentation>
+					The Response returns a List of CategorizedSearchResult.
+					One entry for each varied value of the classifier.
+					Each CategorizedSearch Result will have a a list of 
+					CategorizedSearchResultAsset, which will contain the basic 
+					asset info and a list of classifiers for the particular asset. 
+				</wsdl:documentation>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="searchAssetsDetailed">
+			<wsdl:input message="ns0:searchAssetsDetailedRequest">
+				
+				<wsdl:documentation>
+					An additional search operation for returning assets with 
+					different levels of detail based on user's need.
+					The Search asset request presently only support 
+					AttributeCriteria of the AssetQuery Object used.
+					ArtifactCriteria and Conjunction are not supported due to 
+					limitations in the Logidex API. 
+					The default Conjunction is AND.
+					The level of detail specifies the level of information to be returned.  
+				</wsdl:documentation>
+			</wsdl:input>
+			<wsdl:output message="ns0:searchAssetsDetailedResponse">
+				<wsdl:documentation>
+					The Response returns a List of AssetInfo.
+					The different parts of AssetInfo would be populated based on 
+					specified level of detail for the search. 
+				</wsdl:documentation>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="searchAssets">
+			<wsdl:input message="ns0:searchAssetsRequest">
+				<wsdl:documentation>
+					The Search asset request presently only support AttributeCriteria
+					of the AssetQuery Object used.
+					ArtifactCriteria and Conjunction are not supported due to limitations in
+					the Logidex API. 
+					The default Conjunction is AND
+				</wsdl:documentation>
+			</wsdl:input>
+			<wsdl:output message="ns0:searchAssetsResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getSubscription">
+			<wsdl:input message="ns0:getSubscriptionRequest"/>
+			<wsdl:output message="ns0:getSubscriptionResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getAssetDependencies">
+			<wsdl:input message="ns0:getAssetDependenciesRequest"/>
+			<wsdl:output message="ns0:getAssetDependenciesResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getAssetDependenciesByGraph">
+			<wsdl:input message="ns0:getAssetDependenciesByGraphRequest"/>
+			<wsdl:output message="ns0:getAssetDependenciesByGraphResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getLibraryList">
+			<wsdl:input message="ns0:getLibraryListRequest"/>
+			<wsdl:output message="ns0:getLibraryListResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getAssetTypes">
+			<wsdl:input message="ns0:getAssetTypesRequest"/>
+			<wsdl:output message="ns0:getAssetTypesResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getAssetLifeCycleStates">
+			<wsdl:input message="ns0:getAssetLifeCycleStatesRequest"/>
+			<wsdl:output message="ns0:getAssetLifeCycleStatesResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getAssetVersions">
+			<wsdl:input message="ns0:getAssetVersionsRequest"/>
+			<wsdl:output message="ns0:getAssetVersionsResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="rejectAsset">
+			<wsdl:input message="ns0:rejectAssetRequest"/>
+			<wsdl:output message="ns0:rejectAssetResponse"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="approveAsset">
+			<wsdl:input message="ns0:approveAssetRequest"/>
+			<wsdl:output message="ns0:approveAssetResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getService">
+			<wsdl:input message="ns0:getServiceRequest"/>
+			<wsdl:output message="ns0:getServiceResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="createAsset">
+			<wsdl:input message="ns0:createAssetRequest"/>
+			<wsdl:output message="ns0:createAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateAsset">
+			<wsdl:input message="ns0:updateAssetRequest"/>
+			<wsdl:output message="ns0:updateAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetArtifacts">
+			<wsdl:input message="ns0:updateAssetArtifactsRequest"/>
+			<wsdl:output message="ns0:updateAssetArtifactsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetAttributes">
+			<wsdl:input message="ns0:updateAssetAttributesRequest"/>
+			<wsdl:output message="ns0:updateAssetAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="lockAsset">
+			<wsdl:input message="ns0:lockAssetRequest"/>
+			<wsdl:output message="ns0:lockAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="unlockAsset">
+			<wsdl:input message="ns0:unlockAssetRequest"/>
+			<wsdl:output message="ns0:unlockAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="subscribe">
+			<wsdl:input message="ns0:subscribeRequest"/>
+			<wsdl:output message="ns0:subscribeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="unsubscribe">
+			<wsdl:input message="ns0:unsubscribeRequest"/>
+			<wsdl:output message="ns0:unsubscribeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateSubscription">
+			<wsdl:input message="ns0:updateSubscriptionRequest"/>
+			<wsdl:output message="ns0:updateSubscriptionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="createService">
+			<wsdl:input message="ns0:createServiceRequest">
+				<wsdl:documentation>
+					An operation for creating an asset in one go.
+					This is in enhancement to the existing operation of createAsset,
+					which only create the basic details of the the asset. 
+					
+					The new operation creates a new asset and also add the classifiers,
+					artifacts and relations hips for the asset.
+					
+					The capture template provided in the captureTemplate filed of the 
+					request is used for applying a capture template on the asset.
+					
+					After creation of the asset the group whose, name is provided
+					in the groupName field of the request is made the owner of the asset.
+				</wsdl:documentation>
+			</wsdl:input>
+			<wsdl:output message="ns0:createServiceResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="createCompleteAsset">
+			<wsdl:input message="ns0:createCompleteAssetRequest"/>
+			<wsdl:output message="ns0:createCompleteAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="createAndSubmitAsset">
+			<wsdl:input message="ns0:createAndSubmitAssetRequest"/>
+			<wsdl:output message="ns0:createAndSubmitAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateCompleteAsset">
+			<wsdl:input message="ns0:updateCompleteAssetRequest"/>
+			<wsdl:output message="ns0:updateCompleteAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateService">
+			<wsdl:input message="ns0:updateServiceRequest"/>
+			<wsdl:output message="ns0:updateServiceResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetDependencies">
+			<wsdl:input message="ns0:updateAssetDependenciesRequest"/>
+			<wsdl:output message="ns0:updateAssetDependenciesResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetDependenciesByGraph">
+			<wsdl:input message="ns0:updateAssetDependenciesByGraphRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:updateAssetDependenciesByGraphResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeAsset">
+			<wsdl:input message="ns0:removeAssetRequest"/>
+			<wsdl:output message="ns0:removeAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="validateAsset">
+			<wsdl:input message="ns0:validateAssetRequest"/>
+			<wsdl:output message="ns0:validateAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getAllProjectsAndGroups">
+			<wsdl:input message="ns0:getAllProjectsAndGroupsRequest"/>
+			<wsdl:output message="ns0:getAllProjectsAndGroupsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getUsersProjectsAndGroups">
+			<wsdl:input message="ns0:getUsersProjectsAndGroupsRequest"/>
+			<wsdl:output message="ns0:getUsersProjectsAndGroupsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetSubmissionProperties">
+			<wsdl:input message="ns0:getAssetSubmissionPropertiesRequest"/>
+			<wsdl:output message="ns0:getAssetSubmissionPropertiesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetTreeByAttributes">
+			<wsdl:documentation/>
+			<wsdl:input message="ns0:getAssetTreeByAttributesRequest">
+				<wsdl:documentation>
+					The getAssetTreeByAttributes will give the enough information so that the next level
+					nodes can be rendered. It will return all possible values for a particular attribute 
+					among all assets that belong to an asset type in a specific library. It also returns
+					the number of assets for each value.  
+				</wsdl:documentation>
+			</wsdl:input>
+			<wsdl:output message="ns0:getAssetTreeByAttributesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitForPublishing">
+			<wsdl:documentation/>
+			<wsdl:input message="ns0:submitForPublishingRequest">
+				<wsdl:documentation>
+					  
+				</wsdl:documentation>
+			</wsdl:input>
+			<wsdl:output message="ns0:submitForPublishingResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="RepositoryServiceSOAPBinding" type="ns0:RepositoryServicePort">
+
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getAssetStatus">
+			<soap12:operation soapAction="urn:getAssetStatus" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetInfo">
+			<soap12:operation soapAction="urn:getAssetInfo" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBasicAssetInfo">
+			<soap12:operation soapAction="urn:getBasicAssetInfo" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAllAssetsGroupedByCategory">
+			<soap12:operation soapAction="urn:searchAssetsCategorized" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchAssetsDetailed">
+			<soap12:operation soapAction="urn:searchAssetsDetailed" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchAssets">
+			<soap12:operation soapAction="urn:searchAssets" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscription">
+			<soap12:operation soapAction="urn:getSubscription" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateSubscription">
+			<soap12:operation soapAction="urn:updateSubscription" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetDependencies">
+			<soap12:operation soapAction="urn:getAssetDependencies" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetDependenciesByGraph">
+			<soap12:operation soapAction="urn:getAssetDependenciesByGraph" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getLibraryList">
+			<soap12:operation soapAction="urn:getLibraryList" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetTypes">
+			<soap12:operation soapAction="urn:getAssetTypes" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetLifeCycleStates">
+			<soap12:operation soapAction="urn:getAssetLifeCycleStates" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetVersions">
+			<soap12:operation soapAction="urn:getAssetVersions" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="rejectAsset">
+			<soap12:operation soapAction="urn:rejectAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="approveAsset">
+			<soap12:operation soapAction="urn:approveAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getService">
+			<soap12:operation soapAction="urn:getService" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createAsset">
+			<soap12:operation soapAction="urn:createAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAsset">
+			<soap12:operation soapAction="urn:updateAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetArtifacts">
+			<soap12:operation soapAction="urn:updateAssetArtifacts" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetAttributes">
+			<soap12:operation soapAction="urn:updateAssetAttributes" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="lockAsset">
+			<soap12:operation soapAction="urn:lockAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="unlockAsset">
+			<soap12:operation soapAction="urn:unlockAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="subscribe">
+			<soap12:operation soapAction="urn:subscribe" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="unsubscribe">
+			<soap12:operation soapAction="urn:unsubscribe" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createService">
+			<soap12:operation soapAction="urn:createService" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createCompleteAsset">
+			<soap12:operation soapAction="urn:createCompleteAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createAndSubmitAsset">
+			<soap12:operation soapAction="urn:createAndSubmitAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateCompleteAsset">
+			<soap12:operation soapAction="urn:updateCompleteAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateService">
+			<soap12:operation soapAction="urn:updateService" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetDependencies">
+			<soap12:operation soapAction="urn:updateAssetDependencies" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetDependenciesByGraph">
+			<soap12:operation soapAction="urn:updateAssetDependenciesByGraph" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeAsset">
+			<soap12:operation soapAction="urn:removeAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="validateAsset">
+			<soap12:operation soapAction="urn:validateAsset" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAllProjectsAndGroups">
+			<soap12:operation soapAction="urn:getAllProjectsAndGroups" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getUsersProjectsAndGroups">
+			<soap12:operation soapAction="urn:getUsersProjectsAndGroups" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetSubmissionProperties">
+			<soap12:operation soapAction="urn:getAssetSubmissionProperties" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetTreeByAttributes">
+			<soap12:operation soapAction="urn:getAssetTreeByAttributes" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>			
+		</wsdl:operation>
+		<wsdl:operation name="submitForPublishing">
+			<soap12:operation soapAction="urn:submitForPublishing" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>			
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="RepositoryServiceHttpBinding" type="ns0:RepositoryServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getAssetStatus">
+			<http:operation location="RepositoryService/getAssetStatus"/>
+			<wsdl:input>
+				<mime:content part="getAssetStatus" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetStatus" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetInfo">
+			<http:operation location="RepositoryService/getAssetInfo"/>
+			<wsdl:input>
+				<mime:content part="getAssetInfo" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetInfo" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBasicAssetInfo">
+			<http:operation location="RepositoryService/getBasicAssetInfo"/>
+			<wsdl:input>
+				<mime:content part="getBasicAssetInfo" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getBasicAssetInfo" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAllAssetsGroupedByCategory">
+			<http:operation location="RepositoryService/searchAssetsCategorized"/>
+			<wsdl:input>
+				<mime:content part="searchAssetsCategorized" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="searchAssetsCategorized" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchAssetsDetailed">
+			<http:operation location="RepositoryService/searchAssetsDetailed"/>
+			<wsdl:input>
+				<mime:content part="searchAssetsDetailed" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="searchAssetsDetailed" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchAssets">
+			<http:operation location="RepositoryService/searchAssets"/>
+			<wsdl:input>
+				<mime:content part="searchAssets" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="searchAssets" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscription">
+			<http:operation location="RepositoryService/getSubscription"/>
+			<wsdl:input>
+				<mime:content part="getSubscription" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getSubscription" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateSubscription">
+			<http:operation location="RepositoryService/updateSubscription"/>
+			<wsdl:input>
+				<mime:content part="updateSubscription" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateSubscription" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetDependencies">
+			<http:operation location="RepositoryService/getAssetDependencies"/>
+			<wsdl:input>
+				<mime:content part="getAssetDependencies" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetDependencies" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetDependenciesByGraph">
+			<http:operation location="RepositoryService/getAssetDependenciesByGraph"/>
+			<wsdl:input>
+				<mime:content part="getAssetDependenciesByGraph" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetDependenciesByGraph" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getLibraryList">
+			<http:operation location="RepositoryService/getLibraryList"/>
+			<wsdl:input>
+				<mime:content part="getLibraryList" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getLibraryList" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetTypes">
+			<http:operation location="RepositoryService/getAssetTypes"/>
+			<wsdl:input>
+				<mime:content part="getAssetTypes" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetTypes" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetLifeCycleStates">
+			<http:operation location="RepositoryService/getAssetLifeCycleStates"/>
+			<wsdl:input>
+				<mime:content part="getAssetLifeCycleStates" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetLifeCycleStates" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetVersions">
+			<http:operation location="RepositoryService/getAssetVersions"/>
+			<wsdl:input>
+				<mime:content part="getAssetVersions" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetVersions" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="rejectAsset">
+			<http:operation location="RepositoryService/rejectAsset"/>
+			<wsdl:input>
+				<mime:content part="rejectAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="rejectAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="approveAsset">
+			<http:operation location="RepositoryService/approveAsset"/>
+			<wsdl:input>
+				<mime:content part="approveAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="approveAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getService">
+			<http:operation location="RepositoryService/getService"/>
+			<wsdl:input>
+				<mime:content part="getService" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getService" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createAsset">
+			<http:operation location="RepositoryService/createAsset"/>
+			<wsdl:input>
+				<mime:content part="createAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAsset">
+			<http:operation location="RepositoryService/updateAsset"/>
+			<wsdl:input>
+				<mime:content part="updateAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetArtifacts">
+			<http:operation location="RepositoryService/updateAssetArtifacts"/>
+			<wsdl:input>
+				<mime:content part="updateAssetArtifacts" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateAssetArtifacts" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetAttributes">
+			<http:operation location="RepositoryService/updateAssetAttributes"/>
+			<wsdl:input>
+				<mime:content part="updateAssetAttributes" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateAssetAttributes" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="lockAsset">
+			<http:operation location="RepositoryService/lockAsset"/>
+			<wsdl:input>
+				<mime:content part="lockAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="lockAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="unlockAsset">
+			<http:operation location="RepositoryService/unlockAsset"/>
+			<wsdl:input>
+				<mime:content part="unlockAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="unlockAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="subscribe">
+			<http:operation location="RepositoryService/subscribe"/>
+			<wsdl:input>
+				<mime:content part="subscribe" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="subscribe" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="unsubscribe">
+			<http:operation location="RepositoryService/unsubscribe"/>
+			<wsdl:input>
+				<mime:content part="unsubscribe" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="unsubscribe" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createService">
+			<http:operation location="RepositoryService/createService"/>
+			<wsdl:input>
+				<mime:content part="createService" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createService" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createCompleteAsset">
+			<http:operation location="RepositoryService/createCompleteAsset"/>
+			<wsdl:input>
+				<mime:content part="createCompleteAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createCompleteAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createAndSubmitAsset">
+			<http:operation location="RepositoryService/createAndSubmitAsset"/>
+			<wsdl:input>
+				<mime:content part="createAndSubmitAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="createAndSubmitAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateCompleteAsset">
+			<http:operation location="RepositoryService/updateCompleteAsset"/>
+			<wsdl:input>
+				<mime:content part="updateCompleteAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateCompleteAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateService">
+			<http:operation location="RepositoryService/updateService"/>
+			<wsdl:input>
+				<mime:content part="updateService" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateService" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetDependencies">
+			<http:operation location="RepositoryService/updateAssetDependencies"/>
+			<wsdl:input>
+				<mime:content part="updateAssetDependencies" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateAssetDependencies" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateAssetDependenciesByGraph">
+			<http:operation location="RepositoryService/updateAssetDependenciesByGraph"/>
+			<wsdl:input>
+				<mime:content part="updateAssetDependenciesByGraph" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="updateAssetDependenciesByGraph" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeAsset">
+			<http:operation location="RepositoryService/removeAsset"/>
+			<wsdl:input>
+				<mime:content part="removeAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="removeAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="validateAsset">
+			<http:operation location="RepositoryService/validateAsset"/>
+			<wsdl:input>
+				<mime:content part="validateAsset" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="validateAsset" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAssetTreeByAttributes">
+			<http:operation location="RepositoryService/getAssetTreeByAttributes"/>
+			<wsdl:input>
+				<mime:content part="getAssetTreeByAttributes" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetTreeByAttributes" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="submitForPublishing">
+			<http:operation location="RepositoryService/submitForPublishing"/>
+			<wsdl:input>
+				<mime:content part="submitForPublishing" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="submitForPublishing" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getAssetSubmissionProperties">
+			<http:operation location="RepositoryService/getAssetSubmissionProperties"/>
+			<wsdl:input>
+				<mime:content part="getAssetSubmissionProperties" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAssetSubmissionProperties" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getAllProjectsAndGroups">
+			<http:operation location="RepositoryService/getAllProjectsAndGroups"/>
+			<wsdl:input>
+				<mime:content part="getAllProjectsAndGroups" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getAllProjectsAndGroups" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getUsersProjectsAndGroups">
+			<http:operation location="RepositoryService/getUsersProjectsAndGroups"/>
+			<wsdl:input>
+				<mime:content part="getUsersProjectsAndGroups" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="getUsersProjectsAndGroups" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+	</wsdl:binding>
+	<wsdl:service name="RepositoryService">
+		<wsdl:port binding="ns0:RepositoryServiceSOAPBinding" name="RepositoryServiceSOAP">
+			<soap12:address location="http://localhost:8080/RepositoryService/RepositoryService"/>
+		</wsdl:port>
+		<wsdl:port binding="ns0:RepositoryServiceHttpBinding" name="RepositoryServiceHttp">
+			<http:address location="http://localhost:8080/RepositoryService/RepositoryService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

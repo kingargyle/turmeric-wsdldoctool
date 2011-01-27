@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="RepositoryMetadataService" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+			<xs:element name="getAssetGroupsRequest" type="tns:GetAssetGroupsRequest">
+			</xs:element>
+
+			<xs:element name="getAssetGroupsResponse" type="tns:GetAssetGroupsResponse">
+			</xs:element>
+			<xs:element name="getAssetTypesRequest" type="tns:GetAssetTypesInfoRequest">
+			</xs:element>
+
+			<xs:element name="getAssetTypesResponse" type="tns:GetAssetTypesInfoResponse">
+			</xs:element>
+
+			<xs:element name="getAssetSchemasRequest" type="tns:GetAssetSchemasRequest">
+
+			</xs:element>
+			<xs:element name="getAssetSchemasResponse" type="tns:GetAssetSchemasResponse">
+			</xs:element>
+			<xs:complexType name="GetAssetGroupsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request type of getAssetGroups operation.
+						Request takes assetTypeName(string) as
+						parameter.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetTypeName" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetGroupsResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response type of getAssetGroups operation.
+						Response gives AssetGroup object which contains
+						assetType(AssetTypeIno), group name and group
+						description.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetGroup" type="tns:AssetGroup"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetTypesInfoRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request type for getAssetTypes operation.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+					<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetGroupName" type="xs:string"/>
+						</xs:sequence>
+						
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetTypesInfoResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response type for getAssetTypes operation. This
+						wraps AssetTypeInfo object.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetTypeInfo" type="tns:AssetTypeInfo">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="Library">
+				<xs:sequence>
+					<xs:element name="libraryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The library name is unique crossing the
+								system
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="libraryId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The libraryId is unique crossing the
+								system
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error that occurred
+								when eBay processed the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a wns0:ing) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Wns0:ing">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								wns0:ings. /* deprecated */
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								wns0:ings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Wns0:ing
+						occured as part of service call. Any run time
+						error will not be reported here, but will be
+						reported aspart of soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain upon which the error
+								occurred. &lt;dl&gt; &lt;lh&gt;Domains
+								include:&lt;/lh&gt; &lt;dt&gt;
+								Marketplace &lt;/dt&gt; &lt;dd&gt; A
+								business or validation error occurred
+								for the Merchandising Service.
+								&lt;/dd&gt; &lt;dt&gt; SOA &lt;/dt&gt;
+								&lt;dd&gt; An exception occurred in the
+								Service Oriented Architecture (SOA)
+								framework. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the
+								request to fail (Error) or not
+								(Wns0:ing). &lt;br&gt;&lt;br&gt; If the
+								request fails and the source of the
+								problem is within the application (such
+								as a missing required element), please
+								change the application before you retry
+								the request. If the problem is due to
+								end-user input data, please alert the
+								end-user to the problem and provide the
+								means for them to correct the data. Once
+								the problem in the application or data
+								is resolved, you can attempt to re- send
+								the request to eBay.
+								&lt;br&gt;&lt;br&gt; If the source of
+								the problem is on eBay's side, you can
+								retry the request as-is a reasonable
+								number of times (eBay recommends twice).
+								If the error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+								&lt;br&gt;&lt;br&gt; When a wns0:ing
+								occurs, the error is returned in
+								addition to the business data. In this
+								case, you do not need to retry the
+								request (as the original request was
+								successful). However, depending on the
+								cause or nature of the wns0:ing, you
+								might need to contact either the end
+								user or eBay to effect a long term
+								solution to the problem to prevent it
+								from reoccurring in the future.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors:
+								request errors, application errors, and
+								system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition
+								that resulted in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain upon which the
+								error occurred. &lt;dl&gt;
+								&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+								&lt;dt&gt; Merchandising &lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								Merchandising service. &lt;/dd&gt;
+								&lt;dt&gt; MarketplaceCommon &lt;/dt&gt;
+								&lt;dd&gt; The error is common to all
+								Marketplace services. &lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some wns0:ing and error messages return
+								one or more variables that contain
+								contextual information about the error.
+								This is often the field or value that
+								triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the
+									list of parameter types returned
+									within the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a wns0:ing) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Wns0:ing">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the wns0:ing.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="AssetGroup">
+				<xs:annotation>
+					<xs:documentation>
+						AssetGroup gives list of asset types which are
+						for eg: Service, Data Type and etc.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="assetTypeInfo" type="tns:AssetTypeInfo">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="groupName" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="groupDescription" type="xs:string">
+					</xs:element>
+					<xs:element name="visible" type="xs:boolean"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AssetTypeInfo">
+				<xs:annotation>
+					<xs:documentation>
+						Asset type information contains
+						type(Service/DataType), group name and library.
+						This is used in conjuction with AssetGroup
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="assetTypeName" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="assetGroupName" type="xs:string">
+					</xs:element>
+					<xs:element name="library" type="tns:Library"/>
+					<xs:element name="visible" type="xs:boolean"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ArtifactMetadata">
+				<xs:annotation>
+					<xs:documentation>
+						Artifact information such as type, name,
+						description and help text. ArtifactMetadata is
+						used in AssetSchema type.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="artifactCategory" type="xs:string">
+					</xs:element>
+					<xs:element name="artifactName" type="xs:string"/>
+					<xs:element name="artifactDisplayName" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="artifactHelpText" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="artifactType" type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AttributeMetadata">
+				<xs:annotation>
+					<xs:documentation>
+						Attribute details such as type, name, default
+						value, required(true/false) and value. This type
+						is used in AssetSchema.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="attributeName" type="xs:string"/>
+					<xs:element name="attributeDisplayName" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="attributeHelpText" type="xs:string">
+					</xs:element>
+					<xs:element name="attributeType" type="tns:AttributeType">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="defaultValue" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="required" type="xs:boolean">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="possibleValues" type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AttributeType">
+				<xs:annotation/>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="string"/>
+					<xs:enumeration value="boolean"/>
+					<xs:enumeration value="decimal"/>
+					<xs:enumeration value="date"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="RelationshipMetadata">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="relationshipName" type="xs:string">
+					</xs:element>
+					<xs:element name="relationshipDisplayName" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="relationshipHelpText" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="reverseRetaionshipName" type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetSchemasResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response type for getAssetSchemas operation.
+						Wraps Template.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="assetSchema" type="tns:AssetSchema">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="GetAssetSchemasRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Request type for getAssetSchemas operation. This
+						takes required parameter of assetTypeInfo and
+						optional parameter of attribute name/value
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="assetTypeName" type="xs:string">
+							</xs:element>
+                            <xs:element name="libraryName" type="xs:string">
+							</xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="attributeNameValue" type="tns:Attribute">
+							</xs:element>
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+						<xs:complexType name="AssetSchema">
+				<xs:annotation>
+					<xs:documentation>
+						Describes template in SOA Registry. Template
+						type associated with AttributeMetadata,
+						ArtifactMetadata and RelationshipMetadata
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="assetSchemaName" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeMetadata" type="tns:AttributeMetadata">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="artifactMetadata" type="tns:ArtifactMetadata">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="relationshipMetadata" type="tns:RelationshipMetadata">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="Attribute">
+				<xs:sequence>
+					<xs:element name="attributeName" type="xs:string"/>					
+					<xs:element name="attributeValue" type="xs:string"/>						
+				</xs:sequence>
+			</xs:complexType>
+
+		</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getAssetGroupsResponse">
+    <wsdl:part element="tns:getAssetGroupsResponse" name="getAssetGroupsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAssetSchemasResponse">
+    <wsdl:part element="tns:getAssetSchemasResponse" name="getAssetSchemasResponse">
+    </wsdl:part>
+  </wsdl:message>
+
+
+
+
+  <wsdl:message name="getAssetSchemasRequest">
+    <wsdl:part element="tns:getAssetSchemasRequest" name="getAssetSchemasRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAssetGroupsRequest">
+    <wsdl:part element="tns:getAssetGroupsRequest" name="getAssetGroupsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAssetTypesRequest">
+    <wsdl:part element="tns:getAssetTypesRequest" name="getAssetTypesRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAssetTypesResponse">
+    <wsdl:part element="tns:getAssetTypesResponse" name="getAssetTypesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RepositoryMetadataServicePort">
+    <wsdl:operation name="getAssetGroups">
+      <wsdl:input message="tns:getAssetGroupsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getAssetGroupsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAssetTypes">
+      <wsdl:input message="tns:getAssetTypesRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getAssetTypesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAssetSchemas">
+      <wsdl:input message="tns:getAssetSchemasRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getAssetSchemasResponse">
+    </wsdl:output>
+    </wsdl:operation>
+
+
+  </wsdl:portType>
+  <wsdl:binding name="RepositoryMetadataServiceSOAPBinding" type="tns:RepositoryMetadataServicePort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAssetGroups">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/services/getAssetGroups"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAssetTypes">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/services/getAssetTypes"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAssetSchemas">
+      <soap:operation soapAction="http://www.ebay.com/marketplace/services/getAssetSchemas"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  
+  </wsdl:binding>
+  <wsdl:binding name="RepositoryMetadataServiceHttpBinding" type="tns:RepositoryMetadataServicePort">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="getAssetGroups">
+      <http:operation location="/getAssetGroups"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getAssetGroupsResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAssetTypes">
+      <http:operation location="/getAssetTypes"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getAssetTypesResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAssetSchemas">
+      <http:operation location="/getAssetSchemas"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getAssetSchemasResponse" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RepositoryMetadataService">
+    <wsdl:port binding="tns:RepositoryMetadataServiceSOAPBinding" name="RepositoryMetadataServiceSOAP">
+      <soap:address location="http://localhost:8080/RepositoryMetadataService/RepositoryMetadataService"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:RepositoryMetadataServiceHttpBinding" name="RepositoryMetadataServiceHttp">
+      <http:address location="http://localhost:8080/RepositoryMetadataService/RepositoryMetadataService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

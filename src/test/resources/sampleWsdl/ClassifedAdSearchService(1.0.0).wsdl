@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/classifiedad/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="ClassifiedAdSearchService" targetNamespace="http://www.ebay.com/classifiedad/v1/services">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/classifiedad/v1/services">
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation/>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="System"/>
+					<xs:enumeration value="Application"/>
+					<xs:enumeration value="Request"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long"/>
+					<xs:element name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string"/>
+					<xs:element name="severity" type="tns:ErrorSeverity"/>
+					<xs:element name="category" type="tns:ErrorCategory"/>
+					<xs:element name="message" type="xs:string"/>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="tns:ErrorParameter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<!-- 
+					<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0"
+					processContents="lax" />
+					</xs:sequence>
+				-->
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="tns:ErrorData"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string" use="optional"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Documentation goes here.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Error"/>
+					<xs:enumeration value="Warning"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="getAdCountRequest" type="tns:GetAdCountRequest"/>
+			<xs:complexType name="GetAdCountRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAdSearchRequest">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getAdCountResponse" type="tns:GetAdCountResponse"/>
+			<xs:complexType name="GetAdCountResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="count" type="xs:long"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getAdByIdRequest" type="tns:GetAdByIdRequest">
+
+			</xs:element>
+			<xs:element name="getAdByIdResponse" type="tns:GetAdByIdResponse">
+
+			</xs:element>
+			<xs:complexType name="GetAdByIdRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element name="adId" type="xs:long"/>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetAdByIdResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="ad" type="tns:ClassifiedAd"/>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="findAdsRequest" type="tns:FindAdsRequest">
+
+			</xs:element>
+			<xs:element name="findAdsResponse" type="tns:FindAdsResponse">
+
+			</xs:element>
+			<xs:complexType name="FindAdsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAdSearchRequest">
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+			<xs:complexType name="FindAdsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="ads" type="tns:ClassifiedAd">
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="histogram" type="tns:AdHistogramResult">
+							</xs:element>
+							<xs:element name="paginationOutput" type="tns:PaginationOutput">
+							</xs:element>
+						</xs:sequence>
+
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+			<xs:complexType name="PaginationOutput">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="totalPages" type="xs:int">
+					</xs:element>
+					<xs:element minOccurs="0" name="totalEntries" type="xs:int">
+					</xs:element>
+					<xs:element minOccurs="0" name="pageNumber" type="xs:int">
+					</xs:element>
+					<xs:element minOccurs="0" name="entriesPerPage" type="xs:int">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+
+
+
+
+
+
+			<xs:element name="findAdsByLocationRequest" type="tns:FindAdsByLocationRequest">
+			</xs:element>
+			<xs:element name="findAdsByLocationResponse" type="tns:FindAdsResponse">
+			</xs:element>
+			<xs:element name="findAdsByLocationsRequest" type="tns:FindAdsByLocationsRequest">
+			</xs:element>
+			<xs:element name="findAdsByLocationsResponse" type="tns:FindAdsResponse">
+			</xs:element>
+			<xs:element name="findAdsByCurrentLocationRequest" type="tns:FindAdsByCurrentLocationRequest">
+			</xs:element>
+			<xs:element name="findAdsByCurrentLocationResponse" type="tns:FindAdsResponse">
+
+			</xs:element>
+
+			<xs:complexType name="FindAdsByLocationRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAdSearchRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="locationId" type="xs:long">
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="selectSurrounding" type="xs:boolean">
+							</xs:element>
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+
+
+			<xs:complexType name="FindAdsByLocationsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAdSearchRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="locationId" type="xs:long">
+							</xs:element>
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="FindAdsByCurrentLocationRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseAdSearchRequest">
+						<xs:sequence>
+							<xs:choice>
+								<xs:element maxOccurs="1" minOccurs="0" name="postalCode" type="xs:string">
+								</xs:element>
+
+								<xs:element maxOccurs="1" minOccurs="0" name="geo" type="tns:GeoCoordinates">
+								</xs:element>
+							</xs:choice>
+							<xs:element maxOccurs="1" minOccurs="1" name="searchLevel">
+								<xs:simpleType>
+									<xs:restriction base="xs:token">
+										<xs:enumeration value="COUNTRY">
+										</xs:enumeration>
+										<xs:enumeration value="REGION">
+										</xs:enumeration>
+										<xs:enumeration value="DEPARTMENT">
+										</xs:enumeration>
+
+										<xs:enumeration value="POSTAL">
+										</xs:enumeration>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+
+
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PaginationInput">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="pageNumber" type="xs:int">
+					</xs:element>
+					<xs:element minOccurs="0" name="entriesPerPage" type="xs:int">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="BaseAdSearchRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+
+							<xs:element maxOccurs="1" minOccurs="0" name="keywords" type="xs:string">
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="categoryId" type="xs:long">
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="eBayCategoryId" type="xs:long">
+							</xs:element>
+
+							<xs:element maxOccurs="1" minOccurs="0" name="maxPrice" type="tns:Amount">
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="minPrice" type="tns:Amount">
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="pictureAvailable" type="xs:boolean">
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="sortOptions" type="tns:SortCriteria"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="histogramOptions" type="tns:AdHistogramRequest">
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="paginationInput" type="tns:PaginationInput">
+							</xs:element>
+
+
+							<xs:element maxOccurs="1" minOccurs="0" name="adSource" type="tns:AdSource">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AdHistogramRequest">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="histogramType" type="tns:AdHistogramType">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AdHistogramDetails">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="value" type="xs:long">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="name" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:long">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AdHistogramResult">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="histogramDetails" type="tns:AdHistogramDetails">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="histogramType" type="tns:AdHistogramType">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AdHistogramType">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="CategoryL1">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="CategoryL2">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Region">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Department">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ClassifiedAd">
+				<xs:annotation>
+					<xs:documentation>Classified Ad</xs:documentation>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="status" type="xs:token">
+					</xs:element>
+
+					<xs:element maxOccurs="1" minOccurs="0" name="seller" type="tns:ClassifiedAdUser">
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="pictures" type="xs:anyURI">
+					</xs:element>
+					<xs:element name="price" type="tns:Amount"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="category" type="tns:ClassifiedAdCategory">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="location" type="tns:ClassifiedAdLocation">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="endTime" type="xs:dateTime">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="startTime" type="xs:dateTime">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="description" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="title" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="adURL" type="xs:anyURI">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="adId" type="xs:long">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="attributeList" type="tns:ClassifiedAdAttribute">
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ClassifiedAdUser">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+
+					<xs:element maxOccurs="1" minOccurs="0" name="name" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="phoneNumber" type="xs:string">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+
+					<xs:element maxOccurs="1" minOccurs="0" name="userDesignation" type="tns:UserDesignationType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Amount">
+				<xs:annotation>
+					<xs:appinfo>
+						<typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="currencyId" type="xs:string" use="required">
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:simpleType name="AdCategoryType">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="L1">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="L2">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="L3">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="L4">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="L5">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ClassifiedAdCategory">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="id" type="xs:long">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="name" type="xs:string">
+					</xs:element>
+
+					<xs:element maxOccurs="1" minOccurs="1" name="type" type="tns:AdCategoryType">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="parentId" type="xs:long">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AdLocationType">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="COUNTRY">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="REGION">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="DEPARTMENT">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="POSTAL">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ClassifiedAdLocation">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="id" type="xs:long">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="name" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="type" type="tns:AdLocationType">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="parentId" type="xs:long">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="GeoCoordinates">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="longitude" type="xs:double"/>
+					<xs:element maxOccurs="1" minOccurs="1" name="latitude" type="xs:double"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="AdSource">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="TROY">
+						<xs:annotation>
+							<xs:documentation>
+								Troy Inventory Fetch
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="MOBILE">
+						<xs:annotation>
+							<xs:documentation>
+								Mobile Inventory Fetch
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ClassifiedAdAttribute">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="value" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="name" type="xs:string">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="attributeValueId" type="xs:long">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="attributeId" type="xs:long">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SortCriteria">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="field" type="xs:token">
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="order" type="xs:token">
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax">
+					</xs:any>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="UserDesignationType">
+				<xs:annotation>
+					<xs:documentation/>
+					<xs:appinfo>
+						<typeLibrarySource library="ClassifiedAdDomainTypeLibrary" namespace="http://www.ebay.com/classifiedad/v1/services">
+						</typeLibrarySource>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="PRIVATE">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="BUSINESS">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="UNKNOWN">
+						<xs:annotation>
+							<xs:documentation>
+								Description
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getAdCountRequest">
+		<wsdl:part element="tns:getAdCountRequest" name="params">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getAdByIdResponse">
+		<wsdl:part element="tns:getAdByIdResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="findAdsByLocationRequest">
+		<wsdl:part element="tns:findAdsByLocationRequest" name="findAdsByLocationRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="findAdsByLocationResponse">
+		<wsdl:part element="tns:findAdsByLocationResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getAdCountResponse">
+		<wsdl:part element="tns:getAdCountResponse" name="params">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getAdByIdRequest">
+		<wsdl:part element="tns:getAdByIdRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="findAdsRequest">
+		<wsdl:part element="tns:findAdsRequest" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="findAdsByLocationsRequest">
+		<wsdl:part element="tns:findAdsByLocationsRequest" name="findAdsByLocationsRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="findAdsByLocationsResponse">
+		<wsdl:part element="tns:findAdsByLocationsResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="findAdsResponse">
+		<wsdl:part element="tns:findAdsResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="findAdsByCurrentLocationRequest">
+		<wsdl:part element="tns:findAdsByCurrentLocationRequest" name="findAdsByCurrentLocationRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="findAdsByCurrentLocationResponse">
+		<wsdl:part element="tns:findAdsByCurrentLocationResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="ClassifiedAdSearchServicePort">
+		<wsdl:operation name="getAdCount">
+			<wsdl:input message="tns:getAdCountRequest"/>
+			<wsdl:output message="tns:getAdCountResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getAdById">
+			<wsdl:input message="tns:getAdByIdRequest"/>
+			<wsdl:output message="tns:getAdByIdResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findAds">
+			<wsdl:input message="tns:findAdsRequest"/>
+			<wsdl:output message="tns:findAdsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByLocation">
+			<wsdl:input message="tns:findAdsByLocationRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:findAdsByLocationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByLocations">
+			<wsdl:input message="tns:findAdsByLocationsRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:findAdsByLocationsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByCurrentLocation">
+			<wsdl:input message="tns:findAdsByCurrentLocationRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:findAdsByCurrentLocationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ClassifiedAdSearchServiceSOAPBinding" type="tns:ClassifiedAdSearchServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getAdCount">
+			<soap12:operation soapAction="urn:getAdCount" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAdById">
+			<soap12:operation soapAction="urn:getAdById" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAds">
+			<soap12:operation soapAction="urn:findAds" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByLocation">
+			<soap12:operation soapAction="urn:findAdsByLocation" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByLocations">
+			<soap12:operation soapAction="urn:findAdsByLocations" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByCurrentLocation">
+			<soap12:operation soapAction="urn:findAdsByCurrentLocation" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ClassifiedAdSearchServiceHttpBinding" type="tns:ClassifiedAdSearchServicePort">
+		<http:binding verb="POST"/>
+		<wsdl:operation name="getAdCount">
+			<http:operation location="/getAdCount"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAdById">
+			<http:operation location="/getAdById"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAds">
+			<http:operation location="/findAds"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByLocation">
+			<http:operation location="/findAdsByLocation"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByLocations">
+			<http:operation location="/findAdsByLocations"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findAdsByCurrentLocation">
+			<http:operation location="/findAdsByCurrentLocation"/>
+			<wsdl:input>
+				<mime:content part="params" type="application/x-www-form-urlencoded"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="params" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ClassifiedAdSearchService">
+		<wsdl:port binding="tns:ClassifiedAdSearchServiceHttpBinding" name="ClassifiedAdSearchServiceHttp">
+			<http:address location="http://svcs.ebay.com/services/classifiedad/ClassifiedAdSearchService/v1"/>
+
+		</wsdl:port>
+		<wsdl:port binding="tns:ClassifiedAdSearchServiceSOAPBinding" name="ClassifiedAdSearchServiceSOAP">
+			<soap12:address location="http://svcs.ebay.com/services/classifiedad/ClassifiedAdSearchService/v1"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

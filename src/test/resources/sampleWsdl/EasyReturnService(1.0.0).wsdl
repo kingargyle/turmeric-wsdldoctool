@@ -1,0 +1,1428 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+      <xs:element name="getReturnCaseInfoRequest" nillable="true" type="tns:GetReturnCaseInfoRequest"/>
+      <xs:element name="getReturnCaseInfoResponse" nillable="true" type="tns:GetReturnCaseInfoResponse"/>
+      <xs:element name="findReturnCaseInfoRequest" nillable="true" type="tns:FindReturnCaseInfoRequest"/>
+      <xs:element name="findReturnCaseInfoResponse" nillable="true" type="tns:FindReturnCaseInfoResponse"/>
+
+      <xs:element name="setReturnCaseInfoRequest" nillable="true" type="tns:SetReturnCaseInfoRequest"/>
+      <xs:element name="setReturnCaseInfoResponse" nillable="true" type="tns:SetReturnCaseInfoResponse"/>
+
+
+      <xs:complexType abstract="true" name="BaseServiceRequest">
+        <xs:annotation>
+          <xs:documentation>
+            This is the base class for request container for all service operations.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="GetReturnCaseInfoRequest">
+        <xs:annotation>
+          <xs:documentation>
+            Retrieves detailed data for seller's easy return cases, it returns basic case info, case messages and buyer bank info.
+          </xs:documentation>
+          <xs:appinfo>
+            <Summary>
+              It only return max 1 record based on a case id.
+            </Summary>
+            <TempInfo>samples</TempInfo>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+          <xs:extension base="tns:BaseServiceRequest">
+            <xs:sequence>
+              <xs:element maxOccurs="1" minOccurs="0" name="caseId" type="xs:long">
+                <xs:annotation>
+                  <xs:documentation>
+                    The ID of the case.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>GetReturnCaseInfo</CallName>
+                      <RequiredInput>No</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType name="FindReturnCaseInfoRequest">
+        <xs:annotation>
+          <xs:documentation>
+            Find return cases by parameters, it can return multiple basic case info, if you want case messages and buyer bank info, please call getReturnCaseInfo.
+          </xs:documentation>
+          <xs:appinfo>
+            <Summary>
+              It support query by seller id, buyer name, item id, and time frame etc.
+            </Summary>
+            <TempInfo>samples</TempInfo>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+          <xs:extension base="tns:BaseServiceRequest">
+            <xs:sequence>
+              <xs:element maxOccurs="1" minOccurs="0" name="buyerUserName" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>
+                    The Name of the buyer.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>findReturnCaseInfo</CallName>
+                      <RequiredInput>No</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element maxOccurs="1" minOccurs="0" name="itemId" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>
+                    The ID of the item.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>findReturnCaseInfo</CallName>
+                      <RequiredInput>No</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element maxOccurs="1" minOccurs="1" name="startDate" type="xs:dateTime">
+                <xs:annotation>
+                  <xs:documentation>
+                    The fromdate based on case creation date.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>findReturnCaseInfo</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element maxOccurs="1" minOccurs="1" name="endDate" type="xs:dateTime">
+                <xs:annotation>
+                  <xs:documentation>
+                    The todate based on case creation date.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>findReturnCaseInfo</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="maxResults" type="xs:int">
+                <xs:annotation>
+                  <xs:documentation>
+                    The max result can be returned.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <CallInfo>
+                      <CallName>findReturnCaseInfo</CallName>
+                      <RequiredInput>No</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      
+	 <xs:complexType name="SetReturnCaseInfoRequest">
+        <xs:annotation>
+          <xs:documentation>
+			This is a request for setting seller's easy return cases, which allows actions on multiple cases per call.        
+          </xs:documentation>
+          <xs:appinfo>
+            <Summary>
+			This is a request for setting seller's easy return cases, which allows actions on multiple cases per call.        	 			
+            </Summary>
+            <TempInfo>samples</TempInfo>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+          <xs:extension base="tns:BaseServiceRequest">
+            <xs:sequence>
+               
+              <xs:element maxOccurs="unbounded" minOccurs="1" name="caseAction" type="tns:CaseAction">
+                <xs:annotation>
+                  <xs:documentation>
+                    Allow sellers set multiple cases.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoRequest</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+                
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+	 <xs:simpleType name="ActionType">
+        <xs:annotation>
+          <xs:documentation>
+            Action type enum.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ACCEPT">
+            <xs:annotation>
+              <xs:documentation>
+                ACCEPT.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="REFUND_INITIATED">
+            <xs:annotation>
+              <xs:documentation>
+                REFUND_INITIATED.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SEND_MESSAGE">
+            <xs:annotation>
+              <xs:documentation>
+                SEND_MESSAGE.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      
+      <xs:complexType abstract="true" name="BaseServiceResponse">
+        <xs:annotation>
+          <xs:documentation>
+            Base response container for all service operations. Contains error information
+            associated with the request.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="ack" type="tns:AckValue">
+            <xs:annotation>
+              <xs:documentation>
+
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+            <xs:annotation>
+              <xs:documentation>
+                Information for an error or warning that occurred when eBay processed the
+                request.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="version" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+
+          </xs:element>
+          <xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:simpleType name="AckValue">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates whether the error is a severe error (causing the request to fail)
+            or an informational error (a warning) that should be communicated to the
+            user.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Success">
+            <xs:annotation>
+              <xs:documentation>
+                The request was processed successfully, but something occurred that may
+                affect your application or the user.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Failure">
+            <xs:annotation>
+              <xs:documentation>
+                The request that triggered the error was not processed successfully.
+                When a serious application-level error occurs, the error is returned
+                instead of the business data.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Warning">
+            <xs:annotation>
+              <xs:documentation>
+                The request that triggered the error was processed successfully but with some warnings.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PartialFailure">
+            <xs:annotation>
+              <xs:documentation>
+                The request that triggered the error was processed successfully but with some warnings.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <xs:complexType name="GetReturnCaseInfoResponse">
+        <xs:annotation>
+          <xs:documentation>
+            This is a response for operations that return seller's easy return cases. Results consist
+            of an ReturnCaseInfo array containing one or more item containers.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+          <xs:extension base="tns:BaseServiceResponse">
+            <xs:sequence>
+              <xs:element maxOccurs="1" minOccurs="0" name="returnCaseInfo" type="tns:ReturnCaseInfo">
+                <xs:annotation>
+                  <xs:documentation>
+                    A list of easy return cases matching the given criteria. It is ordered based on last modified date desc.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <CallInfo>
+                      <CallName>getReturnCaseInfo</CallName>
+                      <Returned>Always</Returned>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType name="FindReturnCaseInfoResponse">
+        <xs:annotation>
+          <xs:documentation>
+            This is a response for operations that return seller's easy return cases. Results consist
+            of an ReturnCaseInfo array containing one or more item containers.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+          <xs:extension base="tns:BaseServiceResponse">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="returnCaseInfo" type="tns:ReturnCaseInfo">
+                <xs:annotation>
+                  <xs:documentation>
+                    A list of easy return cases matching the given criteria. It is ordered based on last modified date desc.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <CallInfo>
+                      <CallName>findReturnCaseInfo</CallName>
+                      <Returned>Always</Returned>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>      
+      
+      <xs:complexType name="SetReturnCaseInfoResponse">
+        <xs:annotation>
+          <xs:documentation>
+            This is a response for operations that set seller's easy return cases. Results consist
+            of an ActionStatus array containing one or more action status.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+          <xs:extension base="tns:BaseServiceResponse">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="1" name="actionStatus" type="tns:ActionStatus">
+                <xs:annotation>
+                  <xs:documentation>
+                    Return 0...n action status appropriate with the cases in the request.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoResponse</CallName>
+                      <Returned>Always</Returned>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+	  <xs:complexType name="ActionStatus">
+        <xs:annotation>
+          <xs:documentation>
+            It's an complex type to hold the execution status of each case.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+	    	<xs:element maxOccurs="1" minOccurs="1" name="caseId" type="xs:long">
+                <xs:annotation>
+                  <xs:documentation>
+                    The ID of the case.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoRequest</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>     
+			<xs:element maxOccurs="1" minOccurs="1" name="status" type="tns:CaseStatus">
+                <xs:annotation>
+                  <xs:documentation>
+                    Status can be success, failed etc.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoRequest</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>            
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+     </xs:complexType>
+
+      <xs:simpleType name="CaseStatus">
+        <xs:annotation>
+          <xs:documentation>
+            Case status enum.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Success">
+            <xs:annotation>
+              <xs:documentation>
+                Status1.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Failure">
+            <xs:annotation>
+              <xs:documentation>
+                Status2.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>     
+      
+	 <xs:complexType name="CaseAction">
+        <xs:annotation>
+          <xs:documentation>
+   			It's a complex type to hold an action info that seller want to do for a case. It's repeatable
+   			 to allow actions on multiple cases per call.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+			  <xs:element maxOccurs="1" minOccurs="1" name="caseId" type="xs:long">
+                <xs:annotation>
+                  <xs:documentation>
+                    The ID of the case.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoRequest</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element maxOccurs="1" minOccurs="1" name="actionType" type="tns:ActionType">
+                <xs:annotation>
+                  <xs:documentation>
+                    Three actions: ACCEPT, REFUND_INITIATED, SEND_MESSAGE
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoRequest</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element maxOccurs="1" minOccurs="0" name="messageToBuyer" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>
+                    The fromdate based on case creation date.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoRequest</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element maxOccurs="1" minOccurs="1" name="partialRefundAmount" type="tns:Amount">
+                <xs:annotation>
+                  <xs:documentation>
+                    Partial refund amount.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoRequest</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>        
+							<xs:element maxOccurs="1" minOccurs="1" name="fullRefund" type="tns:FullRefundType">
+                <xs:annotation>
+                  <xs:documentation>
+                    Shipping cost of full refund.
+                  </xs:documentation>
+                  <xs:appinfo>
+                    <MaxLength>38</MaxLength>
+                    <CallInfo>
+                      <CallName>SetReturnCaseInfoRequest</CallName>
+                      <RequiredInput>Yes</RequiredInput>
+                    </CallInfo>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>                    
+			  <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+      
+      
+     <xs:complexType name="FullRefundType">
+        <xs:annotation>
+          <xs:documentation>
+            Contains information of each return case.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="refundItemPrice" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>
+                The ID that uniquely identifies the easy return case.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          
+          <xs:element name="ShippingCost" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>
+                The ID that uniquely identifies the easy return case.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          
+          <xs:element name="PostageCost" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>
+                The ID that uniquely identifies the easy return case.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+           
+  			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+     </xs:complexType>
+      
+      
+      <xs:complexType name="ReturnCaseInfo">
+        <xs:annotation>
+          <xs:documentation>
+            Contains information of each return case.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="caseId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>
+                The ID that uniquely identifies the easy return case.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="caseReason" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Case reason enum, selected by buyer.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="caseStatus" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Case current status.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="buyerId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>
+                buyer Id.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="buyerUserName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                buyer Name.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>          
+           <xs:element name="itemId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                item Id.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+            <xs:element name="itemTitle" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                item Title.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>                    
+          <xs:element name="itemReceiveDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>
+                Item received date.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="quantity" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>
+                Quantity of the items belongs to the case.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="paymentType" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Payment type of the case.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefundAmount" type="tns:Amount">
+            <xs:annotation>
+              <xs:documentation>
+                PayPal or Bank refund amount.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PayPalEmailAddress" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                PayPal email address.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="creationDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>
+                Case creation date.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="lastModifiedDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>
+                Last modified date.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="returnMessage" type="tns:ReturnCaseMessage">
+            <xs:annotation>
+              <xs:documentation>
+                A list of easy return case messages between seller and buyer.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="1" minOccurs="0" name="buyerBankInfo" type="tns:BuyerBankInfo">
+            <xs:annotation>
+              <xs:documentation>
+                The buyer's bank info.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>          
+          <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="ReturnCaseMessage">
+        <xs:annotation>
+          <xs:documentation>
+            Return case messages sent between buyer and seller.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="messageId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>
+                Message sequence id.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="messageBody" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                The body of the message.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="messageType" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Message type enum.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="creationDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>
+                Message creation date.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+      
+      <xs:complexType name="BuyerBankInfo">
+        <xs:annotation>
+          <xs:documentation>
+            Buyer's bank info.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="accountOwner" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Account Owner.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="bankName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Bank Name.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="accountNumber" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+               Account Number.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="sortCode" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Sort Code.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+           <xs:element name="IBAN" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                International Bank Account Number.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+           <xs:element name="BIC" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Swift Code.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <CallName>getReturnCaseInfo</CallName>
+                  <Returned>Always</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="Amount">
+        <xs:annotation>
+          <xs:documentation>
+            Basic type for specifying monetary amounts. A double value (e.g.,1.00 or 1.0) is
+            meaningful as a monetary amount when accompanied by a specification of the
+            currency, in which case the value specifies the amount in that currency. An
+            AmountType expresses both the value (a double) and the currency. Details such as
+            prices, fees, costs,and payments are specified as amount types.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+          <xs:extension base="xs:double">
+            <xs:attribute name="currencyId" type="xs:string" use="required">
+              <xs:annotation>
+                <xs:documentation>
+                  Currency in which the monetary amount is specified.
+                  &lt;br&gt;&lt;br&gt;
+                  For a list of possible enumeration values, see
+                  &lt;a href="Enums/currencyIdList.html.html"&gt;currencyId Values&lt;/a&gt;.
+                </xs:documentation>
+                <xs:appinfo>
+                  <CallInfo>
+                    <AllCalls/>
+                    <Returned>Always</Returned>
+                  </CallInfo>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:extension>
+        </xs:simpleContent>
+      </xs:complexType>
+
+      <xs:complexType name="ErrorMessage">
+        <xs:annotation>
+          <xs:documentation>
+            ErrorMessage to indicate any Error/Warning occured as part of service call.
+            Any run time error will not be reported here, but will be reported aspart of
+            soap fault.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+            <xs:annotation>
+              <xs:documentation>
+                Details about a single error.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+
+
+      <xs:complexType name="ErrorData">
+        <xs:annotation>
+          <xs:documentation>
+            This represents error details.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="errorId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>
+                A unique code that identifies the particular error condition that occurred.
+                Your application can use error codes as identifiers in your customized
+                error-handling algorithms.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="domain" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Name of the domain upon which the error occurred.
+                &lt;dl&gt;
+                &lt;lh&gt;Domains include:&lt;/lh&gt;
+                &lt;dt&gt;
+                Marketplace
+                &lt;/dt&gt;
+                &lt;dd&gt;
+                A business or validation error occurred for the Easy Return Service.
+                &lt;/dd&gt;
+                &lt;dt&gt;
+                SOA
+                &lt;/dt&gt;
+                &lt;dd&gt;
+                An exception occurred in the Service Oriented Architecture (SOA) framework.
+                &lt;/dd&gt;
+                &lt;/dl&gt;
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="severity" type="tns:ErrorSeverity">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates whether the error caused the request to fail (Error) or not
+                (Warning).
+                &lt;br&gt;&lt;br&gt;
+                If the request fails and the source of the problem is within the application
+                (such as a missing required element), please change the application before you
+                retry the request. If the problem is due to end-user input data, please alert
+                the end-user to the problem and provide the means for them to correct the data.
+                Once the problem in the application or data is resolved, you can attempt to re-
+                send the request to eBay.
+                &lt;br&gt;&lt;br&gt;
+                If the source of the problem is on eBay's side, you can retry the request as-is
+                a reasonable number of times (eBay recommends twice). If the error persists,
+                contact Developer Technical Support. Once the problem has been resolved, the
+                request may be resent in its original form.
+                &lt;br&gt;&lt;br&gt;
+                When a warning occurs, the error is returned in addition to the business data.
+                In this case, you do not need to retry the request (as the original request was
+                successful). However, depending on the cause or nature of the warning, you
+                might need to contact either the end user or eBay to effect a long term
+                solution to the problem to prevent it from reoccurring in the future.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="category" type="tns:ErrorCategory">
+            <xs:annotation>
+              <xs:documentation>
+                There are three categories of errors: request errors, application errors, and
+                system errors.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="message" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                A detailed description of the condition that resulted in the error.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="subdomain" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                Name of the subdomain upon which the error occurred.
+                &lt;dl&gt;
+                &lt;lh&gt;Subdomains include:&lt;/lh&gt;
+                &lt;dt&gt;
+                Easy Return
+                &lt;/dt&gt;
+                &lt;dd&gt;
+                The error is specific to the Easy return service.
+                &lt;/dd&gt;
+                &lt;dt&gt;
+                MarketplaceCommon
+                &lt;/dt&gt;
+                &lt;dd&gt;
+                The error is common to all Marketplace services.
+                &lt;/dd&gt;
+                &lt;/dl&gt;
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="exceptionId" type="xs:token">
+            <xs:annotation>
+              <xs:documentation>
+                Unique identifier for an exception associated with an error.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+            <xs:annotation>
+              <xs:documentation>
+                Some warning and error messages return one or more variables that contain
+                contextual information about the error. This is often the field or value that
+                triggered the error.
+              </xs:documentation>
+              <xs:appinfo>
+                <CallInfo>
+                  <AllCalls/>
+                  <Returned>Conditionally</Returned>
+                </CallInfo>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+
+
+      <xs:complexType name="ErrorParameter">
+        <xs:annotation>
+          <xs:documentation>
+            Contextual information associated with an error.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+          <xs:extension base="xs:string">
+            <xs:attribute name="name" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>
+                  The name of the parameter in the list of parameter types returned
+                  within the error type.
+                </xs:documentation>
+                <xs:appinfo>
+                  <CallInfo>
+                    <AllCalls/>
+                    <Returned>Conditionally</Returned>
+                  </CallInfo>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:extension>
+        </xs:simpleContent>
+      </xs:complexType>
+
+
+      <xs:simpleType name="ErrorSeverity">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates whether the error is a severe error (causing the request to fail)
+            or an informational error (a warning) that should be communicated to the
+            user.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Error">
+            <xs:annotation>
+              <xs:documentation>
+                The request that triggered the error was not processed successfully.
+                When a serious application-level error occurs, the error is returned
+                instead of the business data.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Warning">
+            <xs:annotation>
+              <xs:documentation>
+                The request was processed successfully, but something occurred that may
+                affect your application or the user. For example, eBay may have changed a
+                value the user sent in. In this case, eBay returns a normal, successful
+                response and also returns the warning.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+
+
+      <xs:simpleType name="ErrorCategory">
+        <xs:annotation>
+          <xs:documentation>
+            There are three categories of error: request errors, application errors,
+            and system errors. Request and application errors are caused primarily by
+            invalid data passed in the request. System errors are caused primarily by
+            application failures and cannot be corrected by changing request values.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="System">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates that an error has occurred on the eBay system side, such as a
+                database or server down. An application can retry the request as-is a
+                reasonable number of times (eBay recommends twice). If the error
+                persists, contact Developer Technical Support. Once the problem has been
+                resolved, the request may be resent in its original form.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Application">
+            <xs:annotation>
+              <xs:documentation>
+                An error occurred due to a problem with the request, such as missing or
+                invalid fields. The problem must be corrected before the request can be
+                made again. If the problem is due to something in the application (such
+                as a missing required field), the application must be changed. Once the
+                problem in the application or data is resolved, resend the corrected
+                request to eBay.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Request">
+            <xs:annotation>
+              <xs:documentation>
+                An error occurred due to a problem with the request, such as invalid or
+                missing data. The problem must be corrected before the request can be
+                made again. If the problem is a result of end-user data, the application
+                must alert the end-user to the problem and provide the means for the
+                end-user to correct the data. Once the problem in the data is resolved,
+                resend the request to eBay with the corrected data.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getReturnCaseInfoRequest">
+    <wsdl:part element="ns0:getReturnCaseInfoRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getReturnCaseInfoResponse">
+    <wsdl:part element="ns0:getReturnCaseInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findReturnCaseInfoRequest">
+    <wsdl:part element="ns0:findReturnCaseInfoRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findReturnCaseInfoResponse">
+    <wsdl:part element="ns0:findReturnCaseInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>  
+  <wsdl:message name="setReturnCaseInfoRequest">
+    <wsdl:part element="ns0:setReturnCaseInfoRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setReturnCaseInfoResponse">
+    <wsdl:part element="ns0:setReturnCaseInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>  
+  <wsdl:portType name="EasyReturnServicePort">
+    <wsdl:operation name="getReturnCaseInfo">
+      <wsdl:input message="ns0:getReturnCaseInfoRequest">
+    </wsdl:input>
+      <wsdl:output message="ns0:getReturnCaseInfoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findReturnCaseInfo">
+      <wsdl:input message="ns0:findReturnCaseInfoRequest">
+      </wsdl:input>
+      <wsdl:output message="ns0:findReturnCaseInfoResponse">
+      </wsdl:output>
+    </wsdl:operation>    
+    <wsdl:operation name="setReturnCaseInfo">
+      <wsdl:input message="ns0:setReturnCaseInfoRequest">
+    </wsdl:input>
+      <wsdl:output message="ns0:setReturnCaseInfoResponse">
+    </wsdl:output>
+    </wsdl:operation>    
+
+  </wsdl:portType>
+  <wsdl:binding name="EasyReturnServiceSOAPBinding" type="ns0:EasyReturnServicePort">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getReturnCaseInfo">
+      <soap12:operation soapAction="urn:getReturnCaseInfo" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findReturnCaseInfo">
+      <soap12:operation soapAction="urn:findReturnCaseInfo" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>    
+     <wsdl:operation name="setReturnCaseInfo">
+      <soap12:operation soapAction="urn:setReturnCaseInfo" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+   
+  <wsdl:binding name="EasyReturnServiceHttpBinding" type="ns0:EasyReturnServicePort">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="getReturnCaseInfo">
+      <http:operation location="EasyReturnService/getReturnCaseInfo"/>
+      <wsdl:input>
+        <mime:content part="getReturnCaseInfo" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getReturnCaseInfo" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="findReturnCaseInfo">
+      <http:operation location="EasyReturnService/findReturnCaseInfo"/>
+      <wsdl:input>
+        <mime:content part="findReturnCaseInfo" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="findReturnCaseInfo" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+   
+    <wsdl:operation name="setReturnCaseInfo">
+      <http:operation location="EasyReturnService/setReturnCaseInfo"/>
+      <wsdl:input>
+        <mime:content part="setReturnCaseInfo" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="setReturnCaseInfo" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EasyReturnService">
+    <wsdl:port binding="ns0:EasyReturnServiceHttpBinding" name="EasyReturnServiceHttp">
+      <http:address location="http://svcs.ebay.com/EasyReturnService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:EasyReturnServiceSOAPBinding" name="EasyReturnServiceSOAP">
+      <soap12:address location="http://svcs.ebay.com/EasyReturnService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

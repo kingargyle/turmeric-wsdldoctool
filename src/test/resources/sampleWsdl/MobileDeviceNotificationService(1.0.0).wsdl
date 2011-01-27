@@ -1,0 +1,1297 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/mobile/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="MobileDeviceNotificationService" targetNamespace="http://www.ebay.com/marketplace/mobile/v1/services">
+
+	<wsdl:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/mobile/v1/services">
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning
+						occurred as part of service call. Any run time
+						error will not be reported here, but will be
+						reported as part of soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain upon which the error
+								occurred. &lt;dl&gt; &lt;lh&gt;Domains
+								include:&lt;/lh&gt; &lt;dt&gt;
+								Marketplace &lt;/dt&gt; &lt;dd&gt; A
+								business or validation error occurred
+								for the Merchandising Service.
+								&lt;/dd&gt; &lt;dt&gt; SOA &lt;/dt&gt;
+								&lt;dd&gt; An exception occurred in the
+								Service Oriented Architecture (SOA)
+								framework. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the
+								request to fail (Error) or not
+								(Warning). &lt;br&gt;&lt;br&gt; If the
+								request fails and the source of the
+								problem is within the application (such
+								as a missing required element), please
+								change the application before you retry
+								the request. If the problem is due to
+								end-user input data, please alert the
+								end-user to the problem and provide the
+								means for them to correct the data. Once
+								the problem in the application or data
+								is resolved, you can attempt to re- send
+								the request to eBay.
+								&lt;br&gt;&lt;br&gt; If the source of
+								the problem is on eBay's side, you can
+								retry the request as-is a reasonable
+								number of times (eBay recommends twice).
+								If the error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+								&lt;br&gt;&lt;br&gt; When a warning
+								occurs, the error is returned in
+								addition to the business data. In this
+								case, you do not need to retry the
+								request (as the original request was
+								successful). However, depending on the
+								cause or nature of the warning, you
+								might need to contact either the end
+								user or eBay to effect a long term
+								solution to the problem to prevent it
+								from reoccurring in the future.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors:
+								request errors, application errors, and
+								system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition
+								that resulted in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain upon which the
+								error occurred. &lt;dl&gt;
+								&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+								&lt;dt&gt; Merchandising &lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								Merchandising service. &lt;/dd&gt;
+								&lt;dt&gt; MarketplaceCommon &lt;/dt&gt;
+								&lt;dd&gt; The error is common to all
+								Marketplace services. &lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some warning and error messages return
+								one or more variables that contain
+								contextual information about the error.
+								This is often the field or value that
+								triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the
+									list of parameter types returned
+									within the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="EventMessageLanguageTag">
+				<xs:annotation>
+					<xs:documentation>
+						Langage to use for localizing the event message
+						text. The tag should follow IETF BCP 47 as
+						described at
+						http://www.w3.org/International/articles/language-tags/.
+						Examples: en-US, fr-CA, or de.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+
+			<xs:element name="setDeviceNotificationPreferences">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceRequest">
+							<xs:sequence>
+
+								<xs:element name="userid" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											The userid of the user for
+											whom device notification
+											preferences are to be set.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="deviceHandle" type="tns:DeviceHandleType">
+									<xs:annotation>
+										<xs:documentation>
+											the token and type of token
+											information identifying the
+											mobile device.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+
+								<xs:element maxOccurs="1" minOccurs="0" name="description" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											A human readable identification of the device that 
+											generated the token.  A phone number or the user-assigned 
+											device name might be useful here.  
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="language" type="tns:EventMessageLanguageTag">
+									<xs:annotation>
+										<xs:documentation>
+											A tag describing the
+											language that should be used
+											to localize the event
+											messages sent back to this
+											device. The tag should
+											follow IETF BCP 47 as
+											described at
+											http://www.w3.org/International/articles/language-tags/
+											Examples include en-US,
+											fr-CA and de.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="preferences" type="tns:NotificationPreferencesType">
+									<xs:annotation>
+										<xs:documentation>
+											The preferences to be set
+											for this user. Note the user
+											may only have one set of
+											preferences across all
+											subscribed devices.
+											Notifications sent to all
+											devices for this user will
+											be governed by the
+											preferences set here.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="setDeviceNotificationPreferencesResponse">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceResponse"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getDeviceNotificationPreferences">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceRequest">
+							<xs:sequence>
+								<xs:element name="userid" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											The userid for whom device
+											notification preferences
+											should be retrieved.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="deviceHandle" type="tns:DeviceHandleType">
+									<xs:annotation>
+										<xs:documentation>
+											This token identifies the
+											device the user receives
+											preferences on.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getDeviceNotificationPreferencesResponse">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceResponse">
+							<xs:sequence>
+
+								<xs:element name="active" type="xs:boolean">
+									<xs:annotation>
+										<xs:documentation>
+											Indicates whether or not the
+											user is receiving
+											notifications on this
+											particular device. Since the
+											user/device binding must be
+											established, it is possible
+											that the user has some
+											device notification
+											preferences set, but is not
+											actively receiving
+											notifications on this
+											particular device.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element maxOccurs="1" minOccurs="0" name="description" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											A human readable identification of the device that 
+											generated the token.  A phone number or the user-assigned 
+											device name might be useful here.  
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="language" type="tns:EventMessageLanguageTag">
+									<xs:annotation>
+										<xs:documentation>
+											A tag describing the
+											language used to localize
+											the event messages sent back
+											to this device. The tag
+											should follow IETF BCP 47 as
+											described at
+											http://www.w3.org/International/articles/language-tags/
+											Examples include en-US,
+											fr-CA and de.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element maxOccurs="1" minOccurs="0" name="preferences" type="tns:NotificationPreferencesType">
+									<xs:annotation>
+										<xs:documentation>
+											The device notification
+											preferences set for a user.
+											If none have been set, then
+											none is returned.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="activateUserOnDevice">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceRequest">
+							<xs:sequence>
+
+								<xs:element name="userid" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											The userid of the user who
+											is to start receiving
+											notifications on this
+											device. The preference must
+											have previously been set.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="deviceHandle" type="tns:DeviceHandleType">
+									<xs:annotation>
+										<xs:documentation>
+											The device token identifying
+											the device where the
+											notifications should be
+											sent.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element maxOccurs="1" minOccurs="0" name="description" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											A human readable identification of the device that 
+											generated the token.  A phone number or the user-assigned 
+											device name might be useful here.  
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="language" type="tns:EventMessageLanguageTag">
+									<xs:annotation>
+										<xs:documentation>
+											A tag describing the
+											language that should be used
+											to localize the event
+											messages sent back to this
+											device. The tag should
+											follow IETF BCP 47 as
+											described at
+											http://www.w3.org/International/articles/language-tags/
+											Examples include en-US,
+											fr-CA and de.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="activateUserOnDeviceResponse">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceResponse"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="deactivateUserOnDevice">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceRequest">
+							<xs:sequence>
+
+								<xs:element name="userid" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											The userid of the user for
+											whom notifications are no
+											longer to be sent on this
+											device.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="deviceHandle" type="tns:DeviceHandleType">
+									<xs:annotation>
+										<xs:documentation>
+											The device token identifying
+											the device to no longer
+											receive notfications for
+											this user.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element maxOccurs="1" minOccurs="0" name="description" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											A human readable identification of the device that 
+											generated the token.  A phone number or the user-assigned 
+											device name might be useful here.  
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="deactivateUserOnDeviceResponse">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceResponse"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="suspendDeviceNotificationsForUser">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceRequest">
+							<xs:sequence>
+
+								<xs:element name="userid" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											The userid of the user for
+											whom notifications should be
+											suspended.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="suspendDeviceNotificationsForUserResponse">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceResponse"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="suspendNotificationsForDevice">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceRequest">
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="1" name="inactiveApnsDeviceHandle" type="tns:InactiveApnsDeviceTokenType">
+									<xs:annotation>
+										<xs:documentation>
+											The device token identifying
+											the device that is no longer
+											to receive any notifications
+											for any users.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="suspendNotificationsForDeviceResponse">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceResponse"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="listDevicesForUser">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceRequest">
+							<xs:sequence>
+								<xs:element name="userid" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											the userid of the user
+											requesting device
+											information
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="listDevicesForUserResponse">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:BaseServiceResponse">
+							<xs:sequence>
+
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="userDeviceDetails" type="tns:UserDeviceDetailsType">
+									<xs:annotation>
+										<xs:documentation>
+											a list of device binding
+											information
+										</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:complexType name="InactiveApnsDeviceTokenType">
+				<xs:annotation/>
+				<xs:sequence>
+					<xs:element name="deviceToken" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								a token that identifies the Apple device (iPhone/iPod). The
+								form of the token is text without
+								whitespace. 
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InactivedTime" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A timestamp indicating when the APNs determined that 
+								the application no longer exists on the device. 
+								This value represents the SECONDS since 1970, anchored to UTC.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="DeviceHandleType">
+				<xs:annotation/>
+				<xs:sequence>
+					<xs:element name="deviceToken" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								a token that identifies the device. The
+								form of the token is text without
+								whitespace. The meaning varies by type.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deviceType" type="tns:DeviceTokenType">
+						<xs:annotation>
+							<xs:documentation>
+								identifies the type of device token,
+								e.g. APNS
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="DeviceTokenType">
+				<xs:annotation>
+					<xs:documentation>
+						an enumeration to identify the type of device
+						token
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="APNS">
+						<xs:annotation>
+							<xs:documentation>
+								Apple Push Notification Service, iPhone.
+								The tokens generated by APNS are binary.
+								The token passed here is a
+								hexidecimal-text rendering of the binary
+								form. That is, a 32 byte binary token
+								will be passed as a 64 character string
+								of hexidecimal digits represented as
+								text using the UTF-8 encoding (same as
+								ASCII for strings made up of hexidecimal
+								digits).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="UserDeviceDetailsType">
+				<xs:annotation>
+					<xs:documentation>
+						details about a particular user to device
+						binding
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="enabled" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								indicated that this particular device is
+								an active recipient of notifications for
+								the user
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deviceHandle" type="tns:DeviceHandleType">
+						<xs:annotation>
+							<xs:documentation>
+								identifies the device
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="description" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A human readable identification of the device that 
+								generated the token.  A phone number or the user-assigned 
+								device name might be useful here.  
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastModifiedUserid" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								userid of the last user to modify the
+								binding status of the device for this
+								user
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastModifiedDate" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								datetime of the last modification of the
+								binding status of the device for this
+								user
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="creationDate" type="xs:dateTime">
+						<xs:annotation>
+							v
+							<xs:documentation>
+								datetime when this binding was first
+								created
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EventNotificationPreferenceType">
+				<xs:annotation>
+					<xs:documentation>
+						specifies the type of notification set and any
+						associated properties
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="notificationEventTypeCode" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								identifies the type of notification,
+								e.g. OUTBID
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="properties" type="tns:NotificationEventPropertyType">
+						<xs:annotation>
+							<xs:documentation>
+								name/value pairs of properties specific
+								to a particular notificaiton, like watch
+								interval for items ending soon.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="NotificationEventPropertyType">
+				<xs:annotation>
+					<xs:documentation>
+						a name value pair specifying properties
+						associated with a notification
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="name" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								the name portion of the name/value pair
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="value" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								the value portion of a name/value pair
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="NotificationPreferencesType">
+				<xs:annotation>
+					<xs:documentation>
+						a list of event preferences, an event in the
+						list is being request. Any events not in the
+						list are NOT being requested.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="preference" type="tns:EventNotificationPreferenceType">
+						<xs:annotation>
+							<xs:documentation>
+								an individual event preference
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="setDeviceNotificationPreferencesRequest">
+		<wsdl:part element="tns:setDeviceNotificationPreferences" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="setDeviceNotificationPreferencesResponse">
+
+		<wsdl:part element="tns:setDeviceNotificationPreferencesResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeviceNotificationPreferencesRequest">
+		<wsdl:part element="tns:getDeviceNotificationPreferences" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getDeviceNotificationPreferencesResponse">
+		<wsdl:part element="tns:getDeviceNotificationPreferencesResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="activateUserOnDeviceRequest">
+		<wsdl:part element="tns:activateUserOnDevice" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="activateUserOnDeviceResponse">
+
+		<wsdl:part element="tns:activateUserOnDeviceResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deactivateUserOnDeviceRequest">
+		<wsdl:part element="tns:deactivateUserOnDevice" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deactivateUserOnDeviceResponse">
+
+		<wsdl:part element="tns:deactivateUserOnDeviceResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="suspendDeviceNotificationsForUserRequest">
+		<wsdl:part element="tns:suspendDeviceNotificationsForUser" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="suspendDeviceNotificationsForUserResponse">
+
+		<wsdl:part element="tns:suspendDeviceNotificationsForUserResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="suspendNotificationsForDeviceRequest">
+		<wsdl:part element="tns:suspendNotificationsForDevice" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="suspendNotificationsForDeviceResponse">
+
+		<wsdl:part element="tns:suspendNotificationsForDeviceResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="listDevicesForUserRequest">
+		<wsdl:part element="tns:listDevicesForUser" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="listDevicesForUserResponse">
+		<wsdl:part element="tns:listDevicesForUserResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:portType name="MobileDeviceNotificationServicePort">
+
+		<wsdl:operation name="setDeviceNotificationPreferences">
+			<wsdl:documentation>
+				For the given user, set the device notification
+				preferences. There is only one set of notification
+				preferences for a user across all devices. The service
+				will record the binding of the presented device token
+				with the given user and will send notifications received
+				for that user to the device. A user may be bound to more
+				than one device token. All such devices will receive the
+				same notifications
+			</wsdl:documentation>
+			<wsdl:input message="tns:setDeviceNotificationPreferencesRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:setDeviceNotificationPreferencesResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeviceNotificationPreferences">
+			<wsdl:documentation>
+				Get the notification preferences for user on a
+				particular device. The result indicates whether or not
+				notifications for this user are active on the device,
+				and independent of that, what the device notification
+				preferences are for this user.
+			</wsdl:documentation>
+			<wsdl:input message="tns:getDeviceNotificationPreferencesRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:getDeviceNotificationPreferencesResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="activateUserOnDevice">
+			<wsdl:documentation>
+				Activate notifications for a user on a device using
+				existing settings. By default, when the preferences are
+				set, they are active. However, the device should call
+				deactivateUserOnDevice when a user logs out, the
+				application closes or the user disables notifications.
+				Callinig activateUserOnDevice is how notifications are
+				turned back on
+			</wsdl:documentation>
+			<wsdl:input message="tns:activateUserOnDeviceRequest"/>
+			<wsdl:output message="tns:activateUserOnDeviceResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="deactivateUserOnDevice">
+			<wsdl:documentation>
+				Deactive sending notifications for the given user to the
+				specified device
+			</wsdl:documentation>
+			<wsdl:input message="tns:deactivateUserOnDeviceRequest"/>
+			<wsdl:output message="tns:deactivateUserOnDeviceResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="suspendDeviceNotificationsForUser">
+			<wsdl:documentation>
+				Suspend device notifications for the specified user for
+				all devices
+			</wsdl:documentation>
+			<wsdl:input message="tns:suspendDeviceNotificationsForUserRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:suspendDeviceNotificationsForUserResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="suspendNotificationsForDevice">
+			<wsdl:documentation>
+				Stop sending notifications to the specified device for
+				any users that have previously registered on this
+				device.
+			</wsdl:documentation>
+			<wsdl:input message="tns:suspendNotificationsForDeviceRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:suspendNotificationsForDeviceResponse">
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="listDevicesForUser">
+			<wsdl:documentation>
+				Return a list of user to device binding information
+				showing what is known about devices to which the user
+				has been bound
+			</wsdl:documentation>
+			<wsdl:input message="tns:listDevicesForUserRequest"/>
+			<wsdl:output message="tns:listDevicesForUserResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+
+
+
+
+
+	<wsdl:binding name="eMSNotifySOAPBinding" type="tns:MobileDeviceNotificationServicePort">
+
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="setDeviceNotificationPreferences">
+
+			<soap12:operation soapAction="urn:setDeviceNotificationPreferences" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDeviceNotificationPreferences">
+
+			<soap12:operation soapAction="urn:getDeviceNotificationPreferences" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="activateUserOnDevice">
+
+			<soap12:operation soapAction="urn:activateUserOnDevice" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deactivateUserOnDevice">
+
+			<soap12:operation soapAction="urn:deactivateUserOnDevice" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="suspendDeviceNotificationsForUser">
+
+			<soap12:operation soapAction="urn:suspendDeviceNotificationsForUser" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="suspendNotificationsForDevice">
+
+			<soap12:operation soapAction="urn:suspendNotificationsForDevice" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listDevicesForUser">
+
+			<soap12:operation soapAction="urn:listDevicesForUser" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="MobileDeviceNotificationService">
+		<wsdl:documentation>
+			This service manages the notifications for an eBay user on a
+			mobile device. Operations are provided to set and retreive
+			preferences as well as to activiate and deactiveate both
+			users and devices
+		</wsdl:documentation>
+		<wsdl:port binding="tns:eMSNotifySOAPBinding" name="MobileDeviceNotificationServiceSOAP">
+			<soap12:address location="https://svcs.ebay.com/mobile/DeviceNotificationService/v1"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,1738 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+  <wsdl:types>
+    <xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+	<xs:element name="addReviewRequest" nillable="true" type="tns:AddReviewRequest"/>
+	<xs:element name="addReviewResponse" nillable="true" type="tns:AddReviewResponse"/>
+	<xs:element name="addSolutionForApprovalRequest" nillable="true" type="tns:AddSolutionForApprovalRequest"/>
+	<xs:element name="addSolutionForApprovalResponse" nillable="true" type="tns:AddSolutionForApprovalResponse"/>
+	<xs:element name="adminEditSolutionRequest" nillable="true" type="tns:AdminEditSolutionRequest"/>
+	<xs:element name="adminEditSolutionResponse" nillable="true" type="tns:AdminEditSolutionResponse"/>
+	<xs:element name="adminGetSolutionsRequest" nillable="true" type="tns:AdminGetSolutionsRequest"/>
+	<xs:element name="adminGetSolutionsResponse" nillable="true" type="tns:AdminGetSolutionsResponse"/>
+	<xs:element name="adminRemoveReviewRequest" nillable="true" type="tns:AdminRemoveReviewRequest"/>
+	<xs:element name="adminRemoveReviewResponse" nillable="true" type="tns:AdminRemoveReviewResponse"/>
+	<xs:element name="adminRemoveSolutionRequest" nillable="true" type="tns:AdminRemoveSolutionRequest"/>
+	<xs:element name="adminRemoveSolutionResponse" nillable="true" type="tns:AdminRemoveSolutionResponse"/>
+	<xs:element name="adminSetPromotionSolutionsRequest" nillable="true" type="tns:AdminSetPromotionSolutionsRequest"/>
+	<xs:element name="adminSetPromotionSolutionsResponse" nillable="true" type="tns:AdminSetPromotionSolutionsResponse"/>
+	<xs:element name="adminSetSolutionStatusRequest" nillable="true" type="tns:AdminSetSolutionStatusRequest"/>
+	<xs:element name="adminSetSolutionStatusResponse" nillable="true" type="tns:AdminSetSolutionStatusResponse"/>
+	<xs:element name="editReviewRequest" nillable="true" type="tns:EditReviewRequest"/>
+	<xs:element name="editReviewResponse" nillable="true" type="tns:EditReviewResponse"/>
+	<xs:element name="editSolutionRequest" nillable="true" type="tns:EditSolutionRequest"/>
+	<xs:element name="editSolutionResponse" nillable="true" type="tns:EditSolutionResponse"/>
+	<xs:element name="findSolutionsRequest" nillable="true" type="tns:FindSolutionsRequest"/>
+	<xs:element name="findSolutionsResponse" nillable="true" type="tns:FindSolutionsResponse"/>
+	<xs:element name="getMySolutionsRequest" nillable="true" type="tns:GetMySolutionsRequest"/>
+	<xs:element name="getMySolutionsResponse" nillable="true" type="tns:GetMySolutionsResponse"/>
+	<xs:element name="getPromotionSolutionsRequest" nillable="true" type="tns:GetPromotionSolutionsRequest"/>
+	<xs:element name="getPromotionSolutionsResponse" nillable="true" type="tns:GetPromotionSolutionsResponse"/>
+	<xs:element name="getReviewsRequest" nillable="true" type="tns:GetReviewsRequest"/>
+	<xs:element name="getReviewsResponse" nillable="true" type="tns:GetReviewsResponse"/>
+	<xs:element name="getSolutionsRequest" nillable="true" type="tns:GetSolutionsRequest"/>
+	<xs:element name="getSolutionsResponse" nillable="true" type="tns:GetSolutionsResponse"/>
+	<xs:element name="userVisitSolutionRequest" nillable="true" type="tns:UserVisitSolutionRequest"/>
+	<xs:element name="userVisitSolutionResponse" nillable="true" type="tns:UserVisitSolutionResponse"/>
+	
+	<xs:element name="requesterCredentials" type="tns:CustomSecurityHeaderType">
+		<xs:annotation>
+			<xs:documentation>
+				Authentication information for the user on whose behalf the
+				application is making the request. Only registered eBay users are
+				allowed to make API calls. To verify that a user is registered,
+				your application needs to pass a user-specific value called an
+				"authentication token" in the request. This is equivalent to
+				signing in on the eBay Web site. As API calls do not pass session
+				information, you need to pass the user's authentication token every
+				time you invoke a call on their behalf. All calls require an
+				authentication token, except the calls you use to retrieve a token
+				in the first place. (For such calls, you use the eBay member's
+				username and password instead.)
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>	
+	
+	
+	<xs:complexType name="CustomSecurityHeaderType">
+		<xs:annotation>
+			<xs:documentation>
+				Security header used for SOAP API calls.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="1" name="eBayAuthToken" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Authentication token representing the user who is making the
+						request. The user's token must be retrieved from eBay. To determine
+						a user's authentication token, see the Authentication and
+						Authorization information in the eBay Web Services guide. For calls
+						that list or retrieve item or transaction data, the user usually
+						needs to be the seller of the item in question or, in some cases,
+						the buyer. Similarly, calls that retrieve user or account data may
+						be restricted to the user whose data is being requested. The
+						documentation for each call includes information about such
+						restrictions.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType abstract="true" name="BaseServiceRequest">
+		<xs:annotation>
+			<xs:documentation>
+				This is the base class for request container for all service operations.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType abstract="true" name="BaseServiceResponse">
+		<xs:annotation>
+			<xs:documentation>
+				Base response container for all service operations. Contains error information
+				associated with the request.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ack" type="tns:AckValue">
+				<xs:annotation>
+					<xs:documentation>
+
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Information for an error or warning that occurred when eBay processed the
+						request.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="version" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+
+			</xs:element>
+			<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Always</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>		
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="AckValue">
+		<xs:annotation>
+			<xs:documentation>
+				Indicates whether the error is a severe error (causing the request to fail)
+				or an informational error (a warning) that should be communicated to the
+				user.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Success">
+				<xs:annotation>
+					<xs:documentation>
+						The request was processed successfully, but something occurred that may
+						affect your application or the user.				
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Failure">
+				<xs:annotation>
+					<xs:documentation>
+						The request that triggered the error was not processed successfully.
+						When a serious application-level error occurs, the error is returned
+						instead of the business data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Warning">
+				<xs:annotation>
+					<xs:documentation>
+						The request that triggered the error was processed successfully but with some warnings.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PartialFailure">
+				<xs:annotation>
+					<xs:documentation>
+						The request that triggered the error was processed successfully but with some warnings.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="ErrorMessage">
+		<xs:annotation>
+			<xs:documentation>
+				ErrorMessage to indicate any Error/Warning occured as part of service call.
+				Any run time error will not be reported here, but will be reported aspart of
+				soap fault.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						Details about a single error.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ErrorData">
+		<xs:annotation>
+			<xs:documentation>
+				This represents error details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="errorId" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>
+						A unique code that identifies the particular error condition that occurred.
+						Your application can use error codes as identifiers in your customized
+						error-handling algorithms.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="domain" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Name of the domain upon which the error occurred. 
+						&lt;dl&gt;
+						&lt;lh&gt;Domains include:&lt;/lh&gt;
+						&lt;dt&gt;
+							Marketplace
+						&lt;/dt&gt;
+						&lt;dd&gt;
+							A business or validation error occurred for the Merchandising Service.
+						&lt;/dd&gt;
+						&lt;dt&gt;
+							SOA
+						&lt;/dt&gt;
+						&lt;dd&gt;
+							An exception occurred in the Service Oriented Architecture (SOA) framework.
+						&lt;/dd&gt;
+						&lt;/dl&gt;
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="severity" type="tns:ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error caused the request to fail (Error) or not
+						(Warning).
+						&lt;br&gt;&lt;br&gt;
+						If the request fails and the source of the problem is within the application
+						(such as a missing required element), please change the application before you
+						retry the request. If the problem is due to end-user input data, please alert
+						the end-user to the problem and provide the means for them to correct the data.
+						Once the problem in the application or data is resolved, you can attempt to re-
+						send the request to eBay.
+						&lt;br&gt;&lt;br&gt;
+						If the source of the problem is on eBay's side, you can retry the request as-is
+						a reasonable number of times (eBay recommends twice). If the error persists,
+						contact Developer Technical Support. Once the problem has been resolved, the
+						request may be resent in its original form.
+						&lt;br&gt;&lt;br&gt;
+						When a warning occurs, the error is returned in addition to the business data.
+						In this case, you do not need to retry the request (as the original request was
+						successful). However, depending on the cause or nature of the warning, you
+						might need to contact either the end user or eBay to effect a long term
+						solution to the problem to prevent it from reoccurring in the future.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="category" type="tns:ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of errors: request errors, application errors, and
+						system errors.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="message" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						A detailed description of the condition that resulted in the error.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="subdomain" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Name of the subdomain upon which the error occurred. 
+						&lt;dl&gt;
+						&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+						&lt;dt&gt;
+							Merchandising
+						&lt;/dt&gt;
+						&lt;dd&gt;
+							The error is specific to the Merchandising service.
+						&lt;/dd&gt;
+						&lt;dt&gt;
+							MarketplaceCommon
+						&lt;/dt&gt;
+						&lt;dd&gt;
+							The error is common to all Marketplace services.
+						&lt;/dd&gt;
+						&lt;/dl&gt;
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>
+						Unique identifier for an exception associated with an error.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Some warning and error messages return one or more variables that contain
+						contextual information about the error. This is often the field or value that
+						triggered the error.
+					</xs:documentation>
+					<xs:appinfo>
+						<CallInfo>
+							<AllCalls/>
+							<Returned>Conditionally</Returned>
+						</CallInfo>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="ErrorSeverity">
+		<xs:annotation>
+			<xs:documentation>
+				Indicates whether the error is a severe error (causing the request to fail)
+				or an informational error (a warning) that should be communicated to the
+				user.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Error">
+				<xs:annotation>
+					<xs:documentation>
+						The request that triggered the error was not processed successfully.
+						When a serious application-level error occurs, the error is returned
+						instead of the business data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Warning">
+				<xs:annotation>
+					<xs:documentation>
+						The request was processed successfully, but something occurred that may
+						affect your application or the user. For example, eBay may have changed a
+						value the user sent in. In this case, eBay returns a normal, successful
+						response and also returns the warning.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ErrorCategory">
+		<xs:annotation>
+			<xs:documentation>
+				There are three categories of error: request errors, application errors,
+				and system errors. Request and application errors are caused primarily by
+				invalid data passed in the request. System errors are caused primarily by
+				application failures and cannot be corrected by changing request values.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="System">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates that an error has occurred on the eBay system side, such as a
+						database or server down. An application can retry the request as-is a
+						reasonable number of times (eBay recommends twice). If the error
+						persists, contact Developer Technical Support. Once the problem has been
+						resolved, the request may be resent in its original form.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Application">
+				<xs:annotation>
+					<xs:documentation>
+						An error occurred due to a problem with the request, such as missing or
+						invalid fields. The problem must be corrected before the request can be
+						made again. If the problem is due to something in the application (such
+						as a missing required field), the application must be changed. Once the
+						problem in the application or data is resolved, resend the corrected
+						request to eBay.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Request">
+				<xs:annotation>
+					<xs:documentation>
+						An error occurred due to a problem with the request, such as invalid or
+						missing data. The problem must be corrected before the request can be
+						made again. If the problem is a result of end-user data, the application
+						must alert the end-user to the problem and provide the means for the
+						end-user to correct the data. Once the problem in the data is resolved,
+						resend the request to eBay with the corrected data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="ErrorParameter">
+		<xs:annotation>
+			<xs:documentation>
+				Contextual information associated with an error.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The name of the parameter in the list of parameter types returned
+							within the error type.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="AddReviewRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="reviewSpec" type="tns:SolutionReviewSpec"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AddReviewResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="reviewId" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AddSolutionForApprovalRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="solutionSpec" type="tns:SolutionSpec"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AddSolutionForApprovalResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="solutionId" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminEditSolutionRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="solutionId" type="xs:long"/>
+					<xs:element name="solutionEditSet" type="tns:AdminSolutionEditSet"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminEditSolutionResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminGetSolutionsRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="solutionId" type="xs:long"/>
+					<xs:element minOccurs="0" name="solutionStatus" type="xs:string"/>
+					<xs:element minOccurs="0" name="developerId" type="xs:string"/>
+					<xs:element minOccurs="0" name="sortOption" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Possible value:Average Rating, Most Popular, Newest, Alphabetical. Default is Alphabetical.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="solutionCategory" type="xs:string"/>
+					<xs:element minOccurs="0" name="toolType" type="xs:string"/>
+					<xs:element minOccurs="0" name="platform" type="xs:string"/>
+					<xs:element minOccurs="0" name="developerType" type="xs:string"/>
+					<xs:element minOccurs="0" name="minRating" type="xs:int"/>
+					<xs:element minOccurs="0" name="pagination" type="tns:PaginationRequest"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminGetSolutionsResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="adminSolution" type="tns:AdminSolution"/>
+					<xs:element minOccurs="0" name="pagination" type="tns:PaginationResponse"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminRemoveReviewRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="reviewId" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminRemoveReviewResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminRemoveSolutionRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="solutionId" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminRemoveSolutionResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="solutionId" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminSetPromotionSolutionsRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="solutionPromotion" type="tns:SolutionPromotion"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminSetPromotionSolutionsResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminSetSolutionStatusRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="solutionId" type="xs:long"/>
+					<xs:element name="solutionStatus" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AdminSetSolutionStatusResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="solutionId" type="xs:long"/>
+					<xs:element minOccurs="0" name="solutionStatus" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EditReviewRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="reviewId" type="xs:long"/>
+					<xs:element name="reviewEditSet" type="tns:SolutionReviewEditSet"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EditReviewResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EditSolutionRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="solutionId" type="xs:long"/>
+					<xs:element name="solutionEditSet" type="tns:SolutionEditSet"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EditSolutionResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FindSolutionsRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="keywords" type="xs:string"/>
+					<xs:element minOccurs="0" name="sortOption" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Possible value:Average Rating, Most Popular, Newest, Alphabetical. Default is Alphabetical.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="solutionCategory" type="xs:string"/>
+					<xs:element minOccurs="0" name="toolType" type="xs:string"/>
+					<xs:element minOccurs="0" name="platform" type="xs:string"/>
+					<xs:element minOccurs="0" name="developerType" type="xs:string"/>
+					<xs:element minOccurs="0" name="minRating" type="xs:int"/>
+					<xs:element minOccurs="0" name="pagination" type="tns:PaginationRequest"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FindSolutionsResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="solutionHistogram" type="tns:SolutionHistogram"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="solution" type="tns:Solution"/>
+					<xs:element minOccurs="0" name="pagination" type="tns:PaginationResponse"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="GetMySolutionsRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="developerId" type="xs:string"/>
+					<xs:element minOccurs="0" name="solutionStatus" type="xs:string"/>
+					<xs:element minOccurs="0" name="sortOption" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Possible value:Average Rating, Most Popular, Newest, Alphabetical. Default is Alphabetical.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="solutionCategory" type="xs:string"/>
+					<xs:element minOccurs="0" name="toolType" type="xs:string"/>
+					<xs:element minOccurs="0" name="platform" type="xs:string"/>
+					<xs:element minOccurs="0" name="developerType" type="xs:string"/>
+					<xs:element minOccurs="0" name="minRating" type="xs:int"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="GetMySolutionsResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="solution" type="tns:Solution"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="GetPromotionSolutionsRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="startTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="endTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="promotionType" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Possible values:Featured, MayWeSuggest
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="GetPromotionSolutionsResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="solutionPromotion" type="tns:SolutionPromotion"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="GetReviewsRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="solutionId" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="GetReviewsResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="review" type="tns:SolutionReview"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="GetSolutionsRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="solutionId" type="xs:long"/>
+					<xs:element minOccurs="0" name="developerId" type="xs:string"/>
+					<xs:element minOccurs="0" name="sortOption" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Possible value:Average Rating, Most Popular, Newest, Alphabetical. Default is Alphabetical.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="solutionCategory" type="xs:string"/>
+					<xs:element minOccurs="0" name="toolType" type="xs:string"/>
+					<xs:element minOccurs="0" name="platform" type="xs:string"/>
+					<xs:element minOccurs="0" name="developerType" type="xs:string"/>
+					<xs:element minOccurs="0" name="minRating" type="xs:int"/>
+					<xs:element minOccurs="0" name="pagination" type="tns:PaginationRequest"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="GetSolutionsResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="solutionHistogram" type="tns:SolutionHistogram"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="solution" type="tns:Solution"/>
+					<xs:element minOccurs="0" name="pagination" type="tns:PaginationResponse"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="UserVisitSolutionRequest">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceRequest">
+				<xs:sequence>
+					<xs:element name="solutionId" type="xs:long"/>
+					<xs:element minOccurs="0" name="clientIP" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="UserVisitSolutionResponse">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseServiceResponse">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PaginationRequest">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="entriesPerPage" type="xs:int"/>
+			<xs:element name="pageNumber" type="xs:int"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PaginationResponse">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="totalCount" type="xs:int"/>
+			<xs:element name="totalPages" type="xs:int"/>
+			<xs:element name="pageNumber" type="xs:int"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SolutionReview">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="reviewId" type="xs:long"/>
+			<xs:element name="submitTime" type="xs:dateTime"/>
+			<xs:element name="reviewSpec" type="tns:SolutionReviewSpec"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SolutionReviewEditSet">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="summary" type="xs:string"/>
+			<xs:element minOccurs="0" name="review" type="xs:string"/>
+			<xs:element minOccurs="0" name="featureRating" type="xs:int"/>
+			<xs:element minOccurs="0" name="usabilityRatingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="supportRatingSummary" type="xs:int"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SolutionReviewSpec">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="1" name="userId" type="xs:string"/>
+			<xs:element minOccurs="1" name="solutionId" type="xs:long"/>
+			<xs:element minOccurs="0" name="summary" type="xs:string"/>
+			<xs:element minOccurs="0" name="review" type="xs:string"/>
+			<xs:element minOccurs="0" name="featureRating" type="xs:int"/>
+			<xs:element minOccurs="0" name="usabilityRatingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="supportRatingSummary" type="xs:int"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AdminSolution">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="solutionId" type="xs:long"/>
+			<xs:element name="solutionStatus" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible value:In Review, Live, Revision Needed, Removed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="solutionSpec" type="tns:SolutionSpec"/>
+			<xs:element minOccurs="0" name="adminSolutionSpec" type="tns:AdminSolutionSpec"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Solution">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="solutionId" type="xs:long"/>
+			<xs:element name="solutionStatus" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible value:In Review, Live, Revision Needed, Removed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="solutionSpec" type="tns:SolutionSpec"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SolutionSpec">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="solutionName" type="xs:string"/>
+			<xs:element name="listingName" type="xs:string"/>
+			<xs:element name="developerId" type="xs:string"/>
+			<xs:element name="solutionURL" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="companyId" type="xs:string"/>
+			<xs:element minOccurs="0" name="companyName" type="xs:string"/>
+			<xs:element minOccurs="0" name="street1" type="xs:string"/>
+			<xs:element minOccurs="0" name="street2" type="xs:string"/>
+			<xs:element minOccurs="0" name="city" type="xs:string"/>
+			<xs:element minOccurs="0" name="stateOrProvince" type="xs:string"/>
+			<xs:element minOccurs="0" name="country" type="xs:string"/>
+			<xs:element minOccurs="0" name="postalCode" type="xs:string"/>
+			<xs:element minOccurs="0" name="companyURL" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="companyDescription" type="xs:string"/>
+			<xs:element minOccurs="0" name="email" type="xs:string"/>
+			<xs:element minOccurs="0" name="solutionShortDescription" type="xs:string"/>
+			<xs:element minOccurs="0" name="solutionDescription" type="xs:string"/>
+			<xs:element minOccurs="0" name="language" type="xs:string"/>
+			<xs:element minOccurs="0" name="pricingFormat" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Flat, Variable, Flat and Variable. Default is Invalid.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="pricingFrequency" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Daily, Monthly, Quarterly, Yearly. Default is Invalid.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="pricingPlan" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Free, One-Time Fee, Multiple Pricing Plans, Single Pricing Plan, Other. Default is Free.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="pricingDetails" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="solutionCategory" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Search, Bid/Buy, Monitor Auctions
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="developerType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:eBay, eBay Partners, Third-party developers
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="toolType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Desktop apps, Wireless/Mobile, Browser add-ons, Web-based apps, Instant messaging, Gadgets/Widgets, Other
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="platformsSupported" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Windows, Mac Os X, Windows Mobiles, iPhone, Internet Explorer, Mozilla Firefox
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="companyLogoURL" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="logoURLBig" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="logoURLSmall" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image1Big" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image1Small" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image2Big" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image2Small" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image3Big" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image3Small" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image4Big" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image4Small" type="xs:anyURI"/>
+			<xs:element name="globalId" type="xs:string">
+			<xs:annotation>
+					<xs:documentation>
+						Possible values:EBAY-US
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ratingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="featureRatingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="supportRatingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="usabilityRatingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="reviewCount" type="xs:int"/>
+			<xs:element minOccurs="0" name="impressionCount" type="xs:int"/>
+			<xs:element minOccurs="0" name="lastUpdateTime" type="xs:dateTime"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AdminSolutionSpec">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ebayApplication" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="certifiedApplication" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="certifiedServiceProviderService" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="certifiedServiceProviderSoftware" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="adminComment" type="xs:string"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="SolutionEditSet">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="solutionName" type="xs:string"/>
+			<xs:element minOccurs="0" name="listingName" type="xs:string"/>
+			<xs:element minOccurs="0" name="developerId" type="xs:string"/>
+			<xs:element minOccurs="0" name="companyId" type="xs:string"/>
+			<xs:element minOccurs="0" name="companyName" type="xs:string"/>
+			<xs:element minOccurs="0" name="street1" type="xs:string"/>
+			<xs:element minOccurs="0" name="street2" type="xs:string"/>
+			<xs:element minOccurs="0" name="city" type="xs:string"/>
+			<xs:element minOccurs="0" name="stateOrProvince" type="xs:string"/>
+			<xs:element minOccurs="0" name="country" type="xs:string"/>
+			<xs:element minOccurs="0" name="postalCode" type="xs:string"/>
+			<xs:element minOccurs="0" name="companyURL" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="companyDescription" type="xs:string"/>
+			<xs:element minOccurs="0" name="email" type="xs:string"/>
+			<xs:element minOccurs="0" name="solutionShortDescription" type="xs:string"/>
+			<xs:element minOccurs="0" name="solutionDescription" type="xs:string"/>
+			<xs:element minOccurs="0" name="solutionStatus" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible value:In Review, Live, Revision Needed, Removed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="solutionURL" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="language" type="xs:string"/>
+			<xs:element minOccurs="0" name="pricingFormat" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Flat, Variable, Flat and Variable
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="pricingFrequency" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Daily, Monthly, Quarterly, Yearly
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="pricingPlan" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Free, One-Time Fee, Multiple Pricing Formats, Single Pricing Format, other
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="pricingDetails" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="solutionCategory" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Search, Bid/Buy, Monitor Auctions
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="developerType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:eBay, eBay Partners, Third-party developers
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="toolType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Desktop apps, Wireless/Mobile, Browser add-ons, Web-based apps, Instant messaging, Gadgets/Widgets
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="platformsSupported" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Windows, Mac Os X, Windows Mobiles, iPhone, Internet Explorer, Moziller Firefox
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="companyLogoURL" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="logoURLBig" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="logoURLSmall" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image1Big" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image1Small" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image2Big" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image2Small" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image3Big" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image3Small" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image4Big" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="image4Small" type="xs:anyURI"/>
+			<xs:element minOccurs="0" name="globalId" type="xs:string"/>
+			<xs:element minOccurs="0" name="ratingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="featureRatingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="supportRatingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="usabilityRatingSummary" type="xs:int"/>
+			<xs:element minOccurs="0" name="reviewCount" type="xs:int"/>
+			<xs:element minOccurs="0" name="impressionCount" type="xs:int"/>
+			<xs:element minOccurs="0" name="lastUpdateTime" type="xs:dateTime"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AdminSolutionEditSet">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ebayApplication" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="certifiedApplication" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="CSPService" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="CSPSoftware" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="adminComment" type="xs:string"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SolutionPromotion">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="promotionId" type="xs:long"/>
+			<xs:element minOccurs="0" name="startTime" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="endTime" type="xs:dateTime"/>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="solutionId" type="xs:long"/>
+			<xs:element minOccurs="0" name="promotionType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Possible values:Featured, MayWeSuggest. Default is Featured.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SolutionHistogram">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="title" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="details" type="tns:SolutionHistogramEntry"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SolutionHistogramEntry">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="title" type="xs:string"/>
+			<xs:element name="count" type="xs:int"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="requesterCredentials">
+    <wsdl:part element="ns0:requesterCredentials" name="RequesterCredentials"/>
+  </wsdl:message>
+  <wsdl:message name="adminGetSolutionsRequest">
+    <wsdl:part element="ns0:adminGetSolutionsRequest" name="AdminGetSolutionsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="userVisitSolutionResponse">
+    <wsdl:part element="ns0:userVisitSolutionResponse" name="UserVisitSolutionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addReviewResponse">
+    <wsdl:part element="ns0:addReviewResponse" name="AddReviewResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getMySolutionsResponse">
+    <wsdl:part element="ns0:getMySolutionsResponse" name="GetMySolutionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="userVisitSolutionRequest">
+    <wsdl:part element="ns0:userVisitSolutionRequest" name="UserVisitSolutionRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addReviewRequest">
+    <wsdl:part element="ns0:addReviewRequest" name="AddReviewRequest"/>
+  </wsdl:message>
+  <wsdl:message name="adminGetSolutionsResponse">
+    <wsdl:part element="ns0:adminGetSolutionsResponse" name="AdminGetSolutionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="adminEditSolutionResponse">
+    <wsdl:part element="ns0:adminEditSolutionResponse" name="AdminEditSolutionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addSolutionForApprovalResponse">
+    <wsdl:part element="ns0:addSolutionForApprovalResponse" name="AddSolutionForApprovalResponse"/>
+  </wsdl:message>
+  <wsdl:message name="adminSetSolutionStatusRequest">
+    <wsdl:part element="ns0:adminSetSolutionStatusRequest" name="AdminSetSolutionStatusRequest"/>
+  </wsdl:message>
+  <wsdl:message name="findSolutionsRequest">
+    <wsdl:part element="ns0:findSolutionsRequest" name="FindSolutionsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="adminRemoveSolutionResponse">
+    <wsdl:part element="ns0:adminRemoveSolutionResponse" name="AdminRemoveSolutionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="editReviewRequest">
+    <wsdl:part element="ns0:editReviewRequest" name="EditReviewRequest"/>
+  </wsdl:message>
+  <wsdl:message name="editSolutionRequest">
+    <wsdl:part element="ns0:editSolutionRequest" name="EditSolutionRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getReviewsRequest">
+    <wsdl:part element="ns0:getReviewsRequest" name="GetReviewsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="adminRemoveReviewRequest">
+    <wsdl:part element="ns0:adminRemoveReviewRequest" name="AdminRemoveReviewRequest"/>
+  </wsdl:message>
+  <wsdl:message name="adminRemoveSolutionRequest">
+    <wsdl:part element="ns0:adminRemoveSolutionRequest" name="AdminRemoveSolutionRequest"/>
+  </wsdl:message>
+  <wsdl:message name="editReviewResponse">
+    <wsdl:part element="ns0:editReviewResponse" name="EditReviewResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPromotionSolutionsRequest">
+    <wsdl:part element="ns0:getPromotionSolutionsRequest" name="GetPromotionSolutionsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="adminSetSolutionStatusResponse">
+    <wsdl:part element="ns0:adminSetSolutionStatusResponse" name="AdminSetSolutionStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="adminEditSolutionRequest">
+    <wsdl:part element="ns0:adminEditSolutionRequest" name="AdminEditSolutionRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addSolutionForApprovalRequest">
+    <wsdl:part element="ns0:addSolutionForApprovalRequest" name="AddSolutionForApprovalRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getMySolutionsRequest">
+    <wsdl:part element="ns0:getMySolutionsRequest" name="GetMySolutionsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getPromotionSolutionsResponse">
+    <wsdl:part element="ns0:getPromotionSolutionsResponse" name="GetPromotionSolutionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="adminRemoveReviewResponse">
+    <wsdl:part element="ns0:adminRemoveReviewResponse" name="AdminRemoveReviewResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getSolutionsRequest">
+    <wsdl:part element="ns0:getSolutionsRequest" name="GetSolutionsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="adminSetPromotionSolutionsResponse">
+    <wsdl:part element="ns0:adminSetPromotionSolutionsResponse" name="AdminSetPromotionSolutionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getReviewsResponse">
+    <wsdl:part element="ns0:getReviewsResponse" name="GetReviewsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getSolutionsResponse">
+    <wsdl:part element="ns0:getSolutionsResponse" name="GetSolutionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="adminSetPromotionSolutionsRequest">
+    <wsdl:part element="ns0:adminSetPromotionSolutionsRequest" name="AdminSetPromotionSolutionsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="editSolutionResponse">
+    <wsdl:part element="ns0:editSolutionResponse" name="EditSolutionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="findSolutionsResponse">
+    <wsdl:part element="ns0:findSolutionsResponse" name="FindSolutionsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="SolutionDirectoryServicePort">
+    <wsdl:operation name="addReview">
+      <wsdl:input message="ns0:addReviewRequest"/>
+      <wsdl:output message="ns0:addReviewResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addSolutionForApproval">
+      <wsdl:input message="ns0:addSolutionForApprovalRequest"/>
+      <wsdl:output message="ns0:addSolutionForApprovalResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="adminEditSolution">
+      <wsdl:input message="ns0:adminEditSolutionRequest"/>
+      <wsdl:output message="ns0:adminEditSolutionResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="adminGetSolutions">
+      <wsdl:input message="ns0:adminGetSolutionsRequest"/>
+      <wsdl:output message="ns0:adminGetSolutionsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="adminRemoveReview">
+      <wsdl:input message="ns0:adminRemoveReviewRequest"/>
+      <wsdl:output message="ns0:adminRemoveReviewResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="adminRemoveSolution">
+      <wsdl:input message="ns0:adminRemoveSolutionRequest"/>
+      <wsdl:output message="ns0:adminRemoveSolutionResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="adminSetPromotionSolutions">
+      <wsdl:input message="ns0:adminSetPromotionSolutionsRequest"/>
+      <wsdl:output message="ns0:adminSetPromotionSolutionsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="adminSetSolutionStatus">
+      <wsdl:input message="ns0:adminSetSolutionStatusRequest"/>
+      <wsdl:output message="ns0:adminSetSolutionStatusResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="editReview">
+      <wsdl:input message="ns0:editReviewRequest"/>
+      <wsdl:output message="ns0:editReviewResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="editSolution">
+      <wsdl:input message="ns0:editSolutionRequest"/>
+      <wsdl:output message="ns0:editSolutionResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="findSolutions">
+      <wsdl:input message="ns0:findSolutionsRequest"/>
+      <wsdl:output message="ns0:findSolutionsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getMySolutions">
+      <wsdl:input message="ns0:getMySolutionsRequest"/>
+      <wsdl:output message="ns0:getMySolutionsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPromotionSolutions">
+      <wsdl:input message="ns0:getPromotionSolutionsRequest"/>
+      <wsdl:output message="ns0:getPromotionSolutionsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getReviews">
+      <wsdl:input message="ns0:getReviewsRequest"/>
+      <wsdl:output message="ns0:getReviewsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getSolutions">
+      <wsdl:input message="ns0:getSolutionsRequest"/>
+      <wsdl:output message="ns0:getSolutionsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="userVisitSolution">
+      <wsdl:input message="ns0:userVisitSolutionRequest"/>
+      <wsdl:output message="ns0:userVisitSolutionResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SolutionDirectoryServiceHttpBinding" type="ns0:SolutionDirectoryServicePort">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="addReview">
+      <http:operation location="SolutionDirectoryService/addReview"/>
+      <wsdl:input>
+        <mime:content part="addReview" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="addReview" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSolutionForApproval">
+      <http:operation location="SolutionDirectoryService/addSolutionForApproval"/>
+      <wsdl:input>
+        <mime:content part="addSolutionForApproval" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="addSolutionForApproval" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminEditSolution">
+      <http:operation location="SolutionDirectoryService/adminEditSolution"/>
+      <wsdl:input>
+        <mime:content part="adminEditSolution" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="adminEditSolution" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminGetSolutions">
+      <http:operation location="SolutionDirectoryService/adminGetSolutions"/>
+      <wsdl:input>
+        <mime:content part="adminGetSolutions" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="adminGetSolutions" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminRemoveReview">
+      <http:operation location="SolutionDirectoryService/adminRemoveReview"/>
+      <wsdl:input>
+        <mime:content part="adminRemoveReview" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="adminRemoveReview" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminRemoveSolution">
+      <http:operation location="SolutionDirectoryService/adminRemoveSolution"/>
+      <wsdl:input>
+        <mime:content part="adminRemoveSolution" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="adminRemoveSolution" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminSetPromotionSolutions">
+      <http:operation location="SolutionDirectoryService/adminSetPromotionSolutions"/>
+      <wsdl:input>
+        <mime:content part="adminSetPromotionSolutions" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="adminSetPromotionSolutions" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminSetSolutionStatus">
+      <http:operation location="SolutionDirectoryService/adminSetSolutionStatus"/>
+      <wsdl:input>
+        <mime:content part="adminSetSolutionStatus" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="adminSetSolutionStatus" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editReview">
+      <http:operation location="SolutionDirectoryService/editReview"/>
+      <wsdl:input>
+        <mime:content part="editReview" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="editReview" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editSolution">
+      <http:operation location="SolutionDirectoryService/editSolution"/>
+      <wsdl:input>
+        <mime:content part="editSolution" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="editSolution" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findSolutions">
+      <http:operation location="SolutionDirectoryService/findSolutions"/>
+      <wsdl:input>
+        <mime:content part="findSolutions" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="findSolutions" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMySolutions">
+      <http:operation location="SolutionDirectoryService/getMySolutions"/>
+      <wsdl:input>
+        <mime:content part="getMySolutions" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getMySolutions" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPromotionSolutions">
+      <http:operation location="SolutionDirectoryService/getPromotionSolutions"/>
+      <wsdl:input>
+        <mime:content part="getPromotionSolutions" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getPromotionSolutions" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReviews">
+      <http:operation location="SolutionDirectoryService/getReviews"/>
+      <wsdl:input>
+        <mime:content part="getReviews" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getReviews" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSolutions">
+      <http:operation location="SolutionDirectoryService/getSolutions"/>
+      <wsdl:input>
+        <mime:content part="getSolutions" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getSolutions" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="userVisitSolution">
+      <http:operation location="SolutionDirectoryService/userVisitSolution"/>
+      <wsdl:input>
+        <mime:content part="userVisitSolution" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="userVisitSolution" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SolutionDirectoryServiceSOAPBinding" type="ns0:SolutionDirectoryServicePort">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addReview">
+    <soap12:operation soapAction="urn:addReview" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>            
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSolutionForApproval">
+    <soap12:operation soapAction="urn:addSolutionForApproval" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>      
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminEditSolution">
+    <soap12:operation soapAction="urn:adminEditSolution" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>            
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminGetSolutions">
+    <soap12:operation soapAction="urn:adminGetSolutions" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>        
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminRemoveReview">
+    <soap12:operation soapAction="urn:adminRemoveReview" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>          
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminRemoveSolution">
+    <soap12:operation soapAction="urn:adminRemoveSolution" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>           
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminSetPromotionSolutions">
+    <soap12:operation soapAction="urn:adminSetPromotionSolutions" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>          
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminSetSolutionStatus">
+    <soap12:operation soapAction="urn:adminSetSolutionStatus" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>       
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editReview">
+    <soap12:operation soapAction="urn:editReview" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>           
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editSolution">
+    <soap12:operation soapAction="urn:editSolution" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>          
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findSolutions">
+    <soap12:operation soapAction="urn:findSolutions" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMySolutions">
+    <soap12:operation soapAction="urn:getMySolutions" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>            
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPromotionSolutions">
+    <soap12:operation soapAction="urn:getPromotionSolutions" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReviews">
+    <soap12:operation soapAction="urn:getReviews" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSolutions">
+    <soap12:operation soapAction="urn:getSolutions" style="document"/>
+      <wsdl:input>
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="userVisitSolution">
+    <soap12:operation soapAction="urn:userVisitSolution" style="document"/>
+      <wsdl:input>
+    <soap12:header message="ns0:requesterCredentials" part="RequesterCredentials" use="literal"/>            
+    <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SolutionDirectoryService">
+    <wsdl:port binding="ns0:SolutionDirectoryServiceSOAPBinding" name="SolutionDirectoryServiceSOAP">
+    <soap12:address location="http://svcs.ebay.com/SolutionDirectoryService"/>
+    </wsdl:port>
+    <wsdl:port binding="ns0:SolutionDirectoryServiceHttpBinding" name="SolutionDirectoryServiceHttp">
+      <http:address location="http://svcs.ebay.com/SolutionDirectoryService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

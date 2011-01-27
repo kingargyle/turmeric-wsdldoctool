@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<outputgenerators>
+		<outputgenerator>
+			<class>org.ebayopensource.turmeric.tools.annoparser.outputgenerator.impl.TestOpGenClass
+			</class>
+			<mode>debug</mode>
+		</outputgenerator>
+	</outputgenerators>
+</config>

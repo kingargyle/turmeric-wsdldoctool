@@ -1,0 +1,1546 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.ebay.com/marketplace/catalog/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="CoreProductService" targetNamespace="http://www.ebay.com/marketplace/catalog/v1/services">
+  <wsdl:types>
+  
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/catalog/v1/services">
+
+<xs:element name="addProductsRequest" nillable="true" type="tns:AddProductsRequest"/>
+<xs:element name="addProductsResponse" nillable="true" type="tns:AddProductsResponse"/>
+<xs:element name="overwriteProductsRequest" nillable="true" type="tns:OverwriteProductsRequest"/>
+<xs:element name="overwriteProductsResponse" nillable="true" type="tns:OverwriteProductsResponse"/>
+<xs:element name="deleteProductsRequest" nillable="true" type="tns:DeleteProductsRequest"/>
+<xs:element name="deleteProductsResponse" nillable="true" type="tns:DeleteProductsResponse"/>
+<xs:element name="mergeProductsRequest" nillable="true" type="tns:MergeProductsRequest"/>
+<xs:element name="mergeProductsResponse" nillable="true" type="tns:MergeProductsResponse"/>
+<xs:element name="getProductsRequest" nillable="true" type="tns:GetProductsRequest"/>
+<xs:element name="getProductsResponse" nillable="true" type="tns:GetProductsResponse"/>
+
+<xs:complexType abstract="true" name="BaseServiceRequest">
+	<xs:annotation>
+		<xs:documentation>
+			This is the base class for request container for all service operations.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType abstract="true" name="BaseProductServiceRequest">
+	<xs:annotation>
+		<xs:documentation>
+			This is the base class for request container for all operations in Product Service
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceRequest">
+			<xs:sequence>
+				<xs:element name="invocationId" type="xs:string">
+					<xs:annotation>			
+						<xs:documentation>
+							a unique ID assigned to each request by client within the context of this service call.
+							This ID is sent back to client in service response so that client can correlate response with request in batch processing mode
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>				
+			</xs:sequence>			
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="GetProductRequest">
+	<xs:annotation>
+		<xs:documentation>
+			Extends BaseProductServiceRequest. This is the request type for getProduct operation
+			To specify a product, user can use either ProviderProductIdWithCatalogInfo or EbayCoreProductIdWithLocale. If both are present, EbayCoreProductIdWithLocale takes precedence
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceRequest">
+			<xs:sequence>
+				<xs:choice>
+					<xs:annotation>
+						<xs:documentation>
+							Client can refer to a product either by its ProviderProductIdWithCatalogInfo or by its EbayCoreProductIdWithLocale
+						</xs:documentation>
+					</xs:annotation>
+					<xs:element name="providerProductIdentifier" type="tns:ProviderProductIdWithCatalogInfo">			
+						<xs:annotation>
+							<xs:documentation>
+								External identification of the product to get
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="localeCPID" type="tns:EbayCoreProductIdWithLocale">			
+						<xs:annotation>
+							<xs:documentation>
+								Internal identification of the product to get
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+	<xs:complexType name="GetProductsRequest">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="getProductRequest" type="tns:GetProductRequest">
+				<xs:annotation>
+					<xs:documentation>
+						a list of getProductRequest for batch operation
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>				
+	</xs:complexType>
+
+<xs:complexType name="AddProductRequest">
+	<xs:annotation>
+		<xs:documentation>
+			Extends BaseProductServiceRequest. This is the request type for addProduct operation
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceRequest">
+			<xs:sequence>
+				<xs:element name="providerProductIdentifier" type="tns:ProviderProductIdWithCatalogInfo">			
+					<xs:annotation>
+						<xs:documentation>
+							External identification of the product to add
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="1" name="propertyValue" type="tns:PropertyValueWithSourceInfo">
+					<xs:annotation>			
+						<xs:documentation>
+							Property values of the product
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>							
+			</xs:sequence>		
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+	<xs:complexType name="AddProductsRequest">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="addProductRequest" type="tns:AddProductRequest">
+				<xs:annotation>
+					<xs:documentation>
+						a list of AddProductRequests for batch operation
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>				
+	</xs:complexType>
+	
+<xs:complexType name="OverwriteProductRequest">
+	<xs:annotation>
+		<xs:documentation>
+			Extends BaseProductServiceRequest. This is the request type for overwriteProduct operation
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceRequest">
+			<xs:sequence>
+				<xs:element name="localeCPID" type="tns:EbayCoreProductIdWithLocale">			
+					<xs:annotation>
+						<xs:documentation>
+							Internal identification of the product to overwrite
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="1" name="propertyValue" type="tns:PropertyValueWithSourceInfo">
+					<xs:annotation>			
+						<xs:documentation>
+							Property values of the product
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>							
+			</xs:sequence>		
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+	<xs:complexType name="OverwriteProductsRequest">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="overwriteProductRequest" type="tns:OverwriteProductRequest">
+				<xs:annotation>
+					<xs:documentation>
+						a list of OverwriteProductRequests for batch operation
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>				
+	</xs:complexType>	
+
+<xs:complexType name="DeleteProductRequest">
+	<xs:annotation>
+		<xs:documentation>
+			Extends BaseProductServiceRequest. This is the request type for deleteProduct operation.
+			To specify a product, user can use either ProviderProductIdWithCatalogInfo or EbayCoreProductIdWithLocale. If both are present, EbayCoreProductIdWithLocale takes precedence
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceRequest">
+			<xs:sequence>
+				<xs:element name="userId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							requester userId, for tracking purpose
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>
+					<xs:annotation>
+						<xs:documentation>
+							Client can refer to a product either by its ProviderProductIdWithCatalogInfo or by its EbayCoreProductIdWithLocale
+						</xs:documentation>			
+					</xs:annotation>				
+					<xs:element name="providerProductIdentifier" type="tns:ProviderProductIdWithCatalogInfo">			
+						<xs:annotation>
+							<xs:documentation>
+								External identification of the product to delete
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="localeCPID" type="tns:EbayCoreProductIdWithLocale">			
+						<xs:annotation>
+							<xs:documentation>
+								Internal identification of the product to delete
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+	
+	<xs:complexType name="DeleteProductsRequest">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="deleteProductRequest" type="tns:DeleteProductRequest">
+				<xs:annotation>
+					<xs:documentation>
+						a list of DeleteProductRequests for batch operation
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>				
+	</xs:complexType>	
+	
+<xs:complexType name="MergeProductRequest">
+	<xs:annotation>
+		<xs:documentation>
+			Extends BaseProductServiceRequest. This is the request type for mergeProduct operation
+			To specify a product, user can use either ProviderProductIdWithCatalogInfo or EbayCoreProductIdWithLocale. If both are present, EbayCoreProductIdWithLocale takes precedence			
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceRequest">
+			<xs:sequence>
+				<xs:element name="requester" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							requester identity, for tracking purpose
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>
+					<xs:annotation>
+						<xs:documentation>
+						    This is the product to be discarded.
+							Client can refer to the product either by its ProviderProductIdWithCatalogInfo or by its EbayCoreProductIdWithLocale
+						</xs:documentation>
+					</xs:annotation>								
+					<xs:element name="discardProviderProductIdentifier" type="tns:ProviderProductIdWithCatalogInfo">			
+						<xs:annotation>
+							<xs:documentation>
+								External identification of the product to be discarded.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="discardLocaleCPID" type="tns:EbayCoreProductIdWithLocale">			
+						<xs:annotation>
+							<xs:documentation>
+								Internal identification of the product to be discarded. 
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+				<xs:choice>
+					<xs:annotation>
+						<xs:documentation>
+						    This is the merge destination. Product will be retained.
+							Client can refer to the product either by its ProviderProductIdWithCatalogInfo or by its EbayCoreProductIdWithLocale
+						</xs:documentation>
+					</xs:annotation>				
+					<xs:element name="retainProviderProductIdentifier" type="tns:ProviderProductIdWithCatalogInfo">			
+						<xs:annotation>
+							<xs:documentation>
+								External identification of the product to retain
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="retainLocaleCPID" type="tns:EbayCoreProductIdWithLocale">			
+						<xs:annotation>
+							<xs:documentation>
+								Internal identification of the product to retain
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>										
+				</xs:choice>
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>		
+	
+	<xs:complexType name="MergeProductsRequest">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="mergeProductRequest" type="tns:MergeProductRequest">
+				<xs:annotation>
+					<xs:documentation>
+						a list of MergeProductRequests for batch operation
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>				
+	</xs:complexType>
+	
+	<xs:complexType name="ProviderProductId">
+		<xs:sequence>
+			<xs:annotation>			
+				<xs:documentation>
+					defines a productId in the context of a provider
+				</xs:documentation>
+			</xs:annotation>	
+			<xs:element name="providerName" type="xs:string">
+				<xs:annotation>			
+					<xs:documentation>
+						name of the provider. Examples are MUZE, CNet, C3
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>				
+			<xs:element name="ID" type="xs:string">
+				<xs:annotation>			
+					<xs:documentation>
+						provider's productID
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+		
+	<xs:complexType name="EbayCoreProductId">
+		<xs:sequence>
+			<xs:annotation>			
+				<xs:documentation>
+					represents CPID (core product ID) in eBay, Inc. product repository
+				</xs:documentation>
+			</xs:annotation>	
+			<xs:element name="cpid" type="xs:string">
+				<xs:annotation>			
+					<xs:documentation>
+						CPID in eBay, Inc. product repository
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>				
+		</xs:sequence>
+	</xs:complexType>
+			
+	<xs:complexType name="ProviderProductIdWithCatalogInfo">
+		<xs:sequence>
+			<xs:annotation>			
+				<xs:documentation>
+					provider's productId with catalog information
+				</xs:documentation>
+			</xs:annotation>	
+			<xs:element name="catalogName" type="xs:string">
+				<xs:annotation>			
+					<xs:documentation>
+						canonical name of the catalog as defined in eBay, Inc catalog DB
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+			<xs:element name="locale" type="tns:Locale">
+				<xs:annotation>			
+					<xs:documentation>
+						locale this product belongs to
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+			<xs:element name="providerProductId" type="tns:ProviderProductId">
+				<xs:annotation>			
+					<xs:documentation>
+						provider's product identifier
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="EbayCoreProductIdWithLocale">
+		<xs:sequence>
+			<xs:annotation>			
+				<xs:documentation>
+					CPID with locale
+				</xs:documentation>
+			</xs:annotation>	
+			<xs:element name="locale" type="tns:Locale">
+				<xs:annotation>			
+					<xs:documentation>
+						locale this product belongs to
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+			<xs:element name="ebayCoreProductID" type="tns:EbayCoreProductId">
+				<xs:annotation>			
+					<xs:documentation>
+						eBay Core Product ID (a.k.a. CPID)
+					</xs:documentation>
+				</xs:annotation>				
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>			
+	
+<xs:complexType name="Locale">
+ <xs:simpleContent>
+  <xs:extension base="xs:token">
+   <xs:annotation>
+    <xs:documentation>
+     Valid values are:
+    US_EN, DE_DE, GB_EN, FR_FR, NL_NL, IT_IT, CN_ZH, AU_EN, ES_ES, IN_IN, CA_FR, BE_FR
+     <!-- en_US, de_dE, en_GB, fr_FR, nl_NL, it_IT, zh_CN, en_AU, es_ES, in_IN, fr_CA, fr_BE -->
+    </xs:documentation>
+   </xs:annotation>
+  </xs:extension>
+ </xs:simpleContent>
+</xs:complexType>
+
+<xs:complexType name="UnitOfMeasurement">
+ <xs:simpleContent>
+  <xs:extension base="xs:token">
+   <xs:annotation>   
+    <xs:documentation>
+     UOM of this value.
+     List of valid values are: bps, kbps, bit, byte, kb, MB, mW, W, Hz, kHz, m, mm, rph, hr, min, ms, ns, sec, g, lbs
+    </xs:documentation>
+   </xs:annotation> 
+  </xs:extension>
+ </xs:simpleContent>
+</xs:complexType>
+
+	<xs:complexType name="Property">
+		<xs:sequence>
+			<xs:element name="canonicalName" type="xs:string">
+				<xs:annotation>			
+					<xs:documentation>
+						This is the canonical name of the property. Used to identify a property within a catalog.
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Value">
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>
+						A value can be one of the types given below.
+					</xs:documentation>			
+				</xs:annotation>
+				<xs:element name="stringValue" type="tns:StringValue">
+					<xs:annotation>			
+						<xs:documentation>
+							For string value type.
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>
+				<xs:element name="numericValue" type="tns:NumericValue">
+					<xs:annotation>			
+						<xs:documentation>
+							For numeric value type.
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>				
+				<xs:element name="uriValue" type="tns:URIValue">
+					<xs:annotation>			
+						<xs:documentation>
+							For URL value type.
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>			
+			</xs:choice>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>										
+		</xs:sequence>
+	</xs:complexType>
+	
+<xs:complexType name="ValueWithSourceInfo">
+	<xs:annotation>
+		<xs:documentation>
+			Extends Value with source information
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:Value">
+			<xs:sequence>
+				<xs:element maxOccurs="1" minOccurs="0" name="ownershipType" type="tns:OwnershipType">
+					<xs:annotation>			
+						<xs:documentation>
+							If OwnershipType is not specified, the default OwnershipType for that provider and Catalog will be used. 
+							For OverwriteProduct operation, default ownershipType is AFFIRMATIVE unless specified
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" name="sourceInfo" type="tns:SourceInfo">
+					<xs:annotation>			
+						<xs:documentation>
+							source information for this value.
+							In addProduct request and getProduct response, default source is provider of the product with no userId.
+							In overwriteProduct request, default source is eBay Internal with no userId.
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>			
+			</xs:sequence>			
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+
+	<xs:complexType name="SourceInfo">
+		<xs:annotation>
+			<xs:documentation>
+				This type captures source of the information
+			</xs:documentation>			
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="providerProductId" type="tns:ProviderProductId">
+				<xs:annotation>			
+					<xs:documentation>
+						Provider product which owns this property value. This is only used in getProduct response.
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>			
+			<xs:element maxOccurs="1" minOccurs="0" name="dataProviderIdentifier" type="tns:DataProviderIdentifier">
+				<xs:annotation>			
+					<xs:documentation>
+						For properties like images and descriptions, this is the provider specific user_id that contributed the property value
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>				
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="DataProviderIdentifier">
+		<xs:annotation>
+			<xs:documentation>
+				This type holds a userId and the provider this userId belongs to
+			</xs:documentation>			
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="providerName" type="xs:string">
+				<xs:annotation>			
+					<xs:documentation>
+						Name of the provider this user belongs to
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>			
+			<xs:element name="userId" type="xs:string">
+				<xs:annotation>			
+					<xs:documentation>
+						ID of the user
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>				
+		</xs:sequence>
+	</xs:complexType>	
+
+	<xs:complexType name="PropertyValueWithSourceInfo">
+		<xs:annotation>
+			<xs:documentation>
+				This type associates Property with a list of values. It describes property value of a product. Used in AddProduct input, OverwriteProduct input and GetProduct output
+			</xs:documentation>			
+		</xs:annotation>
+		<xs:sequence>
+				<xs:element name="property" type="tns:Property">
+					<xs:annotation>			
+						<xs:documentation>
+							Property the values are for
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="1" name="value" type="tns:ValueWithSourceInfo">
+					<xs:annotation>			
+						<xs:documentation>
+							Values for the property. A multi-valued property may have multiple values
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>				
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="NumericValue">
+		<xs:annotation>			
+			<xs:documentation>
+				This class holds a numeric value
+			</xs:documentation>
+		</xs:annotation>
+			<xs:sequence>
+				<xs:element name="value" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							a number
+						</xs:documentation>
+					</xs:annotation>					
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" name="unitOfMeasurement" type="tns:UnitOfMeasurement">
+					<xs:annotation>			
+						<xs:documentation>
+							UOM of this value if applicable
+						</xs:documentation>
+					</xs:annotation>	
+				</xs:element>					
+			</xs:sequence>
+	</xs:complexType>	
+	
+	<xs:complexType name="StringValue">
+		<xs:annotation>			
+			<xs:documentation>
+				This class holds a String value
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="value" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						a string value						
+					</xs:documentation>
+				</xs:annotation>					
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+		
+	<xs:complexType name="URIValue">
+		<xs:annotation>			
+			<xs:documentation>
+				This class holds a URL value
+			</xs:documentation>
+		</xs:annotation>	
+			<xs:sequence>
+				<xs:element name="value" type="xs:anyURI">
+					<xs:annotation>			
+						<xs:documentation>
+							as part of request, this will be the URL to download media file
+							as part of response, this will be the URL where the media file is stored on EPS
+						</xs:documentation>
+					</xs:annotation>					
+				</xs:element>
+			</xs:sequence>
+	</xs:complexType>			
+	
+	<xs:simpleType name="OwnershipType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AFFIRMATIVE">
+				<xs:annotation>
+					<xs:documentation>
+						We know for sure we own the data completely
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRESUMED">
+				<xs:annotation>
+					<xs:documentation>
+						We believe we own the data
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+<xs:complexType abstract="true" name="BaseProductServiceResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Base response container for all service operations in the ProductService.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseServiceResponse">
+			<xs:sequence>
+				<xs:element maxOccurs="1" minOccurs="0" name="returnMessage" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							informational string message from the service operation
+						</xs:documentation>
+					</xs:annotation>				
+				</xs:element>
+				<xs:element name="invocationId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							a unique ID assigned to each request by client.
+							This ID is sent back to client in service response so that client can correlate response with request in batch processing mode						
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>		
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>	
+
+<xs:complexType name="GetProductResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Response for getProduct operation
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceResponse">
+			<xs:sequence>
+				<xs:element name="localeCPID" type="tns:EbayCoreProductIdWithLocale">			
+					<xs:annotation>
+						<xs:documentation>
+							Internal identification of the product, i.e. CPID and Locale_ID
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ownerProduct" type="tns:ProviderProductId">
+					<xs:annotation>			
+						<xs:documentation>
+							product which owns the locale CPID
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>
+				<xs:element name="ownershipType" type="tns:OwnershipType">
+					<xs:annotation>			
+						<xs:documentation>
+							OwnershipType of this product
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>				
+				<xs:element maxOccurs="unbounded" minOccurs="1" name="propertyValue" type="tns:PropertyValueWithSourceInfo">
+					<xs:annotation>			
+						<xs:documentation>
+							Property values of the product
+						</xs:documentation>
+					</xs:annotation>			
+				</xs:element>			
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>	
+
+	<xs:complexType name="GetProductsResponse">
+		<xs:annotation>
+			<xs:documentation>
+				This is a container for list of getProductResponses.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="getProductResponse" type="tns:GetProductResponse">
+				<xs:annotation>
+					<xs:documentation>
+						response for one getProduct request
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+<xs:complexType name="AddProductResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Response for addProduct operation
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceResponse">
+			<xs:sequence>
+				<xs:element name="productTitle" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							title of the product
+						</xs:documentation>
+					</xs:annotation>				
+				</xs:element>
+					<xs:element name="localeCPID" type="tns:EbayCoreProductIdWithLocale">			
+						<xs:annotation>
+							<xs:documentation>
+								Internal identification of the product added / updated / merged into
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>				
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>	
+	
+	<xs:complexType name="AddProductsResponse">
+		<xs:annotation>
+			<xs:documentation>
+				This is a container for list of addProductResponses.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="addProductResponse" type="tns:AddProductResponse">
+				<xs:annotation>
+					<xs:documentation>
+						response for one addProduct request
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+<xs:complexType name="OverwriteProductResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Response for overwriteProduct operation
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceResponse"/>
+	</xs:complexContent>
+</xs:complexType>		
+	
+	<xs:complexType name="OverwriteProductsResponse">
+		<xs:annotation>
+			<xs:documentation>
+				This is a container for list of overwriteProductResponses.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="overwriteProductResponse" type="tns:OverwriteProductResponse">
+				<xs:annotation>
+					<xs:documentation>
+						response for one overwriteProduct request
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+<xs:complexType name="DeleteProductResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Response for deleteProduct operation
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceResponse"/>
+	</xs:complexContent>
+</xs:complexType>	
+	
+	<xs:complexType name="DeleteProductsResponse">
+		<xs:annotation>
+			<xs:documentation>
+				This is a container for list of deleteProductResponses.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="deleteProductResponse" type="tns:DeleteProductResponse">
+				<xs:annotation>
+					<xs:documentation>
+						response for one deleteProduct request
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+<xs:complexType name="MergeProductResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Response for mergeProduct operation
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="tns:BaseProductServiceResponse"/>
+	</xs:complexContent>
+</xs:complexType>	
+
+	<xs:complexType name="MergeProductsResponse">
+		<xs:annotation>
+			<xs:documentation>
+				This is a container for list of mergeProductResponses.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="mergeProductResponse" type="tns:MergeProductResponse">
+				<xs:annotation>
+					<xs:documentation>
+						response for one mergeProduct request
+					</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>				
+	
+<xs:complexType abstract="true" name="BaseServiceResponse">
+	<xs:annotation>
+		<xs:documentation>
+			Base response container for all service operations. Contains error information
+			associated with the request.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="ack" type="tns:AckValue">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether there are any errors or warnings associated with the
+					processing of the request.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+			<xs:annotation>
+				<xs:documentation>
+					Information for an error or warning that occurred when eBay processed the
+					request. Not returned when responseStatus is Success. See TBD 
+					for a list of errors and warnings that can be returned by ProductService operations.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="version" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The version of the response payload schema. Indicates the version of the
+					schema that eBay used to process the request. Developer Technical Support 
+					may ask you for the version value when you work with them to troubleshoot 
+					issues.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+
+		</xs:element>
+		<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+			<xs:annotation>
+				<xs:documentation>
+					This value represents the date and time when eBay processed the
+					request. The time zone of this value is &lt;a 
+					href="types/simpleTypes.html#dateTime"&gt;GMT&lt;/a&gt;
+					and the format is the
+					ISO 8601 date and time format (YYYY-MM-DDTHH:MM:SS.SSSZ).
+					See the "dateTime" type for information about this
+					time format and converting to and from the GMT time zone.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Always</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>		
+		<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ErrorMessage">
+	<xs:annotation>
+		<xs:documentation>
+			ErrorMessage to indicate any Error/Warning that occured as part of service 
+			call. Any run time error will not be reported here, but will be reported as 
+			part of a SOAP fault.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+			<xs:annotation>
+				<xs:documentation>
+					Details about a single error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ErrorData">
+	<xs:annotation>
+		<xs:documentation>
+			This represents error details.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:sequence>
+		<xs:element name="errorId" type="xs:long">
+			<xs:annotation>
+				<xs:documentation>
+					A unique code that identifies the particular error condition that occurred.
+					Your application can use error codes as identifiers in your customized
+					error-handling algorithms.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="domain" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the domain upon which the error occurred.
+					&lt;dl&gt;
+					&lt;lh&gt;Domains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Catalog
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						A business or validation error occurred for the Catalog Service.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						SOA
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						An exception occurred in the Service Oriented Architecture (SOA) framework.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="severity" type="tns:ErrorSeverity">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the error caused the request to fail (Error) or not
+					(Warning).
+					&lt;br&gt;&lt;br&gt;
+					If the request fails and the source of the problem is within the application
+					(such as a missing required element), please change the application before you
+					retry the request. If the problem is due to end-user input data, please alert
+					the end-user to the problem and provide the means for them to correct the data.
+					Once the problem in the application or data is resolved, you can attempt to re-
+					send the request to eBay.
+					&lt;br&gt;&lt;br&gt;
+					If the source of the problem is on eBay's side, you can retry the request as-is
+					a reasonable number of times (eBay recommends twice). If the error persists,
+					contact Developer Technical Support. Once the problem has been resolved, the
+					request may be resent in its original form.
+					&lt;br&gt;&lt;br&gt;
+					When a warning occurs, the error is returned in addition to the business data.
+					In this case, you do not need to retry the request (as the original request was
+					successful). However, depending on the cause or nature of the warning, you
+					might need to contact either the end user or eBay to effect a long term
+					solution to the problem to prevent it from reoccurring in the future.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="category" type="tns:ErrorCategory">
+			<xs:annotation>
+				<xs:documentation>
+					There are three categories of errors: request errors, application errors, and
+					system errors.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="message" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					A detailed description of the condition that resulted in the error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="subdomain" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the subdomain upon which the error occurred.
+					&lt;dl&gt;
+					&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+					&lt;dt&gt;
+						Product
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is specific to the ProductService.
+					&lt;/dd&gt;					
+					&lt;dt&gt;
+						Metadata
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is specific to the MetadataService.
+					&lt;/dd&gt;
+					&lt;dt&gt;
+						ProductDuplicateSearch
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is specific to the ProductDuplicateSearchService.
+					&lt;/dd&gt;					
+					&lt;dt&gt;
+						MarketplaceCommon
+					&lt;/dt&gt;
+					&lt;dd&gt;
+						The error is common to all Marketplace services.
+					&lt;/dd&gt;
+					&lt;/dl&gt;
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+			<xs:annotation>
+				<xs:documentation>
+					Unique identifier for an exception associated with an error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+		<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+			<xs:annotation>
+				<xs:documentation>
+					Some warning and error messages return one or more variables that contain
+					contextual information about the error. This is often the field or value that
+					triggered the error.
+				</xs:documentation>
+				<xs:appinfo>
+					<CallInfo>
+						<AllCalls/>
+						<Returned>Conditionally</Returned>
+					</CallInfo>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ErrorParameter">
+	<xs:annotation>
+		<xs:documentation>
+			Contextual information associated with an error.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						The name of the parameter in the list of parameter types returned
+						within the error type.
+					</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<AllCalls/>
+								<Returned>Conditionally</Returned>
+							</CallInfo>
+						</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+
+<xs:simpleType name="ErrorSeverity">
+	<xs:annotation>
+		<xs:documentation>
+			Indicates whether the error is a severe error (causing the request to fail)
+			or an informational error (a warning) that should be communicated to the
+			user.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Error">
+			<xs:annotation>
+				<xs:documentation>
+					The request that triggered the error was not processed successfully.
+					When a serious application-level error occurs, the error is returned
+					instead of the business data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Warning">
+			<xs:annotation>
+				<xs:documentation>
+					The request was processed successfully, but something occurred that may
+					affect your application or the user. For example, eBay may have changed a
+					value the user sent in. In this case, eBay returns a normal, successful
+					response and also returns the warning.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="ErrorCategory">
+	<xs:annotation>
+		<xs:documentation>
+			There are three categories of error: request errors, application errors,
+			and system errors. Request and application errors are caused primarily by
+			invalid data passed in the request. System errors are caused primarily by
+			application failures and cannot be corrected by changing request values.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="System">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates that an error has occurred on the eBay system side, such as a
+					database or server down. An application can retry the request as-is a
+					reasonable number of times (eBay recommends twice). If the error
+					persists, contact Developer Technical Support. Once the problem has been
+					resolved, the request may be resent in its original form.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Application">
+			<xs:annotation>
+				<xs:documentation>
+					An error occurred due to a problem with the request, such as missing or
+					invalid fields. The problem must be corrected before the request can be
+					made again. If the problem is due to something in the application (such
+					as a missing required field), the application must be changed. Once the
+					problem in the application or data is resolved, resend the corrected
+					request to eBay.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+		<xs:enumeration value="Request">
+			<xs:annotation>
+				<xs:documentation>
+					An error occurred due to a problem with the request, such as invalid or
+					missing data. The problem must be corrected before the request can be
+					made again. If the problem is a result of end-user data, the application
+					must alert the end-user to the problem and provide the means for the
+					end-user to correct the data. Once the problem in the data is resolved,
+					resend the request to eBay with the corrected data.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:enumeration>
+	</xs:restriction>
+</xs:simpleType>
+
+	<xs:simpleType name="AckValue">
+		<xs:annotation>
+			<xs:documentation>
+				Indicates whether the error is a severe error (causing
+				the request to fail) or an informational error (a
+				warning) that should be communicated to the user.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Success">
+				<xs:annotation>
+					<xs:documentation>
+						The request was processed successfully, but
+						something occurred that may affect your
+						application or the user.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Failure">
+				<xs:annotation>
+					<xs:documentation>
+						The request that triggered the error was not
+						processed successfully. When a serious
+						application-level error occurs, the error is
+						returned instead of the business data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Warning">
+				<xs:annotation>
+					<xs:documentation>
+						The request that triggered the error was
+						processed successfully but with some warnings.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PartialFailure">
+				<xs:annotation>
+					<xs:documentation>
+						The request that triggered the error was
+						processed successfully but with some warnings.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>	
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getProductsRequest">
+    <wsdl:part element="tns:getProductsRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addProductsResponse">
+    <wsdl:part element="tns:addProductsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteProductsResponse">
+    <wsdl:part element="tns:deleteProductsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteProductsRequest">
+    <wsdl:part element="tns:deleteProductsRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="overwriteProductsResponse">
+    <wsdl:part element="tns:overwriteProductsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="overwriteProductsRequest">
+    <wsdl:part element="tns:overwriteProductsRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="mergeProductsRequest">
+    <wsdl:part element="tns:mergeProductsRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="mergeProductsResponse">
+    <wsdl:part element="tns:mergeProductsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProductsResponse">
+    <wsdl:part element="tns:getProductsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addProductsRequest">
+    <wsdl:part element="tns:addProductsRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CoreProductServicePort">
+    <wsdl:operation name="addProducts">
+<wsdl:documentation>
+				<Version>1.0.0</Version>
+				operation to add products
+			</wsdl:documentation>
+      <wsdl:input message="tns:addProductsRequest" name="addProductsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:addProductsResponse" name="addProductsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="overwriteProducts">
+<wsdl:documentation>
+				<Version>1.0.0</Version>
+				operation to overwrite products
+			</wsdl:documentation>
+      <wsdl:input message="tns:overwriteProductsRequest" name="overwriteProductsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:overwriteProductsResponse" name="overwriteProductsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteProducts">
+<wsdl:documentation>
+				<Version>1.0.0</Version>
+				operation to delete products
+			</wsdl:documentation>
+      <wsdl:input message="tns:deleteProductsRequest" name="deleteProductsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteProductsResponse" name="deleteProductsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="mergeProducts">
+<wsdl:documentation>
+				<Version>1.0.0</Version>
+				operation to merge products
+			</wsdl:documentation>
+      <wsdl:input message="tns:mergeProductsRequest" name="mergeProductsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:mergeProductsResponse" name="mergeProductsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProducts">
+<wsdl:documentation>
+				<Version>1.0.0</Version>
+				operation to get products
+			</wsdl:documentation>
+      <wsdl:input message="tns:getProductsRequest" name="getProductsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getProductsResponse" name="getProductsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CoreProductServiceSOAPBinding" type="tns:CoreProductServicePort">
+
+  	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  	<wsdl:operation name="addProducts">
+
+  		<soap:operation soapAction="urn:addProducts"/>
+  		<wsdl:input name="addProductsRequest">
+
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output name="addProductsResponse">
+
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="overwriteProducts">
+
+  		<soap:operation soapAction="urn:overwriteProducts"/>
+  		<wsdl:input name="overwriteProductsRequest">
+
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output name="overwriteProductsResponse">
+
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="deleteProducts">
+
+  		<soap:operation soapAction="urn:deleteProducts"/>
+  		<wsdl:input name="deleteProductsRequest">
+
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output name="deleteProductsResponse">
+
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="mergeProducts">
+
+  		<soap:operation soapAction="urn:mergeProducts"/>
+  		<wsdl:input name="mergeProductsRequest">
+
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output name="mergeProductsResponse">
+
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="getProducts">
+
+  		<soap:operation soapAction="urn:getProducts"/>
+  		<wsdl:input name="getProductsRequest">
+
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output name="getProductsResponse">
+
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CoreProductServiceHttpBinding" type="tns:CoreProductServicePort">
+
+  	<http:binding verb="POST"/>
+  	<wsdl:operation name="addProducts">
+
+  		<http:operation location="/addProducts"/>
+  		<wsdl:input name="addProductsRequest">
+  			<mime:content part="addProducts" type="application/x-www-form-urlencoded"/>
+
+  		</wsdl:input>
+  		<wsdl:output name="addProductsResponse">
+  			<mime:content part="addProducts" type="text/xml"/>
+
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="overwriteProducts">
+
+  		<http:operation location="/overwriteProducts"/>
+  		<wsdl:input name="overwriteProductsRequest">
+  			<mime:content part="overwriteProducts" type="application/x-www-form-urlencoded"/>
+
+  		</wsdl:input>
+  		<wsdl:output name="overwriteProductsResponse">
+  			<mime:content part="overwriteProducts" type="text/xml"/>
+
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="deleteProducts">
+
+  		<http:operation location="/deleteProducts"/>
+  		<wsdl:input name="deleteProductsRequest">
+  			<mime:content part="deleteProducts" type="application/x-www-form-urlencoded"/>
+
+  		</wsdl:input>
+  		<wsdl:output name="deleteProductsResponse">
+  			<mime:content part="deleteProducts" type="text/xml"/>
+
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="mergeProducts">
+
+  		<http:operation location="/mergeProducts"/>
+  		<wsdl:input name="mergeProductsRequest">
+  			<mime:content part="mergeProducts" type="application/x-www-form-urlencoded"/>
+
+  		</wsdl:input>
+  		<wsdl:output name="mergeProductsResponse">
+  			<mime:content part="mergeProducts" type="text/xml"/>
+
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="getProducts">
+
+  		<http:operation location="/getProducts"/>
+  		<wsdl:input name="getProductsRequest">
+  			<mime:content part="getProducts" type="application/x-www-form-urlencoded"/>
+
+  		</wsdl:input>
+  		<wsdl:output name="getProductsResponse">
+  			<mime:content part="getProducts" type="text/xml"/>
+
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CoreProductService">
+<wsdl:documentation>
+			CoreProductService is the interface between eBay, Inc's product repository and applications that deal with product information.
+			CoreProductService provides operations to create, retrieve and update product data.
+		</wsdl:documentation>
+    <wsdl:port binding="tns:CoreProductServiceHttpBinding" name="CoreProductServiceHttp">
+      <http:address location="http://apicatalogs.vip.ebay.com/ws/spf/CoreProductService"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:CoreProductServiceSOAPBinding" name="CoreProductServiceSOAP">
+      <soap12:address location="http://apicatalogs.vip.ebay.com/ws/spf/CoreProductService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

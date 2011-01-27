@@ -1,0 +1,3654 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+			<xs:element name="getSearchKeywordsRecommendationRequest" nillable="true" type="tns:GetSearchKeywordsRecommendationRequest"/>
+			<xs:element name="getSearchKeywordsRecommendationResponse" nillable="true" type="tns:GetSearchKeywordsRecommendationResponse"/>
+
+
+			<xs:complexType name="GetSearchKeywordsRecommendationRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Checks specified keywords for spelling errors and returns corrected keywords 
+						that will provide better search results. If you make a keyword query
+						search that returns no results, use this call to check the keywords 
+						for misspellings. The call checks the words in context of the entire query. 
+						For example, if you submit "arry potter" in the request, the response will 
+						recommend "harry potter." However, if you submit "potter arry" in the 
+						request, the response will recommend "potter army." 
+						&lt;br&gt;&lt;br&gt;
+						The response will not return recommended keywords in the following 
+						conditions:
+						&lt;ul&gt;
+						&lt;li&gt;
+							Keywords value returns results (even a single item) in either 
+							findItemsByKeywords or findItemsAdvanced. 
+						&lt;/li&gt;
+						&lt;li&gt;
+							Keywords value contains no misspelled words (even if the keywords query 
+							returns no items).
+						&lt;/li&gt;
+						&lt;/ul&gt;
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Checks specified keywords and returns correctly spelled keywords for best 
+							search results. 
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="keywords" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										One or more words to use as a search query for finding items on eBay.  
+										It is best to include the complete keyworks value, as words are 
+										checked in context with each other. If you are using a URL request 
+										and your keyword query consists of multiple words, use "%20" separate 
+										the words (for example, "arry%20Potter"). 
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>getSearchKeywordsRecommendation</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="GetSearchKeywordsRecommendationResponse">
+				<xs:annotation>
+					<xs:documentation>
+						This is a response container for the spelling check and correction for 
+						keywords.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="keywords" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Contains a spell-checked version of the submitted keywords. Only 
+										returned if the keywords submitted in the request contained 
+										spelling errors. 
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>getSearchKeywordsRecommendation</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="findItemsByKeywordsRequest" nillable="true" type="tns:FindItemsByKeywordsRequest"/>
+			<xs:element name="findItemsByKeywordsResponse" nillable="true" type="tns:FindItemsByKeywordsResponse"/>
+
+
+			<xs:complexType name="FindItemsByKeywordsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Searches for items based on a keyword query and returns details for matching
+						items. Item filters can be used to restrict search results. Aspect filters 
+						can be used to further refine results. Use outputSelector to expand the 
+						amount of data returned for each matching item.
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Searches for eBay items based upon a keyword query and returns details
+							for matching items.
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="keywords" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										One or more words to use as a search query for finding items on eBay. 
+										By default, the query searches item tiltes only. If you are using a 
+										URL request and your keyword query consists of multiple words, use 
+										"%20" separate the words. For example, use Harry%20Potter to search 
+										for items containing those words in any order. You can incorporate 
+										wildcards into a multi-word search, as in "ap*%20ip*", which will 
+										return results for "apple ipod" among other matches. The words "and" 
+										and "or" are treated like any other word. Only use "and", "or", or 
+										"the" if you are searching for listings containing these words. 
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByKeywords</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="itemFilter" type="tns:ItemFilter">
+								<xs:annotation>
+									<xs:documentation>
+										Use item filters to narrow searches. Some filters 
+										
+										&lt;dl&gt;
+										&lt;dt&gt;
+											&lt;strong&gt;Applicable Values&lt;/strong&gt;
+										&lt;/dt&gt;
+										&lt;dt&gt;
+											AvailableTo
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Limits the result set to just those items available to the 
+											specified country. 
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											Condition
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											Currency
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											EndTimeFrom
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											EndTimeTo
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											ExcludeAutoPay
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											ExcludeSeller
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											FeaturedOnly
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											FeedbackScoreMax
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											FeedbackScoreMin
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											FreeShippingOnly
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											GetItFastOnly
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											HideDuplicateItems
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											ListingType
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											LocalPickupOnly
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											LocalSearchOnly
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											LocatedIn
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											LotsOnly
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											MaxBids
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											MaxDistance
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											MaxPrice
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											MaxQuantity
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											MinBids
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											MinPrice
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											MinQuantity
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											PaymentMethod
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											Seller
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											WorldOfGoodOnly
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;/dl&gt;
+										
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByKeywords</CallName>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="aspectFilter" type="tns:AspectFilter">
+								<xs:annotation>
+									<xs:documentation>
+										
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByKeywords</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="outputSelector" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+										Defines standard subsets of fields to return within the response.
+										&lt;br&gt;&lt;br&gt;
+										If you don't specify this field, a default set of fields is returned. If you
+										specify this field, then the set of fields returned includes the default fields
+										(refer to . If you specify this field, the additional fields returned can affect
+										the call's response time (performance), including in the case of feedback data.
+										
+										&lt;br&gt;&lt;br&gt;
+										&lt;b&gt;Applicable values:&lt;/b&gt;
+										&lt;dl&gt;
+										&lt;dt&gt;
+											AspectHistogram
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Include a CategoryHistogram container with information about 
+											categories that match your search.
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											CategoryHistogram
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Include a CategoryHistogram container with information about 
+											categories that match your search.
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											ItemSpecifics
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Include ItemSpecifics in the response. This only returns Item 
+											Specifics (if any) that are applicable to search results (not all 
+											of a listing's Item Specifics).
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											SellerInfo
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Include information about the seller in the response.
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											StoreInfo
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Include information about the seller's eBay store in the response.
+										&lt;/dd&gt;
+										&lt;/dl&gt;
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByKeywords</CallName>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="FindItemsByKeywordsResponse">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="categoryHistogramContainer" type="tns:CategoryHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByKeywords</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="aspectHistogramContainer" type="tns:AspectHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByKeywords</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="findItemsByCategoryRequest" nillable="true" type="tns:FindItemsByCategoryRequest"/>
+			<xs:element name="findItemsByCategoryResponse" nillable="true" type="tns:FindItemsByCategoryResponse"/>
+
+
+			<xs:complexType name="FindItemsByCategoryRequest">
+				<xs:annotation>
+					<xs:documentation>
+						
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Finds items in a specific category. Filters can be used to further restrict 
+							and refine results.
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" name="categoryId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Specifies the category for which to retrieve item listings.
+										&lt;br&gt;&lt;br&gt;
+										If the specified category ID doesn't match an existing category for 
+										the site, an invalid-category error message is returned. To determine 
+										valid categories, use findItemsByKeywords with a simple keywords 
+										query and outputSelector set to CategoryHistogram. Then make another 
+										findItemsByCategory call with the ID of a valid category.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="itemFilter" type="tns:ItemFilter">
+								<xs:annotation>
+									<xs:documentation>
+										
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="aspectFilter" type="tns:AspectFilter">
+								<xs:annotation>
+									<xs:documentation>
+										
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="outputSelector" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+										
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="FindItemsByCategoryResponse">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="categoryHistogramContainer" type="tns:CategoryHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="aspectHistogramContainer" type="tns:AspectHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="findItemsAdvancedRequest" nillable="true" type="tns:FindItemsAdvancedRequest"/>
+			<xs:element name="findItemsAdvancedResponse" nillable="true" type="tns:FindItemsAdvancedResponse"/>
+
+
+			<xs:complexType name="FindItemsAdvancedRequest">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							TBD
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="keywords" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										One or more words to use as a search query for finding items on eBay. 
+										By default, the query serches item titles only. If you are using a 
+										URL request and your keyword query consists of multiple words, use 
+										"%20" separate the words. For example, use Harry%20Potter to search 
+										for items containing those words in any order. You can incorporate 
+										wildcards into a multi-word search, as in "ap*%20ip*", which will 
+										return results for "apple ipod" among other matches. The words "and" 
+										and "or" are treated like any other word. Only use "and", "or", or 
+										"the" if you are searching for listings containing these words. 
+										findItemsAdvanced requires that you specify either keywords or 
+										categoryId.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsAdvanced</CallName>
+											<RequiredInput>Conditionally</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="categoryId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsAdvanced</CallName>
+											<RequiredInput>Conditionally</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="itemFilter" type="tns:ItemFilter">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsAdvanced</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="aspectFilter" type="tns:AspectFilter">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsAdvanced</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="outputSelector" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsAdvanced</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="descriptionSearch" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsAdvanced</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="FindItemsAdvancedResponse">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="categoryHistogramContainer" type="tns:CategoryHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsAdvanced</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="aspectHistogramContainer" type="tns:AspectHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsAdvanced</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="findItemsByProductRequest" nillable="true" type="tns:FindItemsByProductRequest"/>
+			<xs:element name="findItemsByProductResponse" nillable="true" type="tns:FindItemsByProductResponse"/>
+
+
+			<xs:complexType name="FindItemsByProductRequest">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							TBD
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="productId" type="tns:ProductId">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="itemFilter" type="tns:ItemFilter">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="outputSelector" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+										The findItemsAdvanced response contains a default set of data about items
+										matching your request. If you want more data than the default data, you can use
+										one or more OutputSelector fields, as follows:
+										
+										&lt;dl&gt;
+											&lt;dt&gt;
+												&lt;strong&gt;outputSelector values:&lt;/strong&gt;
+											&lt;/dt&gt;
+											&lt;dt&gt;
+												AspectHistogram
+											&lt;/dt&gt;
+											&lt;dd&gt;
+												
+											&lt;/dd&gt;
+											&lt;dt&gt;
+												CatagoryHistogram
+											&lt;/dt&gt;
+											&lt;dd&gt;
+											Returns a CategoryHistogram container with information about
+											categories that match your search.
+											&lt;/dd&gt;
+											&lt;dt&gt;
+												ItemSpecifics
+											&lt;/dt&gt;
+											&lt;dd&gt;
+												Returns a list of attribute and value pairs. The results only include Item
+												Specifics that would be included in the summary search results on the Web
+												site (if any), such as the item condition or the vehicle mileage and year. In
+												most categories, no summary Item Specifics are returned in search results
+												(even when the item is listed with Item Specifics.) So, for more Item
+												Specifics, you need to use GetSingleItem instead. Specify a query keyword
+												when you set IncludeSelector to ItemSpecifics.
+											&lt;/dd&gt;
+											&lt;dt&gt;
+												SellerInfo
+											&lt;/dt&gt;
+											&lt;dd&gt;
+												Returns information about the seller; includes the user ID and
+												feedback score of the seller.
+											&lt;/dd&gt;
+											&lt;dt&gt;
+												StoreInfo
+											&lt;/dt&gt;
+											&lt;dd&gt;
+												
+											&lt;/dd&gt;
+										&lt;/dl&gt;
+
+										* Details. Returns most available fields; includes ListingType and
+										PaymentMethods.
+										* SearchDetails. Returns additional fields that can affect the call's
+										performance, e.g. DistanceFromBuyer, if available.
+										* ExpansionItemCount. Returns the counts of items that would be returned with
+										expansions.
+											To use multiple IncludeSelector fields in a URL, separate them using a comma, for example:
+											IncludeSelector=Details, SellerInfo
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="FindItemsByProductResponse">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="aspectHistogramContainer" type="tns:AspectHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByProduct</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="findItemsIneBayStoresRequest" nillable="true" type="tns:FindItemsIneBayStoresRequest"/>
+			<xs:element name="findItemsIneBayStoresResponse" nillable="true" type="tns:FindItemsIneBayStoresResponse"/>
+
+
+			<xs:complexType name="FindItemsIneBayStoresRequest">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							TBD
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="keywords" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsIneBayStores</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="storeName" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsIneBayStores</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="itemFilter" type="tns:ItemFilter">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsIneBayStores</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="outputSelector" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsIneBayStores</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="aspectFilter" type="tns:AspectFilter">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsIneBayStores</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="FindItemsIneBayStoresResponse">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseFindingServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="categoryHistogramContainer" type="tns:CategoryHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsIneBayStores</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="aspectHistogramContainer" type="tns:AspectHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsIneBayStores</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="getHistogramsRequest" nillable="true" type="tns:GetHistogramsRequest"/>
+			<xs:element name="getHistogramsResponse" nillable="true" type="tns:GetHistogramsResponse"/>
+
+
+			<xs:complexType name="GetHistogramsRequest">
+				<xs:annotation>
+					<xs:documentation>
+						Gets histogram information for the supplied ...
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Gets histogram information for the supplied ...
+						</Summary>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="categoryId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The numeric ID of a category on eBay.
+										&lt;br /&gt;&lt;br /&gt;
+										Use an ID of -1 to retrieve the root category and the top-level (level 1) meta
+										categories. You can determine other CategoryIDs from the response from this call,
+										or from a specific item (retrieved from another call like findItemsAdvanced),
+										or from the eBay website.
+									</xs:documentation>
+									<xs:appinfo>
+										<MaxLength>10</MaxLength>
+										<CallInfo>
+											<CallName>getHistograms</CallName>
+											<RequiredInput>Yes</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="GetHistogramsResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Response to a call of getHistogramsRequest.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="categoryHistogramContainer" type="tns:CategoryHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>getHistograms</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="aspectHistogramContainer" type="tns:AspectHistogramContainer">
+								<xs:annotation>
+									<xs:documentation>
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>getHistograms</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for all service operations.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType abstract="true" name="BaseFindingServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for all operations in Finding Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="paginationInput" type="tns:PaginationInput">
+								<xs:annotation>
+									<xs:documentation>
+										
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<CallName>findItemsAdvanced</CallName>
+											<CallName>findItemsByKeywords</CallName>
+											<CallName>findItemsIneBayStores</CallName>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="sortOrder" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>
+										Sort the returned items according to a single specified sort order.
+										The available sort orders are:
+
+										&lt;dl&gt;
+										&lt;dt&gt;
+											&lt;strong&gt;sortOrder values:&lt;/strong&gt;
+										&lt;/dt&gt;
+										&lt;dt&gt;
+											BestMatch
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											BidCountAsc
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											BidCountDsc
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											Country
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											CurrentPrice
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											Distance
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											EndTime
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											PricePlusShippingAsc
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											PricePlusShippingDsc
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;dt&gt;
+											StartDate
+										&lt;/dt&gt;
+										&lt;dd&gt;
+											Description
+										&lt;/dd&gt;
+										&lt;/dl&gt;
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<CallName>findItemsAdvanced</CallName>
+											<CallName>findItemsByKeywords</CallName>
+											<CallName>findItemsIneBayStores</CallName>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="buyerPostalCode" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The postal code of the buyer, which is used as the basis for 
+										proximity searches. 
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<CallName>findItemsAdvanced</CallName>
+											<CallName>findItemsByKeywords</CallName>
+											<CallName>findItemsIneBayStores</CallName>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element minOccurs="0" name="affiliate" type="tns:Affiliate">
+								<xs:annotation>
+									<xs:documentation>
+										Container for affiliate details. eBay uses the specified affiliate 
+										details to build a View Item URL and Product URL string in the 
+										response that ncludes your affiliate tracking information in the 
+										correct format. When a user clicks through these URLs to eBay and 
+										performs certain tasks, you may get an affiliate commission.
+										&lt;br&gt;&lt;br&gt;
+										See the &lt;a href="https://www.ebaypartnernetwork.com/"
+										target="_blank"&gt;eBay Partner Network&lt;/a&gt; for information 
+										about commissions.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<CallName>findItemsAdvanced</CallName>
+											<CallName>findItemsByKeywords</CallName>
+											<CallName>findItemsIneBayStores</CallName>
+											<CallName>findItemsByProduct</CallName>
+											<RequiredInput>No</RequiredInput>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether there are any errors or warnings associated with the
+								processing of the request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that occurred when eBay processed the
+								request. Not returned when the ack value is Success.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="version" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The version of the response payload schema. Indicates the version of the
+								schema that eBay used to process the request. Developer Technical Support 
+								may ask you for the version value when you work with them to troubleshoot 
+								issues.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+								This value represents the date and time when eBay processed the
+								request. The time zone of this value is 
+								&lt;a href="types/simpleTypes.html#dateTime"&gt;GMT&lt;/a&gt;
+								and the format is the ISO 8601 date and time format 
+								(YYYY-MM-DDTHH:MM:SS.SSSZ). See the "dateTime" type for information
+								about this time format and converting to and from the GMT time zone.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType abstract="true" name="BaseFindingServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service operations in Finding Service.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+ 							<xs:element maxOccurs="1" minOccurs="0" name="searchResult" type="tns:SearchResult">
+								<xs:annotation>
+									<xs:documentation>
+										
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<CallName>findItemsAdvanced</CallName>
+											<CallName>findItemsByKeywords</CallName>
+											<CallName>findItemsIneBayStores</CallName>
+											<CallName>findItemsByProduct</CallName>
+											<Returned>Always</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="paginationOutput" type="tns:PaginationOutput">
+								<xs:annotation>
+									<xs:documentation>
+										Indicates the pagination of the result set. Child elements indicate 
+										the maximum number of item listings returned per response and which 
+										page of data has been returned.
+									</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<CallName>findItemsByCategory</CallName>
+											<CallName>findItemsAdvanced</CallName>
+											<CallName>findItemsByKeywords</CallName>
+											<CallName>findItemsIneBayStores</CallName>
+											<CallName>findItemsByProduct</CallName>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						Information for an Error or Warning that occurred when eBay processed the request. Not
+						returned when the ack value is Success. Run time errors are not reported here, but are
+						instead reported as part of a SOAP fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the particular error condition that 
+								occurred. Your application can use error codes as identifiers in your 
+								customized error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain in which the error occurred.
+
+								&lt;dl&gt;
+								&lt;dt&gt;
+									&lt;strong&gt;Domain values:&lt;/strong&gt;
+								&lt;/dt&gt;
+								&lt;dt&gt;
+									Marketplace
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									A business or validation error occurred for the Merchandising Service.
+								&lt;/dd&gt;
+								&lt;dt&gt;
+									SOA
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									An exception occurred in the Service Oriented Architecture (SOA) 
+									framework.
+								&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the request to fail (an Error) or not
+								(a Warning).
+								&lt;br&gt;&lt;br&gt;
+								If the request fails and the source of the problem is within the 
+								application (such as a missing required element), change the 
+								application before you retry the request. If the problem is due to 
+								end-user input data, please alert the end-user to the problem and 
+								provide the means for them to correct the data. Once the problem in 
+								the application or data is resolved, you can attempt to re-send the 
+								request to eBay.
+								&lt;br&gt;&lt;br&gt;
+								If the source of the problem is on eBay's side, you can retry the
+								request as-is a reasonable number of times (eBay recommends you try
+								the request twice). If the error persists, contact Developer Technical
+								Support. Once the problem has been resolved, you can resend the request
+								in its original form.
+								&lt;br&gt;&lt;br&gt;
+								When a warning occurs, the warning is returned in addition to the 
+								business data. In this case, you do not need to retry the request (as 
+								the original request was successful). However, depending on the cause 
+								or nature of the warning, you might need to contact either the end 
+								user or eBay to effect a long term solution to the problem.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors: request errors, application 
+								errors, and system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition that resulted in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain in which the error occurred.
+
+								&lt;dl&gt;
+								&lt;dt&gt;
+									&lt;strong&gt;Subdomain values:&lt;/strong&gt;
+								&lt;/dt&gt;
+								&lt;dt&gt;
+									Finding
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									The error is specific to the Finding service.
+								&lt;/dd&gt;
+								&lt;dt&gt;
+									MarketplaceCommon
+								&lt;/dt&gt;
+								&lt;dd&gt;
+									The error is common to all Marketplace services.
+								&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some warning and error messages return one or more variables that 
+								contain contextual information about the error. This is often the 
+								field or value that triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Represents contextual data associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the list of parameter types returned
+									within the error type.
+								</xs:documentation>
+									<xs:appinfo>
+										<CallInfo>
+											<AllCalls/>
+											<Returned>Conditionally</Returned>
+										</CallInfo>
+									</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error (causing the request to fail)
+						or an informational error (a warning) that should be communicated to the
+						user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully, but something occurred that may
+								affect your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was not processed successfully.
+								When a serious application-level error occurs, the error is returned
+								instead of the business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully, but a non-fatal warning occurred
+								during the processing.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was processed successfully but 
+								some warnings occurred during the processing.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error (causing the request to fail)
+						or an informational error (a warning) that should be communicated to the
+						user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was not processed successfully.
+								When a serious application-level error occurs, the error is returned
+								instead of the business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully, but something occurred that may
+								affect your application or the user. For example, eBay may have changed a
+								value the user sent in. In this case, eBay returns a normal, successful
+								response and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request errors, application errors,
+						and system errors. Request and application errors are caused primarily by
+						invalid data passed in the request. System errors are caused primarily by
+						application failures and cannot be corrected by changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on the eBay system side, such as a
+								database or server down. An application can retry the request as-is a
+								reasonable number of times (eBay recommends twice). If the error
+								persists, contact Developer Technical Support. Once the problem has been
+								resolved, the request may be resent in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with the request, such as missing or
+								invalid fields. The problem must be corrected before the request can be
+								made again. If the problem is due to something in the application (such
+								as a missing required field), the application must be changed. Once the
+								problem in the application or data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with the request, such as invalid or
+								missing data. The problem must be corrected before the request can be
+								made again. If the problem is a result of end-user data, the application
+								must alert the end-user to the problem and provide the means for the
+								end-user to correct the data. Once the problem in the data is resolved,
+								resend the request to eBay with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+
+			<xs:complexType name="Amount">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="currencyId" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>
+									Currency in which the monetary amount is specified.
+									&lt;br /&gt;&lt;br /&gt;
+									For a list of possible enumeration values, see
+									&lt;a href="Enums/currencyIdList.html"&gt;currencyId Values&lt;/a&gt;.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>Always</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="Category">
+				<xs:annotation>
+					<xs:documentation>
+						Contains details about a category. 
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="categoryName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Display name of the category as it would appear on the eBay Web site. 
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Context>primaryCategory</Context>
+									<Returned>Always</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Context>secondaryCategory</Context>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Context>categoryHistogram</Context>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+				<xs:attribute name="categoryId" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>
+							The numeric ID of a category on eBay.
+							&lt;br /&gt;&lt;br /&gt;
+							Use a categoryId of -1 to retrieve the root category and the top-level (level 1) meta
+							categories. You can determine other categoryIds from the response from this call,
+							from a specific item (retrieved from another call like findItemsAdvanced), or from the
+							eBay website.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Context>primaryCategory</Context>
+									<Returned>Always</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Context>secondaryCategory</Context>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Context>categoryHistogram</Context>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+
+
+			<xs:complexType name="ProductId">
+				<xs:annotation>
+					<xs:documentation>
+						Use this findItemsByProduct input field to search by ISBN, UPC, EAN, or eBay Product
+						Reference ID, as in the following examples:
+						&lt;ul&gt;
+							&lt;li&gt;
+								To search using an ISBN, specify productID.type=ISBN and set productID.value
+								to an ISBN value.
+							&lt;/li&gt;
+							&lt;li&gt;
+								To search using an eBay Product Reference ID, specify productID.type=ReferenceID
+								and set productID.value to an eBay Product Reference ID value. If you do not know
+								the eBay Product Reference ID of a product, use FindProducts to retrieve the
+								desired eBay Product Reference ID.
+								
+								&lt;br&gt;[??]findItemsAdvanced requires that you
+								specify at least one of the following: queryKeywords, categoryID, productID,
+								or sellerID. If you use the productID field, do not use queryKeywords, categoryID,
+								or SellerID. Not supported when categoryID is specified in the request, and
+								queryKeywords is not included in the request.
+							&lt;/li&gt;
+						&lt;/ul&gt;
+					</xs:documentation>
+					<xs:appinfo>
+						<Summary>
+							Finds items by a specific Product ID. Filters can be used to further restrict 
+							and refine results.
+						</Summary>
+						<TempInfo>samples</TempInfo>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="type" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>
+									The nature of the identifier being used. For findItemsByProduct, search by
+									a single type. Supported types are: ReferenceID, ISBN, UPC, and EAN.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<CallName>findItemsByProduct</CallName>
+										<RequiredInput>Yes</RequiredInput>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="ItemFilter">
+				<xs:annotation>
+					<xs:documentation>
+						Reduce the items returned using itemFilter Name/Value pairs. In addition, some
+						itemFilters also make use of parameter Name/Value pairs, most notably the filters that
+						use currency values. For example, if you use a MaxPrice itemFilter, you will need to
+						specify a parameter Name of Currency with a value that specifies the type of
+						currency desired.
+						&lt;br /&gt;&lt;br /&gt;
+						For a list of possible currency enumeration values, see
+						&lt;a href="Enums/currencyIdList.html"&gt;currencyId Values&lt;/a&gt;.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="paramName" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="paramValue" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="name" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the item filter.
+
+								&lt;dl&gt;
+									&lt;dt&gt;
+										&lt;strong&gt;ItemFilter Name values:&lt;/strong&gt;
+									&lt;/dt&gt;
+									&lt;dt&gt;
+										AvailableTo
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										Condition
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										Currency
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										EndTimeFrom
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										EndTimeTo
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										ExcludeAutoPay
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										ExcludeSeller
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										FeaturedOnly
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										FeedbackScoreMax
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										FeedbackScoreMin
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										FreeShippingOnly
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										GetItFastOnly
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										HideDuplicateItems
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										ListingType
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										LocalPickupOnly
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										LocalSearchOnly
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										LocatedIn
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										LotsOnly
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										MaxBids
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										MaxDistance
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										MaxPrice
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										MaxQuantity
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										MinBids
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										MinPrice
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										MinQuantity
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										PaymentMethod
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										Seller
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+									&lt;dt&gt;
+										WorldOfGoodOnly
+									&lt;/dt&gt;
+									&lt;dd&gt;
+										Description
+									&lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="value" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Value on which to filter the returned items with regards to the
+								associated itemFilter Name value.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="CategoryHistogram">
+				<xs:annotation>
+					<xs:documentation>
+						Statistical (histogram) information about categories that contain items that match the
+						query, if any. For categories associated with specific items, see items returned in each
+						search result. Shows the distribution of items across each category. Not returned if
+						there is no match.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="category" type="tns:Category">
+						<xs:annotation>
+							<xs:documentation>
+								Contains details about a category.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="count" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								The total quantity of matching items in the category. In the response, 
+								matching categories at the same level (i.e., sibling categories) are sorted
+								by count. That is, if the request specifies that fewer categories or subcategories
+								should be returned, the ones with the most matching items are returned first.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="childCategoryHistogram" type="tns:CategoryHistogram">
+						<xs:annotation>
+							<xs:documentation>
+								Contains histogram information of a child of the associated category.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="CategoryHistogramContainer">
+				<xs:annotation>
+					<xs:documentation>
+						Base container for histogram information.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="categoryHistogram" type="tns:CategoryHistogram">
+						<xs:annotation>
+							<xs:documentation>
+								Statistical (histogram) information about categories that contain items that match
+								the query, if any. For categories associated with specific items, see items returned
+								in each search result. Shows the distribution of items across each category. Not
+								returned if there is no match.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="AspectValueHistogram">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="valueName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="1" name="count" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+				<xs:attribute name="valueId" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+
+
+			<xs:complexType name="AspectHistogramContainer">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="domainId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Numeric representation of a domainName.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="domainName" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								A buy-side group of items, for example "Shoes." Domains are extracted from item
+								listing properties, such as the title, descriptions, and so on.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="aspect" type="tns:Aspect">
+						<xs:annotation>
+							<xs:documentation>
+								A charastic of an item in a domain. For example, "Shoe Size" or "Shoe Style."
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="Aspect">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="valueHistogram" type="tns:AspectValueHistogram">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="primary" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+								<CallInfo>
+									<CallName>getHistograms</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+
+
+			<xs:complexType name="AspectFilter">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="domainId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="aspectId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="aspectValueId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ItemSpecific">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="value" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="PaginationInput">
+				<xs:annotation>
+					<xs:documentation>
+						Controls the pagination of the result set. Child elements specify the maximum 
+						number of item listings to return per call and which page of data to return. 
+						Controls the way the listings are organized in the response (not the details 
+						to return for each listing). 
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="pageNumber" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the maximum number of entries to return in a single call. If 
+								the number of entries that can be returned is less than the value in 
+								entriesPerPage, then the lower number is returned. 
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="entriesPerPage" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates the maximum number of items that can be returned in a 
+								SearchResults for any given request. 
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="PaginationOutput">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="pageNumber" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates the page of data returned by the current call. For instance, for the first
+								set of items returned, this field has a value of 1.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="entriesPerPage" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates the maximum number of items that can be returned in a SearchResultItemArray
+								for any given call.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="totalPages" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates the total number of pages of data that could be returned by repeated
+								requests. Returned with a value of 0 if no pages are available.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="totalEntries" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates the total number of items that could be returned by repeated requests.
+								Returned with a value of 0 if no items match your search request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="SearchResult">
+				<xs:annotation>
+					<xs:documentation>
+						Contains the returned item listings, if any. The data for each listing is returned in an
+						item container.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="item" type="tns:SearchItem">
+						<xs:annotation>
+							<xs:documentation>
+								Contains data for an item listing.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+				<xs:attribute name="count" type="xs:long" use="required">
+					<xs:annotation>
+						<xs:documentation>
+							Number of items returned by the search.
+						</xs:documentation>
+						<xs:appinfo>
+							<CallInfo>
+								<CallName>findItemsByCategory</CallName>
+								<CallName>findItemsAdvanced</CallName>
+								<CallName>findItemsByKeywords</CallName>
+								<CallName>findItemsIneBayStores</CallName>
+								<CallName>findItemsByProduct</CallName>
+								<Returned>Always</Returned>
+							</CallInfo>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+
+
+			<xs:complexType name="SearchItem">
+				<xs:annotation>
+					<xs:documentation>
+						Contains data for an item listing.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="itemId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The ID that uniquely identifies the item listing. eBay generates this 
+								ID when an item is listed. This ID is unique across all eBay sites.
+							</xs:documentation>
+							<xs:appinfo>
+								<MaxLength>19 (Note: The eBay database specifies 38. Currently, Item IDs are usually 9 to 12 digits). </MaxLength>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="title" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the item as it appears in the listing or in search and browse results.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="globalId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								The token that represnts the eBay site on which the item was originally listed.
+								For example, if the item is listed on the eBay US site, the value is US.
+								If item is listed on the eBay Germany site, the value would be DE. For a list of
+								all valid eBay site ID, see [??]
+								&lt;br /&gt;&lt;br /&gt;
+								The listing's original site can affect the values of converted (localized) prices
+								(when your request specifies a site that is different from the listing's site).
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subtitle" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Subtitle of the item. Only returned if the seller included a subtitle for the
+								listing.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="primaryCategory" type="tns:Category">
+						<xs:annotation>
+							<xs:documentation>
+								Numeric ID of the first (or only) category in which the item is listed. This is a
+								fully qualified category breadcrumb (e.g., Computers &amp; Networking:Laptops,
+								Notebooks). Note that listings can appear in more than a single category.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="secondaryCategory" type="tns:Category">
+						<xs:annotation>
+							<xs:documentation>
+								Numeric ID of the second category in which the item is listed. 
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="galleryURL" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+								URL for a picture used as the Gallery thumbnail, if any. The image uses one of the
+								following graphics formats: JPEG, BMP, TIF, or GIF. Only returned if the seller chose
+								to show a gallery image.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="viewItemURLForNaturalSearch" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+								The URL to view this listing on eBay. This URL is optimized to support natural
+								search. That is, this URL is designed to make items on eBay easier to find via
+								popular Internet search engines. For example, this URL specifies the item title, and
+								it is optimized for natural search: "_W0QQ" is like "?" (question mark), "QQ" is like
+								"&amp;" (ampersand), and "Z" is like "=" (equals sign). You shouldn't modify the
+								query syntax in your application. For example, eBay won't recognize the URL if you
+								change QQ to ?. In the Sandbox environment and on the Hong Kong site (site ID 201),
+								the data returned in this field is a standard ViewItem URL, rather than the ViewItem
+								URL for natural search that generally is returned in the Production environment.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="charityId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A unique identification number assigned by eBay to registered nonprofit charity
+								organizations.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="productId" type="tns:ProductId">
+						<xs:annotation>
+							<xs:documentation>
+								Reflects the productId and value used in the search:
+								ISBN, UPC, EAN, or eBay Product ReferenceID.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="paymentMethod" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Identifies the payment method (such as PayPal) the seller will accept when the buyer
+								pays for the item.
+								&lt;br /&gt;&lt;br /&gt;
+								&lt;strong&gt;Note:&lt;/strong&gt; If the seller only accepts PayPal, the buyer can
+								still pay with a credit card. PayPal supports major credit cards.
+								&lt;br /&gt;&lt;br /&gt;
+								Payment methods are not applicable to eBay Real Estate advertisement listings, or
+								other Classified Ad format listings.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="autoPay" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								If true, the seller requests immediate payment for the item. If false or not
+								specified, immediate payment is not requested. (In responses, does not indicate
+								whether the item is actually still a candidate for purchase via immediate payment.)
+								&lt;br /&gt;&lt;br /&gt;
+								Only applicable to items listed on PayPal-enabled sites in categories that support
+								immediate payment (see AutoPayEnabled in GetCategories), when seller has a Premier or
+								Business PayPal account (see PayPalAccountType in Getuser). If true, the seller must
+								also accept PayPal as a payment method for the item (see item.paymentMethod).
+								&lt;br /&gt;&lt;br /&gt;
+								See the eBay Web Services guide section on Immediate Payment for additional
+								requirements and dependencies. Also see the section on working with the eBay Motors
+								site for additional rules. Not applicable to Half.com.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="postalCode" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The postal code where an item is located. The search behavior depends on the 
+								combination of maxDistance and postalCode values.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="location" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Physical location of the item, as specified by the seller. (This gives a general
+								indication of where the item will be shipped or delivered from.)
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="country" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Two-letter ISO 3166 country code to indicate the country where the item is located.
+								&lt;br /&gt;&lt;br /&gt;
+								&lt;strong&gt;Applicable values:&lt;/strong&gt; See Country.
+								&lt;a href="http://developer.ebay.com/DevZone/shopping/docs/CallRef/extra/FndItmsAdvncdRspns.SrchRslt.ItmArry.Itm.Cntry.html"&gt;Country.&lt;/a&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="storeInfo" type="tns:Storefront">
+						<xs:annotation>
+							<xs:documentation>
+								storeInfo Description.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="sellerInfo" type="tns:SellerInfo">
+						<xs:annotation>
+							<xs:documentation>
+								Container for information about a listing's seller. 
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingInfo" type="tns:ShippingInfo">
+						<xs:annotation>
+							<xs:documentation>
+								Container for information about a listing's shipping details.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="sellingStatus" type="tns:SellingStatus">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies a listing's selling status in eBay's processing workflow.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="listingInfo" type="tns:ListingInfo">
+						<xs:annotation>
+							<xs:documentation>
+								The format of the listing, such as online auction, fixed price, or advertisement 
+								format. 
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="itemSpecific" type="tns:ItemSpecific">
+						<xs:annotation>
+							<xs:documentation>
+								Category-specific fields that the seller added to describe the listing. The names of 
+								these fields are different for items in different categories, so they're returned in a 
+								generic name/value structure. The field names are usually very well known within the 
+								category.
+								&lt;br&gt;&lt;br&gt;
+								For example, a book's item specifics might include a field like Publication Year=2007 
+								(where Publication Year is returned in Name, and 2007 is returned in Value), and a 
+								field like Format=Hardcover. But a car's item specifics would be different from a 
+								book's, with fields like Make=Toyota and Model=Prius. And a ticket's item specifics 
+								would be different from those of books and cars, with fields like EventType=Concerts 
+								and Venue=The Fillmore. 
+								&lt;br&gt;&lt;br&gt;
+								One of the most common uses for item specifics is the item condition.
+								&lt;br&gt;&lt;br&gt;
+								Only contains data if the listing includes Item Specifics.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="distanceFromBuyer" type="tns:Distance">
+						<xs:annotation>
+							<xs:documentation>
+								The distance of the item from the buyer. The DistanceFromBuyer unit (miles or 
+								kilometers) varies by site. If the country whose site you are searching, e.g. 
+								India, uses kilometers, then the DistanceFromBuyer unit is kilometers. Otherwise, 
+								e.g. if the country is US or UK, then the DistanceFromBuyer unit is miles.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<CallName>findItemsByCategory</CallName>
+									<CallName>findItemsAdvanced</CallName>
+									<CallName>findItemsByKeywords</CallName>
+									<CallName>findItemsIneBayStores</CallName>
+									<CallName>findItemsByProduct</CallName>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="SellingStatus">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="currentPrice" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="convertedCurrentPrice" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="bidCount" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="sellingState" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="timeLeft" type="xs:duration">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ListingInfo">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="bestOfferEnabled" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="buyItNowAvailable" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="buyItNowPrice" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="convertedBuyItNowPrice" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="startTime" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="endTime" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="listingType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="gift" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="SellerInfo">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="sellerUserName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="feedbackScore" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="feedbackRatingStar" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="positveFeedbackPercent" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="Storefront">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="storeName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="storeURL" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="ShippingInfo">
+				<xs:annotation>
+					<xs:documentation>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="shippingServiceCost" type="tns:Amount">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="shippingType" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="shipToLocations" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="Distance">
+				<xs:annotation>
+					<xs:documentation>
+						Distance, used for a proximity search.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:double">
+						<xs:attribute name="unit" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									Unit of measure used in a proximity search distance calculation. 
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<CallName>findItemsByCategory</CallName>
+										<CallName>findItemsAdvanced</CallName>
+										<CallName>findItemsByKeywords</CallName>
+										<CallName>findItemsIneBayStores</CallName>
+										<CallName>findItemsByProduct</CallName>
+										<Returned>Conditionally</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+
+			<xs:complexType name="Affiliate">
+				<xs:annotation>
+					<xs:documentation>
+						eBay uses the specified details to build a View Item URL and Product URL string in
+						the response that includes your affiliate tracking information in the correct
+						format. When a user clicks through the URL to eBay and performs certain tasks,
+						you may get a commission.
+						&lt;br&gt;&lt;br&gt;
+						For information about commissions, see the
+						&lt;a href="https://www.ebaypartnernetwork.com/"&gt;
+						eBay Partner Network&lt;/a&gt;.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="0" name="trackingId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The value you specify is obtained from your tracking partner.
+								For eBay Partner Network, the trackingID is the Campaign ID ("campid")
+								provided by eBay Partner Network. A Campaign ID is a 9-digit, unique number
+								to be used for associating traffic. A Campaign ID is valid across all programs
+								to which you have been accepted. Another example is the Affiliate ID given to
+								you by TradeDoubler.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="networkId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies your tracking partner for affiliate commissions. Affiliates earn
+								money from eBay for driving traffic to eBay. Required if you specify a
+								trackingID. Depending on your tracking partner, specify one of the following
+								values. Not all partners are valid for all sites. For PlaceOffer, only
+								eBay Partner Network and Mediaplex are valid:
+								&lt;br&gt;2 = Be Free
+								&lt;br&gt;3 = Affilinet
+								&lt;br&gt;4 = TradeDoubler
+								&lt;br&gt;5 = Mediaplex
+								&lt;br&gt;6 = DoubleClick
+								&lt;br&gt;7 = Allyes
+								&lt;br&gt;8 = BJMT
+								&lt;br&gt;9 = eBay Partner Network
+								For information about commissions, see the
+								&lt;a href="https://www.ebaypartnernetwork.com/"&gt;
+								eBay Partner Network&lt;/a&gt;.
+						</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="customId" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Need not be specified. You can define an AffiliateUserID (up to 256 characters)
+								if you want to leverage it to better monitor your marketing efforts.
+								If you are using the eBay Partner Network, and you provide an AffiliateUserID,
+								the tracking URL returned by eBay Partner Network will contain the
+								AffiliateUserID, but it will be referred to as a "customid".
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<RequiredInput>No</RequiredInput>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getSearchKeywordsRecommendationRequest">
+		<wsdl:part element="ns0:getSearchKeywordsRecommendationRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getSearchKeywordsRecommendationResponse">
+		<wsdl:part element="ns0:getSearchKeywordsRecommendationResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsByKeywordsRequest">
+		<wsdl:part element="ns0:findItemsByKeywordsRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsByKeywordsResponse">
+		<wsdl:part element="ns0:findItemsByKeywordsResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsByCategoryRequest">
+		<wsdl:part element="ns0:findItemsByCategoryRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsByCategoryResponse">
+		<wsdl:part element="ns0:findItemsByCategoryResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsAdvancedRequest">
+		<wsdl:part element="ns0:findItemsAdvancedRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsAdvancedResponse">
+		<wsdl:part element="ns0:findItemsAdvancedResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsByProductRequest">
+		<wsdl:part element="ns0:findItemsByProductRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsByProductResponse">
+		<wsdl:part element="ns0:findItemsByProductResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsIneBayStoresRequest">
+		<wsdl:part element="ns0:findItemsIneBayStoresRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findItemsIneBayStoresResponse">
+		<wsdl:part element="ns0:findItemsIneBayStoresResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getHistogramsRequest">
+		<wsdl:part element="ns0:getHistogramsRequest" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getHistogramsResponse">
+		<wsdl:part element="ns0:getHistogramsResponse" name="messageParameters"/>
+	</wsdl:message>
+	<wsdl:portType name="FindingServicePortType">
+		<wsdl:operation name="getSearchKeywordsRecommendation">
+			<wsdl:input message="ns0:getSearchKeywordsRecommendationRequest"/>
+			<wsdl:output message="ns0:getSearchKeywordsRecommendationResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsByKeywords">
+			<wsdl:input message="ns0:findItemsByKeywordsRequest"/>
+			<wsdl:output message="ns0:findItemsByKeywordsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsByCategory">
+			<wsdl:input message="ns0:findItemsByCategoryRequest"/>
+			<wsdl:output message="ns0:findItemsByCategoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsAdvanced">
+			<wsdl:input message="ns0:findItemsAdvancedRequest"/>
+			<wsdl:output message="ns0:findItemsAdvancedResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsByProduct">
+			<wsdl:input message="ns0:findItemsByProductRequest"/>
+			<wsdl:output message="ns0:findItemsByProductResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsIneBayStores">
+			<wsdl:input message="ns0:findItemsIneBayStoresRequest"/>
+			<wsdl:output message="ns0:findItemsIneBayStoresResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getHistograms">
+			<wsdl:input message="ns0:getHistogramsRequest"/>
+			<wsdl:output message="ns0:getHistogramsResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="FindingServiceSOAP12Binding" type="ns0:FindingServicePortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getSearchKeywordsRecommendation">
+			<soap12:operation soapAction="urn:getSearchKeywordsRecommendation" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsByKeywords">
+			<soap12:operation soapAction="urn:findItemsByKeywords" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsByCategory">
+			<soap12:operation soapAction="urn:findItemsByCategory" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsAdvanced">
+			<soap12:operation soapAction="urn:findItemsAdvanced" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsByProduct">
+			<soap12:operation soapAction="urn:findItemsByProduct" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="findItemsIneBayStores">
+			<soap12:operation soapAction="urn:findItemsIneBayStores" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getHistograms">
+			<soap12:operation soapAction="urn:getHistograms" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="FindingService">
+		<wsdl:documentation>
+			<Version>1.0.0</Version>
+		</wsdl:documentation>
+		<wsdl:port binding="ns0:FindingServiceSOAP12Binding" name="FindingServiceSOAP12port_http">
+			<soap12:address location="http://svcs.ebay.com/FindingService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

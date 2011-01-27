@@ -1,0 +1,300 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true">  
+  <class corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.Main" 
+    project="DocTool" file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/Main.java" 
+    binary="false">    
+    <position x="723" y="37" width="201" height="80"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.CommandLineParser" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/CommandLineParser.java" 
+    binary="false">    
+    <position x="237" y="37" width="250" height="64"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.driver.Driver" 
+    project="DocTool" file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/driver/Driver.java" 
+    binary="false">    
+    <position x="723" y="157" width="228" height="144"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.config.ConfigurationReader" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/config/ConfigurationReader.java" 
+    binary="false">    
+    <position x="308" y="541" width="230" height="112"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/OutputGenaratorParam.java" 
+    binary="false">    
+    <position x="348" y="1165" width="235" height="208"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="org.ebayopensource.turmeric.tools.annoparser.context.Context" 
+    project="DocTool" file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/Context.java" 
+    binary="false">    
+    <position x="369" y="805" width="333" height="320"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationInfo.java" 
+    binary="false">    
+    <position x="783" y="1165" width="314" height="128"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationTag" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationTag.java" 
+    binary="false">    
+    <position x="803" y="805" width="307" height="240"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.exception.AnnotationParserException" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/AnnotationParserException.java" 
+    binary="false">    
+    <position x="42" y="805" width="245" height="80"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/outputgenerator/OutputGenerator.java" 
+    binary="false">    
+    <position x="328" y="1413" width="362" height="96"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.WsdlParserImpl" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/WsdlParserImpl.java" 
+    binary="false">    
+    <position x="763" y="341" width="300" height="160"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.DefaultAnnotationParser" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/DefaultAnnotationParser.java" 
+    binary="false">    
+    <position x="1053" y="541" width="258" height="64"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" 
+    name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl" project="DocTool" 
+    file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/XSDParserImpl.java" 
+    binary="false">    
+    <position x="763" y="541" width="250" height="224"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/XSDParserImpl.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.Context" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/Context.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <bendpoint x="317" y="805"/>    
+    <bendpoint x="317" y="1165"/>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.config.ConfigurationReader" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/config/ConfigurationReader.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/outputgenerator/OutputGenerator.java" 
+      binary="false"/>  
+  </dependency>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/OutputGenaratorParam.java" 
+      binary="false" navigable="false">      
+      <attribute name="outputGenerator"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/outputgenerator/OutputGenerator.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency>    
+    <bendpoint x="338" y="805"/>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.config.ConfigurationReader" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/config/ConfigurationReader.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/OutputGenaratorParam.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationInfo.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationTag" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationTag.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.WsdlParserImpl" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/WsdlParserImpl.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/XSDParserImpl.java" 
+      binary="false"/>  
+  </dependency>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.Context" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/Context.java" binary="false" 
+      navigable="false">      
+      <attribute name="outputGenerators"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/OutputGenaratorParam.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency>    
+    <bendpoint x="1093" y="341"/>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.driver.Driver" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/driver/Driver.java" binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/XSDParserImpl.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/outputgenerator/OutputGenerator.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/OutputGenaratorParam.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <bendpoint x="568" y="341"/>    
+    <bendpoint x="568" y="541"/>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.driver.Driver" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/driver/Driver.java" binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.Context" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/Context.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.config.ConfigurationReader" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/config/ConfigurationReader.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.Context" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/Context.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.driver.Driver" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/driver/Driver.java" binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.WsdlParserImpl" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/WsdlParserImpl.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.Main" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/Main.java" binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.driver.Driver" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/driver/Driver.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.DefaultAnnotationParser" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/DefaultAnnotationParser.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationTag" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationTag.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/XSDParserImpl.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationTag" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationTag.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.config.ConfigurationReader" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/config/ConfigurationReader.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.exception.AnnotationParserException" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/exception/AnnotationParserException.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <bendpoint x="772" y="805"/>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/parser/impl/XSDParserImpl.java" 
+      binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationInfo.java" 
+      binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <bendpoint x="732" y="341"/>    
+    <bendpoint x="732" y="541"/>    
+    <bendpoint x="732" y="805"/>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.driver.Driver" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/driver/Driver.java" binary="false"/>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/context/OutputGenaratorParam.java" 
+      binary="false"/>  
+  </dependency>  
+  <association>    
+    <source project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationTag" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationTag.java" 
+      binary="false" navigable="false">      
+      <attribute name="myParsedAnnotationInfo"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="DocTool" name="org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo" 
+      file="/DocTool/src/main/java/org/ebayopensource/turmeric/tools/annoparser/dataobjects/ParsedAnnotationInfo.java" 
+      binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

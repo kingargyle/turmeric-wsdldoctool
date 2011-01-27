@@ -1,0 +1,1371 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.ebay.com/marketplace/services" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ebay.com/marketplace/services">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://www.ebay.com/marketplace/services" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/services">
+
+			<xs:complexType abstract="true" name="BaseServiceRequest">
+				<xs:annotation>
+					<xs:documentation>
+						This is the base class for request container for
+						all service operations.
+					</xs:documentation>
+				</xs:annotation>	
+				<xs:sequence>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType abstract="true" name="BaseServiceResponse">
+				<xs:annotation>
+					<xs:documentation>
+						Base response container for all service
+						operations. Contains error information
+						associated with the request.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="ack" type="tns:AckValue">
+						<xs:annotation>
+							<xs:documentation>
+
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Always</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="errorMessage" type="tns:ErrorMessage">
+						<xs:annotation>
+							<xs:documentation>
+								Information for an error or warning that
+								occurred when eBay processed the
+								request.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="AckValue">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Success">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Failure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="PartialFailure">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								processed successfully but with some
+								warnings.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="ErrorMessage">
+				<xs:annotation>
+					<xs:documentation>
+						ErrorMessage to indicate any Error/Warning
+						occured as part of service call. Any run time
+						error will not be reported here, but will be
+						reported aspart of soap fault.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:ErrorData">
+						<xs:annotation>
+							<xs:documentation>
+								Details about a single error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ErrorData">
+				<xs:annotation>
+					<xs:documentation>
+						This represents error details.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="errorId" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>
+								A unique code that identifies the
+								particular error condition that
+								occurred. Your application can use error
+								codes as identifiers in your customized
+								error-handling algorithms.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="domain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the domain upon which the error
+								occurred. &lt;dl&gt; &lt;lh&gt;Domains
+								include:&lt;/lh&gt; &lt;dt&gt;
+								Marketplace &lt;/dt&gt; &lt;dd&gt; A
+								business or validation error occurred
+								for the Merchandising Service.
+								&lt;/dd&gt; &lt;dt&gt; SOA &lt;/dt&gt;
+								&lt;dd&gt; An exception occurred in the
+								Service Oriented Architecture (SOA)
+								framework. &lt;/dd&gt; &lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="severity" type="tns:ErrorSeverity">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates whether the error caused the
+								request to fail (Error) or not
+								(Warning). &lt;br&gt;&lt;br&gt; If the
+								request fails and the source of the
+								problem is within the application (such
+								as a missing required element), please
+								change the application before you retry
+								the request. If the problem is due to
+								end-user input data, please alert the
+								end-user to the problem and provide the
+								means for them to correct the data. Once
+								the problem in the application or data
+								is resolved, you can attempt to re- send
+								the request to eBay.
+								&lt;br&gt;&lt;br&gt; If the source of
+								the problem is on eBay's side, you can
+								retry the request as-is a reasonable
+								number of times (eBay recommends twice).
+								If the error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+								&lt;br&gt;&lt;br&gt; When a warning
+								occurs, the error is returned in
+								addition to the business data. In this
+								case, you do not need to retry the
+								request (as the original request was
+								successful). However, depending on the
+								cause or nature of the warning, you
+								might need to contact either the end
+								user or eBay to effect a long term
+								solution to the problem to prevent it
+								from reoccurring in the future.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="category" type="tns:ErrorCategory">
+						<xs:annotation>
+							<xs:documentation>
+								There are three categories of errors:
+								request errors, application errors, and
+								system errors.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="message" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								A detailed description of the condition
+								that resulted in the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="subdomain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the subdomain upon which the
+								error occurred. &lt;dl&gt;
+								&lt;lh&gt;Subdomains include:&lt;/lh&gt;
+								&lt;dt&gt; Merchandising &lt;/dt&gt;
+								&lt;dd&gt; The error is specific to the
+								Merchandising service. &lt;/dd&gt;
+								&lt;dt&gt; MarketplaceCommon &lt;/dt&gt;
+								&lt;dd&gt; The error is common to all
+								Marketplace services. &lt;/dd&gt;
+								&lt;/dl&gt;
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="exceptionId" type="xs:token">
+						<xs:annotation>
+							<xs:documentation>
+								Unique identifier for an exception
+								associated with an error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter" nillable="true" type="tns:ErrorParameter">
+						<xs:annotation>
+							<xs:documentation>
+								Some warning and error messages return
+								one or more variables that contain
+								contextual information about the error.
+								This is often the field or value that
+								triggered the error.
+							</xs:documentation>
+							<xs:appinfo>
+								<CallInfo>
+									<AllCalls/>
+									<Returned>Conditionally</Returned>
+								</CallInfo>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="ErrorSeverity">
+				<xs:annotation>
+					<xs:documentation>
+						Indicates whether the error is a severe error
+						(causing the request to fail) or an
+						informational error (a warning) that should be
+						communicated to the user.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Error">
+						<xs:annotation>
+							<xs:documentation>
+								The request that triggered the error was
+								not processed successfully. When a
+								serious application-level error occurs,
+								the error is returned instead of the
+								business data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Warning">
+						<xs:annotation>
+							<xs:documentation>
+								The request was processed successfully,
+								but something occurred that may affect
+								your application or the user. For
+								example, eBay may have changed a value
+								the user sent in. In this case, eBay
+								returns a normal, successful response
+								and also returns the warning.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="ErrorCategory">
+				<xs:annotation>
+					<xs:documentation>
+						There are three categories of error: request
+						errors, application errors, and system errors.
+						Request and application errors are caused
+						primarily by invalid data passed in the request.
+						System errors are caused primarily by
+						application failures and cannot be corrected by
+						changing request values.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System">
+						<xs:annotation>
+							<xs:documentation>
+								Indicates that an error has occurred on
+								the eBay system side, such as a database
+								or server down. An application can retry
+								the request as-is a reasonable number of
+								times (eBay recommends twice). If the
+								error persists, contact Developer
+								Technical Support. Once the problem has
+								been resolved, the request may be resent
+								in its original form.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Application">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as missing or invalid
+								fields. The problem must be corrected
+								before the request can be made again. If
+								the problem is due to something in the
+								application (such as a missing required
+								field), the application must be changed.
+								Once the problem in the application or
+								data is resolved, resend the corrected
+								request to eBay.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Request">
+						<xs:annotation>
+							<xs:documentation>
+								An error occurred due to a problem with
+								the request, such as invalid or missing
+								data. The problem must be corrected
+								before the request can be made again. If
+								the problem is a result of end-user
+								data, the application must alert the
+								end-user to the problem and provide the
+								means for the end-user to correct the
+								data. Once the problem in the data is
+								resolved, resend the request to eBay
+								with the corrected data.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:complexType name="ErrorParameter">
+				<xs:annotation>
+					<xs:documentation>
+						Contextual information associated with an error.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The name of the parameter in the
+									list of parameter types returned
+									within the error type.
+								</xs:documentation>
+								<xs:appinfo>
+									<CallInfo>
+										<AllCalls/>
+										<Returned>
+											Conditionally
+										</Returned>
+									</CallInfo>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+
+			<xs:complexType name="EchoEciResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="message" type="xs:string"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="messageType" type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:complexType name="EchoApplicationQueryFilterType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="appOperationalStates" nillable="true" type="xs:int"/>
+
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="appAccessStates" nillable="true" type="xs:int"/>
+
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="appLifeCycleStates" nillable="true" type="xs:int"/>
+
+					<xs:element maxOccurs="1" minOccurs="0" name="resource" type="tns:EchoResourceType"/>
+
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+		<xs:complexType name="EchoSubscriptionQueryFilterType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subscriptionStates" nillable="true" type="xs:int"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			
+			<xs:complexType name="EchoApplicationType">
+				<xs:sequence>
+
+					<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="appIdentity" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="platformId" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="operationalState" type="xs:int"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="approvalState" type="xs:int"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="visibilityState" type="xs:int"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="resource" type="tns:EchoResourceType"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="EchoImageType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="url" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="EchoMessageType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="value" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="EchoLinkType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="url" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="EchoEntityType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="value" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+			<xs:complexType name="EchoApplicationKeyType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="appId" type="xs:long"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="appIdentity" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="EbayUserKeyType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="userId" type="xs:long"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="loginName" type="xs:string"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			
+			
+`			<xs:complexType name="EchoResourceType">
+				<xs:sequence>
+								
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="images" nillable="true" type="tns:EchoImageType"/>
+							
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="links" nillable="true" type="tns:EchoLinkType"/>
+
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="messages" nillable="true" type="tns:EchoMessageType"/>
+
+ 				       <xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>		
+ 			</xs:complexType>
+
+	
+
+			<xs:complexType name="EchoSubscriptionType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:long"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="appId" type="xs:long"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="ebayUserId" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="state" type="xs:int"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="subscriptionStartDate" type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="subscriptionEndDate" type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="EchoSubscriptionHistoryType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:long"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="appId" type="xs:long"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="ebayUserId" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="state" type="xs:int"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="subscriptionStartDate" type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="subscriptionEndDate" type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="lastModifiedDate" type="xs:dateTime"/>
+					<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+				</xs:sequence>
+			</xs:complexType>
+
+
+
+			<!--  getApplications -->
+			<xs:complexType name="GetApplicationsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="applicationQueryFilter" type="tns:EchoApplicationQueryFilterType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="GetApplicationsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="echoApplication" nillable="true" type="tns:EchoApplicationType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getApplicationsRequest" nillable="true" type="tns:GetApplicationsRequest"/>
+			<xs:element name="getApplicationsResponse" nillable="true" type="tns:GetApplicationsResponse"/>
+				
+
+
+			<!--  getSubscribableApplications -->
+			<xs:complexType name="GetSubscribableApplicationsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="eBayUserKey" type="tns:EbayUserKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="applicationQueryFilter" type="tns:EchoApplicationQueryFilterType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetSubscribableApplicationsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="echoApplication" nillable="true" type="tns:EchoApplicationType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getSubscribableApplicationsRequest" nillable="true" type="tns:GetSubscribableApplicationsRequest"/>
+			<xs:element name="getSubscribableApplicationsResponse" nillable="true" type="tns:GetSubscribableApplicationsResponse"/>
+
+
+
+
+
+			<!--  getSubscribedApplications -->
+			<xs:complexType name="GetSubscribedApplicationsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="eBayUserKey" type="tns:EbayUserKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="applicationQueryFilter" type="tns:EchoApplicationQueryFilterType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetSubscribedApplicationsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="echoApplication" nillable="true" type="tns:EchoApplicationType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getSubscribedApplicationsRequest" nillable="true" type="tns:GetSubscribedApplicationsRequest"/>
+			<xs:element name="getSubscribedApplicationsResponse" nillable="true" type="tns:GetSubscribedApplicationsResponse"/>
+
+
+			<!--  getSubscribedApplicationHistory -->
+			<xs:complexType name="GetSubscribedApplicationHistoryRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="eBayUserKey" type="tns:EbayUserKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="applicationQueryFilter" type="tns:EchoApplicationQueryFilterType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetSubscribedApplicationHistoryResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="echoApplication" nillable="true" type="tns:EchoApplicationType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getSubscribedApplicationHistoryRequest" nillable="true" type="tns:GetSubscribedApplicationHistoryRequest"/>
+			<xs:element name="getSubscribedApplicationHistoryResponse" nillable="true" type="tns:GetSubscribedApplicationHistoryResponse"/>
+
+
+
+			<!--  getApplication -->
+			<xs:complexType name="GetApplicationRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="appKey" type="tns:EchoApplicationKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="resourceFilter" type="tns:EchoResourceType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetApplicationResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="echoApplication" type="tns:EchoApplicationType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getApplicationRequest" nillable="true" type="tns:GetApplicationRequest"/>
+			<xs:element name="getApplicationResponse" nillable="true" type="tns:GetApplicationResponse"/>
+
+
+
+			<!-- getSubscriptions -->
+			<xs:complexType name="GetSubscriptionsRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="eBayUserKey" type="tns:EbayUserKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="appKey" type="tns:EchoApplicationKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="subscriptionQueryFilter" type="tns:EchoSubscriptionQueryFilterType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetSubscriptionsResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="echoSubscription" nillable="true" type="tns:EchoSubscriptionType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getSubscriptionsRequest" nillable="true" type="tns:GetSubscriptionsRequest"/>
+			<xs:element name="getSubscriptionsResponse" nillable="true" type="tns:GetSubscriptionsResponse"/>
+
+
+			<xs:complexType name="GetSubscriptionHistoryRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="eBayUserKey" type="tns:EbayUserKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="appKey" type="tns:EchoApplicationKeyType"/>	
+							<xs:element maxOccurs="1" minOccurs="0" name="subscriptionQueryFilter" type="tns:EchoSubscriptionQueryFilterType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetSubscriptionHistoryResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="echoSubscriptionHistory" nillable="true" type="tns:EchoSubscriptionHistoryType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+
+			<xs:element name="getSubscriptionHistoryRequest" nillable="true" type="tns:GetSubscriptionHistoryRequest"/>
+			<xs:element name="getSubscriptionHistoryResponse" nillable="true" type="tns:GetSubscriptionHistoryResponse"/>
+
+
+
+
+			<xs:complexType name="PerformSessionOperationRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="eBayUserKey" type="tns:EbayUserKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="1" name="appKey" type="tns:EchoApplicationKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="1" name="operation" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PerformSessionOperationResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element name="appId" type="xs:long"/>
+							<xs:element name="sessionId" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="performSessionOperationRequest" nillable="true" type="tns:PerformSessionOperationRequest"/>
+			<xs:element name="performSessionOperationResponse" nillable="true" type="tns:PerformSessionOperationResponse"/>
+
+
+			<xs:complexType name="GetApplicationEntityListRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="appKey" type="tns:EchoApplicationKeyType"/>	
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entity" nillable="true" type="tns:EchoEntityType"/>
+							</xs:sequence>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetApplicationEntityListResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entity" nillable="true" type="tns:EchoEntityType"/>
+							</xs:sequence>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getApplicationEntityListRequest" nillable="true" type="tns:GetApplicationEntityListRequest"/>
+			<xs:element name="getApplicationEntityListResponse" nillable="true" type="tns:GetApplicationEntityListResponse"/>
+
+
+
+
+
+			<xs:complexType name="GetApplicationResourceListRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="appKey" type="tns:EchoApplicationKeyType"/>	
+							<xs:element maxOccurs="1" minOccurs="0" name="resource" type="tns:EchoResourceType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="GetApplicationResourceListResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="resource" type="tns:EchoResourceType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="getApplicationResourceListRequest" nillable="true" type="tns:GetApplicationResourceListRequest"/>
+			<xs:element name="getApplicationResourceListResponse" nillable="true" type="tns:GetApplicationResourceListResponse"/>
+
+
+			<xs:complexType name="SubscribeToApplicationRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="appKey" type="tns:EchoApplicationKeyType"/>	
+							<xs:element maxOccurs="1" minOccurs="1" name="eBayUserKey" type="tns:EbayUserKeyType"/>
+							<xs:element maxOccurs="1" minOccurs="0" name="subscriptionData" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SubscribeToApplicationResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="echoSubscription" type="tns:EchoSubscriptionType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="subscribeToApplicationRequest" nillable="true" type="tns:SubscribeToApplicationRequest"/>
+			<xs:element name="subscribeToApplicationResponse" nillable="true" type="tns:SubscribeToApplicationResponse"/>
+
+
+			<xs:complexType name="UnsubscribeFromApplicationRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceRequest">
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="1" name="appKey" type="tns:EchoApplicationKeyType"/>	
+							<xs:element maxOccurs="1" minOccurs="1" name="eBayUserKey" type="tns:EbayUserKeyType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UnsubscribeFromApplicationResponse">
+				<xs:complexContent>
+					<xs:extension base="tns:BaseServiceResponse">
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="unsubscribeFromApplicationRequest" nillable="true" type="tns:UnsubscribeFromApplicationRequest"/>
+			<xs:element name="unsubscribeFromApplicationResponse" nillable="true" type="tns:UnsubscribeFromApplicationResponse"/>
+
+		</xs:schema>
+	</wsdl:types>
+
+
+
+	<wsdl:message name="getSubscriptionsRequest">
+		<wsdl:part element="ns0:getSubscriptionsRequest" name="GetSubscriptionsRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSubscriptionsResponse">
+		<wsdl:part element="ns0:getSubscriptionsResponse" name="GetSubscriptionsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSubscriptionHistoryRequest">
+		<wsdl:part element="ns0:getSubscriptionHistoryRequest" name="getSubscriptionHistoryRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSubscriptionHistoryResponse">
+		<wsdl:part element="ns0:getSubscriptionHistoryResponse" name="getSubscriptionHistoryResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getApplicationEntityListRequest">
+		<wsdl:part element="ns0:getApplicationEntityListRequest" name="getApplicationEntityListRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getApplicationEntityListResponse">
+		<wsdl:part element="ns0:getApplicationEntityListResponse" name="getApplicationEntityListResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getApplicationResourceListRequest">
+		<wsdl:part element="ns0:getApplicationResourceListRequest" name="GetApplicationResourceListRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getApplicationResourceListResponse">
+		<wsdl:part element="ns0:getApplicationResourceListResponse" name="GetApplicationResourceListResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="subscribeToApplicationRequest">
+		<wsdl:part element="ns0:subscribeToApplicationRequest" name="SubscribeToApplicationRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="subscribeToApplicationResponse">
+		<wsdl:part element="ns0:subscribeToApplicationResponse" name="SubscribeToApplicationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="unsubscribeFromApplicationRequest">
+		<wsdl:part element="ns0:unsubscribeFromApplicationRequest" name="UnsubscribeFromApplicationRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="unsubscribeFromApplicationResponse">
+		<wsdl:part element="ns0:unsubscribeFromApplicationResponse" name="UnsubscribeFromApplicationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	
+	<wsdl:message name="getApplicationsRequest">
+		<wsdl:part element="ns0:getApplicationsRequest" name="GetApplicationsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getApplicationsResponse">
+		<wsdl:part element="ns0:getApplicationsResponse" name="GetApplicationsResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="getApplicationRequest">
+		<wsdl:part element="ns0:getApplicationRequest" name="GetApplicationRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getApplicationResponse">
+		<wsdl:part element="ns0:getApplicationResponse" name="GetApplicationResponse"/>
+	</wsdl:message>
+
+
+	<wsdl:message name="getSubscribableApplicationsRequest">
+		<wsdl:part element="ns0:getSubscribableApplicationsRequest" name="GetSubscribableApplicationsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getSubscribableApplicationsResponse">
+		<wsdl:part element="ns0:getSubscribableApplicationsResponse" name="GetSubscribableApplicationsResponse"/>
+	</wsdl:message>
+
+
+	<wsdl:message name="getSubscribedApplicationsRequest">
+		<wsdl:part element="ns0:getSubscribedApplicationsRequest" name="GetSubscribedApplicationsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getSubscribedApplicationsResponse">
+		<wsdl:part element="ns0:getSubscribedApplicationsResponse" name="GetSubscribedApplicationsResponse"/>
+	</wsdl:message>
+	
+	
+	<wsdl:message name="getSubscribedApplicationHistoryRequest">
+		<wsdl:part element="ns0:getSubscribedApplicationHistoryRequest" name="GetSubscribedApplicationHistoryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getSubscribedApplicationHistoryResponse">
+		<wsdl:part element="ns0:getSubscribedApplicationHistoryResponse" name="GetSubscribedApplicationHistoryResponse"/>
+	</wsdl:message>
+	
+
+
+	<wsdl:message name="performSessionOperationRequest">
+		<wsdl:part element="ns0:performSessionOperationRequest" name="PerformSessionOperationRequest"/>
+	</wsdl:message>
+	<wsdl:message name="performSessionOperationResponse">
+		<wsdl:part element="ns0:performSessionOperationResponse" name="PerformSessionOperationResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="EchoEciServicePort">
+
+		<wsdl:operation name="getApplications">
+			<wsdl:input message="ns0:getApplicationsRequest"/>
+			<wsdl:output message="ns0:getApplicationsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="getSubscribableApplications">
+			<wsdl:input message="ns0:getSubscribableApplicationsRequest"/>
+			<wsdl:output message="ns0:getSubscribableApplicationsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+
+
+		<wsdl:operation name="getSubscribedApplications">
+			<wsdl:input message="ns0:getSubscribedApplicationsRequest"/>
+			<wsdl:output message="ns0:getSubscribedApplicationsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="getSubscribedApplicationHistory">
+			<wsdl:input message="ns0:getSubscribedApplicationHistoryRequest"/>
+			<wsdl:output message="ns0:getSubscribedApplicationHistoryResponse">
+			</wsdl:output>
+		</wsdl:operation>
+
+
+		<wsdl:operation name="getApplication">
+			<wsdl:input message="ns0:getApplicationRequest"/>
+			<wsdl:output message="ns0:getApplicationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="getSubscriptions">
+			<wsdl:input message="ns0:getSubscriptionsRequest"/>
+			<wsdl:output message="ns0:getSubscriptionsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getSubscriptionHistory">
+			<wsdl:input message="ns0:getSubscriptionHistoryRequest"/>
+			<wsdl:output message="ns0:getSubscriptionHistoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getApplicationEntityList">
+			<wsdl:input message="ns0:getApplicationEntityListRequest"/>
+			<wsdl:output message="ns0:getApplicationEntityListResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="getApplicationResourceList">
+			<wsdl:input message="ns0:getApplicationResourceListRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:getApplicationResourceListResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="subscribeToApplication">
+			<wsdl:input message="ns0:subscribeToApplicationRequest"/>
+			<wsdl:output message="ns0:subscribeToApplicationResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="unsubscribeFromApplication">
+			<wsdl:input message="ns0:unsubscribeFromApplicationRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:unsubscribeFromApplicationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="performSessionOperation">
+			<wsdl:input message="ns0:performSessionOperationRequest">
+			</wsdl:input>
+			<wsdl:output message="ns0:performSessionOperationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		
+	</wsdl:portType>
+	
+	
+	<wsdl:binding name="EchoEciServiceHttpBinding" type="ns0:EchoEciServicePort"> 
+		<http:binding verb="POST"/>
+
+
+	<wsdl:operation name="getApplications">
+			<http:operation location="EchoEciService/getApplications"/>
+			<wsdl:input>
+				<mime:content part="GetApplicationsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetApplicationsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="getSubscribableApplications">
+			<http:operation location="EchoEciService/getSubscribableApplications"/>
+			<wsdl:input>
+				<mime:content part="GetSubscribableApplicationsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetSubscribableApplicationsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+
+
+		<wsdl:operation name="getSubscribedApplications">
+			<http:operation location="EchoEciService/getSubscribedApplications"/>
+			<wsdl:input>
+				<mime:content part="GetSubscribedApplicationsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetSubscribedApplicationsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="getSubscribedApplicationHistory">
+			<http:operation location="EchoEciService/getSubscribedApplicationHistory"/>
+			<wsdl:input>
+				<mime:content part="GetSubscribedApplicationHistoryRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetSubscribedApplicationHistoryResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		
+		
+		<wsdl:operation name="getApplication">
+			<http:operation location="EchoEciService/getApplication"/>
+			<wsdl:input>
+				<mime:content part="GetApplicationRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetApplicationResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+
+		
+		<wsdl:operation name="getSubscriptions">
+			<http:operation location="EchoEciService/getSubscriptions"/>
+			<wsdl:input>
+				<mime:content part="GetSubscriptionsRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetSubscriptionsResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+
+		<wsdl:operation name="getSubscriptionHistory">
+			<http:operation location="EchoEciService/getSubscriptionHistory"/>
+			<wsdl:input>
+				<mime:content part="GetSubscriptionHistoryRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetSubscriptionHistoryResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+
+		<wsdl:operation name="getApplicationEntityList">
+			<http:operation location="EchoEciService/getApplicationEntityList"/>
+			<wsdl:input>
+				<mime:content part="GetApplicationEntityListRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetApplicationEntityListResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+
+		<wsdl:operation name="getApplicationResourceList">
+			<http:operation location="EchoEciService/getApplicationResourceList"/>
+			<wsdl:input>
+				<mime:content part="GetApplicationResourceListRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="GetApplicationResourceListResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+
+		<wsdl:operation name="subscribeToApplication">
+			<http:operation location="EchoEciService/subscribeToApplication"/>
+			<wsdl:input>
+				<mime:content part="SubscribeToApplicationRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="SubscribeToApplicationResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+
+		<wsdl:operation name="unsubscribeFromApplication">
+			<http:operation location="EchoEciService/unsubscribeFromApplication"/>
+			<wsdl:input>
+				<mime:content part="UnsubscribeFromApplicationRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="UnsubscribeFromApplicationResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="performSessionOperation">
+			<http:operation location="EchoEciService/performSessionOperation"/>
+			<wsdl:input>
+				<mime:content part="PerformSessionOperationRequest" type="text/xml"/>
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="PerformSessionOperationResponse" type="text/xml"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+	</wsdl:binding>
+	
+	
+	<wsdl:binding name="EchoEciServiceSOAPBinding" type="ns0:EchoEciServicePort">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+
+	<wsdl:operation name="getApplications">
+			<soap12:operation soapAction="urn:getApplications" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="getSubscribedApplications">
+			<soap12:operation soapAction="urn:getSubscribedApplications" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="getSubscribableApplications">
+			<soap12:operation soapAction="urn:getSubscribableApplications" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getSubscribedApplicationHistory">
+			<soap12:operation soapAction="urn:getSubscribedApplicationHistory" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+
+		<wsdl:operation name="getApplication">
+			<soap12:operation soapAction="urn:getApplication" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+		<wsdl:operation name="getSubscriptions">
+			<soap12:operation soapAction="urn:getSubscriptions" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="getSubscriptionHistory">
+			<soap12:operation soapAction="urn:getSubscriptionHistory" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+		<wsdl:operation name="getApplicationEntityList">
+			<soap12:operation soapAction="urn:getApplicationEntityList" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+
+		<wsdl:operation name="getApplicationResourceList">
+			<soap12:operation soapAction="urn:getApplicationResourceList" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+
+		<wsdl:operation name="subscribeToApplication">
+			<soap12:operation soapAction="urn:subscribeToApplication" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="unsubscribeFromApplication">
+			<soap12:operation soapAction="urn:unsubscribeFromApplication" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+			<wsdl:operation name="performSessionOperation">
+			<soap12:operation soapAction="urn:performSessionOperation" style="document"/>
+			<wsdl:input>
+
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+	</wsdl:binding>
+	
+	
+	<wsdl:service name="EchoEciService">
+		<wsdl:port binding="ns0:EchoEciServiceSOAPBinding" name="EchoEciServiceSOAP">
+			<soap12:address location="http://svcs.ebay.com/EchoEciService"/>
+		</wsdl:port>
+		<wsdl:port binding="ns0:EchoEciServiceHttpBinding" name="EchoEciServiceHttp">
+			<http:address location="http://svcs.ebay.com/EchoEciService"/>
+		</wsdl:port>
+	</wsdl:service>
+	
+	
+	
+</wsdl:definitions>
