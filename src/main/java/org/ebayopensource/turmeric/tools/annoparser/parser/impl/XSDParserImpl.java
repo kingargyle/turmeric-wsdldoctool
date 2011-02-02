@@ -1040,49 +1040,6 @@ public class XSDParserImpl implements XSDParser {
 		return null;
 	}
 
-	/**
-	 * The main method.
-	 * 
-	 * @param args
-	 *            the arguments
-	 * @throws Exception
-	 *             the exception
-	 */
-	public static void main(String[] args) throws Exception {
-		try {
-			XSDParser parser = new XSDParserImpl();
-			XSDDocInterface xsdDoc = parser.parse(args[0]);
-			List<Element> elements = xsdDoc.getAllIndependentElements();
-
-			List<ComplexType> ctypes = xsdDoc.getAllComplexTypes();
-			List<SimpleType> stypes = xsdDoc.getAllSimpleTypes();
-			// System.out.println("no of stypes" + stypes.size());
-			/*
-			 * for(Element elem: elements) {
-			 * System.out.println("Beginning of element..................");
-			 * elem.print();
-			 * System.out.println("End of element........................"); }
-			 */
-
-			// ComplexType ctype = (ComplexType)ctypes.get(0);
-			// ctype.print();
-
-			for (ComplexType ctype : ctypes) {
-				ctype.print();
-
-			}
-			xsdDoc.print();
-			// for(SimpleType stype: stypes) {
-			// stype.print();
-			// }
-
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-		}
-	}
+	
 
 }

@@ -55,6 +55,7 @@ import org.ebayopensource.turmeric.tools.annoparser.utils.Utils;
  */
 public class Main {
 	
+	/** The help content. */
 	private static String helpContent=getHelpText();
 
 	/**
@@ -97,7 +98,7 @@ public class Main {
 	/**
 	 * Gets the help text.
 	 * 
-	 * @return the help text
+	 * @return text displayed when help option is supplied.
 	 */
 	private static String getHelpText() {
 		String help=null;
@@ -118,7 +119,7 @@ public class Main {
 	}
 
 	/**
-	 * Removes the empty values.
+	 * Removes any empty values supplied as documents.
 	 * 
 	 * @param documentval
 	 *            the documentval

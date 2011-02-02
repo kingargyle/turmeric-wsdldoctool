@@ -23,40 +23,38 @@ import org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType;
 
 /**
- * The Class WSDLDocument.
+ * The implementation of WSDLDocInterface.
  *
  * @author srengarajan
  */
 public class WSDLDocument implements WSDLDocInterface {
 
+	/** The xsd document defined in the WSDL. */
 	private XSDDocInterface xsdDocument = null;
 	
+	/** The service name. */
 	private String serviceName = null;
 	
+	/** List of all operations defined in the WSDl */
 	private List<OperationHolder> operations = new ArrayList<OperationHolder>();
 	
-//	private List<String> allPossiblePaths = new ArrayList<String>();
-//	
-//	private List<String> allInputPaths = new ArrayList<String>();
-//	
-//	private List<String> allOutputPaths = new ArrayList<String>();
-//	
-//	private Map<String,List<OperationHolder>> typeOpMap = new HashMap<String,List<OperationHolder>>();
-//	
-//	private Map<String, Set<String>> elemCallMap = new HashMap<String, Set<String>>();
-	
+	/** List of all port types defined in the WSDL. */
 	private List<PortType> portTypes;
 	
+	/** The package name. */
 	private String packageName;
 	
 	
 	
+	/** The annotations. */
 	private ParsedAnnotationInfo annotations;
 	
 	
 
+	/** The complete remote path. */
 	private String completeRemotePath;
 	
+	/** Actual URL of the  WSDL document.*/
 	private URL documentURL;
 
 
@@ -217,17 +215,6 @@ public class WSDLDocument implements WSDLDocInterface {
 		return xsdDocument.searchIndependentElement(elementName);
 	}
 
-
-
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#print()
-	 */
-	public void print() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 	
 	/* (non-Javadoc)

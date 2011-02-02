@@ -91,10 +91,7 @@ public interface XSDDocInterface {
 	 */
 	public URL getDocumentURL();
 	
-	/**
-	 * Prints the.
-	 */
-	public void print();
+	
 	
 	/**
 	 * Gets the parent to complex type map.

@@ -143,14 +143,7 @@ public class XSDDocInterfaceTest {
 
 	
 
-	/**
-	 * Test print.
-	 */
-	@Test
-	public void testPrint() {
-		xsdIntf.print();  
-	}
-
+	
 	
 
 
