@@ -76,7 +76,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 */
 
 	public void generateWsdlOutput(WSDLDocInterface wsdlDoc,
-			OutputGenaratorParam outputGenaratorParam) {
+			OutputGenaratorParam outputGenaratorParam) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "handleWsdlDoc",
 				new Object[] { wsdlDoc, outputGenaratorParam });
 		String packageName = wsdlDoc.getPackageName();
@@ -136,8 +136,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	/**
 	 * Creates the all packages description file.
+	 * @throws OutputFormatterException 
 	 */
-	private void createAllPackagesDescriptionFile() {
+	private void createAllPackagesDescriptionFile() throws OutputFormatterException {
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(Constants.ALL_CLASSES, null));
 		html.append(getTextInDiv("WSDL API specification", "pageHeading"));
@@ -150,8 +151,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	/**
 	 * Creates the index file.
+	 * @throws OutputFormatterException 
 	 */
-	private void createIndexFile() {
+	private void createIndexFile() throws OutputFormatterException {
 		StringBuffer html = new StringBuffer(200);
 		html.append("<html><frameset cols=\"20%,80%\">");
 		html.append("<frameset rows=\"30%,70%\">");
@@ -171,8 +173,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	/**
 	 * Creates the individual package files.
+	 * @throws OutputFormatterException 
 	 */
-	private void createIndividualPackageFiles() {
+	private void createIndividualPackageFiles() throws OutputFormatterException {
 		Set<String> set = packageServicesMap.keySet();
 		for (String packageName : set) {
 			List<String> list = packageServicesMap.get(packageName);
@@ -194,8 +197,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	/**
 	 * Creates the all classes file.
+	 * @throws OutputFormatterException 
 	 */
-	private void createAllClassesFile() {
+	private void createAllClassesFile() throws OutputFormatterException {
 		Set<String> set = packageServicesMap.keySet();
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(Constants.ALL_CLASSES, null));
@@ -217,8 +221,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	/**
 	 * Creates the all packages file.
+	 * @throws OutputFormatterException 
 	 */
-	private void createAllPackagesFile() {
+	private void createAllPackagesFile() throws OutputFormatterException {
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(Constants.PACKAGES, null));
 		Set<String> set = packageServicesMap.keySet();
@@ -244,9 +249,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 *            the type
 	 * @param parentPath
 	 *            the parent path
+	 * @throws OutputFormatterException 
 	 */
 	private void writeComplexTypeFile(WSDLDocInterface doc, ComplexType type,
-			String parentPath) {
+			String parentPath) throws OutputFormatterException {
 		logger.entering("JavaDocOuputGenerator", "writeComplexTypeFile",
 				new Object[] { doc, type });
 		processedTypes.add(type);
@@ -434,8 +440,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 *            the doc
 	 * @param type
 	 *            the type
+	 * @throws OutputFormatterException 
 	 */
-	private void writeSimpleTypeFile(WSDLDocInterface doc, SimpleType type) {
+	private void writeSimpleTypeFile(WSDLDocInterface doc, SimpleType type) throws OutputFormatterException {
 		logger.entering("JavaDocOuputGenerator", "writeSimpleTypeFile",
 				new Object[] { doc, type });
 		String typeName = type.getName();
@@ -549,8 +556,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	/**
 	 * Write css files.
+	 * @throws OutputFormatterException 
 	 */
-	private void writeCssFiles() {
+	private void writeCssFiles() throws OutputFormatterException {
 		InputStream is = this.getClass().getClassLoader().getResourceAsStream(
 				"style.css");
 		try {
@@ -587,8 +595,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 *            the dir
 	 * @param fileName
 	 *            the file name
+	 * @throws OutputFormatterException 
 	 */
-	private void writeFile(StringBuffer html, String dir, String fileName) {
+	private void writeFile(StringBuffer html, String dir, String fileName) throws OutputFormatterException {
 		try {
 			File file = new File(dir);
 			file.mkdirs();
@@ -597,7 +606,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			fw.flush();
 			fw.close();
 		} catch (IOException e) {
-			new OutputFormatterException(e);
+			throw new OutputFormatterException(e);
 		}
 	}
 
@@ -850,9 +859,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 *            the op h
 	 * @param wsdlDoc
 	 *            the wsdl doc
+	 * @throws OutputFormatterException 
 	 */
 	private void setInputTypes(StringBuffer html, OperationHolder opH,
-			WSDLDocInterface wsdlDoc) {
+			WSDLDocInterface wsdlDoc) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "setInputTypes",
 				new Object[] { html, opH });
 		List<Element> inputs = opH.getInputTypes();
@@ -888,9 +898,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 *            the op h
 	 * @param wsdlDoc
 	 *            the wsdl doc
+	 * @throws OutputFormatterException 
 	 */
 	private void setOutputTypes(StringBuffer html, OperationHolder opH,
-			WSDLDocInterface wsdlDoc) {
+			WSDLDocInterface wsdlDoc) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "setOutputTypes",
 				new Object[] { html, opH });
 		StringBuffer rtBuf = new StringBuffer("");
@@ -991,9 +1002,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 *            the port type
 	 * @param serviceName
 	 *            the service name
+	 * @throws OutputFormatterException 
 	 */
 	private void buildOperationDetails(StringBuffer html, PortType portType,
-			WSDLDocInterface doc) {
+			WSDLDocInterface doc) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "buildOperationDetails",
 				new Object[] { html, portType });
 		html.append(HtmlUtils.getAnchorTag(Constants.OPERATIONS_DETAIL_HREF,
@@ -1447,7 +1459,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * org.ebayopensource.turmeric.tools.annoparser.outputformatter.OutputGenerator
 	 * #completeProcessing()
 	 */
-	public void completeProcessing() {
+	public void completeProcessing() throws OutputFormatterException {
 		if (packageServicesMap != null && !packageServicesMap.isEmpty()) {
 
 			createAllPackagesFile();
