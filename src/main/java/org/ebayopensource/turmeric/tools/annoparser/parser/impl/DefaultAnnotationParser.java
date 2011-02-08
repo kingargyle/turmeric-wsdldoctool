@@ -152,7 +152,10 @@ public class DefaultAnnotationParser implements AnnotationParser {
 	 */
 	private Node getNextSibling(Node node){
 		Node sib=node.getNextSibling();
-		if(sib!=null && sib.getNodeType()==Node.TEXT_NODE){
+		if(sib !=null && Node.COMMENT_NODE==sib.getNodeType()){
+			sib=getNextSibling(sib);
+		}
+		if(sib!=null && sib.getNodeType()==Node.TEXT_NODE ){
 			String value=sib.getTextContent();
 			if(value!=null){
 				value=value.replaceAll("\t", "");
