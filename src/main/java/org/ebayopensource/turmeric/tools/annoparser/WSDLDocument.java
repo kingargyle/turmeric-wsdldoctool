@@ -201,7 +201,7 @@ public class WSDLDocument implements WSDLDocInterface {
 		if(xsdDocument!=null){
 			return this.xsdDocument.searchCType(name);
 		}
-		return xsdDocument.searchCType(name);
+		return null;
 	}
 
 	
