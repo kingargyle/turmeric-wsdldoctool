@@ -30,9 +30,17 @@ public class Element implements Comparable<Element>{
 	 */
 	private String name;
 	
+	private Comment comment;
 	
 	
-	
+	public Comment getComment() {
+		return comment;
+	}
+
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
+
 	/**
 	 * captures the attributes of this element
 	 */

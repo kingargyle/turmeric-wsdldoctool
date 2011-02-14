@@ -33,6 +33,7 @@ import org.ebayopensource.turmeric.tools.annoparser.XSDDocument;
 import org.ebayopensource.turmeric.tools.annoparser.context.Context;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.Attribute;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.AttributeElement;
+import org.ebayopensource.turmeric.tools.annoparser.dataobjects.Comment;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.EnumElement;
@@ -566,13 +567,11 @@ public class XSDParserImpl implements XSDParser {
 	 */
 	private void parseAllElements(String tagName, Document srcDoc,
 			XSDDocument xsdDocument) {
+		
 		logger.log(Level.FINER,
 				"Entering parseAllElements method in XSDParser", new Object[] {
 						tagName, srcDoc, xsdDocument });
 		List<Element> elements = new ArrayList<Element>();
-		String[] strs = tagName.split(":");
-		String nsprefix = strs[0] + ":";
-
 		NodeList domElements = srcDoc.getElementsByTagName(tagName);
 		int noOfDomElements = domElements.getLength();
 		for (int i = 0; i < noOfDomElements; i++) {
@@ -582,11 +581,19 @@ public class XSDParserImpl implements XSDParser {
 			String[] typeParts = type.split(":");
 			if (typeParts != null && typeParts.length > 1)
 				type = typeParts[1];
-
+			
 			Element elem = new Element();
+			
 			elem.setName(name);
 			elem.setType(type);
-
+			String prevComment=Utils.getPreviousComment(obj);
+			String nextComment=Utils.getNextComment(obj);
+			if(prevComment!=null || nextComment!=null){
+				Comment comment=new Comment();
+				comment.setNextComment(nextComment);
+				comment.setPreviousComment(prevComment);
+				elem.setComment(comment);
+			}
 			List<Element> instances = (List<Element>) typeElementsMap.get(type);
 			if (instances == null) {
 				instances = new ArrayList<Element>();
@@ -658,7 +665,14 @@ public class XSDParserImpl implements XSDParser {
 			elem.setName(name);
 			elem.setType(type);
 			elem.setContainerComplexType(ctype);
-
+			String prevComment=Utils.getPreviousComment(obj);
+			String nextComment=Utils.getNextComment(obj);
+			if(prevComment!=null || nextComment!=null){
+				Comment comment=new Comment();
+				comment.setNextComment(nextComment);
+				comment.setPreviousComment(prevComment);
+				elem.setComment(comment);
+			}
 			NamedNodeMap nameNodeMap = obj.getAttributes();
 			int size = nameNodeMap.getLength();
 
@@ -693,6 +707,14 @@ public class XSDParserImpl implements XSDParser {
 					}
 				}
 				String type = attrElem.getAttribute("type");
+				String prevComment=Utils.getPreviousComment(attrElem);
+				String nextComment=Utils.getNextComment(attrElem);
+				if(prevComment!=null || nextComment!=null){
+					Comment comment=new Comment();
+					comment.setNextComment(nextComment);
+					comment.setPreviousComment(prevComment);
+					attr.setComment(comment);
+				}
 				if(Utils.isEmpty(type)){
 					NodeList simpleTypes=attrElem.getElementsByTagNameNS("*", "simpleType");
 					if(simpleTypes.getLength()>0){

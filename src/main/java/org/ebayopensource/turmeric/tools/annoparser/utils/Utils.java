@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.ebayopensource.turmeric.tools.annoparser.parser.impl.WsdlParserImpl;
+import org.w3c.dom.Node;
 
 /**
  * The Class Utils.
@@ -108,6 +109,32 @@ public class Utils {
 		}
 		return retList;
 	}
-	
+	public static String getPreviousComment(Node element) {
+		while (element.getPreviousSibling() != null) {
+			Node prev = element.getPreviousSibling();
+			if (prev.getNodeType() == Node.COMMENT_NODE) {
+				return prev.getTextContent();
+			} else if (prev.getNodeType() == Node.TEXT_NODE) {
+				return getPreviousComment(prev);
+			} else if (prev.getNodeType() == Node.ELEMENT_NODE) {
+				return null;
+			}
+		}
+		return null;
+	}
+
+	public static String getNextComment(Node element) {
+		while (element.getNextSibling() != null) {
+			Node prev = element.getNextSibling();
+			if (prev.getNodeType() == Node.COMMENT_NODE) {
+				return prev.getTextContent();
+			} else if (prev.getNodeType() == Node.TEXT_NODE) {
+				return getNextComment(prev);
+			} else if (prev.getNodeType() == Node.ELEMENT_NODE) {
+				return null;
+			}
+		}
+		return null;
+	}
 	
 }
