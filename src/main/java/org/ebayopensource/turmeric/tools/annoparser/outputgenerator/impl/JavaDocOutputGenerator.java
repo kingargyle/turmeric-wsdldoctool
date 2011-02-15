@@ -372,7 +372,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		if (annInfo != null) {
 			List<ParsedAnnotationTag> seeLinks = AnnotationsHelper
 					.getAnnotationTag(annInfo, "SeeLink");
+			boolean headingAdded=false;
 			if (seeLinks != null) {
+				headingAdded=true;
 				html.append(getTextInDiv("<br>See: <br>", "javaDocRelatedHeading"));
 				for (ParsedAnnotationTag seeLink : seeLinks) {
 					html.append(AnnotationsHelper.processSeelink(seeLink)
@@ -386,41 +388,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					seeLinks = AnnotationsHelper.getCallInfoChildren(callInfo,
 							"SeeLink");
 					if (seeLinks != null) {
-
-						if (callInfo.getChildren().get("AllCalls") != null) {
-							html.append(getTextInDiv("For All Calls <br>See: ",
-									"javaDocRelatedHeading"));
-							
-						} else {
-							String value = AnnotationsHelper
-									.getFirstCallInfoTagValue(callInfo,
-											"AllCallsExcept");
-							if (!Utils.isEmpty(value)) {
-								html.append(getTextInDiv(
-										"For All Calls Except: " + value
-												+ " <br>See: ",
-										"javaDocRelatedHeading"));
-								
-							}
+						if(!headingAdded){
+							html.append(getTextInDiv("<br>See: <br>", "javaDocRelatedHeading"));
 						}
-						List<ParsedAnnotationTag> calls = AnnotationsHelper
-								.getCallInfoChildren(callInfo, "CallName");
-						if (calls != null) {
-							String callString = "For Calls : ";
-							Iterator<ParsedAnnotationTag> callIter = calls
-									.iterator();
-							while (callIter.hasNext()) {
-								ParsedAnnotationTag call = callIter.next();
-								callString = callString + call.getTagValue();
-								if (callIter.hasNext()) {
-									callString = callString + ",";
-								}
-							}
-							html.append(getTextInDiv(callString + " <br>See:",
-									"javaDocRelatedHeading"));
-							
-						}
-
 						for (ParsedAnnotationTag seeLink : seeLinks) {
 							html.append(AnnotationsHelper
 									.processSeelink(seeLink)
@@ -1164,7 +1134,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			}
 			if(!callReqRet.isEmpty()){
 				html.append(Constants.HTML_BR
-						+ getTextInDiv("Occurances: ",
+						+ getTextInDiv("Used By: ",
 								"javaDocRelatedHeading"));
 			
 			html.append(Constants.HTML_TABLE_START_WITH_ATTRS.replaceAll("\\{#\\}", "class=\"" + "JavadocOccurancesTable"
@@ -1270,9 +1240,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			}
 			String repeatableString="";
 			if(maxOccurs==minOccurs){
-				repeatableString=Constants.HTML_BR+" Repeatable : ["+maxOccurs+"]";
+				repeatableString=Constants.HTML_BR+" Occurrence : ["+maxOccurs+"]";
 			}else{
-				repeatableString=Constants.HTML_BR+" Repeatable : ["+minOccurs+"..."+maxOccurs+"]";
+				repeatableString=Constants.HTML_BR+" Occurrence : ["+minOccurs+"..."+maxOccurs+"]";
 			}
 			html.append(getTextInDiv(repeatableString, "javaDocRelatedHeading"));
 			if (anno != null) {
@@ -1295,9 +1265,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 							}
 							repeatableString="";
 							if(maxOccurs==minOccurs){
-								repeatableString=" Repeatable : ["+maxOccurs+"]";
+								repeatableString=" Occurrence : ["+maxOccurs+"]";
 							}else{
-								repeatableString=" Repeatable : ["+minOccurs+"..."+maxOccurs+"]";
+								repeatableString=" Occurrence : ["+minOccurs+"..."+maxOccurs+"]";
 							}
 							if (callInfo.getChildren().get("AllCalls") != null) {
 
