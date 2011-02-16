@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.net.URL;
 
+import org.ebayopensource.turmeric.tools.annoparser.config.ConfigurationReader;
 import org.ebayopensource.turmeric.tools.annoparser.context.Context;
 import org.ebayopensource.turmeric.tools.annoparser.customparser.impl.TestAnnoParserClass;
 import org.ebayopensource.turmeric.tools.annoparser.parser.XSDParser;
@@ -44,6 +45,7 @@ public class XSDParserTest {
 	@Before
 	public void setUp() throws Exception {
 		this.xsdPath = this.getClass().getClassLoader().getResource("ebaySvc.wsdl").toExternalForm();
+		ConfigurationReader.loadDefaultConfiguration();
 		Context.getContext().addParser("maxLength",new TestAnnoParserClass());
 	}
 
