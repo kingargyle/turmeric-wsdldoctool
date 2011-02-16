@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.tools.annoparser.parser.impl;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ import org.ebayopensource.turmeric.tools.annoparser.parser.WsdlParser;
 import org.ebayopensource.turmeric.tools.annoparser.parser.XSDParser;
 import org.ebayopensource.turmeric.tools.annoparser.utils.Utils;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 
 
@@ -144,24 +142,12 @@ public class WsdlParserImpl implements WsdlParser {
 	public synchronized WSDLDocument parse(String url) throws ParserException {
 		logger.entering("WsdlParser", "parse", url);
 		// WSDLDocument
-		wsdlDoc = new WSDLDocument();
+		wsdlDoc = Context.getContext().getNewWsdlDocument();
 		// this.wsdlDocument = wsdlDoc;
 		try {
 			XSDParser xsdParser = null;
-
-			try {
-				xsdParser = new XSDParserImpl();
-				xsdDocument = xsdParser.parse(url);
-			} catch (SAXException e) {
-				logger.log(Level.SEVERE, "A SAXException occurred", e);
-				StringBuffer sbf = new StringBuffer("Failed to parse " + url + ". A SAXException occurred. Cause for the failure: " + e.getMessage());
-				throw new ParserException(sbf.toString(),e);
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, "An IOException occurred", e);
-				StringBuffer sbf = new StringBuffer("Failed to parse " + url + ". An IOException occurred. Cause for the failure: " + e.getMessage());
-				throw new ParserException(sbf.toString(),e);
-			}
-
+			xsdParser = Context.getContext().getNewXsdParser();
+			xsdDocument = xsdParser.parse(url);
 			wsdlDoc.setXsdDocument(xsdDocument);
 			wsdlDoc.setDocumentURL(xsdDocument.getDocumentURL());
 			WSDLReader wsdlReader = WSDLFactory.newInstance().newWSDLReader();
@@ -188,12 +174,12 @@ public class WsdlParserImpl implements WsdlParser {
 				QName name = entry.getKey();
 
 				PortType p = entry.getValue();
-				org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType portType = new org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType();
+				org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType portType = Context.getContext().getNewPortType();
 				portType.setName(name.getLocalPart());
 				portType.setAnnotations(parseAnnotation(p.getDocumentationElement()));
 				List<Operation> operations = p.getOperations();
 				for (Operation op : operations) {
-					OperationHolder opHolder = new OperationHolder();
+					OperationHolder opHolder = Context.getContext().getNewOperation();
 					opHolder.setName(op.getName());
 					opHolder.setAnnotations(parseAnnotation(op.getDocumentationElement()));
 					wsdlDoc.addOperation(opHolder);
@@ -266,10 +252,12 @@ public class WsdlParserImpl implements WsdlParser {
 								this.addEntry(elem.getType(), opHolder);
 						}
 					}
+					postProcessOperation(opHolder,op);
 				}
+				postProcessPortType(portType,p);
 				wsdlDoc.addPortType(portType);
 			}
-
+			postProcessWsdlDocument(wsdlDoc, wsdlDefinition);
 		} catch (WSDLException e) {
 			logger.log(Level.SEVERE, "A WSDLException occurred", e);
 			throw new ParserException("Failed to parse " + url + "A WSDLException occurred. Cause for the Exception is " + e.getMessage(),e);
@@ -281,10 +269,21 @@ public class WsdlParserImpl implements WsdlParser {
 		
 		
 		logger.exiting("WsdlParser", "parse", wsdlDoc);
+		
 		return wsdlDoc;
 
 	}
 	
+	
+	protected void postProcessOperation(OperationHolder type,Operation operation){
+		//Do Nothing exposed for extensibility
+	}
+	protected void postProcessPortType(org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType type,PortType operation){
+		//Do Nothing exposed for extensibility
+	}
+	protected void postProcessWsdlDocument(WSDLDocument doc,Definition wsdlDefinition ){
+		//Do Nothing exposed for extensibility
+	}
 	/**
 	 * Parses the annotation.
 	 *

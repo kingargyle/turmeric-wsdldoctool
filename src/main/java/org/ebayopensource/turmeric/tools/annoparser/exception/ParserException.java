@@ -39,4 +39,15 @@ public class ParserException extends WsdlDocException  {
 		
 		super(message,t);
 	}
+	
+	/**
+	 * Instantiates a new parser exception.
+	 *
+	 * @param message the message
+	 * @param t the t
+	 */
+	public ParserException(String message ) {
+		
+		super(message);
+	}
 }

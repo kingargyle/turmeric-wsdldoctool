@@ -13,95 +13,107 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ebayopensource.turmeric.tools.annoparser.WSDLDocument;
+import org.ebayopensource.turmeric.tools.annoparser.XSDDocument;
+import org.ebayopensource.turmeric.tools.annoparser.commons.FactoryTypes;
+import org.ebayopensource.turmeric.tools.annoparser.dataobjects.AttributeElement;
+import org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType;
+import org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element;
+import org.ebayopensource.turmeric.tools.annoparser.dataobjects.EnumElement;
+import org.ebayopensource.turmeric.tools.annoparser.dataobjects.OperationHolder;
+import org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType;
+import org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType;
+import org.ebayopensource.turmeric.tools.annoparser.exception.ParserException;
 import org.ebayopensource.turmeric.tools.annoparser.parser.AnnotationParser;
+import org.ebayopensource.turmeric.tools.annoparser.parser.impl.WsdlParserImpl;
+import org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl;
 
 /**
- * The Class Context holds the context information for complete execution of the tool.
- *
+ * The Class Context holds the context information for complete execution of the
+ * tool.
+ * 
  * @author sdaripelli
  */
 public class Context {
-	
+
 	/** The css file path. */
 	private String cssFilePath;
-	
+
 	/** The output dir. */
 	private String outputDir;
-	
+
 	/** The documents. */
 	private List<String> documents;
-	
+
 	/** The annotation parsers. */
-	private Map<String,AnnotationParser> annotationParsers;
-	
+	private Map<String, AnnotationParser> annotationParsers;
+
 	/** The output generators. */
-	private Map<String,OutputGenaratorParam> outputGenerators;
-	
-	
-	
+	private Map<String, OutputGenaratorParam> outputGenerators;
+
+	private Map<FactoryTypes, Class> factoryClasses = new HashMap<FactoryTypes, Class>();
+
 	private AnnotationParser defaultAnnotationParser;
-	
-//	/** The context. */
-//	private static Context context=new Context();
-	
-	
+
+	// /** The context. */
+	// private static Context context=new Context();
 
 	/**
 	 * Instantiates a new context.
 	 */
-	private Context(){
-		
+	private Context() {
+
 	}
-	
+
 	private static ThreadLocal<Context> threadLocSingleton = new ThreadLocal<Context>() {
-        protected synchronized Context initialValue() {
-            return new Context();
-        }
-    };
+		protected synchronized Context initialValue() {
+			return new Context();
+		}
+	};
 
 	/**
 	 * Refresh context.
 	 */
-	public static void refreshContext(){
+	public static void refreshContext() {
 		threadLocSingleton.set(new Context());
-		
+
 	}
-	
+
 	/**
 	 * Gets the context.
 	 * 
 	 * @return the context
 	 */
-	public static Context getContext(){
+	public static Context getContext() {
 		return threadLocSingleton.get();
 	}
-	
+
 	/**
 	 * Adds the output generator.
 	 * 
 	 * @param context
 	 *            the context
 	 */
-	public void addOutputGenerator(OutputGenaratorParam context){
-		if(outputGenerators==null){
-			outputGenerators=new HashMap<String,OutputGenaratorParam>();
+	public void addOutputGenerator(OutputGenaratorParam context) {
+		if (outputGenerators == null) {
+			outputGenerators = new HashMap<String, OutputGenaratorParam>();
 		}
 		outputGenerators.put(context.getName(), context);
 	}
-	
+
 	/**
 	 * Adds the document.
 	 * 
 	 * @param document
 	 *            the document
 	 */
-	public void addDocument(String document){
-		if(documents==null){
-			documents=new ArrayList<String>();
+	public void addDocument(String document) {
+		if (documents == null) {
+			documents = new ArrayList<String>();
 		}
 		documents.add(document);
 	}
-	
+
 	/**
 	 * Adds the parser.
 	 * 
@@ -110,11 +122,11 @@ public class Context {
 	 * @param parser
 	 *            the parser
 	 */
-	public void addParser(String parserName,AnnotationParser parser){
-		if(annotationParsers==null){
-			annotationParsers=new HashMap<String, AnnotationParser>();
+	public void addParser(String parserName, AnnotationParser parser) {
+		if (annotationParsers == null) {
+			annotationParsers = new HashMap<String, AnnotationParser>();
 		}
-		annotationParsers.put(parserName,parser);
+		annotationParsers.put(parserName, parser);
 	}
 
 	/**
@@ -189,7 +201,8 @@ public class Context {
 	 * @param annotationParsers
 	 *            the annotation parsers
 	 */
-	public void setAnnotationParsers(Map<String, AnnotationParser> annotationParsers) {
+	public void setAnnotationParsers(
+			Map<String, AnnotationParser> annotationParsers) {
 		this.annotationParsers = annotationParsers;
 	}
 
@@ -198,7 +211,7 @@ public class Context {
 	 * 
 	 * @return the output generators
 	 */
-	public Map<String,OutputGenaratorParam> getOutputGenerators() {
+	public Map<String, OutputGenaratorParam> getOutputGenerators() {
 		return outputGenerators;
 	}
 
@@ -208,13 +221,14 @@ public class Context {
 	 * @param outputGenerators
 	 *            the new output generators
 	 */
-	public void setOutputGenerators(Map<String,OutputGenaratorParam> outputGenerators) {
+	public void setOutputGenerators(
+			Map<String, OutputGenaratorParam> outputGenerators) {
 		this.outputGenerators = outputGenerators;
 	}
 
 	/**
 	 * Gets the default annotation parser.
-	 *
+	 * 
 	 * @return the default annotation parser
 	 */
 	public AnnotationParser getDefaultAnnotationParser() {
@@ -223,14 +237,105 @@ public class Context {
 
 	/**
 	 * Sets the default annotation parser.
-	 *
-	 * @param defaultParser the new default annotation parser
+	 * 
+	 * @param defaultParser
+	 *            the new default annotation parser
 	 */
 	public void setDefaultAnnotationParser(AnnotationParser defaultParser) {
 		this.defaultAnnotationParser = defaultParser;
 	}
-	
-	
-	
+
+	public void addFactoryClass(FactoryTypes factoryTypes, Class clazz) {
+		factoryClasses.put(factoryTypes, clazz);
+	}
+
+	public Class getFactoryClass(FactoryTypes factoryTypes) {
+		return factoryClasses.get(factoryTypes);
+	}
+
+	public SimpleType getNewSimpleType() throws ParserException {
+		return (SimpleType) getNewObject(FactoryTypes.SimpleType);
+	}
+
+	public Element getNewElement() throws ParserException {
+		return (Element) getNewObject(FactoryTypes.Element);
+	}
+
+	public AttributeElement getNewAttribute() throws ParserException {
+		return (AttributeElement) getNewObject(FactoryTypes.Attribute);
+	}
+
+	public ComplexType getNewComplexType() throws ParserException {
+		return (ComplexType) getNewObject(FactoryTypes.ComplexType);
+	}
+
+	public EnumElement getNewEnumeration() throws ParserException {
+		return (EnumElement) getNewObject(FactoryTypes.Enumeration);
+	}
+
+	public OperationHolder getNewOperation() throws ParserException {
+		return (OperationHolder) getNewObject(FactoryTypes.Operation);
+	}
+
+	public PortType getNewPortType() throws ParserException {
+		return (PortType) getNewObject(FactoryTypes.PortType);
+	}
+
+	public XSDParserImpl getNewXsdParser() throws ParserException {
+		return (XSDParserImpl) getNewObject(FactoryTypes.XsdParser);
+	}
+
+	public WsdlParserImpl getNewWsdlParser() throws ParserException {
+		return (WsdlParserImpl) getNewObject(FactoryTypes.WsdlParser);
+	}
+
+	public XSDDocument getNewXsdDocument() throws ParserException {
+		return (XSDDocument) getNewObject(FactoryTypes.XsdDocument);
+	}
+
+	public WSDLDocument getNewWsdlDocument() throws ParserException {
+		return (WSDLDocument) getNewObject(FactoryTypes.WsdlDocument);
+	}
+
+	private static Map<FactoryTypes, Class> baseClasses = new HashMap<FactoryTypes, Class>();
+	static {
+		baseClasses.put(FactoryTypes.SimpleType, SimpleType.class);
+		baseClasses.put(FactoryTypes.Element, Element.class);
+		baseClasses.put(FactoryTypes.Attribute, AttributeElement.class);
+		baseClasses.put(FactoryTypes.ComplexType, ComplexType.class);
+		baseClasses.put(FactoryTypes.Enumeration, EnumElement.class);
+		baseClasses.put(FactoryTypes.Operation, OperationHolder.class);
+		baseClasses.put(FactoryTypes.PortType, PortType.class);
+		baseClasses.put(FactoryTypes.XsdParser, XSDParserImpl.class);
+		baseClasses.put(FactoryTypes.WsdlParser, WsdlParserImpl.class);
+		baseClasses.put(FactoryTypes.XsdDocument, XSDDocument.class);
+		baseClasses.put(FactoryTypes.WsdlDocument, WSDLDocument.class);
+	}
+
+	private Object getNewObject(FactoryTypes type) throws ParserException {
+		Class baseClazz = baseClasses.get(type);
+		Class clazz = factoryClasses.get(type);
+		if (clazz != null) {
+
+			
+				try {
+					return clazz.asSubclass(baseClazz).newInstance();
+				} catch (InstantiationException e) {
+					throw new ParserException("Wrong " + type
+							+ " Factory class specified, " + type
+							+ " Class should have Default Constructor" + "\n"
+							+ baseClazz.getName());
+				} catch (IllegalAccessException e) {
+					throw new ParserException("Wrong " + type
+							+ " Factory class specified, " + type
+							+ " Class should extend" + "\n"
+							+ baseClazz.getName());
+				}
+			
+		}
+		throw new ParserException(type + " Factory class is required, " + type
+				+ " Class should extend" + "\n" + baseClazz.getName());
+
+	}
 
 }

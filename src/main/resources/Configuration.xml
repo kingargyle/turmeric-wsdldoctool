@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+	<factoryclasses>
+		<factoryclass>
+			<type>Element</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.dataobjects.Element</class>
+		</factoryclass>
+		<factoryclass>
+			<type>Attribute</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.dataobjects.AttributeElement</class>
+		</factoryclass>
+		<factoryclass>
+			<type>ComplexType</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType</class>
+		</factoryclass>
+		<factoryclass>
+			<type>Enumeration</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.dataobjects.EnumElement</class>
+		</factoryclass>
+		<factoryclass>
+			<type>Operation</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.dataobjects.OperationHolder</class>
+		</factoryclass>
+		<factoryclass>
+			<type>PortType</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType</class>
+		</factoryclass>
+		<factoryclass>
+			<type>SimpleType</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType</class>
+		</factoryclass>
+		<factoryclass>
+			<type>XsdParser</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl</class>
+		</factoryclass>
+		<factoryclass>
+			<type>WsdlParser</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.parser.impl.WsdlParserImpl</class>
+		</factoryclass>
+		<factoryclass>
+			<type>XsdDocument</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.XSDDocument</class>
+		</factoryclass>
+		<factoryclass>
+			<type>WsdlDocument</type>
+			<class>org.ebayopensource.turmeric.tools.annoparser.WSDLDocument</class>
+		</factoryclass>
+	</factoryclasses>
 	<defaultparser>
     	<class>org.ebayopensource.turmeric.tools.annoparser.parser.impl.DefaultAnnotationParser</class>
     </defaultparser>

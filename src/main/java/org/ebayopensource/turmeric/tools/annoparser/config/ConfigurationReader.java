@@ -22,6 +22,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.ebayopensource.turmeric.tools.annoparser.commons.FactoryTypes;
 import org.ebayopensource.turmeric.tools.annoparser.context.Context;
 import org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam;
 import org.ebayopensource.turmeric.tools.annoparser.exception.AnnotationParserException;
@@ -127,6 +128,7 @@ public class ConfigurationReader {
 				context.setOutputDir(outputdir);
 			}
 			populateDocuments(document, context);
+			populateFactoryClasses(document, context);
 			Logger.getLogger(ConfigurationReader.class.getName()).log(Level.FINER, "Exiting loadConfigurations method in ConfigurationReader", new Object[]{document,context});
 		} catch (SAXException e) {
 			Logger.getLogger(ConfigurationReader.class.getName()).log(Level.SEVERE,"Configuration File not valid",e);
@@ -138,6 +140,8 @@ public class ConfigurationReader {
 			throw new ConfigurationException(sbf.toString(),e);
 		}
 	}
+	
+	
 	
 	/**
 	 * Load default configuration. 
@@ -202,6 +206,34 @@ public class ConfigurationReader {
 		Logger.getLogger(ConfigurationReader.class.getName()).log(Level.FINER, "Exiting populateAnnotationParsers method in ConfigurationReader", new Object[]{document,context});
 	}
 	
+	
+	
+	private static void populateFactoryClasses(Document document, Context context) {
+		Logger.getLogger(ConfigurationReader.class.getName()).log(Level.FINER, "Entering populateFactoryClasses method in ConfigurationReader", new Object[]{document,context});
+		try {
+		NodeList nodeList=document.getElementsByTagName("factoryclasses");
+		Node node = (org.w3c.dom.Element) nodeList.item(0);
+		if(node!=null){
+			for (Node childNode = node.getFirstChild(); childNode != null;) {
+				
+				Node nextChild = childNode.getNextSibling();
+				if(childNode.getNodeType()==Node.ELEMENT_NODE){
+					String tagName=getTagValue((org.w3c.dom.Element)childNode, "type");
+					String parserClass=getTagValue((org.w3c.dom.Element)childNode, "class");
+					if(tagName!=null && parserClass!=null){
+							Class clazz = Thread.currentThread().getContextClassLoader().loadClass(parserClass.trim());
+							context.addFactoryClass(FactoryTypes.valueOf(tagName), clazz) ;
+					}
+				}				
+				childNode = nextChild;
+			}
+		}
+		} catch (ClassNotFoundException e) {
+			Logger.getLogger(ConfigurationReader.class.getName()).log(Level.SEVERE, "Custom Annotation Parser Class  Not Found.", e);
+			throw new AnnotationParserException("Failed to populate the Factory Class. Class  Not Found.",e);
+		} 
+		Logger.getLogger(ConfigurationReader.class.getName()).log(Level.FINER, "Exiting populateFactoryClasses method in ConfigurationReader", new Object[]{document,context});
+	}
 	/**
 	 * Populate documents.
 	 * 

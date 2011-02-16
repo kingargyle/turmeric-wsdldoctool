@@ -9,7 +9,6 @@
 package org.ebayopensource.turmeric.tools.annoparser.driver;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +26,7 @@ import org.ebayopensource.turmeric.tools.annoparser.exception.ParserException;
 import org.ebayopensource.turmeric.tools.annoparser.exception.XsdDocException;
 import org.ebayopensource.turmeric.tools.annoparser.parser.WsdlParser;
 import org.ebayopensource.turmeric.tools.annoparser.parser.XSDParser;
-import org.ebayopensource.turmeric.tools.annoparser.parser.impl.WsdlParserImpl;
-import org.ebayopensource.turmeric.tools.annoparser.parser.impl.XSDParserImpl;
 import org.ebayopensource.turmeric.tools.annoparser.utils.Utils;
-import org.xml.sax.SAXException;
 
 /**
  * The Class Driver is the main class which integrates and calls all the different modules involved.
@@ -188,7 +184,7 @@ public class Driver {
 			boolean isWsdl = isWsdl(document);
 			try {			
 				if (isWsdl) {
-					WsdlParser wsdlParser = new WsdlParserImpl();
+					WsdlParser wsdlParser =Context.getContext().getNewWsdlParser();
 					WSDLDocInterface obj = (WSDLDocInterface)wsdlParser.parse(document);
 					Context context = Context.getContext();
 					for ( Map.Entry<String,OutputGenaratorParam> entry: context
@@ -198,8 +194,7 @@ public class Driver {
 						param.getOutputGenerator().generateWsdlOutput(obj,param);
 					}
 				} else {
-					try {
-						XSDParser xsdParser = new XSDParserImpl();
+						XSDParser xsdParser = Context.getContext().getNewXsdParser();
 						XSDDocInterface obj = xsdParser.parse(document);
 						Context context = Context.getContext();
 						for ( Map.Entry<String,OutputGenaratorParam> entry: context
@@ -208,15 +203,6 @@ public class Driver {
 							param.setNumOfDocuments(Context.getContext().getDocuments().size());
 							param.getOutputGenerator().generateXsdOutput(obj,param);
 						}
-					} catch (SAXException e) {
-						logger.log(Level.SEVERE, "A SAXException occurred", e);
-						StringBuffer sbf = new StringBuffer("Failed to parse " + document + ". A SAXException occurred. Cause for the failure: " + e.getMessage());
-						throw new ParserException(sbf.toString(),e);
-					} catch (IOException e) {
-						logger.log(Level.SEVERE, "An IOException occurred", e);
-						StringBuffer sbf = new StringBuffer("Failed to parse " + document + ". An IOException occurred. Cause for the failure: " + e.getMessage());
-						throw new ParserException(sbf.toString(),e);
-					}
 				}
 				
 				
