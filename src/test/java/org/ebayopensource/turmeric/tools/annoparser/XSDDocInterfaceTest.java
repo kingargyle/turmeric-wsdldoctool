@@ -11,6 +11,7 @@ package org.ebayopensource.turmeric.tools.annoparser;
 import static org.junit.Assert.*;
 
 import org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface;
+import org.ebayopensource.turmeric.tools.annoparser.config.ConfigurationReader;
 import org.ebayopensource.turmeric.tools.annoparser.context.Context;
 import org.ebayopensource.turmeric.tools.annoparser.customparser.impl.TestAnnoParserClass;
 import org.ebayopensource.turmeric.tools.annoparser.parser.XSDParser;
@@ -43,7 +44,7 @@ public class XSDDocInterfaceTest {
 	@Before
 	public void setUp() throws Exception {
 		String xsdPath = this.getClass().getClassLoader().getResource("ebaySvc.wsdl").toExternalForm();
-
+		ConfigurationReader.loadDefaultConfiguration();
 		Context.getContext().addParser("maxLength",new TestAnnoParserClass());
 		XSDParser parser = new XSDParserImpl();
 		xsdIntf = parser.parse(xsdPath);
