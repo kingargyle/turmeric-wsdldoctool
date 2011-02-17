@@ -298,31 +298,36 @@ public class WsdlParserImpl implements WsdlParser {
 		ParsedAnnotationInfo info = null;
 		if (node != null) {
 			info = new ParsedAnnotationInfo();
-			String documentation="";
-			for (Node childNode = node.getFirstChild(); childNode != null;) {
-				Node nextChild = childNode.getNextSibling();
-				if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-					String tagName = childNode.getNodeName();
-					AnnotationParser parser = getAnnotationParser(tagName);
-					if (parser != null) {
-						ParsedAnnotationTag parsedData = parser
-								.parseAnnotation((org.w3c.dom.Element) childNode);
-						info.addParsedAnnotationTag(tagName, parsedData);
-					}
-				}else if(childNode.getNodeType()==Node.TEXT_NODE){
-					documentation=documentation+childNode.getNodeValue();
-				}
-				childNode = nextChild;
-			}
-			if(!Utils.isEmpty(documentation)){
-				info.setDocumentation(documentation);
-			}
+			processDocumentation(node, info);
 		}
 		logger.log(Level.FINER, "Exiting parseAnnotation method in XSDParser",
 				info);
 		return info;
 	}
-	
+	protected void processDocumentation(org.w3c.dom.Element docElement,
+			ParsedAnnotationInfo info) {
+		String documentation="";
+		for (Node childNode = docElement.getFirstChild(); childNode != null;) {
+			Node nextChild = childNode.getNextSibling();
+			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+				String tagName = childNode.getNodeName();
+				AnnotationParser parser = getAnnotationParser(tagName);
+				if (parser != null) {
+					ParsedAnnotationTag parsedData = parser
+							.parseAnnotation((org.w3c.dom.Element) childNode);
+					info.addParsedAnnotationTag(tagName, parsedData);
+				}
+			}else if(childNode.getNodeType()==Node.TEXT_NODE){
+				documentation=documentation+childNode.getNodeValue();
+			}else if(childNode.getNodeType()==Node.COMMENT_NODE){
+				documentation=documentation+("<!--"+childNode.getNodeValue()+"-->");
+			}
+			childNode = nextChild;
+		}
+		if(!Utils.isEmpty(documentation)){
+			info.setDocumentation(documentation);
+		}
+	}
 	/**
 	 * Gets the annotation parser.
 	 *
