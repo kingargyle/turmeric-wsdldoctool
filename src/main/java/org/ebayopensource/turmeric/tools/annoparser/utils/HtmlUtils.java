@@ -114,7 +114,7 @@ public class HtmlUtils {
 		if(Context.getContext().getCssFilePath()!=null && !Utils.isEmpty(Context.getContext().getCssFilePath())){
 			cssList.add("CustomStyle.css");
 		}
-		String relPath="./";
+		String relPath="";
 		if(currLocFromBase!=null){
 			String [] folders=currLocFromBase.split("/");
 			for(String folder:folders){
