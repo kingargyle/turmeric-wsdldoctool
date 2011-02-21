@@ -38,8 +38,7 @@ public class ToStringOutputGenerator implements OutputGenerator {
 			if (outputGenaratorParam.getParameters().get("writeToFile") != null
 					&& "true".equals(outputGenaratorParam.getParameters().get(
 							"writeToFile"))) {
-				String outFile = outputGenaratorParam.getParameters().get(
-						"filePath");
+				String outFile = outputGenaratorParam.getOutputDir();
 				if (outFile != null) {
 					try {
 						writeFile(doc.toString(),outFile,fileName);
