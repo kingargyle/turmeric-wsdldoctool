@@ -4,14 +4,11 @@
 		<outputgenerator name="ToString">
 			<class>org.ebayopensource.turmeric.tools.annoparser.outputgenerator.impl.ToStringOutputGenerator
 			</class>
+			<outputdir>C:\ToStringOutputTest\</outputdir>
 			<parameters>
 				<parameter>
 					<name>writeToFile</name>
 					<value>true</value>
-				</parameter>
-				<parameter>
-					<name>filePath</name>
-					<value>C:\ToStringOutput</value>
 				</parameter>
 			</parameters>
 		</outputgenerator>	
