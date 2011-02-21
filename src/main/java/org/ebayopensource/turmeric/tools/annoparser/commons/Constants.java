@@ -158,6 +158,12 @@ public interface Constants {
 	 String HTML_SPAN_START = "<span {#}>";
 	 String HTML_SPAN_END = "</span>";
 	
+	 String NBSP = "&nbsp;";
+	 
+	 String NBSP_TWICE = "&nbsp;&nbsp;";
+	 
+	 String NBSP_THRICE = "&nbsp;&nbsp;&nbsp;";
+	 
 	 String INPUT_DOCUMENT="documents";
 	
 	 String INPUT_OUTPUT_DIR="output_dir";
