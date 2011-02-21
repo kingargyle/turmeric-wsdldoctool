@@ -143,36 +143,6 @@ public class ComplexType extends AbstractType implements
 	public void setInstanceElements(List<Element> elements) {
 		this.instanceElements = elements;
 	}
-
-	
-	/**
-	 * Utility method used to console print this Complex type.
-	 */
-	public void print() {
-		int size = childElements.size();
-		System.out.println("ComplexType::::::::::Name = " + super.getName());
-		System.out.println("Printing child Elements { ");
-		// System.out.println("Name: " + name + "size: " + size);
-		for (Element elem : childElements) {
-			elem.print();
-		}
-		System.out.println(" } ");
-
-		System.out.println("Parent Type ......." + this.getParentType());
-		System.out.println("Child Type ........" + this.getChildType());
-
-		System.out.println("Printing Instance Elements { ");
-		System.out.println("Name: " + name + "size: " + size);
-		if (instanceElements != null) {
-			for (Element elem1 : instanceElements) {
-				if (elem1 != null)
-					elem1.print();
-			}
-		}
-		System.out.println(" } ");
-	}
-
-	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -180,5 +150,42 @@ public class ComplexType extends AbstractType implements
 	public int compareTo(ComplexType object) {
 		return this.getName().toUpperCase().compareTo(
 				object.getName().toUpperCase());
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("Complextype Name: " +name + "\n");
+		retVal.append("Complextype Base Type: " +parentType+ "\n");
+		retVal.append("Attributes: "+ "\n");
+		if(super.getAttributes()!=null){
+			for(Attribute attr: super.getAttributes()) {
+				if(attr != null) {
+					retVal.append(attr.toString()+ "\n");
+				}
+			}
+		}
+		if(super.getAnnotations()!=null){
+			retVal.append("Annotations: \n");
+			retVal.append(super.getAnnotations().toString());
+		}
+		retVal.append("Child Attributes: "+ "\n");
+		if(this.getSimpleAttributeContent()!=null){
+			for(AttributeElement attr: this.getSimpleAttributeContent()) {
+				if(attr != null) {
+					retVal.append(attr.toString()+ "\n");
+				}
+			}
+		}
+		retVal.append("Child Elements: "+ "\n");
+		if(this.getChildElements()!=null){
+			for(Element attr: this.getChildElements()) {
+				if(attr != null) {
+					retVal.append(attr.toString()+ "\n");
+				}
+			}
+		}
+		
+		return retVal.toString();
 	}
 }

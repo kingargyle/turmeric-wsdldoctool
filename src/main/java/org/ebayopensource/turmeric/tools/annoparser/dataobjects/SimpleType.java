@@ -94,16 +94,36 @@ public class SimpleType extends AbstractType {
 	}
   
 	
-	/**
-	 * method to dump the SimpleType contents to console output.
-	 */
-	public void print() {
-		System.out.println("Name: " + name + "description" + super.annotations.getDocumentation());
-		int size = enums.size();
-		for(EnumElement elem: enums) {
-			elem.print();
+	
+	
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("SimpleType Name: " +name + "\n");
+		retVal.append("SimpleType Base Type: " +base+ "\n");
+		retVal.append("Attributes: "+ "\n");
+		if(super.getAttributes()!=null){
+			for(Attribute attr: super.getAttributes()) {
+				if(attr != null) {
+					retVal.append(attr.toString()+ "\n");
+				}
+			}
 		}
-		System.out.println(".....................................................");
+		if(super.getAnnotations()!=null){
+			retVal.append("Annotations: \n");
+			retVal.append(super.getAnnotations().toString());
+		}
+		retVal.append("Enums: "+ "\n");
+		if(this.getEnums()!=null){
+			for(EnumElement attr: this.getEnums()) {
+				if(attr != null) {
+					retVal.append(attr.toString()+ "\n");
+				}
+			}
+		}
+		
+		
+		return retVal.toString();
 	}
 
 }

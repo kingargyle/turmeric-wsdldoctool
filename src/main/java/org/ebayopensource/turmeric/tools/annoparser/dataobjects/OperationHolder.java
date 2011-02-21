@@ -121,13 +121,7 @@ public class OperationHolder implements Comparable<OperationHolder> {
 		this.outputElement = outputs;
 	}
   
-	/**
-	 * Prints the.
-	 */
-	public void print() {
-		System.out.println("Operation[ Name: " + name );
-	}
-
+	
 
 	
 	/* (non-Javadoc)
@@ -152,5 +146,31 @@ public class OperationHolder implements Comparable<OperationHolder> {
 	public void setAnnotations(ParsedAnnotationInfo annotations) {
 		this.annotations = annotations;
 	}
-
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("=========================================================\n");
+		retVal.append("Operation Name: " +name + "\n");
+		if(annotations!=null){
+			retVal.append(name+ " Operation Annotations: \n");
+			retVal.append("=========================================================\n");
+			retVal.append(annotations.toString());
+			retVal.append("=========================================================\n");
+		}
+		retVal.append("Inputs: " + "\n");
+		if(this.inputElement!=null){
+			for(Element elem:this.inputElement){
+				retVal.append(elem.toString() + "\n");
+			}
+		}
+		retVal.append("Outputs: " + "\n");
+		if(this.outputElement!=null){
+			for(Element elem:this.outputElement){
+				retVal.append(elem.toString() + "\n");
+			}
+		}
+		
+		retVal.append("=========================================================\n");
+		return retVal.toString();
+	}
 }

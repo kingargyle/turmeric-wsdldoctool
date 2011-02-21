@@ -84,5 +84,25 @@ public class ParsedAnnotationInfo {
 			value.put(tagName, values);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retBuf=new StringBuffer();
+		retBuf.append("Documentation: \n"+ documentation +"\n");
+		if(value==null){
+			retBuf.append("No Annotations Found\n");
+		}else{
+			if (value != null) {
+				for (Map.Entry<String, List<ParsedAnnotationTag>> entry : value
+						.entrySet()) {
+					for(ParsedAnnotationTag tag:entry.getValue()){
+						retBuf.append(tag.toString()+"\n");
+					}
+				}
+			}
+			
+		}
+		return retBuf.toString();
+	}
 
 }

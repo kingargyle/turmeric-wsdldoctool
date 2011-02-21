@@ -89,5 +89,28 @@ public class PortType {
 	public void setAnnotations(ParsedAnnotationInfo annotations) {
 		this.annotations = annotations;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("=========================================================\n");
+		retVal.append("PortType Name: " +name + "\n");
+		retVal.append("Operations : " + "\n");
+		if(annotations!=null){
+			retVal.append(name +" Port Type Annotations: \n");
+			retVal.append("=========================================================\n");
+			retVal.append(annotations.toString());
+			retVal.append("=========================================================\n");
+		}
+		if(operations!=null){
+			for(OperationHolder attr:operations) {
+				if(attr != null) {
+					retVal.append(attr.toString()+ "\n");
+				}
+			}
+		}
+		retVal.append("=========================================================\n");
+		return retVal.toString();
+	}
 
 }

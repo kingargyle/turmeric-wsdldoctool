@@ -35,5 +35,30 @@ public class AttributeElement extends Element {
 	public void setBaseType(String baseType) {
 		this.baseType = baseType;
 	}
-
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("Attribute Name: " +super.getName() + "\n");
+		retVal.append("Attribute Type: " +super.getType()+ "\n");
+		retVal.append("Attribute Base Type: " +baseType+ "\n");
+		if(super.getComment()!=null){
+			retVal.append("Comments : "+ "\n");
+			retVal.append("Before Attribute : "+ super.getComment().getPreviousComment()+ "\n");
+			retVal.append("After Attribute : "+ super.getComment().getNextComment()+ "\n");
+		}
+		if(super.getAnnotationInfo()!=null){
+			retVal.append("Annotations: \n");
+			retVal.append(super.getAnnotationInfo().toString());
+		}
+		retVal.append("Attributes: "+ "\n");
+		if(super.getAttributes()!=null){
+			for(Attribute attr: super.getAttributes()) {
+				if(attr != null) {
+					retVal.append(attr.toString()+ "\n");
+				}
+			}
+		}
+		
+		return retVal.toString();
+	}
 }

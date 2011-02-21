@@ -310,4 +310,26 @@ public class WSDLDocument implements WSDLDocInterface {
 		
 		return xsdDocument.getParentToComplexTypeMap();
 	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("Service Name " + serviceName + "\n");
+		retVal.append("Service Domain " + packageName+ "\n");
+		if(annotations!=null){
+			retVal.append(serviceName+" Annotations: \n");
+			retVal.append("=========================================================\n");
+			retVal.append(annotations.toString());
+			retVal.append("=========================================================\n");
+		}
+		if(portTypes!=null){
+			for(PortType port:portTypes){
+				retVal.append(port.toString());
+			}
+		}
+		retVal.append("Schema Info \n");
+		retVal.append("=========================================================\n");
+		retVal.append(xsdDocument.toString());
+		return retVal.toString();
+	}
 }

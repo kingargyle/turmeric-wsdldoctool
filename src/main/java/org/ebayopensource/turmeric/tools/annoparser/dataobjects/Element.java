@@ -155,17 +155,31 @@ public class Element implements Comparable<Element>{
 	}
 
 	
-	/**
-	 * Prints the.
-	 */
-	public void print() {
-		System.out.println("Element { name: " + name + " type: " + type );//+ "description " + this.annotation.getDocumentation());
-		for(Attribute attr: this.attributes) {
-			if(attr != null) {
-				attr.print();
+	
+	
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("Element Name: " +name + "\n");
+		retVal.append("Element Type: " +type+ "\n");
+		if(comment!=null){
+			retVal.append("Comments : "+ "\n");
+			retVal.append("Before Element : "+ comment.getPreviousComment()+ "\n");
+			retVal.append("After Element : "+ comment.getNextComment()+ "\n");
+		}
+		if(annotation!=null){
+			retVal.append("Annotations: \n");
+			retVal.append(annotation.toString());
+		}
+		retVal.append("Attributes: "+ "\n");
+		if(attributes!=null){
+			for(Attribute attr: this.attributes) {
+				if(attr != null) {
+					retVal.append(attr.toString()+ "\n");
+				}
 			}
 		}
-		
+		return retVal.toString();
 	}
 
 	/* (non-Javadoc)

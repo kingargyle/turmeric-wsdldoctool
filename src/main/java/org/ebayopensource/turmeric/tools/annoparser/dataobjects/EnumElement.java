@@ -92,12 +92,7 @@ public class EnumElement implements Comparable<EnumElement> {
 		this.value = val;
 	}
 	
-	/**
-	 * Prints the.
-	 */
-	public void print() {
-		System.out.println("[value: " + value + " annotations: " + annotations.documentation);
-	}
+	
 
 	
 	/* (non-Javadoc)
@@ -105,5 +100,18 @@ public class EnumElement implements Comparable<EnumElement> {
 	 */
 	public int compareTo(EnumElement object) {
 		  return this.getValue().toUpperCase().compareTo(object.getValue().toUpperCase());
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("Enum Type: " +type + "\n");
+		retVal.append("Enum Value: " +value+ "\n");
+		
+		if(annotations!=null){
+			retVal.append("Annotations: \n");
+			retVal.append(annotations.toString());
+		}
+		return retVal.toString();
 	}
 }

@@ -99,7 +99,7 @@ public class SimpleTypeTest extends TestCase {
 		{
 			assertTrue(true);
 		}
-		simpleType.print();
+		
 		
 		
 	}

@@ -198,17 +198,7 @@ public class XSDDocument implements XSDDocInterface {
 		this.documentURL = url;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#print()
-	 */
-	public void print() {
-		System.out.println("{");
-		System.out.println("No. of Elements" + this.elements.size());
-		System.out.println("No. of SimpleTypes" + this.simpleTypes.size());
-		System.out.println("No. of ComplexTypes" + this.complexTypes.size());
-		System.out.println("}");
-		System.out.println("Name to CType Map " + this.nameToCTypeMap.entrySet());
-	}
+	
 	
 
 	/* (non-Javadoc)
@@ -225,5 +215,41 @@ public class XSDDocument implements XSDDocInterface {
 	 */
 	public void setElementToComplexTypeMap(Map<String, List<ComplexType>> elementCTypeMap) {
 		this.elemToComplexTypeMap = elementCTypeMap;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("Complex Types\n" );
+		retVal.append("=========================================================\n");
+		if(complexTypes!=null){
+			for(ComplexType cType:complexTypes){
+				retVal.append("=========================================================\n");
+				retVal.append(cType.toString());
+				retVal.append("=========================================================\n");
+			}
+		}
+		retVal.append("Simple Types\n" );
+		retVal.append("=========================================================\n");
+		if(simpleTypes!=null){
+			
+			for(SimpleType cType:simpleTypes){
+				retVal.append("=========================================================\n");
+				retVal.append(cType.toString());
+				retVal.append("=========================================================\n");
+			}
+		}
+		
+		retVal.append("Independent Elements\n" );
+		if(elements!=null){
+			for(Element cType:elements){
+				if(cType.getContainerComplexType()==null){
+					retVal.append("=========================================================\n");
+					retVal.append(cType.toString());
+					retVal.append("=========================================================\n");
+				}
+			}
+		}
+		return retVal.toString();
 	}
 }

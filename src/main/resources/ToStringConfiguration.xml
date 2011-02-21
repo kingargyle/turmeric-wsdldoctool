@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <outputgenerators>
+		<outputgenerator name="ToString">
+			<class>org.ebayopensource.turmeric.tools.annoparser.outputgenerator.impl.ToStringOutputGenerator
+			</class>
+			<parameters>
+				<parameter>
+					<name>writeToFile</name>
+					<value>true</value>
+				</parameter>
+				<parameter>
+					<name>filePath</name>
+					<value>C:\ToStringOutput</value>
+				</parameter>
+			</parameters>
+		</outputgenerator>	
+		<outputgenerator name="DefaultDocToolOutput" disabled="true"/>
+	</outputgenerators>	
+	
+</config>

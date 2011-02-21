@@ -59,11 +59,9 @@ public class Attribute {
 		this.name = name;
 	}
 	
-	/**
-	 * Prints the.
-	 */
-	public void print() {
-		System.out.println("name : " + name + "value " + value);
+	@Override
+	public String toString() {
+		 return " name='" + name + "' value='" + value+"'";
 	}
 
 }

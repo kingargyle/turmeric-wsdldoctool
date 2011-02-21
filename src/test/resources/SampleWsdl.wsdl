@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns="urn:ebay:apis:eBLBaseComponents" xmlns="urn:ebay:apis:eBLBaseComponents" targetNamespace="urn:ebay:apis:eBLBaseComponents">
+  <wsdl:types>
+    <xs:schema targetNamespace="urn:ebay:apis:eBLBaseComponents" xmlns:ns="urn:ebay:apis:eBLBaseComponents" xmlns="urn:ebay:apis:eBLBaseComponents" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+
+<xs:element name="addGroupRequest" type="ns:AddGroupRequestType"/>
+<xs:complexType name="AddGroupRequestType">
+  <xs:annotation>
+    <xs:documentation>
+      Summary description of addGroup. Plus, a more detailed description of
+      addGroup.
+    </xs:documentation>
+    <xs:appinfo>
+      <summary>
+        Summary description of addGroup.
+      </summary>
+      <relatedCalls>modifyGroup, deleteGroup</relatedCalls>
+      <relatedCallsOther>
+        <apiNickname>Trading</apiNickname>
+        <apiCallRefBaseURL>http://developer.ebay.com/devzone/xml/docs/index.html</apiCallRefBaseURL>
+        <relatedCall>
+          <name>SetNotificationPreferences</name>
+          <summary>A summary description of SetNotificationPreferences</summary>
+        </relatedCall>
+        <relatedCall>
+          <name>GetClientAlertsAuthToken</name>
+          <summary>A summary description of GetClientAlertsAuthToken</summary>
+        </relatedCall>
+      </relatedCallsOther>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="commonThing" type="ns:PartlySharedType" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Details about the SAMPLE object to be added.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>addGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="bundle" type="ns:MostlySharedType" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          A single number and a nested number.
+        </xs:documentation>
+        <xs:appinfo>
+          <min>1</min>
+          <callInfo>
+            <callName>addGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="publish" type="xs:boolean" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Whether or not to publish the results.
+        </xs:documentation>
+        <xs:appinfo>
+          <default>false</default>
+          <callInfo>
+            <callName>addGroup</callName>
+            <requiredInput>Conditionally</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="count" type="xs:int" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Number of groups to add.
+        </xs:documentation>
+        <xs:appinfo>
+          <default>1</default>
+          <minOccurs>1</minOccurs>
+          <callInfo>
+            <callName>addGroup</callName>
+            <requiredInput>Conditionally</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="outputSelector" type="ns:OutputSelectorType" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Specifies fields that you want returned in the response.
+        </xs:documentation>
+          <xs:appinfo>
+            <presentDetails>Yes</presentDetails>
+            <callInfo>
+              <callName>addGroup</callName>
+              <requiredInput>No</requiredInput>
+            </callInfo>
+          </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="addGroupResponse" type="ns:AddGroupResponseType"/>
+<xs:complexType name="AddGroupResponseType">
+  <xs:annotation>
+    <xs:documentation>
+      Response to addGroup request.
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="count" type="xs:int" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          The current group count.
+        </xs:documentation>
+        <xs:appinfo>
+          <max/>
+          <callInfo>
+            <callName>addGroup</callName>
+            <details>outputSelector: none</details>
+            <returned>Always</returned>
+          </callInfo>
+          <seeLink>
+            <url>http://pages.ebay.com/help/sell/listings.html</url>
+            <title>A link to a URL</title>
+            <for>rules about prohibited items</for>
+          </seeLink>
+          <seeLink>
+            <url>modifyGroup.html#Response.count</url>
+            <title>A link to modifyGroup's count field</title>
+          </seeLink>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="groupName" type="xs:string" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          The current group name.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>addGroup</callName>
+            <details>outputSelector: ReturnAll</details>
+            <returned>Always</returned>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="deleteGroupRequest" type="ns:DeleteGroupRequestType"/>
+<xs:complexType name="DeleteGroupRequestType">
+  <xs:annotation>
+    <xs:documentation>
+      Summary description of deleteGroup., Plus a more detailed description
+      of deleteGroup.
+    </xs:documentation>
+    <xs:appinfo>
+      <summary>
+        Summary description of deleteGroup.
+      </summary>
+      <seeLink>
+        <url>http://pages.ebay.com/help/sell/listings.html</url>
+        <title>A link to a URL</title>
+        <for>rules about prohibited items</for>
+      </seeLink>
+      <seeLink>
+        <url>modifyGroup.html#Response.count</url>
+        <title>A link to modifyGroup's count field</title>
+      </seeLink>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="commonThing" type="ns:PartlySharedType" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Details about the SAMPLE object to be deleted.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>deleteGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="deleteGroupResponse" type="ns:DeleteGroupResponseType"/>
+<xs:complexType name="DeleteGroupResponseType">
+  <xs:annotation>
+    <xs:documentation>
+      Response to deleteGroup request.
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="count" type="xs:int" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          The number of groups deleted.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>deleteGroup</callName>
+            <returned>Conditionally</returned>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="modifyGroupRequest" type="ns:ModifyGroupRequestType"/>
+<xs:complexType name="ModifyGroupRequestType">
+  <xs:annotation>
+    <xs:documentation>
+      Summary description of modifyGroup. Plus, a more detailed description
+      of modifyGroup.
+    </xs:documentation>
+    <xs:appinfo>
+      <summary>
+        Summary description of modifyGroup.
+      </summary>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="commonThing" type="ns:PartlySharedType" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Details about the SAMPLE object to be modified.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="bundle" type="ns:MostlySharedType" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          A number.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="modifyGroupResponse" type="ns:ModifyGroupResponseType"/>
+<xs:complexType name="ModifyGroupResponseType">
+  <xs:annotation>
+    <xs:documentation>
+      Response to modifyGroup request.
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="count" type="xs:int" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          The number of groups modified.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <returned>Always</returned>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="commonThing" type="ns:PartlySharedType" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Details about the SAMPLE object that was modified.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <returned>Always</returned>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="PartlySharedType">
+  <xs:annotation>
+    <xs:documentation>
+      A type with several elements, some of which are used by some calls,
+      others used by other calls.
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="sampleString" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation>
+        <xs:documentation>
+          A message attached to the SAMPLE object.
+        </xs:documentation>
+        <xs:appinfo>
+          <maxLength>23</maxLength>
+          <maxOccurs>30</maxOccurs>
+          <callInfo>
+            <callName>addGroup</callName>
+            <callName>deleteGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+          <callInfo>
+            <maxLength>19</maxLength>
+            <callName>modifyGroup</callName>
+            <requiredInput>Conditionally</requiredInput>
+          </callInfo>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <returned>Always</returned>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="sampleToken" type="xs:token" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Which payment method.
+        </xs:documentation>
+        <xs:appinfo>
+          <listBasedOn>PaymentMethodList</listBasedOn>
+          <default>PayPal</default>
+          <callInfo>
+            <callName>addGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+          <callInfo>
+            <allValuesExcept>PaisaPay</allValuesExcept>
+            <callName>modifyGroup</callName>
+            <requiredInput>Conditionally</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="sampleTokenPay" type="ns:PaymentMethodList" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Specifies allowed payment types.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <requiredInput>No</requiredInput>
+            <onlyTheseValues>PayPal, Leaves</onlyTheseValues>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="sampleInt" type="xs:int" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          How many times the SAMPLE object can be divided in two.
+        </xs:documentation>
+        <xs:appinfo>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <returned>Conditionally</returned>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="sampleInteger" type="xs:int" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          How many times the SAMPLE object can be divided.
+        </xs:documentation>
+        <xs:appinfo>
+          <deprecationVersion>605</deprecationVersion>
+          <deprecationDetails>NotReturned</deprecationDetails>
+          <useInstead>sampleInt</useInstead>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <returned>Conditionally</returned>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="testInteger" type="xs:int" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Placeholder for an integer.
+        </xs:documentation>
+        <xs:appinfo>
+          <tagStatus>ComingSoon</tagStatus>
+          <callInfo>
+            <callName>deleteGroup</callName>
+            <requiredInput>Conditionally</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="MostlySharedType">
+  <xs:annotation>
+    <xs:documentation>
+      A type with several elements, with varying use by the calls.
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="commonInt" type="xs:int" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Some important number that has a top limit.
+        </xs:documentation>
+        <xs:appinfo>
+          <max>20</max>
+          <callInfo>
+            <callName>addGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+          <callInfo>
+            <callName>modifyGroup</callName>
+            <returned>Always</returned>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="nestedBundle" type="ns:MostlySharedType" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Some important number that has a top limit.
+        </xs:documentation>
+        <xs:appinfo>
+          <maxDepth>3</maxDepth>
+          <callInfo>
+            <callName>addGroup</callName>
+            <requiredInput>Yes</requiredInput>
+          </callInfo>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+<xs:simpleType name="PaymentMethodList">
+  <xs:annotation>
+    <xs:documentation>
+      Available payment methods.
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="PayPal">
+      <xs:annotation>
+        <xs:documentation>
+          PayPal
+        </xs:documentation>
+      </xs:annotation>
+    </xs:enumeration>
+    <xs:enumeration value="PaisaPay">
+      <xs:annotation>
+        <xs:documentation>
+          Curried plastic
+        </xs:documentation>
+      </xs:annotation>
+    </xs:enumeration>
+    <xs:enumeration value="Cash">
+      <xs:annotation>
+        <xs:documentation>
+          Loose change
+        </xs:documentation>
+      </xs:annotation>
+    </xs:enumeration>
+    <xs:enumeration value="Leaves">
+      <xs:annotation>
+        <xs:documentation>
+          Amazonian currency
+        </xs:documentation>
+      </xs:annotation>
+    </xs:enumeration>
+  </xs:restriction>
+</xs:simpleType>
+
+
+<xs:simpleType name="OutputSelectorType">
+  <xs:annotation>
+    <xs:documentation>
+      Output Selector values that you can use to retrieve information in addition to
+      the default set of response fields in the search result.
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="ReturnAll">
+      <xs:annotation>
+        <xs:documentation>
+          Includes all information for each item in the response.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:enumeration>
+  </xs:restriction>
+</xs:simpleType>
+
+
+    </xs:schema>
+  </wsdl:types>
+
+  <wsdl:message name="addGroupResponse"><wsdl:part name="addGroupResponse" element="ns:addGroupResponse"/></wsdl:message>
+  <wsdl:message name="addGroupRequest"><wsdl:part name="addGroupRequest" element="ns:addGroupRequest"/></wsdl:message>
+  <wsdl:message name="deleteGroupResponse"><wsdl:part name="deleteGroupResponse" element="ns:deleteGroupResponse"/></wsdl:message>
+  <wsdl:message name="deleteGroupRequest"><wsdl:part name="deleteGroupRequest" element="ns:deleteGroupRequest"/></wsdl:message>
+  <wsdl:message name="modifyGroupResponse"><wsdl:part name="modifyGroupResponse" element="ns:modifyGroupResponse"/></wsdl:message>
+  <wsdl:message name="modifyGroupRequest"><wsdl:part name="modifyGroupRequest" element="ns:modifyGroupRequest"/></wsdl:message>
+
+  <wsdl:portType name="SampleInterface">
+    <wsdl:operation name="addGroup">
+      <wsdl:documentation>
+        Definition of addGroup.
+        IGNORED by Doc tool if the request type for addGroup has its own xs:documentation.
+        Required by Gnanavel's wsdl doc tool.
+      </wsdl:documentation>
+      <wsdl:input message="ns:addGroupRequest"/>
+      <wsdl:output message="ns:addGroupResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGroup">
+      <wsdl:documentation>
+        Definition of deleteGroup.
+        IGNORED by Doc tool if the request type for addGroup has its own xs:documentation.
+        Required by Gnanavel's wsdl doc tool.
+      </wsdl:documentation>
+      <wsdl:input message="ns:deleteGroupRequest"/>
+      <wsdl:output message="ns:deleteGroupResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="modifyGroup">
+      <wsdl:documentation>
+        Definition of modifyGroup.
+        IGNORED by Doc tool if the request type for addGroup has its own xs:documentation.
+        Required by Gnanavel's wsdl doc tool.
+      </wsdl:documentation>
+      <wsdl:input message="ns:modifyGroupRequest"/>
+      <wsdl:output message="ns:modifyGroupResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="SampleBinding" type="ns:SampleInterface">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addGroup">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input><wsdlsoap:body use="literal"/></wsdl:input>
+      <wsdl:output><wsdlsoap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGroup">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input><wsdlsoap:body use="literal"/></wsdl:input>
+      <wsdl:output><wsdlsoap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="modifyGroup">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input><wsdlsoap:body use="literal"/></wsdl:input>
+      <wsdl:output><wsdlsoap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="SampleService">
+    <wsdl:documentation>
+      <version>1.3.47</version>
+      SampleService is a great way to illustrate a sample service.
+    </wsdl:documentation>
+    <wsdl:port binding="ns:SampleBinding" name="Sample">
+      <wsdlsoap:address location="http://open.api.ebay.com/Sample"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

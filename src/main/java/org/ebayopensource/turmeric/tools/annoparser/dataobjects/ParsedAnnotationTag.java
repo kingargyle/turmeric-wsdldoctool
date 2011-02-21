@@ -8,36 +8,34 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.tools.annoparser.dataobjects;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * The Class ParsedAnnotationTag holds the data collected from each annotation tag.
- *
+ * The Class ParsedAnnotationTag holds the data collected from each annotation
+ * tag.
+ * 
  * @author sdaripelli
  */
-public class   ParsedAnnotationTag {
+public class ParsedAnnotationTag {
 
 	/** The tag name. */
 	public String tagName;
 
 	/** The children. */
-	public Map<String,List<ParsedAnnotationTag>> children;
+	public Map<String, List<ParsedAnnotationTag>> children;
 
 	/** The tag value. */
 	public String tagValue;
 
 	/** The my parsed annotation info. */
 	public ParsedAnnotationInfo myParsedAnnotationInfo;
-	
+
 	/** The attributes. */
 	private Map<String, String> attributes;
 
-	
 	/**
 	 * Gets the tag name.
 	 * 
@@ -46,7 +44,6 @@ public class   ParsedAnnotationTag {
 	public String getTagName() {
 		return tagName;
 	}
-
 
 	/**
 	 * Sets the tag name.
@@ -58,7 +55,6 @@ public class   ParsedAnnotationTag {
 		this.tagName = tagName;
 	}
 
-
 	/**
 	 * Gets the children.
 	 * 
@@ -67,7 +63,6 @@ public class   ParsedAnnotationTag {
 	public Map<String, List<ParsedAnnotationTag>> getChildren() {
 		return children;
 	}
-
 
 	/**
 	 * Sets the children.
@@ -79,7 +74,6 @@ public class   ParsedAnnotationTag {
 		this.children = children;
 	}
 
-
 	/**
 	 * Gets the tag value.
 	 * 
@@ -88,7 +82,6 @@ public class   ParsedAnnotationTag {
 	public String getTagValue() {
 		return tagValue;
 	}
-
 
 	/**
 	 * Sets the tag value.
@@ -100,7 +93,6 @@ public class   ParsedAnnotationTag {
 		this.tagValue = tagValue;
 	}
 
-
 	/**
 	 * Gets the my parsed annotation info.
 	 * 
@@ -109,7 +101,6 @@ public class   ParsedAnnotationTag {
 	public ParsedAnnotationInfo getMyParsedAnnotationInfo() {
 		return myParsedAnnotationInfo;
 	}
-
 
 	/**
 	 * Sets the my parsed annotation info.
@@ -122,7 +113,6 @@ public class   ParsedAnnotationTag {
 		this.myParsedAnnotationInfo = myParsedAnnotationInfo;
 	}
 
-
 	/**
 	 * Gets the attributes.
 	 * 
@@ -131,7 +121,6 @@ public class   ParsedAnnotationTag {
 	public Map<String, String> getAttributes() {
 		return attributes;
 	}
-
 
 	/**
 	 * Sets the attributes.
@@ -143,7 +132,6 @@ public class   ParsedAnnotationTag {
 		this.attributes = attributes;
 	}
 
-
 	/**
 	 * Adds Parsed child data element.
 	 * 
@@ -154,17 +142,16 @@ public class   ParsedAnnotationTag {
 		if (this.children == null) {
 			this.children = new HashMap<String, List<ParsedAnnotationTag>>();
 		}
-		if(children.containsKey(parsedTagValue.getTagName())){
+		if (children.containsKey(parsedTagValue.getTagName())) {
 			children.get(parsedTagValue.getTagName()).add(parsedTagValue);
-		}else{
-			List<ParsedAnnotationTag> values=new ArrayList<ParsedAnnotationTag>();
+		} else {
+			List<ParsedAnnotationTag> values = new ArrayList<ParsedAnnotationTag>();
 			values.add(parsedTagValue);
 			children.put(parsedTagValue.getTagName(), values);
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * Adds Parsed Attribute.
 	 * 
@@ -173,13 +160,39 @@ public class   ParsedAnnotationTag {
 	 * @param attributeValue
 	 *            the attribute value
 	 */
-	public void addAttribute(String attributeName,String attributeValue) {
+	public void addAttribute(String attributeName, String attributeValue) {
 		if (this.attributes == null) {
 			this.attributes = new HashMap<String, String>();
 		}
 		this.attributes.put(attributeName, attributeValue);
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		StringBuffer retVal = new StringBuffer();
+		retVal.append("Annotation: " + tagName + "\n");
+		retVal.append("Value(if any): " + tagValue + "\n");
+		if(attributes!=null){
+		retVal.append("Annotation Tag Attributes\n");
+			if (attributes != null) {
+				for (Map.Entry<String, String> entry : attributes.entrySet()) {
+					retVal.append(entry.getKey() + "=" + entry.getValue() +"\n");
+				}
+			}
+		}
+		if(children!=null && !children.isEmpty())
+		retVal.append("Child Annotations of "+tagName+"\n");
+		retVal.append("=========================================================\n");
+		if (children != null) {
+			for (Map.Entry<String, List<ParsedAnnotationTag>> entry : children
+					.entrySet()) {
+				for(ParsedAnnotationTag tag:entry.getValue()){
+					retVal.append(tag.toString());
+				}
+			}
+		}
+		retVal.append("=========================================================\n");
+		return retVal.toString();
+	}
+
 }
