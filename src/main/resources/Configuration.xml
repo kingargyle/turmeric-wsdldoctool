@@ -55,8 +55,20 @@
 			</class>
 			<parameters>
 		    	<parameter>
-		    		<name>outputMode</name>
-		    		<value>normal</value>
+		    		<name>version</name>
+		    		<value>1.0</value>
+		    	</parameter>
+		    	<parameter>
+		    		<name>operationHeader</name>
+		    		<value>OperationHeader.hdr</value>
+		    	</parameter>
+		    	<parameter>
+		    		<name>ComplexTypeHeader</name>
+		    		<value>ComplexTypeHeader.hdr</value>
+		    	</parameter>
+		    	<parameter>
+		    		<name>SimpleTypeHeader</name>
+		    		<value>SimpleTypeHeader.hdr</value>
 		    	</parameter>
 			</parameters>
 		</outputgenerator>	

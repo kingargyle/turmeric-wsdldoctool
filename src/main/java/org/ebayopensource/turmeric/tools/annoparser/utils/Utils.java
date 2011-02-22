@@ -8,10 +8,21 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.tools.annoparser.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.ebayopensource.turmeric.tools.annoparser.exception.OutputFormatterException;
 import org.ebayopensource.turmeric.tools.annoparser.parser.impl.WsdlParserImpl;
 import org.w3c.dom.Node;
 
@@ -136,5 +147,101 @@ public class Utils {
 		}
 		return null;
 	}
-	
+	/**
+	 * Gets the file as string.
+	 * 
+	 * @param path
+	 *            the path
+	 * @return the file as string
+	 * @throws OutputFormatterException
+	 *             the output formatter exception
+	 */
+	public static StringBuffer getFileAsString(String path)
+			throws OutputFormatterException {
+		File file = new File(path);
+		StringBuffer sb = new StringBuffer("");
+		if (file.exists()) {
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(file));
+
+				String line = reader.readLine();
+				while (line != null) {
+					sb.append(line + System.getProperty("line.separator"));
+					line = reader.readLine();
+				}
+
+			} catch (FileNotFoundException e) {
+				throw new OutputFormatterException(e);
+			} catch (IOException e) {
+				throw new OutputFormatterException(e);
+			}
+
+		}
+		return sb;
+
+	}
+
+	/**
+	 * Gets the file as string.
+	 * 
+	 * @param path
+	 *            the path
+	 * @return the file as string
+	 * @throws OutputFormatterException
+	 *             the output formatter exception
+	 */
+	public static StringBuffer getFileAsString(InputStream iStream)
+			throws OutputFormatterException {
+
+		StringBuffer sb = new StringBuffer("");
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					iStream));
+
+			String line = reader.readLine();
+			while (line != null) {
+				sb.append(line + System.getProperty("line.separator"));
+				line = reader.readLine();
+			}
+
+		} catch (IOException e) {
+			throw new OutputFormatterException(e);
+		}
+
+		return sb;
+
+	}
+
+	/**
+	 * Convert to url. The path supplied is first tried as a URL external form
+	 * string, if it fails it is tried as a Class path resource, Then it is
+	 * tried as a local file path.
+	 * 
+	 * @param path
+	 *            the path
+	 * @return the uRL
+	 * @throws OutputFormatterException
+	 */
+	public static URL convertToURL(String path) throws OutputFormatterException {
+		URL url = null;
+		try {
+			url = new URL(path);
+		} catch (MalformedURLException e) {
+			url = Thread.currentThread().getContextClassLoader().getResource(
+					path);
+			if (url == null) {
+				File file = new File(path);
+				if (file.exists()) {
+					try {
+						url = file.toURI().toURL();
+					} catch (MalformedURLException e1) {
+						Logger.getLogger(Utils.class.getName()).log(
+								Level.SEVERE, path + " is Not valid", e);
+						throw new OutputFormatterException(e1.getCause());
+					}
+				}
+			}
+		}
+		return url;
+	}
 }

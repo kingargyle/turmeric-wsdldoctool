@@ -25,7 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface;
-import org.ebayopensource.turmeric.tools.annoparser.WSDLDocument;
 import org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface;
 import org.ebayopensource.turmeric.tools.annoparser.commons.AnnotationsHelper;
 import org.ebayopensource.turmeric.tools.annoparser.commons.Constants;
@@ -64,6 +63,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	private OutputGenaratorParam outputGenaratorParam;
 
 	private Map<String, List<String>> packageServicesMap = new HashMap<String, List<String>>();
+	private Map<String, List<XSDDocInterface>> packageDocMap = new HashMap<String, List<XSDDocInterface>>();
 	private List<AbstractType> processedTypes = new ArrayList<AbstractType>();
 
 	private static final String SEPARATOR = "/";
@@ -88,7 +88,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		String packageName = wsdlDoc.getPackageName();
 		this.outputGenaratorParam = outputGenaratorParam;
 		if (packageName == null) {
-			packageName = "/DomainNotAvailable";
+			packageName = "/DefaultDomain";
 		}
 		currentPackageName=packageName;
 		currentTypesFolderPath = getCurrentOutputDir() + File.separator
@@ -102,44 +102,38 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(wsdlDoc.getServiceName(),
 					packageName));
-			buildHeader(html);
+			buildHeader(html,false,false,null);
 			html.append(Constants.HTML_BR);
 			buildPortType(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationTable(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationDetails(html, portType, wsdlDoc);
-			addFooter(html);
+			addFooter(html,false,false,null);
 			html.append(HtmlUtils.getEndTags());
 			String outputDir = getCurrentOutputDir() + File.separator;
 			writeFile(html, outputDir + File.separator + packageName, wsdlDoc
 					.getServiceName()
 					+ Constants.DOT_HTML);
 		}
-		writePackageTree(wsdlDoc);
+		
+		addPackageToDocMap(packageName,wsdlDoc);
 		addPackageToServiceMap(packageName, wsdlDoc.getServiceName());
 		processedTypes = new ArrayList<AbstractType>();
 		logger.exiting("JavaDocOutputGenerator", "handleWsdlDoc", new Object[] {
 				wsdlDoc, outputGenaratorParam });
 	}
 
-	private void writePackageTree(WSDLDocInterface wsdlDoc) throws OutputFormatterException {
+	private void writePackageTree(List<XSDDocInterface> wsdlDoc) throws OutputFormatterException {
 		Node root = getTypesInTree(wsdlDoc);
 		StringBuffer html = new StringBuffer();
-
-		html.append(HtmlUtils.getAnchorTag(null, "", null, "Tree") + Constants.NBSP_TWICE);
-		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Use") + Constants.NBSP_TWICE);
-		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Index"));
+		html.append(Constants.HTML_H3_START + "Hierarchy For Service domain " + currentPackageName + Constants.HTML_H3_END);
 		html.append(Constants.HTML_HR);
-		
-		html.append(Constants.HTML_H3_START + "Hierarchy For Package " + wsdlDoc.getPackageName() + Constants.HTML_H3_END);
-		html.append(Constants.HTML_HR);
-		html.append(Constants.HTML_H3_START + "Class Hierarchy" + Constants.HTML_H3_END);
+		html.append(Constants.HTML_H3_START + "Complex Type Hierarchy" + Constants.HTML_H3_END);
 		html.append("<ul>");
 		writeTree(root, html);
 		html.append("</ul>");
-		writeFile(html, getCurrentOutputDir(), "Tree" + Constants.DOT_HTML);
-		System.out.println(root);
+		writeFile(html, getCurrentOutputDir() + File.separator + currentPackageName, "Tree" + Constants.DOT_HTML);
 	}
 	
 	private void writeTree(Node root, StringBuffer html) {
@@ -149,7 +143,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			for (Node node : children) {
 				if (node.isFlag()) {					 
 					html.append("<li type='circle'>\n");
-					html.append(HtmlUtils.getAnchorTag("", "./" + currentPackageName + "/types/" + node.getName() + Constants.DOT_HTML, "", node.getName()) + Constants.HTML_BR);
+					html.append(HtmlUtils.getAnchorTag("", "types/" + node.getName() + Constants.DOT_HTML, "", node.getName()) + Constants.HTML_BR);
 					writeTree(node, html);
 				}
 			}
@@ -159,16 +153,20 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		}
 	}
 	
-	private Node getTypesInTree(WSDLDocInterface wsdlDoc) {
-		XSDDocInterface xsdDocument = ((WSDLDocument) wsdlDoc).getXsdDocument();
-		List<ComplexType> complexTypes = xsdDocument.getAllComplexTypes();
+	private Node getTypesInTree(List<XSDDocInterface> wsdlDoc) {
+		List<ComplexType> complexTypes=new ArrayList<ComplexType>();
+	    for(XSDDocInterface xsdDocument:wsdlDoc){
+	    	if(xsdDocument.getAllComplexTypes()!=null){
+	    		complexTypes.addAll(xsdDocument.getAllComplexTypes());
+	    	}
+	    }
+	
 		
 //		complexTypes = getInput();
 		
 		Node root = new Node();
 		root.setName("Root");
 		root.setLevel(0);
-		
 		for (ComplexType type: complexTypes) {
 			Node node = new Node();
 			node.setName(type.getName());
@@ -262,6 +260,23 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		list.add(serviceName);
 		packageServicesMap.put(packageName, list);
 	}
+	
+	/**
+	 * Adds the package to Doc map.
+	 * 
+	 * @param packageName
+	 *            the package name
+	 * @param serviceName
+	 *            the service name
+	 */
+	private void addPackageToDocMap(String packageName, XSDDocInterface doc) {
+		List<XSDDocInterface> list = packageDocMap.get(packageName);
+		if (list == null) {
+			list = new ArrayList<XSDDocInterface>();
+		}
+		list.add(doc);
+		packageDocMap.put(packageName, list);
+	}
 
 	/**
 	 * Creates the all packages description file.
@@ -274,7 +289,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append(HtmlUtils.getStartTags(Constants.ALL_CLASSES, null));
 		html.append(getTextInDiv("WSDL API specification", "pageHeading"));
 		html.append(Constants.HTML_BR);
-		addFooter(html);
+		//addFooter(html);
 		html.append(HtmlUtils.getEndTags());
 		writeFile(html, getCurrentOutputDir(), Constants.PACKAGES.toLowerCase()
 				+ Constants.INDEX + Constants.DOT_HTML);
@@ -411,7 +426,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
 					+  "/types"));
-			buildTypeHeader(html);
+			buildHeader(html,true,true,type.getName());
 			html.append(getTextInDiv("Type : " + typeName, "JavadocHeading"));
 
 			html.append(Constants.HTML_HR);
@@ -516,7 +531,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				}
 			}
 
-			addFooter(html);
+			addFooter(html,true,true,type.getName());
 			writeFile(html, currentTypesFolderPath, typeName
 					+ Constants.DOT_HTML);
 		}
@@ -643,8 +658,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
-					+ File.separator + "types"));
-
+					+  "/types"));
+			buildHeader(html,true,false,type.getName());
 			String parentType = type.getBase();
 			if (!Utils.isEmpty(parentType)) {
 				parentType = Utils.removeNameSpace(parentType);
@@ -714,8 +729,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 				html.append(Constants.HTML_TABLE_END);
 			}
-			addFooter(html);
-			writeFile(html, currentTypesFolderPath, typeName
+			addFooter(html,true,false,type.getName());
+			writeFile(html, currentTypesFolderPath, type.getName()
 					+ Constants.DOT_HTML);
 
 		}
@@ -866,93 +881,41 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * 
 	 * @param html
 	 *            the html
+	 * 
+	 * @throws OutputFormatterException 
 	 */
-	private void buildHeader(StringBuffer html) {
+	private void buildHeader(StringBuffer html,boolean isType,boolean isComplex,String typeName) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "buildHeader", html);
-		String relPath="";
-		if(currentPackageName!=null){
-			String [] folders=currentPackageName.split("/");
-			for(String folder:folders){
-				relPath=relPath+"../";
+		String parameterName=isType?(isComplex?"ComplexTypeHeader":"SimpleTypeHeader"):"operationHeader";
+		String headerFile=outputGenaratorParam.getParameters().get(parameterName);
+		if(headerFile!=null){
+			try{
+				String header=Utils.getFileAsString(Utils.convertToURL(headerFile).openStream()).toString();
+				String version=outputGenaratorParam.getParameters().get("version");
+				header=header.replaceAll("\\$\\{VERSION\\}", version);
+				if(typeName!=null){
+					header=header.replaceAll("\\$\\{TYPE_NAME\\}", typeName);
+				}
+				html.append(header);
+			}catch (IOException e) {
+				throw new OutputFormatterException(e);
 			}
+			
 		}
-		html.append(HtmlUtils.getAnchorTag(null, relPath + "Tree.html", null, "Tree") + Constants.NBSP_TWICE);
-		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Use") + Constants.NBSP_TWICE);
-		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Index"));
-		html.append(Constants.HTML_HR);
-		
-		html.append(HtmlUtils.getAnchorTag("Top", null, null, null));
-		html.append(getTableTagWithStyle("JavadocHeaderTable"));
-		html.append(getTableRowTagWithStyle("JavadocTableTr"));
-		html.append(getTableDataTagWithStyle("JavadocTableTd"));
-		html.append("Summary: ");
-		html.append(HtmlUtils.getAnchorTag(null, "#"
-				+ Constants.OPERATION_SUMMARY_HREF, Constants.OPERATIONS_LABEL,
-				Constants.OPERATIONS_LABEL));
-
-		html.append(Constants.HTML_TABLE_TD_END);
-
-		html.append(getTableDataTagWithStyle("JavadocTableTd"));
-		html.append("Detail: ");
-		html.append(HtmlUtils.getAnchorTag(null, "#"
-				+ Constants.OPERATIONS_DETAIL_HREF, Constants.OPERATIONS_LABEL,
-				Constants.OPERATIONS_LABEL));
-		html.append(Constants.HTML_TABLE_TD_END);
-
-		html.append(Constants.HTML_TABLE_TR_END);
-		html.append(Constants.HTML_TABLE_END);
-		html.append(Constants.HTML_HR);
 		logger.exiting("JavaDocOutputGenerator", "buildHeader", html);
 	}
 
-	/**
-	 * Builds the header for Types.
-	 * 
-	 * @param html
-	 *            the html
-	 */
-	private void buildTypeHeader(StringBuffer html) {
-
-		logger.entering("JavaDocOutputGenerator", "buildTypeHeader", html);
-		String relPath="";
-		String [] folders=currentPackageName.split("/");
-		for(String folder:folders){
-			relPath=relPath+"../";
-		}
-		html.append(HtmlUtils.getAnchorTag(null, relPath + "Tree.html", null, "Tree") + Constants.NBSP_TWICE);
-		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Use") + Constants.NBSP_TWICE);
-		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Index"));
-		html.append(Constants.HTML_HR);
-		html.append(HtmlUtils.getAnchorTag("Top", null, null, null));
-		html.append(getTableTagWithStyle("JavadocHeaderTable"));
-		html.append(getTableRowTagWithStyle("JavadocTableTr"));
-		html.append(getTableDataTagWithStyle("JavadocTableTd"));
-		html.append("Summary: ");
-		html.append(HtmlUtils.getAnchorTag(null, "#FieldSummary", "Fields",
-				"Fields"));
-
-		html.append(Constants.HTML_TABLE_TD_END);
-
-		html.append(getTableDataTagWithStyle("JavadocTableTd"));
-		html.append("Detail: ");
-		html.append(HtmlUtils.getAnchorTag(null, "#FieldDetail", "Fields",
-				"Fields"));
-		html.append(Constants.HTML_TABLE_TD_END);
-		html.append(Constants.HTML_TABLE_TR_END);
-		html.append(Constants.HTML_TABLE_END);
-		html.append(Constants.HTML_HR);
-		logger.exiting("JavaDocOutputGenerator", "buildTypeHeader", html);
-	}
 
 	/**
 	 * Adds the footer.
 	 * 
 	 * @param html
 	 *            the html
+	 * @throws OutputFormatterException 
 	 */
-	private void addFooter(StringBuffer html) {
+	private void addFooter(StringBuffer html,boolean isType,boolean isComplexType,String typeName) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "addFooter", html);
-		String content = getFooterInformation();
+		String content = getFooterInformation(isType,isComplexType,typeName);
 		html.append(getTextInDiv(content, "footer"));
 		html.append(HtmlUtils.getEndTags());
 		logger.exiting("JavaDocOutputGenerator", "addFooter", html);
@@ -963,8 +926,25 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * Footer.
 	 * 
 	 * @return the footer information
+	 * @throws OutputFormatterException 
 	 */
-	protected String getFooterInformation() {
+	protected String getFooterInformation(boolean isType,boolean isComplex,String typeName) throws OutputFormatterException {
+		
+		String parameterName=isType?(isComplex?"ComplexTypeHeader":"SimpleTypeHeader"):"operationHeader";
+		String headerFile=outputGenaratorParam.getParameters().get(parameterName);
+		if(headerFile!=null){
+			try{
+				String header=Utils.getFileAsString(Utils.convertToURL(headerFile).openStream()).toString();
+				String version=outputGenaratorParam.getParameters().get("version");
+				header=header.replaceAll("\\$\\{VERSION\\}", version);
+				header=header.replaceAll("\\$\\{TYPE_NAME\\}", typeName);
+				header="<hr/>"+header;
+				return header;
+			}catch (IOException e) {
+				throw new OutputFormatterException(e);
+			}
+			
+		}
 		return "";
 	}
 
@@ -1287,8 +1267,6 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append(Constants.HTML_DL_START + Constants.HTML_DD_START);
 			appendOperationDocumentation(html, doc, opH);
 			html.append(Constants.HTML_DD_END + Constants.HTML_DL_END);
-
-			html.append(Constants.HTML_HR);
 		}
 		logger.exiting("JavaDocOutputGenerator", "buildOperationDetails",
 				new Object[] { html, portType });
@@ -1770,7 +1748,12 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		return;
 
 	}
-
+	public void createTreeFiles() throws OutputFormatterException{
+		for(Map.Entry<String, List<XSDDocInterface>> entry:packageDocMap.entrySet()){
+			currentPackageName=entry.getKey();
+			writePackageTree(entry.getValue());
+		}
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -1786,6 +1769,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			createIndividualPackageFiles();
 			createAllClassesFile();
 			createIndexFile();
+			createTreeFiles();
 		}
 	}
 
