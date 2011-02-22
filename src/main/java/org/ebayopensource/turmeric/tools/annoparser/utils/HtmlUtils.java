@@ -115,11 +115,11 @@ public class HtmlUtils {
 			cssList.add("CustomStyle.css");
 		}
 		String relPath="";
-		if(currLocFromBase!=null && "DomainNotAvailable".equals(currLocFromBase)){
-			System.out.println(currLocFromBase);
-		}
 		
 		if(currLocFromBase!=null){
+			if(currLocFromBase.startsWith("/")){
+				currLocFromBase=currLocFromBase.substring(1);
+			}
 			String [] folders=currLocFromBase.split("/");
 			for(String folder:folders){
 				relPath=relPath+"../";

@@ -88,7 +88,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		String packageName = wsdlDoc.getPackageName();
 		this.outputGenaratorParam = outputGenaratorParam;
 		if (packageName == null) {
-			packageName = "DomainNotAvailable";
+			packageName = "/DomainNotAvailable";
 		}
 		currentPackageName=packageName;
 		currentTypesFolderPath = getCurrentOutputDir() + File.separator
@@ -136,21 +136,21 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append(Constants.HTML_HR);
 		html.append(Constants.HTML_H3_START + "Class Hierarchy" + Constants.HTML_H3_END);
 		html.append("<ul>");
-		writeTree(root, html, wsdlDoc.getPackageName());
+		writeTree(root, html);
 		html.append("</ul>");
 		writeFile(html, getCurrentOutputDir(), "Tree" + Constants.DOT_HTML);
 		System.out.println(root);
 	}
 	
-	private void writeTree(Node root, StringBuffer html, String packageName) {
+	private void writeTree(Node root, StringBuffer html) {
 		Set<Node> children = root.getChildren();
 		if (children != null) {
 			html.append("<ul>");
 			for (Node node : children) {
 				if (node.isFlag()) {					 
 					html.append("<li type='circle'>\n");
-					html.append(HtmlUtils.getAnchorTag("", "./" + packageName + "/types/" + node.getName() + Constants.DOT_HTML, "", node.getName()) + Constants.HTML_BR);
-					writeTree(node, html, packageName);
+					html.append(HtmlUtils.getAnchorTag("", "./" + currentPackageName + "/types/" + node.getName() + Constants.DOT_HTML, "", node.getName()) + Constants.HTML_BR);
+					writeTree(node, html);
 				}
 			}
 			if (children.size() != 0) {
@@ -340,8 +340,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append(Constants.HTML_BOLD_START + Constants.ALL_CLASSES
 				+ Constants.HTML_BOLD_END + Constants.HTML_BR);
 		for (String packageName : set) {
+			
 			List<String> list = packageServicesMap.get(packageName);
-
+			if(packageName.startsWith("/")){
+				packageName=packageName.substring(1);
+			}
 			for (String className : list) {
 				html.append(HtmlUtils.getAnchorTag(className, packageName
 						+ SEPARATOR + className + Constants.DOT_HTML, null,
@@ -407,7 +410,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			}
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
-					+ File.separator + "types"));
+					+  "/types"));
 			buildTypeHeader(html);
 			html.append(getTextInDiv("Type : " + typeName, "JavadocHeading"));
 
@@ -916,7 +919,6 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		for(String folder:folders){
 			relPath=relPath+"../";
 		}
-		relPath=relPath+"../";
 		html.append(HtmlUtils.getAnchorTag(null, relPath + "Tree.html", null, "Tree") + Constants.NBSP_TWICE);
 		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Use") + Constants.NBSP_TWICE);
 		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Index"));
