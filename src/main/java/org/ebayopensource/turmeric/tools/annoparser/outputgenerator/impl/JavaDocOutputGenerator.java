@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 import org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface;
 import org.ebayopensource.turmeric.tools.annoparser.WSDLDocument;
 import org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface;
-import org.ebayopensource.turmeric.tools.annoparser.XSDDocument;
 import org.ebayopensource.turmeric.tools.annoparser.commons.AnnotationsHelper;
 import org.ebayopensource.turmeric.tools.annoparser.commons.Constants;
 import org.ebayopensource.turmeric.tools.annoparser.context.Context;
@@ -68,6 +67,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	private List<AbstractType> processedTypes = new ArrayList<AbstractType>();
 
 	private static final String SEPARATOR = "/";
+	
+	private String currentPackageName;
 
 	/*
 	 * (non-Javadoc)
@@ -85,13 +86,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		logger.entering("JavaDocOutputGenerator", "handleWsdlDoc",
 				new Object[] { wsdlDoc, outputGenaratorParam });
 		String packageName = wsdlDoc.getPackageName();
-		if (packageName != null && packageName.startsWith("/")) {
-			packageName = packageName.substring(1);
-		}
 		this.outputGenaratorParam = outputGenaratorParam;
 		if (packageName == null) {
 			packageName = "DomainNotAvailable";
 		}
+		currentPackageName=packageName;
 		currentTypesFolderPath = getCurrentOutputDir() + File.separator
 				+ packageName + File.separator + "types" + File.separator;
 
@@ -103,7 +102,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(wsdlDoc.getServiceName(),
 					packageName));
-			buildHeader(html, wsdlDoc.getPackageName());
+			buildHeader(html);
 			html.append(Constants.HTML_BR);
 			buildPortType(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
@@ -124,49 +123,6 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				wsdlDoc, outputGenaratorParam });
 	}
 
-	private List<ComplexType> getInput() {
-		List<ComplexType> types = new ArrayList<ComplexType>();
-		ComplexType type1 = new ComplexType();
-		type1.setName("gopi");
-		type1.setParentType("raman");
-		
-		ComplexType type2 = new ComplexType();
-		type2.setName("bhas");
-		type2.setParentType("raman");
-		
-		ComplexType type3 = new ComplexType();
-		type3.setName("raman");
-		
-		ComplexType type4 = new ComplexType();
-		type4.setName("sang");
-		type4.setParentType("raman");
-		
-		ComplexType type7 = new ComplexType();
-		type7.setName("santh");
-		type7.setParentType("vas");
-		
-		ComplexType type5 = new ComplexType();
-		type5.setName("vas");
-		
-		ComplexType type6 = new ComplexType();
-		type6.setName("chok");
-		type6.setParentType("vas");
-		
-		ComplexType type8 = new ComplexType();
-		type8.setName("ponr");
-		type8.setParentType("sang");
-		
-		types.add(type1);
-		types.add(type2);
-		types.add(type3);
-		types.add(type4);
-		types.add(type7);
-		types.add(type5);
-		types.add(type6);
-		types.add(type8);
-		return types;
-	}
-	
 	private void writePackageTree(WSDLDocInterface wsdlDoc) throws OutputFormatterException {
 		Node root = getTypesInTree(wsdlDoc);
 		StringBuffer html = new StringBuffer();
@@ -450,9 +406,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				}
 			}
 			html = new StringBuffer();
-			html.append(HtmlUtils.getStartTags(typeName, doc.getPackageName()
+			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
 					+ File.separator + "types"));
-			buildTypeHeader(html, doc.getPackageName());
+			buildTypeHeader(html);
 			html.append(getTextInDiv("Type : " + typeName, "JavadocHeading"));
 
 			html.append(Constants.HTML_HR);
@@ -683,7 +639,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		if (typeName != null && !Utils.isEmpty(typeName)) {
 
 			html = new StringBuffer();
-			html.append(HtmlUtils.getStartTags(typeName, doc.getPackageName()
+			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
 					+ File.separator + "types"));
 
 			String parentType = type.getBase();
@@ -908,15 +864,16 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @param html
 	 *            the html
 	 */
-	private void buildHeader(StringBuffer html, String packageName) {
+	private void buildHeader(StringBuffer html) {
 		logger.entering("JavaDocOutputGenerator", "buildHeader", html);
-		
-		int count = packageName.replaceAll("[^/]","").length();
-		String str = "";
-		for (int i=0; i < count; i++) {
-			str += "../";
+		String relPath="";
+		if(currentPackageName!=null){
+			String [] folders=currentPackageName.split("/");
+			for(String folder:folders){
+				relPath=relPath+"../";
+			}
 		}
-		html.append(HtmlUtils.getAnchorTag(null, str + "Tree.html", null, "Tree") + Constants.NBSP_TWICE);
+		html.append(HtmlUtils.getAnchorTag(null, relPath + "Tree.html", null, "Tree") + Constants.NBSP_TWICE);
 		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Use") + Constants.NBSP_TWICE);
 		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Index"));
 		html.append(Constants.HTML_HR);
@@ -951,15 +908,16 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @param html
 	 *            the html
 	 */
-	private void buildTypeHeader(StringBuffer html, String packageName) {
+	private void buildTypeHeader(StringBuffer html) {
 
 		logger.entering("JavaDocOutputGenerator", "buildTypeHeader", html);
-		int count = packageName.replaceAll("[^/]","").length();
-		String str = "";
-		for (int i=0; i < count + 1; i++) {
-			str += "../";
+		String relPath="";
+		String [] folders=currentPackageName.split("/");
+		for(String folder:folders){
+			relPath=relPath+"../";
 		}
-		html.append(HtmlUtils.getAnchorTag(null, str + "Tree.html", null, "Tree") + Constants.NBSP_TWICE);
+		relPath=relPath+"../";
+		html.append(HtmlUtils.getAnchorTag(null, relPath + "Tree.html", null, "Tree") + Constants.NBSP_TWICE);
 		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Use") + Constants.NBSP_TWICE);
 		html.append(HtmlUtils.getAnchorTag(null, "Tree.html", null, "Index"));
 		html.append(Constants.HTML_HR);
