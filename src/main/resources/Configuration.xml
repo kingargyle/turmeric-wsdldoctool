@@ -70,6 +70,10 @@
 		    		<name>SimpleTypeHeader</name>
 		    		<value>SimpleTypeHeader.hdr</value>
 		    	</parameter>
+		    	<parameter>
+		    		<name>indexHeader</name>
+		    		<value>IndexFilesHeader.hdr</value>
+		    	</parameter>
 			</parameters>
 		</outputgenerator>	
 	</outputgenerators>	

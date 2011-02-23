@@ -711,6 +711,7 @@ public class XSDParserImpl implements XSDParser {
 					}
 				}
 				String type = attrElem.getAttribute("type");
+				attr.setContainerComplexType(ctype);
 				String prevComment=Utils.getPreviousComment(attrElem);
 				String nextComment=Utils.getNextComment(attrElem);
 				if(prevComment!=null || nextComment!=null){

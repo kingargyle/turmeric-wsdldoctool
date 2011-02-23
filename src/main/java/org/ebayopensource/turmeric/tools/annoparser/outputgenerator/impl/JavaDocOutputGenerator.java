@@ -15,11 +15,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,6 +56,7 @@ import org.ebayopensource.turmeric.tools.annoparser.utils.Utils;
  */
 public class JavaDocOutputGenerator implements OutputGenerator {
 
+	private static final String TYPES = "/types/";
 	/** The current types folder path. */
 	private String currentTypesFolderPath = null;
 	private final static String CLASS_NAME = JavaDocOutputGenerator.class
@@ -67,7 +70,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	private List<AbstractType> processedTypes = new ArrayList<AbstractType>();
 
 	private static final String SEPARATOR = "/";
-	
+
 	private String currentPackageName;
 
 	/*
@@ -88,9 +91,12 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		String packageName = wsdlDoc.getPackageName();
 		this.outputGenaratorParam = outputGenaratorParam;
 		if (packageName == null) {
-			packageName = "/DefaultDomain";
+			packageName = "DefaultDomain";
 		}
-		currentPackageName=packageName;
+		if (packageName.startsWith("/")) {
+			packageName = packageName.substring(1);
+		}
+		currentPackageName = packageName;
 		currentTypesFolderPath = getCurrentOutputDir() + File.separator
 				+ packageName + File.separator + "types" + File.separator;
 
@@ -102,48 +108,67 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(wsdlDoc.getServiceName(),
 					packageName));
-			buildHeader(html,false,false,null);
+			buildHeader(html, false, false, null,getRelativePath(currentPackageName),false,null);
 			html.append(Constants.HTML_BR);
 			buildPortType(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationTable(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationDetails(html, portType, wsdlDoc);
-			addFooter(html,false,false,null);
+			addFooter(html, false, false, null,getRelativePath(currentPackageName),false,null);
 			html.append(HtmlUtils.getEndTags());
 			String outputDir = getCurrentOutputDir() + File.separator;
 			writeFile(html, outputDir + File.separator + packageName, wsdlDoc
 					.getServiceName()
 					+ Constants.DOT_HTML);
 		}
-		
-		addPackageToDocMap(packageName,wsdlDoc);
+		writeOrphanTypes(wsdlDoc);
+		addPackageToDocMap(packageName, wsdlDoc);
 		addPackageToServiceMap(packageName, wsdlDoc.getServiceName());
 		processedTypes = new ArrayList<AbstractType>();
 		logger.exiting("JavaDocOutputGenerator", "handleWsdlDoc", new Object[] {
 				wsdlDoc, outputGenaratorParam });
 	}
-
-	private void writePackageTree(List<XSDDocInterface> wsdlDoc) throws OutputFormatterException {
+	private void writeOrphanTypes(WSDLDocInterface wsdlDoc) throws OutputFormatterException{
+		for(ComplexType cType:wsdlDoc.getAllComplexTypes()){
+			if(!processedTypes.contains(cType)){
+				writeComplexTypeFile(wsdlDoc, cType, cType.getName());
+			}
+		}
+		for(SimpleType cType:wsdlDoc.getAllSimpleTypes()){
+			if(!processedTypes.contains(cType)){
+				writeSimpleTypeFile(wsdlDoc, cType);
+			}
+		}
+		
+	}
+	private void writePackageTree(List<XSDDocInterface> wsdlDoc)
+			throws OutputFormatterException {
 		Node root = getTypesInTree(wsdlDoc);
 		StringBuffer html = new StringBuffer();
-		html.append(Constants.HTML_H3_START + "Hierarchy For Service domain " + currentPackageName + Constants.HTML_H3_END);
+		html.append(Constants.HTML_H3_START + "Hierarchy For Service domain "
+				+ currentPackageName + Constants.HTML_H3_END);
 		html.append(Constants.HTML_HR);
-		html.append(Constants.HTML_H3_START + "Complex Type Hierarchy" + Constants.HTML_H3_END);
+		html.append(Constants.HTML_H3_START + "Complex Type Hierarchy"
+				+ Constants.HTML_H3_END);
 		html.append("<ul>");
 		writeTree(root, html);
 		html.append("</ul>");
-		writeFile(html, getCurrentOutputDir() + File.separator + currentPackageName, "Tree" + Constants.DOT_HTML);
+		writeFile(html, getCurrentOutputDir() + File.separator
+				+ currentPackageName, "Tree" + Constants.DOT_HTML);
 	}
-	
+
 	private void writeTree(Node root, StringBuffer html) {
 		Set<Node> children = root.getChildren();
 		if (children != null) {
 			html.append("<ul>");
 			for (Node node : children) {
-				if (node.isFlag()) {					 
+				if (node.isFlag()) {
 					html.append("<li type='circle'>\n");
-					html.append(HtmlUtils.getAnchorTag("", "types/" + node.getName() + Constants.DOT_HTML, "", node.getName()) + Constants.HTML_BR);
+					html.append(HtmlUtils.getAnchorTag("", "types/"
+							+ node.getName() + Constants.DOT_HTML, "", node
+							.getName())
+							+ Constants.HTML_BR);
 					writeTree(node, html);
 				}
 			}
@@ -152,30 +177,31 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			}
 		}
 	}
-	
+
 	private Node getTypesInTree(List<XSDDocInterface> wsdlDoc) {
-		List<ComplexType> complexTypes=new ArrayList<ComplexType>();
-	    for(XSDDocInterface xsdDocument:wsdlDoc){
-	    	if(xsdDocument.getAllComplexTypes()!=null){
-	    		complexTypes.addAll(xsdDocument.getAllComplexTypes());
-	    	}
-	    }
-	
-		
-//		complexTypes = getInput();
-		
+		List<ComplexType> complexTypes = new ArrayList<ComplexType>();
+		for (XSDDocInterface xsdDocument : wsdlDoc) {
+			if (xsdDocument.getAllComplexTypes() != null) {
+				complexTypes.addAll(xsdDocument.getAllComplexTypes());
+			}
+		}
+
+		// complexTypes = getInput();
+
 		Node root = new Node();
 		root.setName("Root");
 		root.setLevel(0);
-		for (ComplexType type: complexTypes) {
+		for (ComplexType type : complexTypes) {
 			Node node = new Node();
 			node.setName(type.getName());
 			node.setOriginalParent(type.getParentType());
-			
-		/*	if (type.getName().equals("GetSearchKeywordsRecommendationResponse")) {
-				System.out.println();
-			}*/
-			
+
+			/*
+			 * if
+			 * (type.getName().equals("GetSearchKeywordsRecommendationResponse"
+			 * )) { System.out.println(); }
+			 */
+
 			getParent(root, node, type.getParentType());
 			if (!node.isNodeAdded()) {
 				if (root.getChildren() == null) {
@@ -184,26 +210,26 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				node.setParent(root);
 				node.setLevel(root.getLevel() + 1);
 				root.getChildren().add(node);
-			} /*else {
-				if (tNode.getChildren() == null) {
-					tNode.setChildren(new TreeSet<Node>());
-				}
-				node.setParent(tNode);
-				tNode.getChildren().add(node);
-			}*/
+			} /*
+			 * else { if (tNode.getChildren() == null) { tNode.setChildren(new
+			 * TreeSet<Node>()); } node.setParent(tNode);
+			 * tNode.getChildren().add(node); }
+			 */
 			normalizeTree(type, root, node);
 		}
 		return root;
 	}
-	
+
 	private void normalizeTree(ComplexType type, Node root, Node node) {
 		Set<Node> set = root.getChildren();
 		if (node.getName().equals(root.getName())) {
 			return;
 		}
 		if (set != null) {
-			for (Node n : set ){
-				if (n.getOriginalParent() != null && n.getOriginalParent().equals(node.getName()) && n.isFlag()) {
+			for (Node n : set) {
+				if (n.getOriginalParent() != null
+						&& n.getOriginalParent().equals(node.getName())
+						&& n.isFlag()) {
 					if (node.getChildren() == null) {
 						node.setChildren(new TreeSet<Node>());
 					}
@@ -216,13 +242,13 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					newNode.setChildren(n.getChildren());
 					newNode.setFlag(true);
 					node.getChildren().add(newNode);
-				} 
+				}
 				normalizeTree(type, n, node);
 			}
 		}
 	}
-	
-	private Node getParent(Node root, Node node, String parent) {		
+
+	private Node getParent(Node root, Node node, String parent) {
 		if (root.getName().equals(parent)) {
 			if (root.getChildren() == null) {
 				root.setChildren(new TreeSet<Node>());
@@ -236,14 +262,14 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			Node retValue = null;
 			if (root.getChildren() != null) {
 				Set<Node> set = root.getChildren();
-				for (Node tRoot : set) {					
+				for (Node tRoot : set) {
 					retValue = getParent(tRoot, node, parent);
 				}
 			}
 			return retValue;
 		}
 	}
-	
+
 	/**
 	 * Adds the package to service map.
 	 * 
@@ -260,7 +286,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		list.add(serviceName);
 		packageServicesMap.put(packageName, list);
 	}
-	
+
 	/**
 	 * Adds the package to Doc map.
 	 * 
@@ -287,9 +313,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			throws OutputFormatterException {
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(Constants.ALL_CLASSES, null));
+		buildHeader(html,false,false,null,".",true,null);
 		html.append(getTextInDiv("WSDL API specification", "pageHeading"));
 		html.append(Constants.HTML_BR);
-		//addFooter(html);
+		addFooter(html,false,false,null,".",true,null);
 		html.append(HtmlUtils.getEndTags());
 		writeFile(html, getCurrentOutputDir(), Constants.PACKAGES.toLowerCase()
 				+ Constants.INDEX + Constants.DOT_HTML);
@@ -355,11 +382,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append(Constants.HTML_BOLD_START + Constants.ALL_CLASSES
 				+ Constants.HTML_BOLD_END + Constants.HTML_BR);
 		for (String packageName : set) {
-			
+
 			List<String> list = packageServicesMap.get(packageName);
-			if(packageName.startsWith("/")){
-				packageName=packageName.substring(1);
-			}
 			for (String className : list) {
 				html.append(HtmlUtils.getAnchorTag(className, packageName
 						+ SEPARATOR + className + Constants.DOT_HTML, null,
@@ -394,7 +418,20 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		writeFile(html, getCurrentOutputDir(), Constants.PACKAGES.toLowerCase()
 				+ Constants.DOT_HTML);
 	}
-
+	private String getRelativePath(String currLocFromBase){
+		String relPath="";
+		
+		if(currLocFromBase!=null){
+			if(currLocFromBase.startsWith("/")){
+				currLocFromBase=currLocFromBase.substring(1);
+			}
+			String [] folders=currLocFromBase.split("/");
+			for(String folder:folders){
+				relPath=relPath+"../";
+			}
+		}
+		return relPath;
+	}
 	/**
 	 * Write complex type file.
 	 * 
@@ -425,8 +462,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			}
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
-					+  "/types"));
-			buildHeader(html,true,true,type.getName());
+					+ TYPES));
+			buildHeader(html, true, true, type.getName(),getRelativePath(currentPackageName +TYPES),false,null);
 			html.append(getTextInDiv("Type : " + typeName, "JavadocHeading"));
 
 			html.append(Constants.HTML_HR);
@@ -465,7 +502,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append(Constants.HTML_TABLE_TH_END);
 			html.append(Constants.HTML_TABLE_TR_END);
 			html.append(Constants.HTML_TABLE_END);
-			
+
 			Set<Element> elements = type.getChildElements();
 			if (type.getSimpleAttributeContent() != null) {
 				elements.addAll(type.getSimpleAttributeContent());
@@ -531,7 +568,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				}
 			}
 
-			addFooter(html,true,true,type.getName());
+			addFooter(html, true, true, type.getName(),getRelativePath(currentPackageName +TYPES),false,null);
 			writeFile(html, currentTypesFolderPath, typeName
 					+ Constants.DOT_HTML);
 		}
@@ -556,7 +593,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		if (elements == null || elements.isEmpty()) {
 			html.append(Constants.HTML_TABLE_END);
 			html.append(type.getName() + " has no fields");
-			
+
 			return;
 		}
 		html.append(getTableRowTagWithStyle("JavadocTableTr"));
@@ -658,8 +695,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
-					+  "/types"));
-			buildHeader(html,true,false,type.getName());
+					+ TYPES));
+			buildHeader(html, true, false, type.getName(),getRelativePath(currentPackageName +TYPES),false,null);
 			String parentType = type.getBase();
 			if (!Utils.isEmpty(parentType)) {
 				parentType = Utils.removeNameSpace(parentType);
@@ -708,6 +745,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				for (EnumElement enumElement : enumElements) {
 					html.append(getTableRowTagWithStyle("JavadocTableTr"));
 					html.append(getTableDataTagWithStyle("JavadocTableTd"));
+					html.append(HtmlUtils.getAnchorTag(enumElement.getValue(), null, null,
+							null));
 					html.append(enumElement.getValue());
 					html.append(Constants.HTML_TABLE_TD_END);
 					html.append(getTableDataTagWithStyle("JavadocTableTd"));
@@ -729,7 +768,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 				html.append(Constants.HTML_TABLE_END);
 			}
-			addFooter(html,true,false,type.getName());
+			addFooter(html, true, false, type.getName(),getRelativePath(currentPackageName +TYPES),false,null);
 			writeFile(html, currentTypesFolderPath, type.getName()
 					+ Constants.DOT_HTML);
 
@@ -882,40 +921,36 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @param html
 	 *            the html
 	 * 
-	 * @throws OutputFormatterException 
+	 * @throws OutputFormatterException
 	 */
-	private void buildHeader(StringBuffer html,boolean isType,boolean isComplex,String typeName) throws OutputFormatterException {
+	private void buildHeader(StringBuffer html, boolean isType,
+			boolean isComplex, String typeName,String relPath,boolean isIndex,String keyLinks) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "buildHeader", html);
-		String parameterName=isType?(isComplex?"ComplexTypeHeader":"SimpleTypeHeader"):"operationHeader";
-		String headerFile=outputGenaratorParam.getParameters().get(parameterName);
-		if(headerFile!=null){
-			try{
-				String header=Utils.getFileAsString(Utils.convertToURL(headerFile).openStream()).toString();
-				String version=outputGenaratorParam.getParameters().get("version");
-				header=header.replaceAll("\\$\\{VERSION\\}", version);
-				if(typeName!=null){
-					header=header.replaceAll("\\$\\{TYPE_NAME\\}", typeName);
-				}
-				html.append(header);
-			}catch (IOException e) {
-				throw new OutputFormatterException(e);
-			}
-			
-		}
+		String header=getFooterInformation(isType, isComplex, typeName, relPath, isIndex, keyLinks);
+		html.append(header);
 		logger.exiting("JavaDocOutputGenerator", "buildHeader", html);
 	}
-
-
+	protected String getHeaderFileName(boolean isType,boolean isComplex,boolean isIndex){
+		if(isIndex){
+			return "indexHeader";
+		}else if(isType){
+			return (isComplex ? "ComplexTypeHeader"
+					: "SimpleTypeHeader");
+		}
+		return "operationHeader";
+	}
 	/**
 	 * Adds the footer.
 	 * 
 	 * @param html
 	 *            the html
-	 * @throws OutputFormatterException 
+	 * @throws OutputFormatterException
 	 */
-	private void addFooter(StringBuffer html,boolean isType,boolean isComplexType,String typeName) throws OutputFormatterException {
+	private void addFooter(StringBuffer html, boolean isType,
+			boolean isComplexType, String typeName,String relPath,boolean isIndex,String keyLinks)
+			throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "addFooter", html);
-		String content = getFooterInformation(isType,isComplexType,typeName);
+		String content = getFooterInformation(isType, isComplexType, typeName,relPath,isIndex,keyLinks);
 		html.append(getTextInDiv(content, "footer"));
 		html.append(HtmlUtils.getEndTags());
 		logger.exiting("JavaDocOutputGenerator", "addFooter", html);
@@ -926,24 +961,35 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * Footer.
 	 * 
 	 * @return the footer information
-	 * @throws OutputFormatterException 
+	 * @throws OutputFormatterException
 	 */
-	protected String getFooterInformation(boolean isType,boolean isComplex,String typeName) throws OutputFormatterException {
-		
-		String parameterName=isType?(isComplex?"ComplexTypeHeader":"SimpleTypeHeader"):"operationHeader";
-		String headerFile=outputGenaratorParam.getParameters().get(parameterName);
-		if(headerFile!=null){
-			try{
-				String header=Utils.getFileAsString(Utils.convertToURL(headerFile).openStream()).toString();
-				String version=outputGenaratorParam.getParameters().get("version");
-				header=header.replaceAll("\\$\\{VERSION\\}", version);
-				header=header.replaceAll("\\$\\{TYPE_NAME\\}", typeName);
-				header="<hr/>"+header;
+	protected String getFooterInformation(boolean isType, boolean isComplex,
+			String typeName,String relPath,boolean isIndex,String keyLinks) throws OutputFormatterException {
+
+	String parameterName = getHeaderFileName(isType,isComplex,isIndex);
+		String headerFile = outputGenaratorParam.getParameters().get(
+				parameterName);
+		if (headerFile != null) {
+			try {
+				String header = Utils.getFileAsString(
+						Utils.convertToURL(headerFile).openStream()).toString();
+				String version = outputGenaratorParam.getParameters().get(
+						"version");
+				header = header.replaceAll("\\$\\{VERSION\\}", version);
+				header = header.replaceAll("\\$\\{TYPE_NAME\\}", typeName);
+				header = header.replaceAll("\\$\\{REL_PATH\\}", relPath);
+				if(isIndex){
+					if(keyLinks==null){
+						keyLinks="";
+					}
+					header = header.replaceAll("\\$\\{KEY_LINKS\\}", keyLinks);
+				}
+				header = "<hr/>" + header;
 				return header;
-			}catch (IOException e) {
+			} catch (IOException e) {
 				throw new OutputFormatterException(e);
 			}
-			
+
 		}
 		return "";
 	}
@@ -1748,12 +1794,256 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		return;
 
 	}
-	public void createTreeFiles() throws OutputFormatterException{
-		for(Map.Entry<String, List<XSDDocInterface>> entry:packageDocMap.entrySet()){
-			currentPackageName=entry.getKey();
+
+	public void createTreeFiles() throws OutputFormatterException {
+		for (Map.Entry<String, List<XSDDocInterface>> entry : packageDocMap
+				.entrySet()) {
+			currentPackageName = entry.getKey();
 			writePackageTree(entry.getValue());
 		}
 	}
+
+	private void createIndexFiles() throws OutputFormatterException {
+		Map<String, IndexerDataObject> completeMap = getCompleteIndexerMap();
+		StringBuffer keyLinks = getKeyLinks(completeMap);
+		int i = 1;
+		for (Map.Entry<String, IndexerDataObject> entry : completeMap
+				.entrySet()) {
+			StringBuffer html = new StringBuffer();
+			html.append(HtmlUtils.getStartTags("index-" + i, "../"));
+			buildHeader(html,false,false,null,"..",true,keyLinks.toString());
+			html.append("<h2><b>" + entry.getKey() + "</b></h2><dl>");
+			List<IndexerBaseDataObject> data = entry.getValue()
+					.getDataObjects();
+			Collections.sort(data);
+			for (IndexerBaseDataObject dataObj : data) {
+				String baseHref = "../"+dataObj.getPackageName();
+				String typeDesc = "";
+				String baseTitleDesc = "";
+				String baseName = "";
+				String baseDoc = "";
+				String inPageHref=dataObj.getBaseName();
+				if (dataObj instanceof IndexerOperationHolder) {
+					baseHref = baseHref + SEPARATOR + dataObj.getServiceName()
+							+ Constants.DOT_HTML;
+					typeDesc = "Operation in ";
+					baseName = dataObj.getServiceName();
+					baseTitleDesc = typeDesc + baseName;
+					IndexerOperationHolder opHolder = (IndexerOperationHolder) dataObj;
+					if (opHolder.getOperation().getAnnotations() != null
+							&& opHolder.getOperation().getAnnotations()
+									.getDocumentation() != null) {
+						baseDoc = opHolder.getOperation().getAnnotations()
+								.getDocumentation();
+					}
+				}
+				if (dataObj instanceof IndexerElementHolder) {
+					IndexerElementHolder elemHolder = (IndexerElementHolder) dataObj;
+					if (elemHolder.isReqResp()) {
+						baseHref = baseHref + SEPARATOR + dataObj.getServiceName()
+								+ Constants.DOT_HTML;
+						if (elemHolder.isInput()) {
+							typeDesc = "Input for Operation in ";
+						} else {
+							typeDesc = "Output for Operation in ";
+						}
+						baseName = dataObj.getServiceName();
+						baseTitleDesc = typeDesc + baseName;
+						inPageHref=elemHolder.getOperationHolder().getBaseName();
+					} else {
+						baseHref = baseHref
+								+ TYPES
+								+ elemHolder.getElement()
+										.getContainerComplexType().getName()
+								+ Constants.DOT_HTML;
+						if (elemHolder.getElement() instanceof Element) {
+							typeDesc = "Field in Complex Type ";
+						} else {
+							typeDesc = "Attribute in Complex Type ";
+						}
+						baseName = elemHolder.getElement()
+								.getContainerComplexType().getName();
+						baseTitleDesc = typeDesc + baseName;
+					}
+					if (elemHolder.getElement().getAnnotationInfo() != null
+							&& elemHolder.getElement().getAnnotationInfo()
+									.getDocumentation() != null) {
+						baseDoc = elemHolder.getElement().getAnnotationInfo()
+								.getDocumentation();
+					}
+				}
+				if (dataObj instanceof IndexerEnumValueElements) {
+					IndexerEnumValueElements elemHolder = (IndexerEnumValueElements) dataObj;
+					baseHref = baseHref
+							+ TYPES
+							+ elemHolder.getEnumElem().getType()+ Constants.DOT_HTML;
+					
+					typeDesc = "Enumeration in Simple Type ";
+					baseName = elemHolder.getEnumElem().getType();
+					baseTitleDesc = typeDesc + baseName;
+
+					if (elemHolder.getEnumElem().getAnnotations() != null
+							&& elemHolder.getEnumElem().getAnnotations()
+									.getDocumentation() != null) {
+						baseDoc = elemHolder.getEnumElem().getAnnotations()
+								.getDocumentation();
+					}
+				}
+				html
+						.append("<dt><a href='" + baseHref + "#"
+								+ inPageHref + "'><b>"
+								+ dataObj.getBaseName() + "</b></a> -"
+								+ typeDesc + "<a href='" + baseHref
+								+ "' title='" + baseTitleDesc + "'>" + baseName
+								+ "</a></dt><dd>" + baseDoc + "</dd>");
+			}
+			html.append("</dl>");
+			addFooter(html,false,false,null,"..",true,keyLinks.toString());
+			html.append(HtmlUtils.getEndTags());
+			writeFile(html, getCurrentOutputDir()+"index-files", "index-" + i + ".html");
+			i = i + 1;
+		}
+	}
+
+	private StringBuffer getKeyLinks(Map<String, IndexerDataObject> completeMap) {
+		StringBuffer keyLinks = new StringBuffer();
+		int i = 1;
+		for (String str : completeMap.keySet()) {
+			keyLinks.append("<a href='index-" + i + ".html'>" + str + "</a>&nbsp;");
+			i = i + 1;
+		}
+		return keyLinks;
+	}
+
+	private Map<String, IndexerDataObject> getCompleteIndexerMap()
+			throws OutputFormatterException {
+		Map<String, IndexerDataObject> completeMap = new TreeMap<String, IndexerDataObject>();
+		for (Map.Entry<String, List<XSDDocInterface>> entry : packageDocMap
+				.entrySet()) {
+			List<XSDDocInterface> wsdlDoc = (List<XSDDocInterface>) entry
+					.getValue();
+			for (XSDDocInterface doc : wsdlDoc) {
+				WSDLDocInterface wsdl = (WSDLDocInterface) doc;
+				for (ComplexType complexType : doc.getAllComplexTypes()) {
+					for (Element element : complexType.getChildElements()) {
+						if(element.getContainerComplexType()!=null && element.getContainerComplexType().getName().equals(complexType.getName())){
+							addElementToIndexMap(completeMap, element, wsdl
+									.getServiceName(), entry.getKey());
+						}
+					}
+					if (complexType.getSimpleAttributeContent() != null) {
+						for (Element element : complexType
+								.getSimpleAttributeContent()) {
+							addElementToIndexMap(completeMap, element, wsdl
+									.getServiceName(), entry.getKey());
+						}
+					}
+				}
+
+				for (OperationHolder oph : wsdl.getAllOperations()) {
+					IndexerOperationHolder inOph = new IndexerOperationHolder();
+					inOph.setOperation(oph);
+					inOph.setServiceName(wsdl.getServiceName());
+					inOph.setPackageName(entry.getKey());
+					String firstChar = getFirstChar(oph.getName());
+					IndexerDataObject index = completeMap.get(firstChar);
+					if (index == null) {
+						index = new IndexerDataObject();
+						completeMap.put(firstChar, index);
+					}
+					index.addDataObjects(inOph);
+					setReqRespElems(completeMap, oph, inOph);
+				}
+				for (EnumElement enumElem : doc.getAllEnums()) {
+					IndexerEnumValueElements indexEnumElem = new IndexerEnumValueElements();
+					indexEnumElem.setValue(enumElem.getValue());
+					indexEnumElem.setEnumElem(enumElem);
+					indexEnumElem.setServiceName(wsdl.getServiceName());
+					indexEnumElem.setPackageName(entry.getKey());
+					String firstChar = getFirstChar(enumElem.getValue());
+					IndexerDataObject index = completeMap.get(firstChar);
+					if (index == null) {
+						index = new IndexerDataObject();
+						completeMap.put(firstChar, index);
+					}
+					index.addDataObjects(indexEnumElem);
+				}
+			}
+		}
+		return completeMap;
+	}
+
+	private void setReqRespElems(Map<String, IndexerDataObject> completeMap,
+			OperationHolder oph, IndexerOperationHolder inOph) {
+		for (Element element : oph.getInputTypes()) {
+			IndexerElementHolder elementHolder = new IndexerElementHolder();
+			elementHolder.setReqResp(true);
+			elementHolder.setInput(true);
+			elementHolder.setServiceName(inOph.getServiceName());
+			elementHolder.setPackageName(inOph.getPackageName());
+			elementHolder.setOperationHolder(inOph);
+			elementHolder.setElement(element);
+			String elemName = element.getName();
+			String firstChar = getFirstChar(elemName);
+			IndexerDataObject index = completeMap.get(firstChar);
+			if (index == null) {
+				index = new IndexerDataObject();
+				completeMap.put(firstChar, index);
+			}
+			index.addDataObjects(elementHolder);
+		}
+		for (Element element : oph.getOutputTypes()) {
+			IndexerElementHolder elementHolder = new IndexerElementHolder();
+			elementHolder.setReqResp(true);
+			elementHolder.setInput(false);
+			elementHolder.setServiceName(inOph.getServiceName());
+			elementHolder.setPackageName(inOph.getPackageName());
+			elementHolder.setOperationHolder(inOph);
+			elementHolder.setElement(element);
+			String elemName = element.getName();
+			String firstChar = getFirstChar(elemName);
+			IndexerDataObject index = completeMap.get(firstChar);
+			if (index == null) {
+				index = new IndexerDataObject();
+				completeMap.put(firstChar, index);
+			}
+			index.addDataObjects(elementHolder);
+		}
+	}
+
+	private void addElementToIndexMap(
+			Map<String, IndexerDataObject> completeMap, Element element,
+			String serviceName, String packageName) {
+		IndexerElementHolder elementHolder = new IndexerElementHolder();
+		elementHolder.setReqResp(false);
+		elementHolder.setElement(element);
+		elementHolder.setServiceName(serviceName);
+		elementHolder.setPackageName(packageName);
+		String elemName = element.getName();
+
+		String firstChar = getFirstChar(elemName);
+		IndexerDataObject index = completeMap.get(firstChar);
+		if (index == null) {
+			index = new IndexerDataObject();
+			completeMap.put(firstChar, index);
+		}
+		index.addDataObjects(elementHolder);
+	}
+
+	private String getFirstChar(String elemName) {
+		if (elemName == null) {
+			return "_";
+		}
+		char ch = elemName.charAt(0);
+		String firstChar = null;
+		if (Character.isDigit(ch)) {
+			firstChar = "#";
+		} else {
+			firstChar = String.valueOf(ch).toUpperCase();
+		}
+		return firstChar;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -1770,6 +2060,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			createAllClassesFile();
 			createIndexFile();
 			createTreeFiles();
+			createIndexFiles();
 		}
 	}
 

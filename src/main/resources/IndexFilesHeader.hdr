@@ -6,8 +6,8 @@
 <A NAME="navbar_top_firstrow"><!-- --></A>
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
-	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../types-use/${TYPE_NAME}.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../Tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1"><B>Use</B></FONT>&nbsp;</TD>
+	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1"><B>Tree</B></FONT>&nbsp;</TD>
 	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="${REL_PATH}/index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
   </TR>
 </TABLE>
@@ -19,5 +19,5 @@
 </TABLE>
 <a name="skip-navbar_top"></a>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
+${KEY_LINKS}
 <hr>
