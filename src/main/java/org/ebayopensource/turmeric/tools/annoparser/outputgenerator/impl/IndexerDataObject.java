@@ -9,7 +9,6 @@ public class IndexerDataObject {
 	public List<IndexerBaseDataObject> getDataObjects() {
 		return dataObjects;
 	}
-
 	public void addDataObjects(IndexerBaseDataObject dataObject) {
 		dataObjects.add(dataObject);
 	}
