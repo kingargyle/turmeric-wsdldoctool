@@ -144,7 +144,9 @@ public interface Constants {
 	
 
 	 String HTML_BR = "<br/>";
+	 String HTML_BR_TWICE=HTML_BR+HTML_BR;
 	 String HTML_HR = "<hr/>";
+
 	 String HTML_TABLE_START_WITH_ATTRS = "<table {#}>";
 	 String HTML_TABLE_END = "</table>";
 	 String HTML_TABLE_TR_START_WITH_ATTRS = "<tr {#}>";
@@ -157,7 +159,15 @@ public interface Constants {
 	 String HTML_DIV_END = "</div>";
 	 String HTML_SPAN_START = "<span {#}>";
 	 String HTML_SPAN_END = "</span>";
-	
+	 String HTML_P_START = "<p>";	 
+	 String HTML_P_END = "</p>";
+	 
+	 String COMPLEX_TYPE_HEADER = "ComplexTypeHeader";
+	 String SIMPLE_TYPE_HEADER = "SimpleTypeHeader";
+	 String OPERATION_HEADER = "operationHeader";
+	 String TREE_HEADER = "TreeHeader";
+	 String USE_HEADER = "UseHeader";
+	 
 	 String NBSP = "&nbsp;";
 	 
 	 String NBSP_TWICE = "&nbsp;&nbsp;";

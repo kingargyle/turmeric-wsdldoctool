@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,12 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
+
 import org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface;
+import org.ebayopensource.turmeric.tools.annoparser.WSDLDocument;
 import org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface;
+import org.ebayopensource.turmeric.tools.annoparser.XSDDocument;
 import org.ebayopensource.turmeric.tools.annoparser.commons.AnnotationsHelper;
 import org.ebayopensource.turmeric.tools.annoparser.commons.Constants;
 import org.ebayopensource.turmeric.tools.annoparser.context.Context;
@@ -59,6 +64,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	private static final String TYPES = "/types/";
 	/** The current types folder path. */
 	private String currentTypesFolderPath = null;
+	
+	private String classUseFolderPath = null;
+	
 	private final static String CLASS_NAME = JavaDocOutputGenerator.class
 			.getClass().getName();
 	Logger logger = Logger.getLogger(CLASS_NAME);
@@ -72,6 +80,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	private static final String SEPARATOR = "/";
 
 	private String currentPackageName;
+	
+	private Map<String, TreeSet<String>> returnTypeToMethodMap = new HashMap<String, TreeSet<String>>();
+	
+	private Map<String, TreeSet<String>> paramsToMethodMap = new HashMap<String, TreeSet<String>>();
 
 	/*
 	 * (non-Javadoc)
@@ -100,6 +112,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		currentTypesFolderPath = getCurrentOutputDir() + File.separator
 				+ packageName + File.separator + "types" + File.separator;
 
+		classUseFolderPath = getCurrentOutputDir() + File.separator
+				+ packageName + File.separator + "types-use" + File.separator;
+		
 		writeCssFiles();
 		logger.logp(Level.INFO, "JavaDocOutputGenerator", "handleWsdlDoc",
 				"Types Folder Path");
@@ -108,16 +123,20 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(wsdlDoc.getServiceName(),
 					packageName));
+
 			buildHeader(html, false, false, null,
 					getRelativePath(currentPackageName), false, null);
+
 			html.append(Constants.HTML_BR);
 			buildPortType(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationTable(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationDetails(html, portType, wsdlDoc);
+
 			addFooter(html, false, false, null,
 					getRelativePath(currentPackageName), false, null);
+
 			html.append(HtmlUtils.getEndTags());
 			String outputDir = getCurrentOutputDir() + File.separator;
 			writeFile(html, outputDir + File.separator + packageName, wsdlDoc
@@ -152,8 +171,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			throws OutputFormatterException {
 		Node root = getTypesInTree(wsdlDoc);
 		StringBuffer html = new StringBuffer();
+
 		html.append(Constants.HTML_H3_START + "Hierarchy For Service domain "
 				+ currentPackageName + Constants.HTML_H3_END);
+
 		html.append(Constants.HTML_HR);
 		html.append(Constants.HTML_H3_START + "Complex Type Hierarchy"
 				+ Constants.HTML_H3_END);
@@ -508,9 +529,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			}
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
+
 					+ TYPES));
 			buildHeader(html, true, true, type.getName(),
 					getRelativePath(currentPackageName + TYPES), false, null);
+
 			html.append(getTextInDiv("Type : " + typeName, "JavadocHeading"));
 
 			html.append(Constants.HTML_HR);
@@ -609,20 +632,183 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 						html.append(deprDet);
 					}
 					processRelatedInfo(html, doc, element.getAnnotationInfo());
-
 					html.append(Constants.HTML_HR + Constants.HTML_BR);
-
 				}
 			}
 
+			
+			writeUseFile(doc, type,	parentPath);			
+
+
 			addFooter(html, true, true, type.getName(),
 					getRelativePath(currentPackageName + TYPES), false, null);
+
 			writeFile(html, currentTypesFolderPath, typeName
 					+ Constants.DOT_HTML);
 		}
 		logger.exiting("JavaDocOuputGenerator", "writeComplexTypeFile", html);
 	}
+	
+	private void writeUseFile(WSDLDocInterface doc, ComplexType type,
+			String parentPath) throws OutputFormatterException {
+		logger.entering("JavaDocOuputGenerator", "writeUseFile");
+		StringBuffer html = new StringBuffer();
+		html.append(HtmlUtils.getStartTags(type.getName(), currentPackageName + "/types-use"));
 
+		
+		addHeadingTable(html, "Uses of " + type.getName());
+		boolean tableAdded = false;
+		
+		Set<String> methods = returnTypeToMethodMap.get(type.getName());
+		if (methods != null) {
+			html.append(Constants.HTML_BR_TWICE);
+			html.append(getTableTagWithStyle("JavadocTable"));
+			html.append(getTableRowTagWithStyle("JavadocTableTr"));
+			html.append("<th colspan=\"2\" class=\"TableSubHeadingColor\">");
+			html.append("Methods that return " + type.getName());
+			html.append(Constants.HTML_TABLE_TH_END);
+			html.append(Constants.HTML_TABLE_TR_END);
+		
+			for (String str : methods) {
+				html.append(getTableRowTagWithStyle("JavadocTableTr"));
+				
+				html.append(getTableDataTagWithStyle("JavadocTableTd"));
+				html.append(HtmlUtils.getAnchorTag(null, "../types/" + type.getName() + Constants.DOT_HTML, null, type.getName()));
+				html.append(Constants.HTML_TABLE_TD_END);
+				
+				html.append(getTableDataTagWithStyle("JavadocTableTd"));
+				html.append(str);				
+				html.append(Constants.HTML_TABLE_TD_END);
+				
+				html.append(Constants.HTML_TABLE_TR_END);
+			}
+			html.append(Constants.HTML_TABLE_END);			
+			tableAdded = true;
+		}
+		
+		methods = paramsToMethodMap.get(type.getName());
+		if (methods != null) {
+			html.append(Constants.HTML_BR_TWICE);
+			html.append(getTableTagWithStyle("JavadocTable"));
+			html.append(getTableRowTagWithStyle("JavadocTableTr"));
+			html.append("<th colspan=\"2\" class=\"TableSubHeadingColor\">");
+			html.append("Methods with parameters of type " + type.getName());
+			html.append(Constants.HTML_TABLE_TH_END);
+			html.append(Constants.HTML_TABLE_TR_END);
+ 		
+ 			Iterator<String> itMethods = methods.iterator();
+			while(itMethods.hasNext()) {
+				String method = itMethods.next();
+				html.append(getTableRowTagWithStyle("JavadocTableTr"));
+				html.append(getTableDataTagWithStyle("JavadocTableTd"));
+				String retTypeName = method.substring(0, method.indexOf('-'));
+				html.append(HtmlUtils.getAnchorTag(null, "../types/" + retTypeName + Constants.DOT_HTML, null, retTypeName));
+				html.append(Constants.HTML_TABLE_TD_END);
+				
+				html.append(getTableDataTagWithStyle("JavadocTableTd"));
+				html.append(method.substring(method.indexOf('-') + 1));
+				html.append(Constants.HTML_TABLE_TD_END);
+				html.append(Constants.HTML_TABLE_TR_END);
+			}
+			html.append(Constants.HTML_TABLE_END);
+			tableAdded = true;
+		}
+		
+		if (doc instanceof WSDLDocument) {
+			// write calls that use this type
+			Map<String, List<ComplexType>> map = doc.getElementComplexTypeMap();
+			List<ComplexType> tempTypes = map.get(type.getName());
+			if (tempTypes != null) {
+				html.append(Constants.HTML_BR_TWICE);
+				html.append(getTableTagWithStyle("JavadocTable"));
+				html.append(getTableRowTagWithStyle("JavadocTableTr"));
+				html.append("<th colspan=\"2\" class=\"TableSubHeadingColor\">");
+				html.append("Types that use " + type.getName());
+				html.append(Constants.HTML_TABLE_TH_END);
+				html.append(Constants.HTML_TABLE_TR_END);
+				
+				Set<String> set = new TreeSet<String>();
+				if (tempTypes != null) {
+					for (ComplexType tempType : tempTypes) {
+						set.addAll(getExtensionTypes(tempType.getName(), doc));
+					}
+				}
+				Iterator<String> setIterator = set.iterator();
+				while (setIterator.hasNext()) {
+					html.append(getTableRowTagWithStyle("JavadocTableTr"));
+					html.append(getTableDataTagWithStyle("JavadocTableTd"));
+					String name = setIterator.next();
+					html.append(HtmlUtils.getAnchorTag(null, "../types/" + name
+							+ Constants.DOT_HTML, null, name));					
+					html.append(Constants.HTML_TABLE_TD_END);
+					
+					ComplexType cType = doc.searchCType(Utils.removeNameSpace(name));
+					String desc = "";
+					if (cType != null) {
+						desc = cType.getAnnotations().getDocumentation();
+					}
+					html.append(getTableDataTagWithStyle("JavadocTableTd"));
+					html.append(desc);
+					html.append(Constants.HTML_TABLE_TD_END);
+					html.append(Constants.HTML_TABLE_TR_END);
+				}
+				html.append(Constants.HTML_TABLE_END);
+				tableAdded = true;
+			}
+		}		
+		
+		if (!tableAdded) {
+			html.append(type.getName() + " is not used anywhere directly.");
+		}
+		
+		html.append(Constants.HTML_BR);
+
+		writeFile(html, classUseFolderPath, type.getName() + Constants.DOT_HTML);
+		logger.exiting("JavaDocOuputGenerator", "writeUseFile", html);
+	}
+	
+	private Set<String> getExtensionTypes(String cTypeName, XSDDocInterface doc) {
+		Set<String> extnTypes = new HashSet<String>();
+		Set<String> parentTypes = doc.getParentToComplexTypeMap()
+				.get(cTypeName);
+		if (parentTypes != null) {
+			for (String parent : parentTypes) {
+				if (!parent.equals(cTypeName)) {
+					ComplexType parentType = doc.searchCType(Utils
+							.removeNameSpace(parent));
+					if (parentType != null) {
+						Set<String> innerExtnTypes = getExtensionTypes(
+								parentType.getName(), doc);
+						extnTypes.addAll(innerExtnTypes);
+					}
+				}
+			}
+
+		}
+		if (extnTypes.isEmpty()) {
+			extnTypes.add(cTypeName);
+		}
+		return extnTypes;
+	}
+	
+	private void addEmptyRow(StringBuffer html) {
+		html.append(getTableRowTagWithStyle("JavadocTableTr"));
+		html.append(getTableDataTagWithStyle("JavadocTableTd"));
+		html.append(Constants.NBSP);
+		html.append(Constants.HTML_TABLE_TD_END);
+		html.append(Constants.HTML_TABLE_TR_END);
+	}
+
+	private void addHeadingTable(StringBuffer html, String heading) {
+		html.append(getTableTagWithStyle("JavadocTable"));
+		html.append(getTableRowTagWithStyle("JavadocTableTr"));
+		html.append(getTableHeadTagWithStyle("JavadocTableHeaders"));
+		html.append(heading);
+		html.append(Constants.HTML_TABLE_TH_END);
+		html.append(Constants.HTML_TABLE_TR_END);
+		html.append(Constants.HTML_TABLE_END);
+	}
+	
 	private void buildFieldSummary(StringBuffer html, WSDLDocInterface doc,
 			ComplexType type) {
 		Set<Element> elements = type.getChildElements();
@@ -741,9 +927,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
+
 					+ TYPES));
 			buildHeader(html, true, false, type.getName(),
 					getRelativePath(currentPackageName + TYPES), false, null);
+
 			String parentType = type.getBase();
 			if (!Utils.isEmpty(parentType)) {
 				parentType = Utils.removeNameSpace(parentType);
@@ -815,8 +1003,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 				html.append(Constants.HTML_TABLE_END);
 			}
+
 			addFooter(html, true, false, type.getName(),
 					getRelativePath(currentPackageName + TYPES), false, null);
+
 			writeFile(html, currentTypesFolderPath, type.getName()
 					+ Constants.DOT_HTML);
 
@@ -971,13 +1161,16 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * 
 	 * @throws OutputFormatterException
 	 */
+
 	private void buildHeader(StringBuffer html, boolean isType,
 			boolean isComplex, String typeName, String relPath,
 			boolean isIndex, String keyLinks) throws OutputFormatterException {
+
 		logger.entering("JavaDocOutputGenerator", "buildHeader", html);
 		String header = getFooterInformation(isType, isComplex, typeName,
 				relPath, isIndex, keyLinks);
 		html.append(header);
+
 		logger.exiting("JavaDocOutputGenerator", "buildHeader", html);
 	}
 
@@ -998,12 +1191,16 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 *            the html
 	 * @throws OutputFormatterException
 	 */
+
 	private void addFooter(StringBuffer html, boolean isType,
 			boolean isComplexType, String typeName, String relPath,
 			boolean isIndex, String keyLinks) throws OutputFormatterException {
+
 		logger.entering("JavaDocOutputGenerator", "addFooter", html);
+
 		String content = getFooterInformation(isType, isComplexType, typeName,
 				relPath, isIndex, keyLinks);
+
 		html.append(getTextInDiv(content, "footer"));
 		html.append(HtmlUtils.getEndTags());
 		logger.exiting("JavaDocOutputGenerator", "addFooter", html);
@@ -1016,6 +1213,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @return the footer information
 	 * @throws OutputFormatterException
 	 */
+
 	protected String getFooterInformation(boolean isType, boolean isComplex,
 			String typeName, String relPath, boolean isIndex, String keyLinks)
 			throws OutputFormatterException {
@@ -1039,6 +1237,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					header = header.replaceAll("\\$\\{KEY_LINKS\\}", keyLinks);
 				}
 				header = "<hr/>" + header;
+
 				return header;
 			} catch (IOException e) {
 				throw new OutputFormatterException(e);
@@ -1169,18 +1368,62 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					+ opH.getName(), opH.getName(), opH.getName()),
 					"javaDocMethodName")
 					+ " (");
-			setInputTypes(html, opH, wsdlDoc.getServiceName());
+			setInputTypes(html, opH, wsdlDoc.getServiceName(), "");
 
 			html.append(")");
 			html.append(Constants.HTML_BR);
 			html.append(getSummary(wsdlDoc, opH));
 			html.append(Constants.HTML_TABLE_TD_END);
 			html.append(Constants.HTML_TABLE_TR_END);
+			if (returnTypeToMethodMap.get(opH.getOutputTypes().get(0).getType()) == null) {
+				returnTypeToMethodMap.put(opH.getOutputTypes().get(0).getType(), new TreeSet<String>());
+			} 
+			String str = wsdlDoc.getServiceName() + "." + opH.getName() + "(";
+			str += setInputTypes(html, opH, wsdlDoc.getServiceName(), "../") + ")";			
+			str += Constants.HTML_BR + Constants.NBSP_THRICE + getSummary(wsdlDoc, opH);
+			returnTypeToMethodMap.get(opH.getOutputTypes().get(0).getType()).add(str);
+			
+			if (opH.getInputTypes() != null) {
+				Iterator<Element> iter = opH.getInputTypes().iterator();
+				while (iter.hasNext()) {
+					Element elem = iter.next();
+					if (paramsToMethodMap.get(elem.getType()) == null) {
+						paramsToMethodMap.put(elem.getType(), new TreeSet<String>());						
+					}
+					String retType = "";
+					if (opH.getOutputTypes() != null && opH.getOutputTypes().size() > 0) {
+						retType = opH.getOutputTypes().get(0).getType();
+					}					
+					str = retType + "-" + wsdlDoc.getServiceName() + "." + opH.getName() + "(" + getParams(opH.getInputTypes(), "../") + ")";
+					str += Constants.HTML_BR + Constants.NBSP_THRICE + getSummary(wsdlDoc, opH);
+					paramsToMethodMap.get(elem.getType()).add(str);
+				}
+			}
 		}
 		html.append(Constants.HTML_TABLE_END);
 		logger.exiting("JavaDocOutputGenerator", "buildOperationTable", html);
 	}
 
+	private String getParams(List<Element> inputs, String locBase) {
+		String params = "";
+		if (inputs != null) {
+			Iterator<Element> iter = inputs.iterator();
+			while (iter.hasNext()) {
+				Element elem = iter.next();
+
+				params = HtmlUtils.getAnchorTag(null, locBase + "types" + SEPARATOR
+						+ elem.getType() + Constants.DOT_HTML, elem.getType(),
+						elem.getType());
+				params += " " + elem.getName();
+				if (iter.hasNext()) {
+					params += ",";
+				}
+				
+			}
+		}
+		return params;
+	}
+	
 	/**
 	 * Sets the input types.
 	 * 
@@ -1268,27 +1511,30 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @param serviceName
 	 *            the service name
 	 */
-	private void setInputTypes(StringBuffer html, OperationHolder opH,
-			String serviceName) {
+	private String setInputTypes(StringBuffer html, OperationHolder opH,
+			String serviceName, String locBase) {
 		logger.entering("JavaDocOutputGenerator", "setInputTypes",
 				new Object[] { html, opH });
+		String params = "";
 		List<Element> inputs = opH.getInputTypes();
 		if (inputs != null) {
 			Iterator<Element> iter = inputs.iterator();
 			while (iter.hasNext()) {
 				Element elem = iter.next();
 
-				html.append(HtmlUtils.getAnchorTag(null, "types" + SEPARATOR
+				params = HtmlUtils.getAnchorTag(null, locBase + "types" + SEPARATOR
 						+ elem.getType() + Constants.DOT_HTML, elem.getType(),
-						elem.getType()));
-				html.append(" ");
-				html.append(elem.getName());
+						elem.getType());
+				params += " " + elem.getName();
 				if (iter.hasNext()) {
-					html.append(",");
+					params += ",";
 				}
+				
 			}
 		}
+		html.append(params);
 		logger.exiting("JavaDocOutputGenerator", "setInputTypes", html);
+		return params;
 	}
 
 	/**
