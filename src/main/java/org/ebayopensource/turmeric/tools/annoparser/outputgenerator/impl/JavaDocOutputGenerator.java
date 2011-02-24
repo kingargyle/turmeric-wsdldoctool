@@ -167,7 +167,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	}
 
-	private void writePackageTree(List<XSDDocInterface> wsdlDoc, String outputdir, boolean isAllPackages)
+	private void writePackageTree(List<XSDDocInterface> wsdlDoc, String outputdir, boolean isAllPackages, String packageName)
 			throws OutputFormatterException {
 		Node root = getTypesInTree(wsdlDoc);
 		StringBuffer html = new StringBuffer();
@@ -175,6 +175,16 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append(Constants.HTML_H3_START + "Hierarchy For Service domain "
 				+ currentPackageName + Constants.HTML_H3_END);
 
+		if (!isAllPackages) {
+			html.append("<b>Package Hierarchies:</b>" + Constants.HTML_BR);
+			String str = "";
+			while (packageName.indexOf('/') != -1) {
+				str = "../";
+				packageName = packageName.substring(packageName.indexOf('/') + 1);
+			}
+			html.append(Constants.NBSP_THRICE + Constants.NBSP_THRICE + HtmlUtils.getAnchorTag(null, str + "Tree" + Constants.DOT_HTML, null, "All Packages"));
+		}
+		
 		html.append(Constants.HTML_HR);
 		html.append(Constants.HTML_H3_START + "Complex Type Hierarchy"
 				+ Constants.HTML_H3_END);
@@ -2111,11 +2121,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				}
 			}
 			writePackageTree(list, getCurrentOutputDir() + File.separator
-					+ currentPackageName, false);
+					+ currentPackageName, false, currentPackageName);
 			allPackages.addAll(entry.getValue());
 		}
 	
-		writePackageTree(allPackages, getCurrentOutputDir(), true);
+		writePackageTree(allPackages, getCurrentOutputDir(), true, null);
 	}
 
 	private void createIndexFiles() throws OutputFormatterException {
