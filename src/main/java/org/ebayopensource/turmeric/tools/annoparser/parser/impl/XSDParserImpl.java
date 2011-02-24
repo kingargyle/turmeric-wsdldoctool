@@ -1041,38 +1041,48 @@ public class XSDParserImpl implements XSDParser {
 			org.w3c.dom.Element elem) {
 		logger.log(Level.FINER, "Entering parseAnnotation method in XSDParser",
 				elem);
-		NodeList docElementList = (NodeList) elem
-				.getElementsByTagNameNS( "*", "documentation");
-		org.w3c.dom.Element docElement = (org.w3c.dom.Element) docElementList
-				.item(0);
+		org.w3c.dom.Element anno= (org.w3c.dom.Element) getFirstChildElementWithTagName(elem,"annotation");
 		ParsedAnnotationInfo info = new ParsedAnnotationInfo();
-		if (docElement != null) {
-			processDocumentation(docElement, info);
-		}
-		NodeList annoElementList = (NodeList) elem
-				.getElementsByTagNameNS( "*", "appinfo");
-		org.w3c.dom.Element node = (org.w3c.dom.Element) annoElementList
-				.item(0);
-		if (node != null) {
-			for (Node childNode = node.getFirstChild(); childNode != null;) {
-				Node nextChild = childNode.getNextSibling();
-				if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-					String tagName = childNode.getNodeName();
-					AnnotationParser parser = getAnnotationParser(tagName);
-					if (parser != null) {
-						ParsedAnnotationTag parsedData = parser
-								.parseAnnotation((org.w3c.dom.Element) childNode);
-						info.addParsedAnnotationTag(tagName, parsedData);
+		if(anno!=null){
+			org.w3c.dom.Element docElement = (org.w3c.dom.Element) getFirstChildElementWithTagName(anno,"documentation");
+			if (docElement != null) {
+				processDocumentation(docElement, info);
+			}
+			org.w3c.dom.Element node = (org.w3c.dom.Element)  getFirstChildElementWithTagName(anno,"appinfo");
+			if (node != null) {
+				for (Node childNode = node.getFirstChild(); childNode != null;) {
+					Node nextChild = childNode.getNextSibling();
+					if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+						String tagName = childNode.getNodeName();
+						AnnotationParser parser = getAnnotationParser(tagName);
+						if (parser != null) {
+							ParsedAnnotationTag parsedData = parser
+									.parseAnnotation((org.w3c.dom.Element) childNode);
+							info.addParsedAnnotationTag(tagName, parsedData);
+						}
 					}
+					childNode = nextChild;
 				}
-				childNode = nextChild;
 			}
 		}
 		logger.log(Level.FINER, "Exiting parseAnnotation method in XSDParser",
 				info);
 		return info;
 	}
-
+	private Node getFirstChildElementWithTagName(org.w3c.dom.Element element,
+			String withTagName) {
+		for (Node childNode = element.getFirstChild(); childNode != null;) {
+			Node nextChild = childNode.getNextSibling();
+			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+				String tagName = ((org.w3c.dom.Element)childNode).getLocalName();
+				if(tagName.equals(withTagName)){
+					return childNode;
+				}
+			}
+			childNode = nextChild;
+		}
+		return null;
+	}
 	protected void processDocumentation(org.w3c.dom.Element docElement,
 			ParsedAnnotationInfo info) {
 		String documentation="";

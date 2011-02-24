@@ -74,6 +74,10 @@
 		    		<name>indexHeader</name>
 		    		<value>IndexFilesHeader.hdr</value>
 		    	</parameter>
+		    	<parameter>
+		    		<name>typesUseHeader</name>
+		    		<value>TypesUseHeader.hdr</value>
+		    	</parameter>
 			</parameters>
 		</outputgenerator>	
 	</outputgenerators>	

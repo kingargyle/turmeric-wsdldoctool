@@ -7,7 +7,7 @@
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
 	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1"><B>Use</B></FONT>&nbsp;</TD>
-	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">     <A HREF="${TREE_REL_PATH}/Tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="${TREE_REL_PATH}/Tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
 	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="${REL_PATH}/index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
 	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="${REL_PATH}/DeprecatedObjects.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   </TR>
@@ -20,5 +20,5 @@
 </TABLE>
 <a name="skip-navbar_top"></a>
 <!-- ========= END OF TOP NAVBAR ========= -->
-${KEY_LINKS}
+
 <hr>
