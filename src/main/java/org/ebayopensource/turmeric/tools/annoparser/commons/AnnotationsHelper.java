@@ -212,8 +212,12 @@ public class AnnotationsHelper {
 		if (!Utils.isEmpty(deprVersion)) {
 			result=new StringBuffer();
 			result.append("Deprecated Version: " + deprVersion+Constants.HTML_BR);
-			result.append("Deprecated Details: " + deprDetails+Constants.HTML_BR);
-			result.append("Use Instead: " + useInstead+Constants.HTML_BR);
+			if (!Utils.isEmpty(deprDetails)) {
+				result.append("Deprecated Details: " + deprDetails+Constants.HTML_BR);
+			}
+			if (!Utils.isEmpty(useInstead)) {
+				result.append("Use Instead: " + useInstead+Constants.HTML_BR);
+			}
 		}
 		return result;
 	}
