@@ -236,8 +236,12 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		root.setLevel(0);
 		for (ComplexType type : complexTypes) {
 			Node node = new Node();
-			node.setName(type.getPackageName() + "." + type.getName());
-			node.setOriginalParent(type.getPackageName() + "." + type.getParentType());
+			String packageName=type.getPackageName();
+			if (packageName == null) {
+				packageName = "/DefaultDomain";
+			}
+			node.setName(packageName + "." + type.getName());
+			node.setOriginalParent(packageName + "." + type.getParentType());
 
 			/*
 			 * if
@@ -245,7 +249,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			 * )) { System.out.println(); }
 			 */
 
-			getParent(root, node, type.getPackageName() + "." + type.getParentType());
+			getParent(root, node, packageName + "." + type.getParentType());
 			if (!node.isNodeAdded()) {
 				if (root.getChildren() == null) {
 					root.setChildren(new TreeSet<Node>());
