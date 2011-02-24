@@ -9,6 +9,7 @@
 	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1"><B>Use</B></FONT>&nbsp;</TD>
 	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1"><B>Tree</B></FONT>&nbsp;</TD>
 	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="${REL_PATH}/index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+	  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="${REL_PATH}/DeprecatedObjects.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   </TR>
 </TABLE>
 </TD>

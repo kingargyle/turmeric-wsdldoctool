@@ -108,14 +108,16 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(wsdlDoc.getServiceName(),
 					packageName));
-			buildHeader(html, false, false, null,getRelativePath(currentPackageName),false,null);
+			buildHeader(html, false, false, null,
+					getRelativePath(currentPackageName), false, null);
 			html.append(Constants.HTML_BR);
 			buildPortType(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationTable(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationDetails(html, portType, wsdlDoc);
-			addFooter(html, false, false, null,getRelativePath(currentPackageName),false,null);
+			addFooter(html, false, false, null,
+					getRelativePath(currentPackageName), false, null);
 			html.append(HtmlUtils.getEndTags());
 			String outputDir = getCurrentOutputDir() + File.separator;
 			writeFile(html, outputDir + File.separator + packageName, wsdlDoc
@@ -123,25 +125,29 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					+ Constants.DOT_HTML);
 		}
 		writeOrphanTypes(wsdlDoc);
+		createTypeIndex(wsdlDoc);
 		addPackageToDocMap(packageName, wsdlDoc);
 		addPackageToServiceMap(packageName, wsdlDoc.getServiceName());
 		processedTypes = new ArrayList<AbstractType>();
 		logger.exiting("JavaDocOutputGenerator", "handleWsdlDoc", new Object[] {
 				wsdlDoc, outputGenaratorParam });
 	}
-	private void writeOrphanTypes(WSDLDocInterface wsdlDoc) throws OutputFormatterException{
-		for(ComplexType cType:wsdlDoc.getAllComplexTypes()){
-			if(!processedTypes.contains(cType)){
+
+	private void writeOrphanTypes(WSDLDocInterface wsdlDoc)
+			throws OutputFormatterException {
+		for (ComplexType cType : wsdlDoc.getAllComplexTypes()) {
+			if (!processedTypes.contains(cType)) {
 				writeComplexTypeFile(wsdlDoc, cType, cType.getName());
 			}
 		}
-		for(SimpleType cType:wsdlDoc.getAllSimpleTypes()){
-			if(!processedTypes.contains(cType)){
+		for (SimpleType cType : wsdlDoc.getAllSimpleTypes()) {
+			if (!processedTypes.contains(cType)) {
 				writeSimpleTypeFile(wsdlDoc, cType);
 			}
 		}
-		
+
 	}
+
 	private void writePackageTree(List<XSDDocInterface> wsdlDoc)
 			throws OutputFormatterException {
 		Node root = getTypesInTree(wsdlDoc);
@@ -313,10 +319,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			throws OutputFormatterException {
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(Constants.ALL_CLASSES, null));
-		buildHeader(html,false,false,null,".",true,null);
+		buildHeader(html, false, false, null, ".", true, null);
 		html.append(getTextInDiv("WSDL API specification", "pageHeading"));
 		html.append(Constants.HTML_BR);
-		addFooter(html,false,false,null,".",true,null);
+		addFooter(html, false, false, null, ".", true, null);
 		html.append(HtmlUtils.getEndTags());
 		writeFile(html, getCurrentOutputDir(), Constants.PACKAGES.toLowerCase()
 				+ Constants.INDEX + Constants.DOT_HTML);
@@ -332,14 +338,14 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append("<html><frameset cols=\"20%,80%\">");
 		html.append("<frameset rows=\"30%,70%\">");
 		html.append("<frame src='" + Constants.PACKAGES.toLowerCase()
-				+ Constants.DOT_HTML + "'/>");
+				+ Constants.DOT_HTML + "' title=''/>");
 		html.append("<frame src='" + Constants.ALLCLASSES.toLowerCase()
 				+ Constants.DOT_HTML + "' name='" + Constants.CLASSESFRAME
-				+ "'/>");
+				+ "' title=''/>");
 		html.append("</frameset>");
 		html.append("<frame src='" + Constants.PACKAGES.toLowerCase()
 				+ Constants.INDEX + Constants.DOT_HTML + "' name='"
-				+ Constants.CLASSFRAME + "'/>");
+				+ Constants.CLASSFRAME + "' title=''/>");
 		html.append("</frameset></html>");
 		writeFile(html, getCurrentOutputDir(), Constants.INDEX
 				+ Constants.DOT_HTML);
@@ -356,13 +362,16 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			List<String> list = packageServicesMap.get(packageName);
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(Constants.CLASSES, packageName));
+			html
+					.append("<script language='JavaScript'>function go(targetUrl1){parent.classframe.location=targetUrl1;}</script>");
 			html.append(Constants.HTML_BOLD_START + Constants.CLASSES
 					+ Constants.HTML_BOLD_END + Constants.HTML_BR);
 			for (String className : list) {
-				html.append(HtmlUtils.getAnchorTag(className, className
-						+ Constants.DOT_HTML, null, className,
-						Constants.CLASSFRAME, null)
-						+ Constants.HTML_BR);
+				html
+						.append("<a href='" + className
+								+ "TypeIndex.html' onclick='go(\"" + className
+								+ ".html\")'>" + className + "</a>"
+								+ Constants.HTML_BR);
 			}
 			html.append(HtmlUtils.getEndTags());
 			writeFile(html, getCurrentOutputDir() + packageName,
@@ -379,21 +388,56 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		Set<String> set = packageServicesMap.keySet();
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(Constants.ALL_CLASSES, null));
+		html
+				.append("<script language='JavaScript'>function go(targetUrl){parent."
+						+ Constants.CLASSFRAME
+						+ ".location=targetUrl;}</script>");
 		html.append(Constants.HTML_BOLD_START + Constants.ALL_CLASSES
 				+ Constants.HTML_BOLD_END + Constants.HTML_BR);
 		for (String packageName : set) {
 
 			List<String> list = packageServicesMap.get(packageName);
 			for (String className : list) {
-				html.append(HtmlUtils.getAnchorTag(className, packageName
-						+ SEPARATOR + className + Constants.DOT_HTML, null,
-						className, Constants.CLASSFRAME, null)
-						+ Constants.HTML_BR);
+				html.append("<a href='" + packageName + SEPARATOR + className
+						+ "TypeIndex.html' onclick='go(\"" + packageName
+						+ SEPARATOR + className + ".html\")'>" + className
+						+ "</a>" + Constants.HTML_BR);
 			}
 		}
 		html.append(HtmlUtils.getEndTags());
 		writeFile(html, getCurrentOutputDir(), Constants.ALLCLASSES
 				+ Constants.DOT_HTML);
+	}
+
+	private void createTypeIndex(WSDLDocInterface doc)
+			throws OutputFormatterException {
+
+		StringBuffer html = new StringBuffer();
+		html.append(HtmlUtils.getStartTags("All Types", null));
+		html
+				.append("<script language='JavaScript'>function go(targetUrl){parent."
+						+ Constants.CLASSFRAME
+						+ ".location=targetUrl;}</script>");
+		html.append(Constants.HTML_BOLD_START + "Complex Types"
+				+ Constants.HTML_BOLD_END + Constants.HTML_BR);
+		for (ComplexType node : doc.getAllComplexTypes()) {
+			html.append(HtmlUtils.getAnchorTag("", "types/" + node.getName()
+					+ Constants.DOT_HTML, "", node.getName(),
+					Constants.CLASSFRAME, null)
+					+ Constants.HTML_BR);
+		}
+		html.append(Constants.HTML_BOLD_START + "Simple Types"
+				+ Constants.HTML_BOLD_END + Constants.HTML_BR);
+		for (SimpleType node : doc.getAllSimpleTypes()) {
+			html.append(HtmlUtils.getAnchorTag("", "types/" + node.getName()
+					+ Constants.DOT_HTML, "", node.getName(),
+					Constants.CLASSFRAME, null)
+					+ Constants.HTML_BR);
+		}
+		html.append(HtmlUtils.getEndTags());
+		writeFile(html, getCurrentOutputDir() + currentPackageName, doc
+				.getServiceName()
+				+ "TypeIndex" + Constants.DOT_HTML);
 	}
 
 	/**
@@ -418,20 +462,22 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		writeFile(html, getCurrentOutputDir(), Constants.PACKAGES.toLowerCase()
 				+ Constants.DOT_HTML);
 	}
-	private String getRelativePath(String currLocFromBase){
-		String relPath="";
-		
-		if(currLocFromBase!=null){
-			if(currLocFromBase.startsWith("/")){
-				currLocFromBase=currLocFromBase.substring(1);
+
+	private String getRelativePath(String currLocFromBase) {
+		String relPath = "";
+
+		if (currLocFromBase != null) {
+			if (currLocFromBase.startsWith("/")) {
+				currLocFromBase = currLocFromBase.substring(1);
 			}
-			String [] folders=currLocFromBase.split("/");
-			for(String folder:folders){
-				relPath=relPath+"../";
+			String[] folders = currLocFromBase.split("/");
+			for (int i=0;i<folders.length;i++) {
+				relPath = relPath + "../";
 			}
 		}
 		return relPath;
 	}
+
 	/**
 	 * Write complex type file.
 	 * 
@@ -463,7 +509,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
 					+ TYPES));
-			buildHeader(html, true, true, type.getName(),getRelativePath(currentPackageName +TYPES),false,null);
+			buildHeader(html, true, true, type.getName(),
+					getRelativePath(currentPackageName + TYPES), false, null);
 			html.append(getTextInDiv("Type : " + typeName, "JavadocHeading"));
 
 			html.append(Constants.HTML_HR);
@@ -568,7 +615,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				}
 			}
 
-			addFooter(html, true, true, type.getName(),getRelativePath(currentPackageName +TYPES),false,null);
+			addFooter(html, true, true, type.getName(),
+					getRelativePath(currentPackageName + TYPES), false, null);
 			writeFile(html, currentTypesFolderPath, typeName
 					+ Constants.DOT_HTML);
 		}
@@ -610,8 +658,6 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append(getTableRowTagWithStyle("JavadocTableTr"));
 			html.append(getTableDataTagWithStyle("JavadocTableTd"));
 			String typeCName = getCTypeTypeName(element.getType());
-			html.append(HtmlUtils.getAnchorTag(element.getName(), null, null,
-					null));
 			if (doc.searchCType(typeCName) != null
 					|| doc.searchSimpleType(typeCName) != null) {
 
@@ -696,7 +742,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
 					+ TYPES));
-			buildHeader(html, true, false, type.getName(),getRelativePath(currentPackageName +TYPES),false,null);
+			buildHeader(html, true, false, type.getName(),
+					getRelativePath(currentPackageName + TYPES), false, null);
 			String parentType = type.getBase();
 			if (!Utils.isEmpty(parentType)) {
 				parentType = Utils.removeNameSpace(parentType);
@@ -745,8 +792,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				for (EnumElement enumElement : enumElements) {
 					html.append(getTableRowTagWithStyle("JavadocTableTr"));
 					html.append(getTableDataTagWithStyle("JavadocTableTd"));
-					html.append(HtmlUtils.getAnchorTag(enumElement.getValue(), null, null,
-							null));
+					html.append(HtmlUtils.getAnchorTag(enumElement.getValue(),
+							null, null, null));
 					html.append(enumElement.getValue());
 					html.append(Constants.HTML_TABLE_TD_END);
 					html.append(getTableDataTagWithStyle("JavadocTableTd"));
@@ -768,7 +815,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 				html.append(Constants.HTML_TABLE_END);
 			}
-			addFooter(html, true, false, type.getName(),getRelativePath(currentPackageName +TYPES),false,null);
+			addFooter(html, true, false, type.getName(),
+					getRelativePath(currentPackageName + TYPES), false, null);
 			writeFile(html, currentTypesFolderPath, type.getName()
 					+ Constants.DOT_HTML);
 
@@ -924,21 +972,25 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @throws OutputFormatterException
 	 */
 	private void buildHeader(StringBuffer html, boolean isType,
-			boolean isComplex, String typeName,String relPath,boolean isIndex,String keyLinks) throws OutputFormatterException {
+			boolean isComplex, String typeName, String relPath,
+			boolean isIndex, String keyLinks) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "buildHeader", html);
-		String header=getFooterInformation(isType, isComplex, typeName, relPath, isIndex, keyLinks);
+		String header = getFooterInformation(isType, isComplex, typeName,
+				relPath, isIndex, keyLinks);
 		html.append(header);
 		logger.exiting("JavaDocOutputGenerator", "buildHeader", html);
 	}
-	protected String getHeaderFileName(boolean isType,boolean isComplex,boolean isIndex){
-		if(isIndex){
+
+	protected String getHeaderFileName(boolean isType, boolean isComplex,
+			boolean isIndex) {
+		if (isIndex) {
 			return "indexHeader";
-		}else if(isType){
-			return (isComplex ? "ComplexTypeHeader"
-					: "SimpleTypeHeader");
+		} else if (isType) {
+			return (isComplex ? "ComplexTypeHeader" : "SimpleTypeHeader");
 		}
 		return "operationHeader";
 	}
+
 	/**
 	 * Adds the footer.
 	 * 
@@ -947,10 +999,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @throws OutputFormatterException
 	 */
 	private void addFooter(StringBuffer html, boolean isType,
-			boolean isComplexType, String typeName,String relPath,boolean isIndex,String keyLinks)
-			throws OutputFormatterException {
+			boolean isComplexType, String typeName, String relPath,
+			boolean isIndex, String keyLinks) throws OutputFormatterException {
 		logger.entering("JavaDocOutputGenerator", "addFooter", html);
-		String content = getFooterInformation(isType, isComplexType, typeName,relPath,isIndex,keyLinks);
+		String content = getFooterInformation(isType, isComplexType, typeName,
+				relPath, isIndex, keyLinks);
 		html.append(getTextInDiv(content, "footer"));
 		html.append(HtmlUtils.getEndTags());
 		logger.exiting("JavaDocOutputGenerator", "addFooter", html);
@@ -964,9 +1017,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @throws OutputFormatterException
 	 */
 	protected String getFooterInformation(boolean isType, boolean isComplex,
-			String typeName,String relPath,boolean isIndex,String keyLinks) throws OutputFormatterException {
+			String typeName, String relPath, boolean isIndex, String keyLinks)
+			throws OutputFormatterException {
 
-	String parameterName = getHeaderFileName(isType,isComplex,isIndex);
+		String parameterName = getHeaderFileName(isType, isComplex, isIndex);
 		String headerFile = outputGenaratorParam.getParameters().get(
 				parameterName);
 		if (headerFile != null) {
@@ -978,9 +1032,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				header = header.replaceAll("\\$\\{VERSION\\}", version);
 				header = header.replaceAll("\\$\\{TYPE_NAME\\}", typeName);
 				header = header.replaceAll("\\$\\{REL_PATH\\}", relPath);
-				if(isIndex){
-					if(keyLinks==null){
-						keyLinks="";
+				if (isIndex) {
+					if (keyLinks == null) {
+						keyLinks = "";
 					}
 					header = header.replaceAll("\\$\\{KEY_LINKS\\}", keyLinks);
 				}
@@ -1811,105 +1865,111 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				.entrySet()) {
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags("index-" + i, "../"));
-			buildHeader(html,false,false,null,"..",true,keyLinks.toString());
+			buildHeader(html, false, false, null, "..", true, keyLinks
+					.toString());
 			html.append("<h2><b>" + entry.getKey() + "</b></h2><dl>");
 			List<IndexerBaseDataObject> data = entry.getValue()
 					.getDataObjects();
 			Collections.sort(data);
 			for (IndexerBaseDataObject dataObj : data) {
-				String baseHref = "../"+dataObj.getPackageName();
-				String typeDesc = "";
-				String baseTitleDesc = "";
-				String baseName = "";
-				String baseDoc = "";
-				String inPageHref=dataObj.getBaseName();
-				if (dataObj instanceof IndexerOperationHolder) {
-					baseHref = baseHref + SEPARATOR + dataObj.getServiceName()
-							+ Constants.DOT_HTML;
-					typeDesc = "Operation in ";
-					baseName = dataObj.getServiceName();
-					baseTitleDesc = typeDesc + baseName;
-					IndexerOperationHolder opHolder = (IndexerOperationHolder) dataObj;
-					if (opHolder.getOperation().getAnnotations() != null
-							&& opHolder.getOperation().getAnnotations()
-									.getDocumentation() != null) {
-						baseDoc = opHolder.getOperation().getAnnotations()
-								.getDocumentation();
-					}
-				}
-				if (dataObj instanceof IndexerElementHolder) {
-					IndexerElementHolder elemHolder = (IndexerElementHolder) dataObj;
-					if (elemHolder.isReqResp()) {
-						baseHref = baseHref + SEPARATOR + dataObj.getServiceName()
-								+ Constants.DOT_HTML;
-						if (elemHolder.isInput()) {
-							typeDesc = "Input for Operation in ";
-						} else {
-							typeDesc = "Output for Operation in ";
-						}
+				if (!(dataObj instanceof IndexerType)) {
+					String baseHref = "../" + dataObj.getPackageName();
+					String typeDesc = "";
+					String baseTitleDesc = "";
+					String baseName = "";
+					String baseDoc = "";
+					String inPageHref = dataObj.getBaseName();
+					if (dataObj instanceof IndexerOperationHolder) {
+						baseHref = baseHref + SEPARATOR
+								+ dataObj.getServiceName() + Constants.DOT_HTML;
+						typeDesc = "Operation in ";
 						baseName = dataObj.getServiceName();
 						baseTitleDesc = typeDesc + baseName;
-						inPageHref=elemHolder.getOperationHolder().getBaseName();
-					} else {
-						baseHref = baseHref
-								+ TYPES
-								+ elemHolder.getElement()
-										.getContainerComplexType().getName()
-								+ Constants.DOT_HTML;
-						if (elemHolder.getElement() instanceof Element) {
-							typeDesc = "Field in Complex Type ";
-						} else {
-							typeDesc = "Attribute in Complex Type ";
+						IndexerOperationHolder opHolder = (IndexerOperationHolder) dataObj;
+						if (opHolder.getOperation().getAnnotations() != null
+								&& opHolder.getOperation().getAnnotations()
+										.getDocumentation() != null) {
+							baseDoc = opHolder.getOperation().getAnnotations()
+									.getDocumentation();
 						}
-						baseName = elemHolder.getElement()
-								.getContainerComplexType().getName();
-						baseTitleDesc = typeDesc + baseName;
 					}
-					if (elemHolder.getElement().getAnnotationInfo() != null
-							&& elemHolder.getElement().getAnnotationInfo()
-									.getDocumentation() != null) {
-						baseDoc = elemHolder.getElement().getAnnotationInfo()
-								.getDocumentation();
+					if (dataObj instanceof IndexerElementHolder) {
+						IndexerElementHolder elemHolder = (IndexerElementHolder) dataObj;
+						if (elemHolder.isReqResp()) {
+							baseHref = baseHref + SEPARATOR
+									+ dataObj.getServiceName()
+									+ Constants.DOT_HTML;
+							if (elemHolder.isInput()) {
+								typeDesc = "Input for Operation in ";
+							} else {
+								typeDesc = "Output for Operation in ";
+							}
+							baseName = dataObj.getServiceName();
+							baseTitleDesc = typeDesc + baseName;
+							inPageHref = elemHolder.getOperationHolder()
+									.getBaseName();
+						} else {
+							baseHref = baseHref
+									+ TYPES
+									+ elemHolder.getElement()
+											.getContainerComplexType()
+											.getName() + Constants.DOT_HTML;
+							if (elemHolder.getElement() instanceof Element) {
+								typeDesc = "Field in Complex Type ";
+							} else {
+								typeDesc = "Attribute in Complex Type ";
+							}
+							baseName = elemHolder.getElement()
+									.getContainerComplexType().getName();
+							baseTitleDesc = typeDesc + baseName;
+						}
+						if (elemHolder.getElement().getAnnotationInfo() != null
+								&& elemHolder.getElement().getAnnotationInfo()
+										.getDocumentation() != null) {
+							baseDoc = elemHolder.getElement()
+									.getAnnotationInfo().getDocumentation();
+						}
 					}
-				}
-				if (dataObj instanceof IndexerEnumValueElements) {
-					IndexerEnumValueElements elemHolder = (IndexerEnumValueElements) dataObj;
-					baseHref = baseHref
-							+ TYPES
-							+ elemHolder.getEnumElem().getType()+ Constants.DOT_HTML;
-					
-					typeDesc = "Enumeration in Simple Type ";
-					baseName = elemHolder.getEnumElem().getType();
-					baseTitleDesc = typeDesc + baseName;
+					if (dataObj instanceof IndexerEnumValueElements) {
+						IndexerEnumValueElements elemHolder = (IndexerEnumValueElements) dataObj;
+						baseHref = baseHref + TYPES
+								+ elemHolder.getEnumElem().getType()
+								+ Constants.DOT_HTML;
 
-					if (elemHolder.getEnumElem().getAnnotations() != null
-							&& elemHolder.getEnumElem().getAnnotations()
-									.getDocumentation() != null) {
-						baseDoc = elemHolder.getEnumElem().getAnnotations()
-								.getDocumentation();
+						typeDesc = "Enumeration in Simple Type ";
+						baseName = elemHolder.getEnumElem().getType();
+						baseTitleDesc = typeDesc + baseName;
+
+						if (elemHolder.getEnumElem().getAnnotations() != null
+								&& elemHolder.getEnumElem().getAnnotations()
+										.getDocumentation() != null) {
+							baseDoc = elemHolder.getEnumElem().getAnnotations()
+									.getDocumentation();
+						}
 					}
+					html.append("<dt><a href='" + baseHref + "#" + inPageHref
+							+ "'><b>" + dataObj.getBaseName() + "</b></a> -"
+							+ typeDesc + "<a href='" + baseHref + "' title='"
+							+ baseTitleDesc + "'>" + baseName + "</a></dt><dd>"
+							+ baseDoc + "</dd>");
 				}
-				html
-						.append("<dt><a href='" + baseHref + "#"
-								+ inPageHref + "'><b>"
-								+ dataObj.getBaseName() + "</b></a> -"
-								+ typeDesc + "<a href='" + baseHref
-								+ "' title='" + baseTitleDesc + "'>" + baseName
-								+ "</a></dt><dd>" + baseDoc + "</dd>");
 			}
 			html.append("</dl>");
-			addFooter(html,false,false,null,"..",true,keyLinks.toString());
+			addFooter(html, false, false, null, "..", true, keyLinks.toString());
 			html.append(HtmlUtils.getEndTags());
-			writeFile(html, getCurrentOutputDir()+"index-files", "index-" + i + ".html");
+			writeFile(html, getCurrentOutputDir() + "index-files", "index-" + i
+					+ ".html");
 			i = i + 1;
 		}
+		createDeprecationFile(completeMap);
 	}
 
 	private StringBuffer getKeyLinks(Map<String, IndexerDataObject> completeMap) {
 		StringBuffer keyLinks = new StringBuffer();
 		int i = 1;
 		for (String str : completeMap.keySet()) {
-			keyLinks.append("<a href='index-" + i + ".html'>" + str + "</a>&nbsp;");
+			keyLinks.append("<a href='index-" + i + ".html'>" + str
+					+ "</a>&nbsp;");
 			i = i + 1;
 		}
 		return keyLinks;
@@ -1926,7 +1986,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				WSDLDocInterface wsdl = (WSDLDocInterface) doc;
 				for (ComplexType complexType : doc.getAllComplexTypes()) {
 					for (Element element : complexType.getChildElements()) {
-						if(element.getContainerComplexType()!=null && element.getContainerComplexType().getName().equals(complexType.getName())){
+						if (element.getContainerComplexType() != null
+								&& element.getContainerComplexType().getName()
+										.equals(complexType.getName())) {
 							addElementToIndexMap(completeMap, element, wsdl
 									.getServiceName(), entry.getKey());
 						}
@@ -1938,6 +2000,16 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 									.getServiceName(), entry.getKey());
 						}
 					}
+					IndexerType type = new IndexerType();
+					type.setServiceName(wsdl.getServiceName());
+					type.setPackageName(entry.getKey());
+					type.setType(complexType);
+				}
+				for (SimpleType simpleType : doc.getAllSimpleTypes()) {
+					IndexerType type = new IndexerType();
+					type.setServiceName(wsdl.getServiceName());
+					type.setPackageName(entry.getKey());
+					type.setType(simpleType);
 				}
 
 				for (OperationHolder oph : wsdl.getAllOperations()) {
@@ -2042,6 +2114,254 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			firstChar = String.valueOf(ch).toUpperCase();
 		}
 		return firstChar;
+	}
+
+	private void createDeprecationFile(
+			Map<String, IndexerDataObject> completeMap)
+			throws OutputFormatterException {
+		Map<IndexerType, String> deprecatedTypes = new TreeMap<IndexerType, String>();
+		Map<IndexerElementHolder, String> deprecatedElements = new TreeMap<IndexerElementHolder, String>();
+		Map<IndexerOperationHolder, String> deprecatedOperations = new TreeMap<IndexerOperationHolder, String>();
+		Map<IndexerEnumValueElements, String> deprecatedEnums = new TreeMap<IndexerEnumValueElements, String>();
+		for (Map.Entry<String, IndexerDataObject> entry : completeMap
+				.entrySet()) {
+			List<IndexerBaseDataObject> data = entry.getValue()
+					.getDataObjects();
+			Collections.sort(data);
+			for (IndexerBaseDataObject dataObj : data) {
+				if (dataObj instanceof IndexerType) {
+					StringBuffer depreDetails = AnnotationsHelper
+							.processDeprication(((IndexerType) dataObj)
+									.getType().getAnnotations());
+					if (depreDetails != null) {
+						deprecatedTypes.put(((IndexerType) dataObj),
+								depreDetails.toString());
+					}
+				}
+				if (dataObj instanceof IndexerElementHolder) {
+					StringBuffer depreDetails = AnnotationsHelper
+							.processDeprication(((IndexerElementHolder) dataObj)
+									.getElement().getAnnotationInfo());
+					if (depreDetails != null) {
+						deprecatedElements.put(
+								((IndexerElementHolder) dataObj), depreDetails
+										.toString());
+					}
+				}
+				if (dataObj instanceof IndexerOperationHolder) {
+					StringBuffer depreDetails = AnnotationsHelper
+							.processDeprication(((IndexerOperationHolder) dataObj)
+									.getOperation().getAnnotations());
+					if (depreDetails == null) {
+						OperationHolder oper = ((IndexerOperationHolder) dataObj)
+								.getOperation();
+						for (Element input : oper.getInputTypes()) {
+							depreDetails = AnnotationsHelper
+									.processDeprication(input
+											.getAnnotationInfo());
+						}
+						if (depreDetails == null) {
+							for (Element input : oper.getOutputTypes()) {
+								depreDetails = AnnotationsHelper
+										.processDeprication(input
+												.getAnnotationInfo());
+							}
+						}
+					}
+					if (depreDetails != null) {
+						deprecatedOperations.put(
+								((IndexerOperationHolder) dataObj),
+								depreDetails.toString());
+					}
+				}
+				if (dataObj instanceof IndexerEnumValueElements) {
+					StringBuffer depreDetails = AnnotationsHelper
+							.processDeprication(((IndexerEnumValueElements) dataObj)
+									.getEnumElem().getAnnotations());
+					if (depreDetails != null) {
+						deprecatedEnums.put(
+								((IndexerEnumValueElements) dataObj),
+								depreDetails.toString());
+					}
+				}
+			}
+		}
+		StringBuffer html = new StringBuffer();
+		html.append(HtmlUtils.getStartTags("Deprecation Details", null));
+		buildHeader(html, false, false, null, ".", true, null);
+		html.append(getTextInDiv("Deprecation Details", "pageHeading"));
+		html.append(Constants.HTML_BR);
+		if (!(deprecatedTypes.isEmpty() && deprecatedElements.isEmpty()
+				&& deprecatedEnums.isEmpty() && deprecatedOperations.isEmpty())) {
+			if (!deprecatedOperations.isEmpty()) {
+				html.append(getTableTagWithStyle("JavadocTable"));
+				html.append(getTableRowTagWithStyle("JavadocTableTr"));
+				html.append("<th class=\"JavadocTableHeaders\">");
+				html.append("Deprecated Operations");
+				html.append(Constants.HTML_TABLE_TH_END);
+				html.append(Constants.HTML_TABLE_TR_END);
+				for (Map.Entry<IndexerOperationHolder, String> entry : deprecatedOperations
+						.entrySet()) {
+					IndexerOperationHolder op = entry.getKey();
+					html.append(getTableRowTagWithStyle("JavadocTableTr"));
+					html.append(getTableDataTagWithStyle("JavadocTableTd"));
+
+					html
+							.append("<a href='"
+									+ op.getPackageName()
+									+ op.getBaseName()
+									+ Constants.DOT_HTML
+									+ "' title='Operation in "
+									+ op.getPackageName()
+									+ "'>"
+									+ op.getBaseName()
+									+ "</a>"
+									+ "<br>"
+									+ "<i>"
+									+ entry.getValue() + "</i>&nbsp;");
+					html.append(Constants.HTML_TABLE_TD_END);
+					html.append(Constants.HTML_TABLE_TR_END);
+				}
+
+			}
+			if (!deprecatedTypes.isEmpty()) {
+				html.append(getTableTagWithStyle("JavadocTable"));
+				html.append(getTableRowTagWithStyle("JavadocTableTr"));
+				html.append("<th class=\"JavadocTableHeaders\">");
+				html.append("Deprecated Types");
+				html.append(Constants.HTML_TABLE_TH_END);
+				html.append(Constants.HTML_TABLE_TR_END);
+				for (Map.Entry<IndexerType, String> entry : deprecatedTypes
+						.entrySet()) {
+					IndexerType op = entry.getKey();
+					html.append(getTableRowTagWithStyle("JavadocTableTr"));
+					html.append(getTableDataTagWithStyle("JavadocTableTd"));
+
+					html
+							.append("<a href='"
+									+ op.getPackageName()
+									+ "/types/"
+									+ op.getBaseName()
+									+ Constants.DOT_HTML
+									+ "' title='Type in "
+									+ op.getPackageName()
+									+ "'>"
+									+ op.getBaseName()
+									+ "</a>"
+									+ "<br>"
+									+ "<i>"
+									+ entry.getValue() + "</i>&nbsp;");
+					html.append(Constants.HTML_TABLE_TD_END);
+					html.append(Constants.HTML_TABLE_TR_END);
+				}
+			}
+
+			if (!deprecatedElements.isEmpty()) {
+				html.append(getTableTagWithStyle("JavadocTable"));
+				html.append(getTableRowTagWithStyle("JavadocTableTr"));
+				html.append("<th class=\"JavadocTableHeaders\">");
+				html.append("Deprecated Fields");
+				html.append(Constants.HTML_TABLE_TH_END);
+				html.append(Constants.HTML_TABLE_TR_END);
+				for (Map.Entry<IndexerElementHolder, String> entry : deprecatedElements
+						.entrySet()) {
+
+					IndexerElementHolder elemHolder = entry.getKey();
+					String baseHref = elemHolder.getPackageName();
+					String typeDesc = "";
+					String baseTitleDesc = "";
+					String baseName = "";
+					String inPageHref = elemHolder.getBaseName();
+					if (elemHolder.isReqResp()) {
+						baseHref = baseHref + SEPARATOR
+								+ elemHolder.getServiceName()
+								+ Constants.DOT_HTML;
+						if (elemHolder.isInput()) {
+							typeDesc = "Input for Operation in ";
+						} else {
+							typeDesc = "Output for Operation in ";
+						}
+						baseName = elemHolder.getServiceName();
+						baseTitleDesc = typeDesc + baseName;
+						inPageHref = elemHolder.getOperationHolder()
+								.getBaseName();
+					} else {
+						baseHref = baseHref
+								+ TYPES
+								+ elemHolder.getElement()
+										.getContainerComplexType().getName()
+								+ Constants.DOT_HTML;
+						if (elemHolder.getElement() instanceof Element) {
+							typeDesc = "Field in Complex Type ";
+						} else {
+							typeDesc = "Attribute in Complex Type ";
+						}
+						baseName = elemHolder.getElement()
+								.getContainerComplexType().getName();
+						baseTitleDesc = typeDesc + baseName;
+					}
+					html.append(getTableRowTagWithStyle("JavadocTableTr"));
+					html.append(getTableDataTagWithStyle("JavadocTableTd"));
+
+					html.append("<a href='" + baseHref + "#" + inPageHref
+							+ "'><b>" + elemHolder.getBaseName() + "</b></a> -"
+							+ typeDesc + "<a href='" + baseHref + "' title='"
+							+ baseTitleDesc + "'>" + baseName + "</a>");
+					html
+							.append("<br>"
+									+ "<i>"
+									+ entry.getValue() + "</i>&nbsp;");
+					html.append(Constants.HTML_TABLE_TD_END);
+					html.append(Constants.HTML_TABLE_TR_END);
+				}
+			}
+			if (!deprecatedEnums.isEmpty()) {
+				html.append(getTableTagWithStyle("JavadocTable"));
+				html.append(getTableRowTagWithStyle("JavadocTableTr"));
+				html.append("<th class=\"JavadocTableHeaders\">");
+				html.append("Deprecated Enumerations");
+				html.append(Constants.HTML_TABLE_TH_END);
+				html.append(Constants.HTML_TABLE_TR_END);
+
+				
+				for (Map.Entry<IndexerEnumValueElements, String> entry : deprecatedEnums
+						.entrySet()) {
+					html.append(getTableRowTagWithStyle("JavadocTableTr"));
+					html.append(getTableDataTagWithStyle("JavadocTableTd"));
+					IndexerEnumValueElements elemHolder = entry.getKey();
+					String baseHref = elemHolder.getPackageName();
+					String typeDesc = "";
+					String baseTitleDesc = "";
+					String baseName = "";
+					String inPageHref = elemHolder.getBaseName();
+					baseHref = baseHref + TYPES
+							+ elemHolder.getEnumElem().getType()
+							+ Constants.DOT_HTML;
+
+					typeDesc = "Enumeration in Simple Type ";
+					baseName = elemHolder.getEnumElem().getType();
+					baseTitleDesc = typeDesc + baseName;
+					html.append("<a href='" + baseHref + "#" + inPageHref
+							+ "'><b>" + elemHolder.getBaseName() + "</b></a> -"
+							+ typeDesc + "<a href='" + baseHref + "' title='"
+							+ baseTitleDesc + "'>" + baseName + "</a>");
+					html
+							.append("<br>"
+									+ "<i>"
+									+ entry.getValue() + "</i>");
+					html.append(Constants.HTML_TABLE_TD_END);
+					html.append(Constants.HTML_TABLE_TR_END);
+				}
+			}
+
+		} else {
+			html.append("<h2>None of the enitites are Deprecated</h2>");
+		}
+
+		addFooter(html, false, false, null, ".", true, null);
+		html.append(HtmlUtils.getEndTags());
+		writeFile(html, getCurrentOutputDir(), "DeprecatedObjects.html");
+
 	}
 
 	/*

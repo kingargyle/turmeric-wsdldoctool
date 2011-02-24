@@ -143,8 +143,8 @@ public interface Constants {
 	 String CALL_OUTPUT_TABLE_DESCRIPTION = "The box below lists all fields that might be returned in the response. To learn more about an individual field or its type, click its name in the box (or scroll down to find it in the table below the box).";
 	
 
-	 String HTML_BR = "<br>";
-	 String HTML_HR = "<hr>";
+	 String HTML_BR = "<br/>";
+	 String HTML_HR = "<hr/>";
 	 String HTML_TABLE_START_WITH_ATTRS = "<table {#}>";
 	 String HTML_TABLE_END = "</table>";
 	 String HTML_TABLE_TR_START_WITH_ATTRS = "<tr {#}>";
