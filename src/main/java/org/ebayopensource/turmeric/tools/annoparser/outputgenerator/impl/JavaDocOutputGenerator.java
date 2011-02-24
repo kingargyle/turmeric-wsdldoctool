@@ -167,7 +167,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	}
 
-	private void writePackageTree(List<XSDDocInterface> wsdlDoc)
+	private void writePackageTree(List<XSDDocInterface> wsdlDoc, String outputdir, boolean isAllPackages)
 			throws OutputFormatterException {
 		Node root = getTypesInTree(wsdlDoc);
 		StringBuffer html = new StringBuffer();
@@ -179,24 +179,27 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append(Constants.HTML_H3_START + "Complex Type Hierarchy"
 				+ Constants.HTML_H3_END);
 		html.append("<ul>");
-		writeTree(root, html);
+		writeTree(root, html, isAllPackages);
 		html.append("</ul>");
-		writeFile(html, getCurrentOutputDir() + File.separator
-				+ currentPackageName, "Tree" + Constants.DOT_HTML);
+		writeFile(html, outputdir, "Tree" + Constants.DOT_HTML);
 	}
 
-	private void writeTree(Node root, StringBuffer html) {
+	private void writeTree(Node root, StringBuffer html, boolean isAllPackages) {
 		Set<Node> children = root.getChildren();
 		if (children != null) {
 			html.append("<ul>");
 			for (Node node : children) {
 				if (node.isFlag()) {
 					html.append("<li type='circle'>\n");
-					html.append(HtmlUtils.getAnchorTag("", "types/"
-							+ node.getName() + Constants.DOT_HTML, "", node
-							.getName())
+					String nodeName = node.getName().substring(node.getName().lastIndexOf(".") + 1);
+					String tempDir = "";
+					if (isAllPackages) {
+						 tempDir = "." + node.getName().substring(0, node.getName().lastIndexOf(".")) + "/";
+					}
+					html.append(HtmlUtils.getAnchorTag("", tempDir + "types/"
+							+ nodeName + Constants.DOT_HTML, "", nodeName)
 							+ Constants.HTML_BR);
-					writeTree(node, html);
+					writeTree(node, html, isAllPackages);
 				}
 			}
 			if (children.size() != 0) {
@@ -220,8 +223,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		root.setLevel(0);
 		for (ComplexType type : complexTypes) {
 			Node node = new Node();
-			node.setName(type.getName());
-			node.setOriginalParent(type.getParentType());
+			node.setName(type.getPackageName() + "." + type.getName());
+			node.setOriginalParent(type.getPackageName() + "." + type.getParentType());
 
 			/*
 			 * if
@@ -229,7 +232,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			 * )) { System.out.println(); }
 			 */
 
-			getParent(root, node, type.getParentType());
+			getParent(root, node, type.getPackageName() + "." + type.getParentType());
 			if (!node.isNodeAdded()) {
 				if (root.getChildren() == null) {
 					root.setChildren(new TreeSet<Node>());
@@ -2096,11 +2099,23 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	}
 
 	public void createTreeFiles() throws OutputFormatterException {
+		List<XSDDocInterface> allPackages = new ArrayList<XSDDocInterface>();
 		for (Map.Entry<String, List<XSDDocInterface>> entry : packageDocMap
 				.entrySet()) {
 			currentPackageName = entry.getKey();
-			writePackageTree(entry.getValue());
+			List<XSDDocInterface> list = entry.getValue();
+			for (XSDDocInterface xsd : list) {
+				List<ComplexType> cTypes = xsd.getAllComplexTypes();
+				for (ComplexType cType : cTypes) {
+					cType.setPackageName(((WSDLDocInterface)xsd).getPackageName());
+				}
+			}
+			writePackageTree(list, getCurrentOutputDir() + File.separator
+					+ currentPackageName, false);
+			allPackages.addAll(entry.getValue());
 		}
+	
+		writePackageTree(allPackages, getCurrentOutputDir(), true);
 	}
 
 	private void createIndexFiles() throws OutputFormatterException {

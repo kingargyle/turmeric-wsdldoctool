@@ -43,6 +43,22 @@ public class ComplexType extends AbstractType implements
 	 */
 	private String parentType = null;
 
+	private String packageName = null;
+	
+	/**
+	 * @return the packageName
+	 */
+	public String getPackageName() {
+		return packageName;
+	}
+
+	/**
+	 * @param packageName the packageName to set
+	 */
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
+
 	/**
 	 * Gets the simple attribute content.
 	 *
