@@ -54,6 +54,7 @@
             <include>**/*.class</include>
             <include>**/Help.txt</include>
             <include>**/Configuration.xml</include>
+             <include>**/*.hdr</include>
             <include>**/style.css</include>
           </includes>
       
