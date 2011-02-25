@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author srengarajan
  */
-public class AbstractType {
+public class AbstractType implements Comparable<AbstractType>{
 
 	/**
 	 * type name 
@@ -111,6 +111,12 @@ public class AbstractType {
 	 */
 	public void setAnnotationInfo(ParsedAnnotationInfo annotations) {
 		this.annotations = annotations;
+	}
+
+	@Override
+	public int compareTo(AbstractType o) {
+		return this.getName().compareToIgnoreCase(
+					o.getName());
 	}
 
 }

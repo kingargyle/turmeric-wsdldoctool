@@ -19,8 +19,7 @@ import java.util.TreeSet;
  * @author srengarajan
  */
 
-public class ComplexType extends AbstractType implements
-		Comparable<ComplexType> {
+public class ComplexType extends AbstractType {
 
 	/**
      *  Direct children elements(type <Element>) of this ComplexType
@@ -160,13 +159,6 @@ public class ComplexType extends AbstractType implements
 		this.instanceElements = elements;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	public int compareTo(ComplexType object) {
-		return this.getName().toUpperCase().compareTo(
-				object.getName().toUpperCase());
-	}
 	
 	@Override
 	public String toString() {
