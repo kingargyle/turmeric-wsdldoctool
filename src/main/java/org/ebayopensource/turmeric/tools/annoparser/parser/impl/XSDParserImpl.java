@@ -579,14 +579,36 @@ public class XSDParserImpl implements XSDParser {
 		for (int i = 0; i < noOfDomElements; i++) {
 			org.w3c.dom.Element obj = (org.w3c.dom.Element) domElements.item(i);
 			String name = obj.getAttribute("name");
-			String type = obj.getAttribute("type");
-			String[] typeParts = type.split(":");
-			if (typeParts != null && typeParts.length > 1)
-				type = typeParts[1];
-			
 			Element elem = Context.getContext().getNewElement();
 			
 			elem.setName(name);
+			String type = obj.getAttribute("type");
+			if(!Utils.isEmpty(type)){
+				String[] typeParts = type.split(":");
+				if (typeParts != null && typeParts.length > 1){
+					type = typeParts[1];
+				}
+			}else{
+				NodeList nodes=obj.getElementsByTagNameNS("*", "complexType");
+				if(nodes!=null && nodes.getLength()>0){
+					org.w3c.dom.Element node=(org.w3c.dom.Element)nodes.item(0);
+					ComplexType cType=processComplexType(xsdDocument, node);
+					if(Utils.isEmpty(cType.getName())){
+						cType.setName(name+"Type");
+						List<Element> instances = (List<Element>) typeElementsMap.get(name);
+						if (instances != null) {
+							cType.setInstanceElements(instances);
+						}else{
+							instances = new ArrayList<Element>();
+							instances.add(elem);
+							cType.setInstanceElements(instances);
+						}
+					}
+					type=cType.getName();
+					xsdDocument.addComplexType(cType);
+				}
+			}
+			
 			elem.setType(type);
 			String prevComment=Utils.getPreviousComment(obj);
 			String nextComment=Utils.getNextComment(obj);
@@ -647,7 +669,7 @@ public class XSDParserImpl implements XSDParser {
 	 * @throws XsdDocException 
 	 */
 	private Set<Element> parseChildElements(ComplexType ctype,
-			NodeList ctypes, org.w3c.dom.Element element,
+			 org.w3c.dom.Element element,
 			XSDDocument xsdDocument) throws ParserException {
 		logger.log(Level.FINER,
 				"Entering parseChildElements method in XSDParser",
@@ -870,33 +892,38 @@ public class XSDParserImpl implements XSDParser {
 		for (int i = 0; i < noOfDomElements; i++) {
 			org.w3c.dom.Element obj = (org.w3c.dom.Element) ctypeElements
 					.item(i);
-			String name = obj.getAttribute("name");
-			ComplexType cType = Context.getContext().getNewComplexType();
-			cType.setName(name);
-			cType.setAnnotationInfo(parseAnnotation( obj));
-			NamedNodeMap nameNodeMap = obj.getAttributes();
-			int size = nameNodeMap.getLength();
-
-			for (int j = 0; j < size; j++) {
-				Attr attr = (Attr) nameNodeMap.item(j);
-				if (attr != null) {
-					Attribute attribute = new Attribute();
-					attribute.setName(attr.getName());
-					attribute.setValue(attr.getValue());
-					cType.getAttributes().add(attribute);
-				}
-			}
-			cType.setChildElements(this.parseChildElements( cType,
-					ctypeElements, obj, xsdDocument));
-			List<Element> instances = (List<Element>) typeElementsMap.get(name);
-			if (instances != null) {
-				cType.setInstanceElements(instances);
-			}
-			postProcessComplexType(cType, obj);
-			xsdDocument.addComplexType(cType);
+			xsdDocument.addComplexType(processComplexType(xsdDocument, obj));
 		}
 		logger.log(Level.FINER,
 				"Exiting parseComplexTypes method in XSDParser", xsdDocument);
+	}
+
+	private ComplexType processComplexType(XSDDocument xsdDocument,
+			org.w3c.dom.Element cTypeElem) throws ParserException {
+		String name = cTypeElem.getAttribute("name");
+		ComplexType cType = Context.getContext().getNewComplexType();
+		cType.setName(name);
+		cType.setAnnotationInfo(parseAnnotation( cTypeElem));
+		NamedNodeMap nameNodeMap = cTypeElem.getAttributes();
+		int size = nameNodeMap.getLength();
+
+		for (int j = 0; j < size; j++) {
+			Attr attr = (Attr) nameNodeMap.item(j);
+			if (attr != null) {
+				Attribute attribute = new Attribute();
+				attribute.setName(attr.getName());
+				attribute.setValue(attr.getValue());
+				cType.getAttributes().add(attribute);
+			}
+		}
+		cType.setChildElements(this.parseChildElements( cType,
+				 cTypeElem, xsdDocument));
+		List<Element> instances = (List<Element>) typeElementsMap.get(name);
+		if (instances != null) {
+			cType.setInstanceElements(instances);
+		}
+		postProcessComplexType(cType, cTypeElem);
+		return cType;
 	}
 
 	/**

@@ -187,9 +187,6 @@ public class WsdlParserImpl implements WsdlParser {
 
 					Output output = op.getOutput();
 					Input input = op.getInput();
-					
-				
-
 					Map inputParts = (input == null || input.getMessage() == null ) ? null : input
 							.getMessage().getParts();
 					Map outputParts = (output == null || output.getMessage() == null ) ? null : output
