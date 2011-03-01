@@ -116,7 +116,6 @@ public class AbstractType implements Comparable<AbstractType>{
 	@Override
 	public int compareTo(AbstractType o) {
 		return this.getName().compareToIgnoreCase(
-					o.getName());
+				o.getName());
 	}
-
 }
