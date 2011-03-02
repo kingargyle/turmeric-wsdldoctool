@@ -749,13 +749,15 @@ public class XSDParserImpl implements XSDParser {
 						
 						SimpleType simpleType=populateSimpleType(xsdDocument,elem,true);
 						if(Utils.isEmpty(simpleType.getName())){
-							simpleType.setName(name+"Type");
+							simpleType.setName(ctype.getName()+ name+"Type");
 							if(simpleType.getEnums()!=null){
 								for(EnumElement enumE:simpleType.getEnums()){
 									enumE.setType(simpleType.getName());
 								}
 							}
+							
 						}
+						xsdDocument.addSimpleType(simpleType);
 						attr.setType(simpleType.getName());
 						attr.setBaseType(simpleType.getName());
 					}
@@ -986,7 +988,16 @@ public class XSDParserImpl implements XSDParser {
 		// System.out.println("no. of simple types" + noOfDomElements);
 		for (int i = 0; i < noOfDomElements; i++) {
 			org.w3c.dom.Element obj = (org.w3c.dom.Element) domElements.item(i);
-			populateSimpleType(xsdDocument, obj,false);
+			SimpleType sType=populateSimpleType(xsdDocument, obj,false);
+				org.w3c.dom.Element parent = (org.w3c.dom.Element) obj
+				.getParentNode();
+				if(!parent.getTagName().endsWith(":attribute")){
+					if(Utils.isEmpty(sType.getName())){
+						sType.setName("SimpleType"+i);
+					}
+					xsdDocument.addSimpleType(sType);
+				}
+			
 		}
 		logger.log(Level.FINER, "Exiting parseSimpleTypes method in XSDParser",
 				xsdDocument);
@@ -1021,15 +1032,7 @@ public class XSDParserImpl implements XSDParser {
 		if (instances != null) {
 			sType.setInstanceElements(instances);
 		}
-		if(!fromAttribute){
-			org.w3c.dom.Element parent = (org.w3c.dom.Element) obj
-			.getParentNode();
-			if(!parent.getTagName().endsWith(":attribute")){
-				xsdDocument.addSimpleType(sType);
-			}
-		}else{
-			xsdDocument.addSimpleType(sType);
-		}
+		
 		postProcessSimpleType(sType,obj);
 		return sType;
 	}
