@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface;
+import org.ebayopensource.turmeric.tools.annoparser.config.ConfigurationReader;
 import org.ebayopensource.turmeric.tools.annoparser.context.Context;
 import org.ebayopensource.turmeric.tools.annoparser.customparser.impl.TestAnnoParserClass;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType;
@@ -47,6 +48,7 @@ public class WsdlParserTest {
 	@Before
 	public void setUp() throws Exception {
 		wsdlPath = this.getClass().getClassLoader().getResource("ebaySvc.wsdl").toExternalForm();
+		ConfigurationReader.loadDefaultConfiguration();
 		Context.getContext().addParser("maxLength",new TestAnnoParserClass());
 	}
 
