@@ -863,7 +863,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append("Name");
 		html.append(Constants.HTML_TABLE_TH_END);
 		html.append(Constants.HTML_TABLE_TR_END);
-
+		
 		for (Element element : elements) {
 			html.append(getTableRowTagWithStyle("JavadocTableTr"));
 			html.append(getTableDataTagWithStyle("JavadocTableTd"));

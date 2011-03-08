@@ -9,9 +9,9 @@
 package org.ebayopensource.turmeric.tools.annoparser.dataobjects;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * The Class ComplexType.
@@ -74,7 +74,7 @@ public class ComplexType extends AbstractType {
 	 */
 	public void addSimpleAttributeContent(AttributeElement simpleAttributeContent) {
 		if(this.simpleAttributeContent==null){
-			this.simpleAttributeContent=new TreeSet<AttributeElement>();
+			this.simpleAttributeContent=new LinkedHashSet<AttributeElement>();
 		}
 		this.simpleAttributeContent.add(simpleAttributeContent);
 	}
