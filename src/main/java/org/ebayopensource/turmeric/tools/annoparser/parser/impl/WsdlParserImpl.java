@@ -213,7 +213,13 @@ public class WsdlParserImpl implements WsdlParser {
 								List<Element> elements = ctype
 										.getInstanceElements();
 								if (elements != null){
-									opHolder.setInput(elements);
+									List<Element> inputs=new ArrayList<Element>();
+									for(Element insElem:elements){
+										if(insElem.getName().equals(elem.getName())){
+											inputs.add(insElem);
+										}
+									}
+									opHolder.setInput(inputs);
 								}
 							}
 
@@ -242,8 +248,16 @@ public class WsdlParserImpl implements WsdlParser {
 							if (ctype != null) {
 								List<Element> elements = ctype
 										.getInstanceElements();
-								if (elements != null)
-									opHolder.setOutput(elements);
+								if (elements != null){
+									List<Element> inputs=new ArrayList<Element>();
+									for(Element insElem:elements){
+										if(insElem.getName().equals(elem.getName())){
+											inputs.add(insElem);
+										}
+									}
+									opHolder.setOutput(inputs);
+								}
+									
 							}
 							if( elem != null )
 								this.addEntry(elem.getType(), opHolder);
