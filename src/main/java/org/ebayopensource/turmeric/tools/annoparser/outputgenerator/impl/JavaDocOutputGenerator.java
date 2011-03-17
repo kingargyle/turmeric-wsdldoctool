@@ -619,23 +619,55 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					}
 					html.append(HtmlUtils.getAnchorTag(element.getName(), null,
 							null, null));
-					if (doc.searchCType(typeCName) != null && !isRecursive) {
+					ComplexType cType=doc.searchCType(typeCName);
+					if ( cType!= null && !isRecursive) {
 						writeComplexTypeFile(doc, doc.searchCType(typeCName),
 								nodePath);
+						String typeVisName=
+							HtmlUtils.getAnchorTag(null, typeCName
+									+ Constants.DOT_HTML, typeCName,
+									typeCName);
+						StringBuffer attrParams = new StringBuffer();
+						if (!Utils.isEmpty(type.getParentType())) {
+							String baseType = Utils.removeNameSpace(type.getParentType());
+							if(doc.searchCType(baseType)==null && doc.searchSimpleType(baseType)==null ){
+								attrParams.append(baseType);
+							}else{
+								attrParams.append(HtmlUtils.getAnchorTag(null, baseType
+										+ Constants.DOT_HTML, baseType, baseType));
+							}
+							
+						}
+						if (attrParams.length() > 0) {
+							typeVisName += " ( " +attrParams+ " )";
+						}
 						html.append(getTextInSpan(element.getName()
 								+ "  : <b>"
-								+ HtmlUtils.getAnchorTag(null, typeCName
-										+ Constants.DOT_HTML, typeCName,
-										typeCName) + "</b>",
+								+ typeVisName + "</b>",
 								"javaDocMethodTypes"));
 					} else if (doc.searchSimpleType(typeCName) != null) {
+						SimpleType Stype=doc.searchSimpleType(typeCName);
 						writeSimpleTypeFile(doc, doc
 								.searchSimpleType(typeCName));
+						String typeVisName=
+							HtmlUtils.getAnchorTag(null, typeCName
+									+ Constants.DOT_HTML, typeCName,
+									typeCName);
+						String base = Utils.removeNameSpace(Stype.getBase());
+						if(!Utils.isEmpty(base)){
+							if(doc.searchCType(base)==null && doc.searchSimpleType(base)==null ){
+								typeVisName+=" ( "+base+" )";
+							}else{
+								typeVisName+=" ( "+ HtmlUtils.getAnchorTag(null,  base
+										+ Constants.DOT_HTML, base,
+										base) +" )";
+							}
+						}
 						html.append(getTextInSpan(element.getName()
 								+ "  : <b>"
 								+ HtmlUtils.getAnchorTag(null, typeCName
 										+ Constants.DOT_HTML, typeCName,
-										typeCName) + "</b>",
+										typeVisName) + "</b>",
 								"javaDocMethodTypes"));
 					} else {
 						html.append(getTextInSpan(element.getName() + "  : <b>"
@@ -661,11 +693,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					html.append(Constants.HTML_HR + Constants.HTML_BR);
 				}
 			}
-
-			
-			writeUseFile(doc, type,	parentPath);			
-
-
+			writeUseFile(doc, type);			
 			addFooter(html, replacementMap, "ComplexTypeHeader");
 
 			writeFile(html, currentTypesFolderPath, typeName
@@ -674,8 +702,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		logger.exiting("JavaDocOuputGenerator", "writeComplexTypeFile", html);
 	}
 	
-	private void writeUseFile(WSDLDocInterface doc, ComplexType type,
-			String parentPath) throws OutputFormatterException {
+	private void writeUseFile(WSDLDocInterface doc, AbstractType type) throws OutputFormatterException {
 		logger.entering("JavaDocOuputGenerator", "writeUseFile");
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(type.getName(), currentPackageName + "/types-use"));
@@ -1029,7 +1056,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 				html.append(Constants.HTML_TABLE_END);
 			}
-
+			writeUseFile(doc, type);
 			addFooter(html, replacementMap,"SimpleTypeHeader");
 
 			writeFile(html, currentTypesFolderPath, type.getName()
