@@ -771,12 +771,12 @@ public class XSDParserImpl implements XSDParser {
 						SimpleType simpleType=populateSimpleType(xsdDocument,elem,true);
 						if(Utils.isEmpty(simpleType.getName())){
 							simpleType.setName(ctype.getName()+ name+"Type");
-							if(simpleType.getEnums()!=null){
-								for(EnumElement enumE:simpleType.getEnums()){
-									enumE.setType(simpleType.getName());
-								}
+						}
+						if(simpleType.getEnums()!=null){
+							for(EnumElement enumE:simpleType.getEnums()){
+								enumE.setType(simpleType.getName());
+								xsdDocument.addEnum(enumE);
 							}
-							
 						}
 						xsdDocument.addSimpleType(simpleType);
 						attr.setType(simpleType.getName());
@@ -980,7 +980,6 @@ public class XSDParserImpl implements XSDParser {
 			elem.setAnnotations(parseAnnotation( obj));
 			elements.add(elem);
 			postProcessEnum(elem, obj);
-			xsdDocument.addEnum(elem);
 		}
 		logger.log(Level.FINER,
 				"Exiting parseEnumElements method in XSDParser", elements);
@@ -1016,8 +1015,15 @@ public class XSDParserImpl implements XSDParser {
 					if(Utils.isEmpty(sType.getName())){
 						sType.setName("SimpleType"+i);
 					}
+					if(sType.getEnums()!=null){
+						for(EnumElement enumE:sType.getEnums()){
+							enumE.setType(sType.getName());
+							xsdDocument.addEnum(enumE);
+						}
+					}
 					xsdDocument.addSimpleType(sType);
 				}
+				
 			
 		}
 		logger.log(Level.FINER, "Exiting parseSimpleTypes method in XSDParser",
