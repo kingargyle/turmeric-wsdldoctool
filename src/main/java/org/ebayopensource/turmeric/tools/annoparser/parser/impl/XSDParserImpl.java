@@ -218,7 +218,7 @@ public class XSDParserImpl implements XSDParser {
 			URL file = new URL(url);
 			Document doc = initialize(file);
 			xsdDocument.setDocumentURL(file);
-			mergeImportedXsd(doc, xsdDocument,"redefine");
+			
 			if (doc != null) {
 
 				this.visit(doc);
@@ -228,6 +228,7 @@ public class XSDParserImpl implements XSDParser {
 				this.parseAllNSSimpleTypes(doc, xsdDocument);
 				this.buildElementToTypeMap(xsdDocument);
 				mergeImportedXsd(doc, xsdDocument,"import");
+				mergeImportedXsd(doc, xsdDocument,"redefine");
 				handleAnonymous(doc, xsdDocument);
 			}
 		} catch (SAXException e) {
@@ -397,7 +398,27 @@ public class XSDParserImpl implements XSDParser {
 								}
 								for (ComplexType elem : parsedDocument
 										.getAllComplexTypes()) {
-									xsdDocument.addComplexType(elem);
+									ComplexType cType=xsdDocument.searchCType(elem.getName());
+									if(cType!=null && cType.getParentType()!=null && cType.getParentType().equals(elem.getName())){
+										if(cType.getChildElements()!=null){
+											cType.getChildElements().addAll(elem.getChildElements());
+										}else{
+											cType.setChildElements(elem.getChildElements());
+										}
+										if(cType.getAttributes()!=null){
+											cType.getAttributes().addAll(elem.getAttributes());
+										}else{
+											cType.setAttributes(elem.getAttributes());
+										}
+										if(cType.getInstanceElements()!=null){
+											cType.getInstanceElements().addAll(elem.getInstanceElements());
+										}else{
+											cType.setInstanceElements(elem.getInstanceElements());
+										}
+										cType.setParentType(null);
+									}else{
+										xsdDocument.addComplexType(elem);
+									}
 								}
 								for (SimpleType elem : parsedDocument
 										.getAllSimpleTypes()) {
