@@ -93,6 +93,11 @@ public class ConfigurationReader {
 				}
 			}
 		}
+		if(url == null){
+			throw new ConfigurationException(
+					"Failed to convert the " + path + "to URL/URI."
+							+ path + " is Not valid");
+		}
 		return url;
 	}
 	
