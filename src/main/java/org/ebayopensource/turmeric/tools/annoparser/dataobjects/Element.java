@@ -17,7 +17,8 @@ import java.util.List;
  * @author srengarajan
  */
 
-public class Element implements Comparable<Element> {
+public class Element implements Comparable<Element>,Cloneable {
+
 
 	/**
 	 * captures the type of the element
@@ -200,5 +201,10 @@ public class Element implements Comparable<Element> {
 			}
 			return retVal;
 		}
+	}
+
+	@Override
+	public Element clone() throws CloneNotSupportedException {
+		return (Element)super.clone();
 	}
 }
