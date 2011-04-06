@@ -1402,13 +1402,15 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append(getSummary(wsdlDoc, opH));
 			html.append(Constants.HTML_TABLE_TD_END);
 			html.append(Constants.HTML_TABLE_TR_END);
-			if (returnTypeToMethodMap.get(opH.getOutputTypes().get(0).getType()) == null) {
+			if (opH.getOutputTypes() != null && opH.getOutputTypes().size() > 0 && returnTypeToMethodMap.get(opH.getOutputTypes().get(0).getType()) == null) {
 				returnTypeToMethodMap.put(opH.getOutputTypes().get(0).getType(), new TreeSet<String>());
 			} 
 			String str = wsdlDoc.getServiceName() + "." + opH.getName() + "(";
 			str += getInputTypes(opH, wsdlDoc.getServiceName(), "../") + ")";			
 			str += Constants.HTML_BR + Constants.NBSP_THRICE + getSummary(wsdlDoc, opH);
-			returnTypeToMethodMap.get(opH.getOutputTypes().get(0).getType()).add(str);
+			if (opH.getOutputTypes() != null && opH.getOutputTypes().size() > 0){
+				returnTypeToMethodMap.get(opH.getOutputTypes().get(0).getType()).add(str);
+			}
 			
 			if (opH.getInputTypes() != null) {
 				Iterator<Element> iter = opH.getInputTypes().iterator();
