@@ -113,7 +113,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				+ packageName + File.separator + "types-use" + File.separator;
 		
 		writeCssFiles();
-		logger.logp(Level.INFO, "JavaDocOutputGenerator", "handleWsdlDoc",
+		logger.logp(Level.FINEST, "JavaDocOutputGenerator", "handleWsdlDoc",
 				"Types Folder Path");
 		List<PortType> portTypes = wsdlDoc.getPortTypes();
 		for (PortType portType : portTypes) {
@@ -1291,7 +1291,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		String tag = Constants.HTML_DIV_START.replace("{#}", temp);
 		tag += text;
 		tag += Constants.HTML_DIV_END;
-		logger.info("Div Tag:" + tag);
+		logger.finest("Div Tag:" + tag);
 		return tag;
 	}
 

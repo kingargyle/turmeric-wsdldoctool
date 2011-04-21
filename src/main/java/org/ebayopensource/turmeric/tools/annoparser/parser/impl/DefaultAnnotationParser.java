@@ -139,7 +139,7 @@ public class DefaultAnnotationParser implements AnnotationParser {
 				}
 			}
 		}
-		logger.log(Level.INFO, "First Child of the Node",firstChild);
+		logger.log(Level.FINEST, "First Child of the Node",firstChild);
 		return firstChild;
 	}
 	
@@ -166,7 +166,7 @@ public class DefaultAnnotationParser implements AnnotationParser {
 				}
 			}
 		}
-		logger.log(Level.INFO, "Next Sibling",sib);
+		logger.log(Level.FINEST, "Next Sibling",sib);
 		return sib;
 	}
 }

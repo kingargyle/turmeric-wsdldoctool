@@ -100,15 +100,15 @@ public class Driver {
     private void setSystemEnvVariables(){
     	if(configXmlPath==null){
 			configXmlPath =System.getenv().get(Constants.INPUT_SYSENV_CONFIG);
-			logger.info("configXmlPath" + configXmlPath);
+			logger.finest("configXmlPath" + configXmlPath);
 		}
     	if(outputDir==null){
 			outputDir =System.getenv().get(Constants.INPUT_SYSENV_OUTPUT_DIR);
-			logger.info("outputDir" + outputDir);
+			logger.finest("outputDir" + outputDir);
 		}
     	if(cssFilePath==null){
     		cssFilePath =System.getenv().get(Constants.INPUT_SYSENV_CSS);
-    		logger.info("cssFilePath" + cssFilePath);
+    		logger.finest("cssFilePath" + cssFilePath);
 		}
     }
 	

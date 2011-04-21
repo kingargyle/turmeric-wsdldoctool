@@ -190,7 +190,7 @@ public class XSDParserImpl implements XSDParser {
 	 *            traverse and collect node names
 	 */
 	public void visit(Node node) {
-		logger.log(Level.INFO, "Node Info", node);
+		logger.log(Level.FINEST, "Node Info", node);
 		this.nameNodeSet.add(node.getNodeName());
 		NodeList children = node.getChildNodes();
 		if (children != null) {

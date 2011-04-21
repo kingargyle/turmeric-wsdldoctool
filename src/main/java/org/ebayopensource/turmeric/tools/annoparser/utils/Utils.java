@@ -84,7 +84,7 @@ public class Utils {
 	 * @return the possible usage paths to a field.
 	 */
 	public static List<String> getUsageHierarchyForField(List<String> allPossiblePaths, String fieldName) {
-		logger.info("getUsageHiearchyForField: " + fieldName);
+		logger.finest("getUsageHiearchyForField: " + fieldName);
 		logger.entering("Utils", "getUsageHiearchyForField", fieldName);
 		ArrayList<String> paths = new ArrayList<String>();
 

@@ -223,7 +223,7 @@ public class WsdlParserImpl implements WsdlParser {
 								}
 							}
 
-							logger.info("part name "
+							logger.finest("part name "
 									+ ipElemName);
 
 						}
@@ -363,7 +363,7 @@ public class WsdlParserImpl implements WsdlParser {
 	 * @return local name after stripping namespace prefix
 	 */
 	private String getLocalName(String ctype) {
-		logger.info("Local Name:" + ctype);
+		logger.finest("Local Name:" + ctype);
 		String[] strs = ctype.split(":");
 		if (strs.length > 1)
 			return strs[1];
