@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class ParsedAnnotationInfo {
 
-	/** The value hold a Map where key the the tagname of the annotation and value is the data collected after parsing the annotation */
+	/** The value hold a Map where key the the tagname of the annotation and value is the data collected after parsing the annotation. */
 	public Map<String,List<ParsedAnnotationTag>> value;
 
 	/**
@@ -85,6 +85,9 @@ public class ParsedAnnotationInfo {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuffer retBuf=new StringBuffer();

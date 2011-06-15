@@ -2,6 +2,9 @@ package org.ebayopensource.turmeric.tools.annoparser.utils;
 
 import java.util.Set;
 
+/**
+ * The Class Node.
+ */
 public class Node implements Comparable<Node> {
 	private String name;
 	
@@ -19,6 +22,8 @@ public class Node implements Comparable<Node> {
 	
 	
 	/**
+	 * Checks if is node added.
+	 *
 	 * @return the nodeAdded
 	 */
 	public boolean isNodeAdded() {
@@ -26,6 +31,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Gets the level.
+	 *
 	 * @return the level
 	 */
 	public int getLevel() {
@@ -33,6 +40,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Sets the level.
+	 *
 	 * @param level the level to set
 	 */
 	public void setLevel(int level) {
@@ -40,6 +49,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Sets the node added.
+	 *
 	 * @param nodeAdded the nodeAdded to set
 	 */
 	public void setNodeAdded(boolean nodeAdded) {
@@ -47,6 +58,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Checks if is flag.
+	 *
 	 * @return the flag
 	 */
 	public boolean isFlag() {
@@ -54,6 +67,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Sets the flag.
+	 *
 	 * @param flag the flag to set
 	 */
 	public void setFlag(boolean flag) {
@@ -61,6 +76,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Gets the original parent.
+	 *
 	 * @return the originalParent
 	 */
 	public String getOriginalParent() {
@@ -68,6 +85,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Sets the original parent.
+	 *
 	 * @param originalParent the originalParent to set
 	 */
 	public void setOriginalParent(String originalParent) {
@@ -75,6 +94,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Gets the name.
+	 *
 	 * @return the name
 	 */
 	public String getName() {
@@ -82,6 +103,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Sets the name.
+	 *
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -89,6 +112,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Gets the parent.
+	 *
 	 * @return the parent
 	 */
 	public Node getParent() {
@@ -96,6 +121,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Sets the parent.
+	 *
 	 * @param parent the parent to set
 	 */
 	public void setParent(Node parent) {
@@ -103,6 +130,8 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Gets the children.
+	 *
 	 * @return the children
 	 */
 	public Set<Node> getChildren() {
@@ -110,12 +139,17 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
+	 * Sets the children.
+	 *
 	 * @param children the children to set
 	 */
 	public void setChildren(Set<Node> children) {
 		this.children = children;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
 	@Override
 	public int compareTo(Node o) {
 		return this.getName().compareTo(o.getName());

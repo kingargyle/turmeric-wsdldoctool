@@ -167,26 +167,32 @@ public class ParsedAnnotationTag {
 		this.attributes.put(attributeName, attributeValue);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuffer retVal = new StringBuffer();
 		retVal.append("Annotation: " + tagName + "\n");
 		retVal.append("Value(if any): " + tagValue + "\n");
-		if(attributes!=null){
-		retVal.append("Annotation Tag Attributes\n");
+		if (attributes != null) {
+			retVal.append("Annotation Tag Attributes\n");
 			if (attributes != null) {
 				for (Map.Entry<String, String> entry : attributes.entrySet()) {
-					retVal.append(entry.getKey() + "=" + entry.getValue() +"\n");
+					retVal.append(entry.getKey() + "=" + entry.getValue()
+							+ "\n");
 				}
 			}
 		}
-		if(children!=null && !children.isEmpty())
-		retVal.append("Child Annotations of "+tagName+"\n");
+		if (children != null && !children.isEmpty())
+			retVal.append("Child Annotations of " + tagName + "\n");
 		retVal.append("=========================================================\n");
 		if (children != null) {
 			for (Map.Entry<String, List<ParsedAnnotationTag>> entry : children
 					.entrySet()) {
-				for(ParsedAnnotationTag tag:entry.getValue()){
+				for (ParsedAnnotationTag tag : entry.getValue()) {
 					retVal.append(tag.toString());
 				}
 			}

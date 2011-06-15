@@ -13,16 +13,19 @@ import org.ebayopensource.turmeric.tools.annoparser.exception.ParserException;
 
 /**
  * The Interface Parser. redundant with IXSDParser. To be removed.
+ * 
  * @author srengarajan
  */
 public interface Parser {
-	
+
 	/**
 	 * Parses the XSD.
-	 *
-	 * @param url the url
+	 * 
+	 * @param url
+	 *            the url
 	 * @return the xSD doc interface
-	 * @throws ParserException the parser exception
+	 * @throws ParserException
+	 *             the parser exception
 	 */
 	public XSDDocInterface parse(String url) throws ParserException;
 }

@@ -28,6 +28,8 @@ public class DefaultAnnotationParser implements AnnotationParser {
 
 	
 	private final static String CLASS_NAME=DefaultAnnotationParser.class.getClass().getName();  
+	
+	/** The logger. */
 	Logger logger  = Logger.getLogger(CLASS_NAME);
 	/**
 	 * Parses the annotation.

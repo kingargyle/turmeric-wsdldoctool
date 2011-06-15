@@ -13,9 +13,16 @@ import org.ebayopensource.turmeric.tools.annoparser.exception.WsdlDocException;
 import org.ebayopensource.turmeric.tools.annoparser.exception.XsdDocException;
 import org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator;
 
+/**
+ * The Class ToStringOutputGenerator.
+ */
 public class ToStringOutputGenerator implements OutputGenerator {
 	private OutputGenaratorParam outParam;
 	private Map<Object,String> docs=new HashMap<Object, String>();
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator#completeProcessing()
+	 */
 	@Override
 	public void completeProcessing() throws XsdDocException {
 		for(Map.Entry<Object,String> entry:docs.entrySet()){
@@ -23,6 +30,9 @@ public class ToStringOutputGenerator implements OutputGenerator {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator#generateWsdlOutput(org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface, org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam)
+	 */
 	@Override
 	public void generateWsdlOutput(WSDLDocInterface wsdlDoc,
 			OutputGenaratorParam outputGenaratorParam) throws WsdlDocException {
@@ -50,6 +60,9 @@ public class ToStringOutputGenerator implements OutputGenerator {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator#generateXsdOutput(org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface, org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam)
+	 */
 	@Override
 	public void generateXsdOutput(XSDDocInterface xsdDoc,
 			OutputGenaratorParam outputGenaratorParam) throws XsdDocException {
@@ -61,14 +74,11 @@ public class ToStringOutputGenerator implements OutputGenerator {
 
 	/**
 	 * Write file.
-	 * 
-	 * @param html
-	 *            the html
-	 * @param dir
-	 *            the dir
-	 * @param fileName
-	 *            the file name
-	 * @throws IOException 
+	 *
+	 * @param fileContent the file content
+	 * @param dir the dir
+	 * @param fileName the file name
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void writeFile(String fileContent, String dir,String fileName) throws IOException {
 		File file = new File(dir);

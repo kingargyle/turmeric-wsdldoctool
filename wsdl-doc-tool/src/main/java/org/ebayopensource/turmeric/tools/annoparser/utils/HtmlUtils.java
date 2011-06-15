@@ -13,28 +13,32 @@ import java.util.List;
 
 import org.ebayopensource.turmeric.tools.annoparser.context.Context;
 
-
 /**
  * The Class HtmlUtils.
- *
+ * 
  * @author goraman
  */
 public class HtmlUtils {
 
 	/**
 	 * Gets the anchor tag.
-	 *
-	 * @param name the name
-	 * @param href the href
-	 * @param title the title
-	 * @param value the value
+	 * 
+	 * @param name
+	 *            the name
+	 * @param href
+	 *            the href
+	 * @param title
+	 *            the title
+	 * @param value
+	 *            the value
 	 * @return the anchor tag
 	 */
-	public static String getAnchorTag(String name, String href, String title, String value) {
+	public static String getAnchorTag(String name, String href, String title,
+			String value) {
 		String tag = "<a ";
 		if (name != null) {
 			tag += "name='" + name + "' ";
-		} 
+		}
 		if (href != null) {
 			tag += "href='" + href + "' ";
 		}
@@ -44,44 +48,59 @@ public class HtmlUtils {
 		tag += ">";
 		if (value != null) {
 			tag += value;
-		}		
+		}
 		tag += "</a>";
 		return tag;
 	}
-	
+
 	/**
 	 * Gets the anchor tag.
-	 *
-	 * @param name the name
-	 * @param href the href
-	 * @param title the title
-	 * @param value the value
-	 * @param target the target
+	 * 
+	 * @param name
+	 *            the name
+	 * @param href
+	 *            the href
+	 * @param title
+	 *            the title
+	 * @param value
+	 *            the value
+	 * @param target
+	 *            the target
 	 * @return the anchor tag
-	 * @deprecated Use {@link #getAnchorTag(String,String,String,String,String,String)} instead
+	 * @deprecated Use
+	 *             {@link #getAnchorTag(String,String,String,String,String,String)}
+	 *             instead
 	 */
-	public static String getAnchorTag(String name, String href, String title, String value, String target) {
+	public static String getAnchorTag(String name, String href, String title,
+			String value, String target) {
 		return getAnchorTag(name, href, title, value, target, null);
 	}
 
 	/**
 	 * Gets the anchor tag.
-	 *
-	 * @param name the name
-	 * @param href the href
-	 * @param title the title
-	 * @param value the value
-	 * @param target the target
-	 * @param cssClass the css class
+	 * 
+	 * @param name
+	 *            the name
+	 * @param href
+	 *            the href
+	 * @param title
+	 *            the title
+	 * @param value
+	 *            the value
+	 * @param target
+	 *            the target
+	 * @param cssClass
+	 *            the css class
 	 * @return the anchor tag
 	 */
-	public static String getAnchorTag(String name, String href, String title, String value, String target, String cssClass) {
+	public static String getAnchorTag(String name, String href, String title,
+			String value, String target, String cssClass) {
 		String tag = "<a ";
 		if (name != null) {
 			tag += "name='" + name + "' ";
-		} 
-		
-		if(cssClass != null) {
+		}
+
+		if (cssClass != null) {
 			tag += "class='" + cssClass + "' ";
 		}
 		if (href != null) {
@@ -92,50 +111,54 @@ public class HtmlUtils {
 		}
 		if (target != null) {
 			tag += "target='" + target + "' ";
-		}		
+		}
 		tag += ">";
 		if (value != null) {
 			tag += value;
-		}		
+		}
 		tag += "</a>";
-		return tag;		
+		return tag;
 	}
-	
+
 	/**
 	 * Gets the start tags.
-	 *
-	 * @param title the title
-	 * @param currLocFromBase the curr loc from base
+	 * 
+	 * @param title
+	 *            the title
+	 * @param currLocFromBase
+	 *            the curr loc from base
 	 * @return the start tags
 	 */
-	public static String getStartTags(String title,String currLocFromBase) {
-		List<String> cssList=new ArrayList<String>();
+	public static String getStartTags(String title, String currLocFromBase) {
+		List<String> cssList = new ArrayList<String>();
 		cssList.add("JavaDocDefaultStyle.css");
-		if(Context.getContext().getCssFilePath()!=null && !Utils.isEmpty(Context.getContext().getCssFilePath())){
+		if (Context.getContext().getCssFilePath() != null
+				&& !Utils.isEmpty(Context.getContext().getCssFilePath())) {
 			cssList.add("CustomStyle.css");
 		}
-		String relPath="";
-		
-		if(currLocFromBase!=null){
-			if(currLocFromBase.startsWith("/")){
-				currLocFromBase=currLocFromBase.substring(1);
+		String relPath = "";
+
+		if (currLocFromBase != null) {
+			if (currLocFromBase.startsWith("/")) {
+				currLocFromBase = currLocFromBase.substring(1);
 			}
-			String [] folders=currLocFromBase.split("/");
-			for(String folder:folders){
-				relPath=relPath+"../";
+			String[] folders = currLocFromBase.split("/");
+			for (String folder : folders) {
+				relPath = relPath + "../";
 			}
 		}
 		String tag = "<html><head><title>" + title + "</title>";
-		for(String css:cssList){
-			tag += "<link href='"+relPath+"css/"+css+ "' rel='stylesheet' type='text/css'>";
+		for (String css : cssList) {
+			tag += "<link href='" + relPath + "css/" + css
+					+ "' rel='stylesheet' type='text/css'>";
 		}
 		tag += "</head><body>";
 		return tag;
 	}
-	
+
 	/**
 	 * Gets the end tags.
-	 *
+	 * 
 	 * @return the end tags
 	 */
 	public static String getEndTags() {

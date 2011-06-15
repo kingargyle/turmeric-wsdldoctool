@@ -15,36 +15,38 @@ import java.util.Set;
 
 /**
  * The Class ComplexType.
- *
+ * 
  * @author srengarajan
  */
 
 public class ComplexType extends AbstractType {
 
 	/**
-     *  Direct children elements(type <Element>) of this ComplexType
-     *  Note that inherited children can be collected by traversing 
-     *  up the hierarchy through parentType  
-     */
+	 * Direct children elements(type <Element>) of this ComplexType Note that
+	 * inherited children can be collected by traversing up the hierarchy
+	 * through parentType
+	 */
 	private Set<Element> childElements;
-	
+
 	private Set<AttributeElement> simpleAttributeContent;
 
 	/**
-     *  this collection relates the complex type to all its instance elements
-     *  its extremely useful in traversals for building Usage paths
-     */
+	 * this collection relates the complex type to all its instance elements its
+	 * extremely useful in traversals for building Usage paths
+	 */
 	private List<Element> instanceElements;
 
 	/**
-	 * points to the name of the parent Complex Type element. Used for search 
+	 * points to the name of the parent Complex Type element. Used for search
 	 * and retrieval of the Complex Type
 	 */
 	private String parentType = null;
 
 	private String packageName = null;
-	
+
 	/**
+	 * Gets the package name.
+	 * 
 	 * @return the packageName
 	 */
 	public String getPackageName() {
@@ -52,7 +54,10 @@ public class ComplexType extends AbstractType {
 	}
 
 	/**
-	 * @param packageName the packageName to set
+	 * Sets the package name.
+	 * 
+	 * @param packageName
+	 *            the packageName to set
 	 */
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
@@ -60,7 +65,7 @@ public class ComplexType extends AbstractType {
 
 	/**
 	 * Gets the simple attribute content.
-	 *
+	 * 
 	 * @return the simple attribute content
 	 */
 	public Set<AttributeElement> getSimpleAttributeContent() {
@@ -69,19 +74,21 @@ public class ComplexType extends AbstractType {
 
 	/**
 	 * Adds the simple attribute content.
-	 *
-	 * @param simpleAttributeContent the simple attribute content
+	 * 
+	 * @param simpleAttributeContent
+	 *            the simple attribute content
 	 */
-	public void addSimpleAttributeContent(AttributeElement simpleAttributeContent) {
-		if(this.simpleAttributeContent==null){
-			this.simpleAttributeContent=new LinkedHashSet<AttributeElement>();
+	public void addSimpleAttributeContent(
+			AttributeElement simpleAttributeContent) {
+		if (this.simpleAttributeContent == null) {
+			this.simpleAttributeContent = new LinkedHashSet<AttributeElement>();
 		}
 		this.simpleAttributeContent.add(simpleAttributeContent);
 	}
-	
+
 	/**
 	 * Gets the parent type.
-	 *
+	 * 
 	 * @return getter for parent type
 	 */
 	public String getParentType() {
@@ -90,23 +97,24 @@ public class ComplexType extends AbstractType {
 
 	/**
 	 * Sets the parent type.
-	 *
-	 * @param parentType the new parent type
+	 * 
+	 * @param parentType
+	 *            the new parent type
 	 */
 	public void setParentType(String parentType) {
 		this.parentType = parentType;
 	}
 
 	/**
-	 * inheriting child ComplexTypes. Useful for traversal of inherited 
-	 * types
+	 * inheriting child ComplexTypes. Useful for traversal of inherited types
 	 */
 	private List<String> childType = new ArrayList<String>();
 
 	/**
 	 * Sets the child type.
-	 *
-	 * @param childType the new child type
+	 * 
+	 * @param childType
+	 *            the new child type
 	 */
 	public void setChildType(List<String> childType) {
 		this.childType = childType;
@@ -114,7 +122,7 @@ public class ComplexType extends AbstractType {
 
 	/**
 	 * Gets the child type.
-	 *
+	 * 
 	 * @return Collection of child types
 	 */
 	public List<String> getChildType() {
@@ -123,18 +131,18 @@ public class ComplexType extends AbstractType {
 
 	/**
 	 * Gets the child elements.
-	 *
+	 * 
 	 * @return Collection of child elements ( Composition relationship )
 	 */
 	public Set<Element> getChildElements() {
 		return childElements;
 	}
 
-	
 	/**
 	 * Sets the child elements.
-	 *
-	 * @param elements the new child elements
+	 * 
+	 * @param elements
+	 *            the new child elements
 	 */
 	public void setChildElements(Set<Element> elements) {
 		this.childElements = elements;
@@ -142,58 +150,62 @@ public class ComplexType extends AbstractType {
 
 	/**
 	 * Gets the instance elements.
-	 *
+	 * 
 	 * @return collection of instances of this complex type
 	 */
 	public List<Element> getInstanceElements() {
 		return instanceElements;
 	}
 
-	
 	/**
 	 * Sets the instance elements.
-	 *
-	 * @param elements the new instance elements
+	 * 
+	 * @param elements
+	 *            the new instance elements
 	 */
 	public void setInstanceElements(List<Element> elements) {
 		this.instanceElements = elements;
 	}
-	
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		StringBuffer retVal=new StringBuffer();
-		retVal.append("Complextype Name: " +name + "\n");
-		retVal.append("Complextype Base Type: " +parentType+ "\n");
-		retVal.append("Attributes: "+ "\n");
-		if(super.getAttributes()!=null){
-			for(Attribute attr: super.getAttributes()) {
-				if(attr != null) {
-					retVal.append(attr.toString()+ "\n");
+		StringBuffer retVal = new StringBuffer();
+		retVal.append("Complextype Name: " + name + "\n");
+		retVal.append("Complextype Base Type: " + parentType + "\n");
+		retVal.append("Attributes: " + "\n");
+		if (super.getAttributes() != null) {
+			for (Attribute attr : super.getAttributes()) {
+				if (attr != null) {
+					retVal.append(attr.toString() + "\n");
 				}
 			}
 		}
-		if(super.getAnnotations()!=null){
+		if (super.getAnnotations() != null) {
 			retVal.append("Annotations: \n");
 			retVal.append(super.getAnnotations().toString());
 		}
-		retVal.append("Child Attributes: "+ "\n");
-		if(this.getSimpleAttributeContent()!=null){
-			for(AttributeElement attr: this.getSimpleAttributeContent()) {
-				if(attr != null) {
-					retVal.append(attr.toString()+ "\n");
+		retVal.append("Child Attributes: " + "\n");
+		if (this.getSimpleAttributeContent() != null) {
+			for (AttributeElement attr : this.getSimpleAttributeContent()) {
+				if (attr != null) {
+					retVal.append(attr.toString() + "\n");
 				}
 			}
 		}
-		retVal.append("Child Elements: "+ "\n");
-		if(this.getChildElements()!=null){
-			for(Element attr: this.getChildElements()) {
-				if(attr != null) {
-					retVal.append(attr.toString()+ "\n");
+		retVal.append("Child Elements: " + "\n");
+		if (this.getChildElements() != null) {
+			for (Element attr : this.getChildElements()) {
+				if (attr != null) {
+					retVal.append(attr.toString() + "\n");
 				}
 			}
 		}
-		
+
 		return retVal.toString();
 	}
 }

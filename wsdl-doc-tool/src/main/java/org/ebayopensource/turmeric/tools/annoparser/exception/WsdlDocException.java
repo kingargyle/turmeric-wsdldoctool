@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.tools.annoparser.exception;
 
 /**
  * The Class WsdlDocException.
- *
+ * 
  * @author srengarajan
  */
 public class WsdlDocException extends XsdDocException {
@@ -19,30 +19,34 @@ public class WsdlDocException extends XsdDocException {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Instantiates a new wsdl doc exception.
-	 *
-	 * @param t the t
+	 * 
+	 * @param t
+	 *            the t
 	 */
 	public WsdlDocException(Throwable t) {
 		super(t);
 	}
-	
+
 	/**
 	 * Instantiates a new wsdl doc exception.
-	 *
-	 * @param message the message
-	 * @param t the t
+	 * 
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the t
 	 */
-	public WsdlDocException(String message ,Throwable t) {
-		super(message,t);
+	public WsdlDocException(String message, Throwable t) {
+		super(message, t);
 	}
-	
+
 	/**
 	 * Instantiates a new wsdl doc exception.
-	 *
-	 * @param message the message
+	 * 
+	 * @param message
+	 *            the message
 	 */
 	public WsdlDocException(String message) {
 		super(message);

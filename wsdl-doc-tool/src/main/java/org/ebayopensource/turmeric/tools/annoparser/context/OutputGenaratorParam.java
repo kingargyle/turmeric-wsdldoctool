@@ -33,10 +33,20 @@ public class OutputGenaratorParam {
    
    private int numOfDocuments=1;
 
+   /**
+    * Gets the num of documents.
+    *
+    * @return the num of documents
+    */
    public int getNumOfDocuments() {
 	return numOfDocuments;
 }
 
+/**
+ * Sets the num of documents.
+ *
+ * @param numOfDocuments the new num of documents
+ */
 public void setNumOfDocuments(int numOfDocuments) {
 	this.numOfDocuments = numOfDocuments;
 }

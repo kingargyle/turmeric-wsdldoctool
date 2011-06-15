@@ -14,37 +14,37 @@ import org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam
 import org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator;
 
 /**
- * The Class TestOpGenClass is just a test implementation to check if Custom Class is getting Instantiated.
- *
+ * The Class TestOpGenClass is just a test implementation to check if Custom
+ * Class is getting Instantiated.
+ * 
  * @author sdaripelli
  */
 public class TestOpGenClass implements OutputGenerator {
 
-	
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator#generateWsdlOutput(org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface, org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam)
+	/**
+	 * {@inheritDoc}
 	 */
-	public void generateWsdlOutput(WSDLDocInterface wsdlDoc, OutputGenaratorParam outputGenaratorParam) {
+	public void generateWsdlOutput(WSDLDocInterface wsdlDoc,
+			OutputGenaratorParam outputGenaratorParam) {
 		System.out.println(" IN Handle WSDL Doc");
 
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator#generateXsdOutput(org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface, org.ebayopensource.turmeric.tools.annoparser.context.OutputGenaratorParam)
+	/**
+	 * {@inheritDoc}
 	 */
-	public void generateXsdOutput(XSDDocInterface xsdDoc, OutputGenaratorParam outputGenaratorParam) {
+	public void generateXsdOutput(XSDDocInterface xsdDoc,
+			OutputGenaratorParam outputGenaratorParam) {
 		System.out.println(" IN Handle XSD Doc");
 
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.tools.annoparser.outputgenerator.OutputGenerator#completeProcessing()
+	/**
+	 * {@inheritDoc}
 	 */
 	public void completeProcessing() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

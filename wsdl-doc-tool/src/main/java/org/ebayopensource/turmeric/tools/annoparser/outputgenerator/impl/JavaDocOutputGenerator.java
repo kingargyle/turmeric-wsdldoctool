@@ -61,11 +61,13 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	private static final String TYPES = "/types/";
 	/** The current types folder path. */
 	private String currentTypesFolderPath = null;
-	
+
 	private String classUseFolderPath = null;
-	
+
 	private final static String CLASS_NAME = JavaDocOutputGenerator.class
 			.getClass().getName();
+
+	/** The logger. */
 	Logger logger = Logger.getLogger(CLASS_NAME);
 
 	private OutputGenaratorParam outputGenaratorParam;
@@ -77,21 +79,14 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	private static final String SEPARATOR = "/";
 
 	private String currentPackageName;
-	
+
 	private Map<String, TreeSet<String>> returnTypeToMethodMap = new HashMap<String, TreeSet<String>>();
-	
+
 	private Map<String, TreeSet<String>> paramsToMethodMap = new HashMap<String, TreeSet<String>>();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.ebayopensource.turmeric.tools.annoparser.outputformatter.DocHandler
-	 * #handleWsdlDoc
-	 * (org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface,
-	 * java.lang.String)
+	/**
+	 * {@inheritDoc}
 	 */
-
 	public void generateWsdlOutput(WSDLDocInterface wsdlDoc,
 			OutputGenaratorParam outputGenaratorParam)
 			throws OutputFormatterException {
@@ -111,7 +106,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 		classUseFolderPath = getCurrentOutputDir() + File.separator
 				+ packageName + File.separator + "types-use" + File.separator;
-		
+
 		writeCssFiles();
 		logger.logp(Level.FINEST, "JavaDocOutputGenerator", "handleWsdlDoc",
 				"Types Folder Path");
@@ -120,9 +115,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(wsdlDoc.getServiceName(),
 					packageName));
-			Map<String, String> replacementMap=new HashMap<String, String>();
+			Map<String, String> replacementMap = new HashMap<String, String>();
 			replacementMap.put("REL_PATH", getRelativePath(currentPackageName));
-			buildHeader(html,replacementMap,"operationHeader");
+			buildHeader(html, replacementMap, "operationHeader");
 
 			html.append(Constants.HTML_BR);
 			buildPortType(html, portType, wsdlDoc);
@@ -130,14 +125,13 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			buildOperationTable(html, portType, wsdlDoc);
 			html.append(Constants.HTML_BR);
 			buildOperationDetails(html, portType, wsdlDoc);
-			
-			addFooter(html,replacementMap,"operationHeader");
+
+			addFooter(html, replacementMap, "operationHeader");
 
 			html.append(HtmlUtils.getEndTags());
 			String outputDir = getCurrentOutputDir() + File.separator;
-			writeFile(html, outputDir + File.separator + packageName, wsdlDoc
-					.getServiceName()
-					+ Constants.DOT_HTML);
+			writeFile(html, outputDir + File.separator + packageName,
+					wsdlDoc.getServiceName() + Constants.DOT_HTML);
 		}
 		writeOrphanTypes(wsdlDoc);
 		createTypeIndex(wsdlDoc);
@@ -163,38 +157,44 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	}
 
-	private void writePackageTree(List<XSDDocInterface> wsdlDoc, String outputdir, boolean isAllPackages)
+	private void writePackageTree(List<XSDDocInterface> wsdlDoc,
+			String outputdir, boolean isAllPackages)
 			throws OutputFormatterException {
 		Node root = getTypesInTree(wsdlDoc);
-		
+
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags("Hierarchy For Service domain "
 				+ currentPackageName, outputdir));
-		Map<String, String> replacementMap=new HashMap<String, String>();
-		replacementMap.put("REL_PATH", (outputdir==null?".":getRelativePath(outputdir)));
+		Map<String, String> replacementMap = new HashMap<String, String>();
+		replacementMap.put("REL_PATH", (outputdir == null ? "."
+				: getRelativePath(outputdir)));
 		replacementMap.put("TREE_REL_PATH", ".");
-		
-		buildHeader(html, replacementMap,"typesUseHeader");
+
+		buildHeader(html, replacementMap, "typesUseHeader");
 		html.append(Constants.HTML_H3_START + "Hierarchy For Service domain "
 				+ currentPackageName + Constants.HTML_H3_END);
 		if (!isAllPackages) {
 			html.append("<b>Package Hierarchies:</b>" + Constants.HTML_BR);
 			String str = getRelativePath(outputdir);
-			html.append(Constants.NBSP_THRICE + Constants.NBSP_THRICE + HtmlUtils.getAnchorTag(null, str + "Tree" + Constants.DOT_HTML, null, "All Packages"));
+			html.append(Constants.NBSP_THRICE
+					+ Constants.NBSP_THRICE
+					+ HtmlUtils.getAnchorTag(null, str + "Tree"
+							+ Constants.DOT_HTML, null, "All Packages"));
 		}
-		
+
 		html.append(Constants.HTML_HR);
 		html.append(Constants.HTML_H3_START + "Complex Type Hierarchy"
 				+ Constants.HTML_H3_END);
 		html.append("<ul>");
 		writeTree(root, html, isAllPackages);
 		html.append("</ul>");
-		addFooter(html, replacementMap,"typesUseHeader");
+		addFooter(html, replacementMap, "typesUseHeader");
 		html.append(HtmlUtils.getEndTags());
-		if(outputdir==null){
-			outputdir="";
+		if (outputdir == null) {
+			outputdir = "";
 		}
-		writeFile(html, getCurrentOutputDir()+outputdir, "Tree" + Constants.DOT_HTML);
+		writeFile(html, getCurrentOutputDir() + outputdir, "Tree"
+				+ Constants.DOT_HTML);
 	}
 
 	private void writeTree(Node root, StringBuffer html, boolean isAllPackages) {
@@ -204,10 +204,13 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			for (Node node : children) {
 				if (node.isFlag()) {
 					html.append("<li type='circle'>\n");
-					String nodeName = node.getName().substring(node.getName().lastIndexOf(".") + 1);
+					String nodeName = node.getName().substring(
+							node.getName().lastIndexOf(".") + 1);
 					String tempDir = "";
 					if (isAllPackages) {
-						 tempDir = "." + node.getName().substring(0, node.getName().lastIndexOf(".")) + "/";
+						tempDir = "."
+								+ node.getName().substring(0,
+										node.getName().lastIndexOf(".")) + "/";
 					}
 					html.append(HtmlUtils.getAnchorTag("", tempDir + "types/"
 							+ nodeName + Constants.DOT_HTML, "", nodeName)
@@ -236,7 +239,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		root.setLevel(0);
 		for (ComplexType type : complexTypes) {
 			Node node = new Node();
-			String packageName=type.getPackageName();
+			String packageName = type.getPackageName();
 			if (packageName == null) {
 				packageName = "/DefaultDomain";
 			}
@@ -360,14 +363,14 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			throws OutputFormatterException {
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(Constants.ALL_CLASSES, null));
-		Map<String, String> replacementMap=new HashMap<String, String>();
+		Map<String, String> replacementMap = new HashMap<String, String>();
 		replacementMap.put("REL_PATH", ".");
 		replacementMap.put("TREE_REL_PATH", ".");
 		replacementMap.put("KEY_LINKS", "");
-		buildHeader(html, replacementMap,"indexHeader");
+		buildHeader(html, replacementMap, "indexHeader");
 		html.append(getTextInDiv("WSDL API specification", "pageHeading"));
 		html.append(Constants.HTML_BR);
-		addFooter(html, replacementMap,"indexHeader");
+		addFooter(html, replacementMap, "indexHeader");
 		html.append(HtmlUtils.getEndTags());
 		writeFile(html, getCurrentOutputDir(), Constants.PACKAGES.toLowerCase()
 				+ Constants.INDEX + Constants.DOT_HTML);
@@ -407,16 +410,13 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			List<String> list = packageServicesMap.get(packageName);
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(Constants.CLASSES, packageName));
-			html
-					.append("<script language='JavaScript'>function go(targetUrl1){parent.classframe.location=targetUrl1;}</script>");
+			html.append("<script language='JavaScript'>function go(targetUrl1){parent.classframe.location=targetUrl1;}</script>");
 			html.append(Constants.HTML_BOLD_START + Constants.CLASSES
 					+ Constants.HTML_BOLD_END + Constants.HTML_BR);
 			for (String className : list) {
-				html
-						.append("<a href='" + className
-								+ "TypeIndex.html' onclick='go(\"" + className
-								+ ".html\")'>" + className + "</a>"
-								+ Constants.HTML_BR);
+				html.append("<a href='" + className
+						+ "TypeIndex.html' onclick='go(\"" + className
+						+ ".html\")'>" + className + "</a>" + Constants.HTML_BR);
 			}
 			html.append(HtmlUtils.getEndTags());
 			writeFile(html, getCurrentOutputDir() + packageName,
@@ -433,10 +433,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		Set<String> set = packageServicesMap.keySet();
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags(Constants.ALL_CLASSES, null));
-		html
-				.append("<script language='JavaScript'>function go(targetUrl){parent."
-						+ Constants.CLASSFRAME
-						+ ".location=targetUrl;}</script>");
+		html.append("<script language='JavaScript'>function go(targetUrl){parent."
+				+ Constants.CLASSFRAME + ".location=targetUrl;}</script>");
 		html.append(Constants.HTML_BOLD_START + Constants.ALL_CLASSES
 				+ Constants.HTML_BOLD_END + Constants.HTML_BR);
 		for (String packageName : set) {
@@ -459,10 +457,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags("All Types", null));
-		html
-				.append("<script language='JavaScript'>function go(targetUrl){parent."
-						+ Constants.CLASSFRAME
-						+ ".location=targetUrl;}</script>");
+		html.append("<script language='JavaScript'>function go(targetUrl){parent."
+				+ Constants.CLASSFRAME + ".location=targetUrl;}</script>");
 		html.append(Constants.HTML_BOLD_START + "Complex Types"
 				+ Constants.HTML_BOLD_END + Constants.HTML_BR);
 		for (ComplexType node : doc.getAllComplexTypes()) {
@@ -480,9 +476,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					+ Constants.HTML_BR);
 		}
 		html.append(HtmlUtils.getEndTags());
-		writeFile(html, getCurrentOutputDir() + currentPackageName, doc
-				.getServiceName()
-				+ "TypeIndex" + Constants.DOT_HTML);
+		writeFile(html, getCurrentOutputDir() + currentPackageName,
+				doc.getServiceName() + "TypeIndex" + Constants.DOT_HTML);
 	}
 
 	/**
@@ -516,7 +511,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				currLocFromBase = currLocFromBase.substring(1);
 			}
 			String[] folders = currLocFromBase.split("/");
-			for (int i=0;i<folders.length;i++) {
+			for (int i = 0; i < folders.length; i++) {
 				relPath = relPath + "../";
 			}
 		}
@@ -554,9 +549,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
 
+			+ TYPES));
+			Map<String, String> replacementMap = new HashMap<String, String>();
+			replacementMap.put("REL_PATH", getRelativePath(currentPackageName
 					+ TYPES));
-			Map<String, String> replacementMap=new HashMap<String, String>();
-			replacementMap.put("REL_PATH", getRelativePath(currentPackageName + TYPES));
 			replacementMap.put("TYPE_NAME", type.getName());
 			buildHeader(html, replacementMap, "ComplexTypeHeader");
 
@@ -578,9 +574,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			StringBuffer deprDet = AnnotationsHelper.processDeprication(type
 					.getAnnotations());
 			if (deprDet != null) {
-				html
-						.append(getTextInDiv("Depricated: ",
-								"javaDocInlineHeading"));
+				html.append(getTextInDiv("Depricated: ", "javaDocInlineHeading"));
 				html.append(deprDet);
 			}
 			processRelatedInfo(html, doc, type.getAnnotations());
@@ -588,9 +582,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			buildFieldSummary(html, doc, type);
 
 			html.append(Constants.HTML_HR);
-			html
-					.append(HtmlUtils.getAnchorTag("FieldDetail", null, null,
-							null));
+			html.append(HtmlUtils.getAnchorTag("FieldDetail", null, null, null));
 			html.append(getTableTagWithStyle("JavadocTable"));
 			html.append(getTableRowTagWithStyle("JavadocTableTr"));
 			html.append(getTableHeadTagWithStyle("JavadocTableHeaders"));
@@ -619,67 +611,66 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					}
 					html.append(HtmlUtils.getAnchorTag(element.getName(), null,
 							null, null));
-					ComplexType cType=doc.searchCType(typeCName);
-					if ( cType!= null && !isRecursive) {
+					ComplexType cType = doc.searchCType(typeCName);
+					if (cType != null && !isRecursive) {
 						writeComplexTypeFile(doc, doc.searchCType(typeCName),
 								nodePath);
-						String typeVisName=
-							HtmlUtils.getAnchorTag(null, typeCName
-									+ Constants.DOT_HTML, typeCName,
-									typeCName);
+						String typeVisName = HtmlUtils.getAnchorTag(null,
+								typeCName + Constants.DOT_HTML, typeCName,
+								typeCName);
 						StringBuffer attrParams = new StringBuffer();
 						if (!Utils.isEmpty(type.getParentType())) {
-							String baseType = Utils.removeNameSpace(type.getParentType());
-							if(doc.searchCType(baseType)==null && doc.searchSimpleType(baseType)==null ){
+							String baseType = Utils.removeNameSpace(type
+									.getParentType());
+							if (doc.searchCType(baseType) == null
+									&& doc.searchSimpleType(baseType) == null) {
 								attrParams.append(baseType);
-							}else{
-								attrParams.append(HtmlUtils.getAnchorTag(null, baseType
-										+ Constants.DOT_HTML, baseType, baseType));
+							} else {
+								attrParams.append(HtmlUtils.getAnchorTag(null,
+										baseType + Constants.DOT_HTML,
+										baseType, baseType));
 							}
-							
+
 						}
 						if (attrParams.length() > 0) {
-							typeVisName += " ( " +attrParams+ " )";
+							typeVisName += " ( " + attrParams + " )";
 						}
-						html.append(getTextInSpan(element.getName()
-								+ "  : <b>"
-								+ typeVisName + "</b>",
-								"javaDocMethodTypes"));
+						html.append(getTextInSpan(element.getName() + "  : <b>"
+								+ typeVisName + "</b>", "javaDocMethodTypes"));
 					} else if (doc.searchSimpleType(typeCName) != null) {
-						SimpleType Stype=doc.searchSimpleType(typeCName);
-						writeSimpleTypeFile(doc, doc
-								.searchSimpleType(typeCName));
-						String typeVisName=
-							HtmlUtils.getAnchorTag(null, typeCName
-									+ Constants.DOT_HTML, typeCName,
-									typeCName);
+						SimpleType Stype = doc.searchSimpleType(typeCName);
+						writeSimpleTypeFile(doc,
+								doc.searchSimpleType(typeCName));
+						String typeVisName = HtmlUtils.getAnchorTag(null,
+								typeCName + Constants.DOT_HTML, typeCName,
+								typeCName);
 						String base = Utils.removeNameSpace(Stype.getBase());
-						if(!Utils.isEmpty(base)){
-							if(doc.searchCType(base)==null && doc.searchSimpleType(base)==null ){
-								typeVisName+=" ( "+base+" )";
-							}else{
-								typeVisName+=" ( "+ HtmlUtils.getAnchorTag(null,  base
-										+ Constants.DOT_HTML, base,
-										base) +" )";
+						if (!Utils.isEmpty(base)) {
+							if (doc.searchCType(base) == null
+									&& doc.searchSimpleType(base) == null) {
+								typeVisName += " ( " + base + " )";
+							} else {
+								typeVisName += " ( "
+										+ HtmlUtils.getAnchorTag(null, base
+												+ Constants.DOT_HTML, base,
+												base) + " )";
 							}
 						}
-						html.append(getTextInSpan(element.getName()
-								+ "  : <b>"
-								+ HtmlUtils.getAnchorTag(null, typeCName
-										+ Constants.DOT_HTML, typeCName,
-										typeVisName) + "</b>",
-								"javaDocMethodTypes"));
+						html.append(getTextInSpan(
+								element.getName()
+										+ "  : <b>"
+										+ HtmlUtils.getAnchorTag(null,
+												typeCName + Constants.DOT_HTML,
+												typeCName, typeVisName)
+										+ "</b>", "javaDocMethodTypes"));
 					} else {
 						html.append(getTextInSpan(element.getName() + "  : <b>"
 								+ typeCName + "</b>", "javaDocMethodTypes"));
 					}
 					if (element.getAnnotationInfo().getDocumentation() != null) {
-						html
-								.append(Constants.HTML_BR
-										+ getTextInSpan(element
-												.getAnnotationInfo()
-												.getDocumentation(),
-												"javaDocOpDetail"));
+						html.append(Constants.HTML_BR
+								+ getTextInSpan(element.getAnnotationInfo()
+										.getDocumentation(), "javaDocOpDetail"));
 					}
 					processDefaultsAndBoundries(html, doc, element);
 					deprDet = AnnotationsHelper.processDeprication(element
@@ -693,7 +684,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					html.append(Constants.HTML_HR + Constants.HTML_BR);
 				}
 			}
-			writeUseFile(doc, type);			
+			writeUseFile(doc, type);
 			addFooter(html, replacementMap, "ComplexTypeHeader");
 
 			writeFile(html, currentTypesFolderPath, typeName
@@ -701,20 +692,23 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		}
 		logger.exiting("JavaDocOuputGenerator", "writeComplexTypeFile", html);
 	}
-	
-	private void writeUseFile(WSDLDocInterface doc, AbstractType type) throws OutputFormatterException {
+
+	private void writeUseFile(WSDLDocInterface doc, AbstractType type)
+			throws OutputFormatterException {
 		logger.entering("JavaDocOuputGenerator", "writeUseFile");
 		StringBuffer html = new StringBuffer();
-		html.append(HtmlUtils.getStartTags(type.getName(), currentPackageName + "/types-use"));
-		Map<String, String> replacementMap=new HashMap<String, String>();
-		replacementMap.put("REL_PATH", getRelativePath(currentPackageName + "/types-use"));
+		html.append(HtmlUtils.getStartTags(type.getName(), currentPackageName
+				+ "/types-use"));
+		Map<String, String> replacementMap = new HashMap<String, String>();
+		replacementMap.put("REL_PATH", getRelativePath(currentPackageName
+				+ "/types-use"));
 		replacementMap.put("TREE_REL_PATH", "..");
-		
-		buildHeader(html, replacementMap,"typesUseHeader");
-		
+
+		buildHeader(html, replacementMap, "typesUseHeader");
+
 		addHeadingTable(html, "Uses of " + type.getName());
 		boolean tableAdded = false;
-		
+
 		Set<String> methods = returnTypeToMethodMap.get(type.getName());
 		if (methods != null) {
 			html.append(Constants.HTML_BR_TWICE);
@@ -724,24 +718,26 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append("Methods that return " + type.getName());
 			html.append(Constants.HTML_TABLE_TH_END);
 			html.append(Constants.HTML_TABLE_TR_END);
-		
+
 			for (String str : methods) {
 				html.append(getTableRowTagWithStyle("JavadocTableTr"));
-				
+
 				html.append(getTableDataTagWithStyle("JavadocTableTd"));
-				html.append(HtmlUtils.getAnchorTag(null, "../types/" + type.getName() + Constants.DOT_HTML, null, type.getName()));
+				html.append(HtmlUtils.getAnchorTag(null,
+						"../types/" + type.getName() + Constants.DOT_HTML,
+						null, type.getName()));
 				html.append(Constants.HTML_TABLE_TD_END);
-				
+
 				html.append(getTableDataTagWithStyle("JavadocTableTd"));
-				html.append(str);				
+				html.append(str);
 				html.append(Constants.HTML_TABLE_TD_END);
-				
+
 				html.append(Constants.HTML_TABLE_TR_END);
 			}
-			html.append(Constants.HTML_TABLE_END);			
+			html.append(Constants.HTML_TABLE_END);
 			tableAdded = true;
 		}
-		
+
 		methods = paramsToMethodMap.get(type.getName());
 		if (methods != null) {
 			html.append(Constants.HTML_BR_TWICE);
@@ -751,16 +747,17 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append("Methods with parameters of type " + type.getName());
 			html.append(Constants.HTML_TABLE_TH_END);
 			html.append(Constants.HTML_TABLE_TR_END);
- 		
- 			Iterator<String> itMethods = methods.iterator();
-			while(itMethods.hasNext()) {
+
+			Iterator<String> itMethods = methods.iterator();
+			while (itMethods.hasNext()) {
 				String method = itMethods.next();
 				html.append(getTableRowTagWithStyle("JavadocTableTr"));
 				html.append(getTableDataTagWithStyle("JavadocTableTd"));
 				String retTypeName = method.substring(0, method.indexOf('-'));
-				html.append(HtmlUtils.getAnchorTag(null, "../types/" + retTypeName + Constants.DOT_HTML, null, retTypeName));
+				html.append(HtmlUtils.getAnchorTag(null, "../types/"
+						+ retTypeName + Constants.DOT_HTML, null, retTypeName));
 				html.append(Constants.HTML_TABLE_TD_END);
-				
+
 				html.append(getTableDataTagWithStyle("JavadocTableTd"));
 				html.append(method.substring(method.indexOf('-') + 1));
 				html.append(Constants.HTML_TABLE_TD_END);
@@ -769,7 +766,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append(Constants.HTML_TABLE_END);
 			tableAdded = true;
 		}
-		
+
 		if (doc instanceof WSDLDocument) {
 			// write calls that use this type
 			Map<String, List<ComplexType>> map = doc.getElementComplexTypeMap();
@@ -782,7 +779,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				html.append("Types that use " + type.getName());
 				html.append(Constants.HTML_TABLE_TH_END);
 				html.append(Constants.HTML_TABLE_TR_END);
-				
+
 				Set<String> set = new TreeSet<String>();
 				if (tempTypes != null) {
 					for (ComplexType tempType : tempTypes) {
@@ -795,10 +792,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					html.append(getTableDataTagWithStyle("JavadocTableTd"));
 					String name = setIterator.next();
 					html.append(HtmlUtils.getAnchorTag(null, "../types/" + name
-							+ Constants.DOT_HTML, null, name));					
+							+ Constants.DOT_HTML, null, name));
 					html.append(Constants.HTML_TABLE_TD_END);
-					
-					ComplexType cType = doc.searchCType(Utils.removeNameSpace(name));
+
+					ComplexType cType = doc.searchCType(Utils
+							.removeNameSpace(name));
 					String desc = "";
 					if (cType != null) {
 						desc = cType.getAnnotations().getDocumentation();
@@ -811,19 +809,19 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				html.append(Constants.HTML_TABLE_END);
 				tableAdded = true;
 			}
-		}		
-		
+		}
+
 		if (!tableAdded) {
 			html.append(type.getName() + " is not used anywhere directly.");
 		}
-		
+
 		html.append(Constants.HTML_BR);
-		addFooter(html, replacementMap,"typesUseHeader");
+		addFooter(html, replacementMap, "typesUseHeader");
 		html.append(HtmlUtils.getEndTags());
 		writeFile(html, classUseFolderPath, type.getName() + Constants.DOT_HTML);
 		logger.exiting("JavaDocOuputGenerator", "writeUseFile", html);
 	}
-	
+
 	private Set<String> getExtensionTypes(String cTypeName, XSDDocInterface doc) {
 		Set<String> extnTypes = new HashSet<String>();
 		Set<String> parentTypes = doc.getParentToComplexTypeMap()
@@ -847,8 +845,6 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		}
 		return extnTypes;
 	}
-	
-	
 
 	private void addHeadingTable(StringBuffer html, String heading) {
 		html.append(getTableTagWithStyle("JavadocTable"));
@@ -859,7 +855,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append(Constants.HTML_TABLE_TR_END);
 		html.append(Constants.HTML_TABLE_END);
 	}
-	
+
 	private void buildFieldSummary(StringBuffer html, WSDLDocInterface doc,
 			ComplexType type) {
 		Set<Element> elements = type.getChildElements();
@@ -890,7 +886,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append("Name");
 		html.append(Constants.HTML_TABLE_TH_END);
 		html.append(Constants.HTML_TABLE_TR_END);
-		
+
 		for (Element element : elements) {
 			html.append(getTableRowTagWithStyle("JavadocTableTr"));
 			html.append(getTableDataTagWithStyle("JavadocTableTd"));
@@ -899,8 +895,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					|| doc.searchSimpleType(typeCName) != null) {
 
 				html.append(HtmlUtils.getAnchorTag(null, element.getType()
-						+ Constants.DOT_HTML, element.getType(), element
-						.getType()));
+						+ Constants.DOT_HTML, element.getType(),
+						element.getType()));
 			} else {
 				html.append(element.getType());
 			}
@@ -949,8 +945,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 						}
 						for (ParsedAnnotationTag seeLink : seeLinks) {
 							html.append(AnnotationsHelper
-									.processSeelink(seeLink)
-									+ "<br>");
+									.processSeelink(seeLink) + "<br>");
 						}
 					}
 				}
@@ -979,11 +974,12 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags(typeName, currentPackageName
 
+			+ TYPES));
+			Map<String, String> replacementMap = new HashMap<String, String>();
+			replacementMap.put("REL_PATH", getRelativePath(currentPackageName
 					+ TYPES));
-			Map<String, String> replacementMap=new HashMap<String, String>();
-			replacementMap.put("REL_PATH", getRelativePath(currentPackageName + TYPES));
 			replacementMap.put("TYPE_NAME", type.getName());
-			buildHeader(html, replacementMap,"SimpleTypeHeader");
+			buildHeader(html, replacementMap, "SimpleTypeHeader");
 
 			String parentType = type.getBase();
 			if (!Utils.isEmpty(parentType)) {
@@ -1002,9 +998,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			StringBuffer deprDet = AnnotationsHelper.processDeprication(type
 					.getAnnotations());
 			if (deprDet != null) {
-				html
-						.append(getTextInDiv("Depricated: ",
-								"javaDocInlineHeading"));
+				html.append(getTextInDiv("Depricated: ", "javaDocInlineHeading"));
 				html.append(deprDet);
 			}
 			processRelatedInfo(html, doc, type.getAnnotations());
@@ -1057,7 +1051,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				html.append(Constants.HTML_TABLE_END);
 			}
 			writeUseFile(doc, type);
-			addFooter(html, replacementMap,"SimpleTypeHeader");
+			addFooter(html, replacementMap, "SimpleTypeHeader");
 
 			writeFile(html, currentTypesFolderPath, type.getName()
 					+ Constants.DOT_HTML);
@@ -1101,8 +1095,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @throws OutputFormatterException
 	 */
 	private void writeCssFiles() throws OutputFormatterException {
-		InputStream is = this.getClass().getClassLoader().getResourceAsStream(
-				"style.css");
+		InputStream is = this.getClass().getClassLoader()
+				.getResourceAsStream("style.css");
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			StringBuffer sb = new StringBuffer();
@@ -1214,16 +1208,17 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @throws OutputFormatterException
 	 */
 
-	private void buildHeader(StringBuffer html,Map<String,String> replacementMap,String hdrFileParameterName) throws OutputFormatterException {
+	private void buildHeader(StringBuffer html,
+			Map<String, String> replacementMap, String hdrFileParameterName)
+			throws OutputFormatterException {
 
 		logger.entering("JavaDocOutputGenerator", "buildHeader", html);
-		String header = getFooterInformation(replacementMap,hdrFileParameterName);
+		String header = getFooterInformation(replacementMap,
+				hdrFileParameterName);
 		html.append(header);
 
 		logger.exiting("JavaDocOutputGenerator", "buildHeader", html);
 	}
-
-	
 
 	/**
 	 * Adds the footer.
@@ -1233,10 +1228,13 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @throws OutputFormatterException
 	 */
 
-	private void addFooter(StringBuffer html,Map<String,String> replacementMap,String hdrFileParameterName) throws OutputFormatterException {
+	private void addFooter(StringBuffer html,
+			Map<String, String> replacementMap, String hdrFileParameterName)
+			throws OutputFormatterException {
 
 		logger.entering("JavaDocOutputGenerator", "addFooter", html);
-		String content = getFooterInformation(replacementMap,hdrFileParameterName);
+		String content = getFooterInformation(replacementMap,
+				hdrFileParameterName);
 		html.append(getTextInDiv(content, "footer"));
 		html.append(HtmlUtils.getEndTags());
 		logger.exiting("JavaDocOutputGenerator", "addFooter", html);
@@ -1246,20 +1244,27 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * Gets the footer information. This method can be over ridden to supply
 	 * Footer.
 	 * 
+	 * @param replacementMap
+	 *            the replacement map
+	 * @param hdrFileParameterName
+	 *            the hdr file parameter name
 	 * @return the footer information
 	 * @throws OutputFormatterException
+	 *             the output formatter exception
 	 */
 
-	protected String getFooterInformation(Map<String,String> replacementMap,String hdrFileParameterName)
-			throws OutputFormatterException {
+	protected String getFooterInformation(Map<String, String> replacementMap,
+			String hdrFileParameterName) throws OutputFormatterException {
 		String headerFile = outputGenaratorParam.getParameters().get(
 				hdrFileParameterName);
 		if (headerFile != null) {
 			try {
 				String header = Utils.getFileAsString(
 						Utils.convertToURL(headerFile).openStream()).toString();
-				for(Map.Entry<String, String> entry:replacementMap.entrySet()){
-					header = header.replaceAll("\\$\\{"+entry.getKey()+"\\}", entry.getValue());
+				for (Map.Entry<String, String> entry : replacementMap
+						.entrySet()) {
+					header = header.replaceAll("\\$\\{" + entry.getKey()
+							+ "\\}", entry.getValue());
 				}
 				String version = outputGenaratorParam.getParameters().get(
 						"version");
@@ -1391,9 +1396,9 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			setOutputTypes(html, opH, wsdlDoc.getServiceName());
 			html.append(Constants.HTML_TABLE_TD_END);
 			html.append(getTableDataTagWithStyle("JavadocTableTd"));
-			html.append(getTextInSpan(HtmlUtils.getAnchorTag(null, "#"
-					+ opH.getName(), opH.getName(), opH.getName()),
-					"javaDocMethodName")
+			html.append(getTextInSpan(
+					HtmlUtils.getAnchorTag(null, "#" + opH.getName(),
+							opH.getName(), opH.getName()), "javaDocMethodName")
 					+ " (");
 			html.append(getInputTypes(opH, wsdlDoc.getServiceName(), ""));
 
@@ -1402,29 +1407,41 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append(getSummary(wsdlDoc, opH));
 			html.append(Constants.HTML_TABLE_TD_END);
 			html.append(Constants.HTML_TABLE_TR_END);
-			if (opH.getOutputTypes() != null && opH.getOutputTypes().size() > 0 && returnTypeToMethodMap.get(opH.getOutputTypes().get(0).getType()) == null) {
-				returnTypeToMethodMap.put(opH.getOutputTypes().get(0).getType(), new TreeSet<String>());
-			} 
-			String str = wsdlDoc.getServiceName() + "." + opH.getName() + "(";
-			str += getInputTypes(opH, wsdlDoc.getServiceName(), "../") + ")";			
-			str += Constants.HTML_BR + Constants.NBSP_THRICE + getSummary(wsdlDoc, opH);
-			if (opH.getOutputTypes() != null && opH.getOutputTypes().size() > 0){
-				returnTypeToMethodMap.get(opH.getOutputTypes().get(0).getType()).add(str);
+			if (opH.getOutputTypes() != null
+					&& opH.getOutputTypes().size() > 0
+					&& returnTypeToMethodMap.get(opH.getOutputTypes().get(0)
+							.getType()) == null) {
+				returnTypeToMethodMap.put(
+						opH.getOutputTypes().get(0).getType(),
+						new TreeSet<String>());
 			}
-			
+			String str = wsdlDoc.getServiceName() + "." + opH.getName() + "(";
+			str += getInputTypes(opH, wsdlDoc.getServiceName(), "../") + ")";
+			str += Constants.HTML_BR + Constants.NBSP_THRICE
+					+ getSummary(wsdlDoc, opH);
+			if (opH.getOutputTypes() != null && opH.getOutputTypes().size() > 0) {
+				returnTypeToMethodMap
+						.get(opH.getOutputTypes().get(0).getType()).add(str);
+			}
+
 			if (opH.getInputTypes() != null) {
 				Iterator<Element> iter = opH.getInputTypes().iterator();
 				while (iter.hasNext()) {
 					Element elem = iter.next();
 					if (paramsToMethodMap.get(elem.getType()) == null) {
-						paramsToMethodMap.put(elem.getType(), new TreeSet<String>());						
+						paramsToMethodMap.put(elem.getType(),
+								new TreeSet<String>());
 					}
 					String retType = "";
-					if (opH.getOutputTypes() != null && opH.getOutputTypes().size() > 0) {
+					if (opH.getOutputTypes() != null
+							&& opH.getOutputTypes().size() > 0) {
 						retType = opH.getOutputTypes().get(0).getType();
-					}					
-					str = retType + "-" + wsdlDoc.getServiceName() + "." + opH.getName() + "(" + getParams(opH.getInputTypes(), "../") + ")";
-					str += Constants.HTML_BR + Constants.NBSP_THRICE + getSummary(wsdlDoc, opH);
+					}
+					str = retType + "-" + wsdlDoc.getServiceName() + "."
+							+ opH.getName() + "("
+							+ getParams(opH.getInputTypes(), "../") + ")";
+					str += Constants.HTML_BR + Constants.NBSP_THRICE
+							+ getSummary(wsdlDoc, opH);
 					paramsToMethodMap.get(elem.getType()).add(str);
 				}
 			}
@@ -1440,19 +1457,19 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			while (iter.hasNext()) {
 				Element elem = iter.next();
 
-				params = HtmlUtils.getAnchorTag(null, locBase + "types" + SEPARATOR
-						+ elem.getType() + Constants.DOT_HTML, elem.getType(),
-						elem.getType());
+				params = HtmlUtils.getAnchorTag(null, locBase + "types"
+						+ SEPARATOR + elem.getType() + Constants.DOT_HTML,
+						elem.getType(), elem.getType());
 				params += " " + elem.getName();
 				if (iter.hasNext()) {
 					params += ",";
 				}
-				
+
 			}
 		}
 		return params;
 	}
-	
+
 	/**
 	 * Sets the input types.
 	 * 
@@ -1474,12 +1491,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			while (iter.hasNext()) {
 				Element elem = iter.next();
 				html.append(getTextInSpan(HtmlUtils.getAnchorTag(null, "types"
-						+ SEPARATOR + elem.getType() + Constants.DOT_HTML, elem
-						.getType(), elem.getType()), "javaDocMethodTypes"));
+						+ SEPARATOR + elem.getType() + Constants.DOT_HTML,
+						elem.getType(), elem.getType()), "javaDocMethodTypes"));
 				html.append(" ");
-				html
-						.append(getTextInSpan(elem.getName(),
-								"javaDocMethodTypes"));
+				html.append(getTextInSpan(elem.getName(), "javaDocMethodTypes"));
 				if (iter.hasNext()) {
 					html.append(",");
 				}
@@ -1515,8 +1530,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				Element elem = iter.next();
 
 				html.append(getTextInSpan(HtmlUtils.getAnchorTag(null, "types"
-						+ SEPARATOR + elem.getType() + Constants.DOT_HTML, elem
-						.getType(), elem.getType()), "javaDocMethodTypes"));
+						+ SEPARATOR + elem.getType() + Constants.DOT_HTML,
+						elem.getType(), elem.getType()), "javaDocMethodTypes"));
 				if (iter.hasNext() && rtBuf.length() > 0) {
 					html.append(",");
 				}
@@ -1540,10 +1555,10 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 	 * @param serviceName
 	 *            the service name
 	 */
-	private String getInputTypes(OperationHolder opH,
-			String serviceName, String locBase) {
+	private String getInputTypes(OperationHolder opH, String serviceName,
+			String locBase) {
 		logger.entering("JavaDocOutputGenerator", "setInputTypes",
-				new Object[] {opH });
+				new Object[] { opH });
 		String params = "";
 		List<Element> inputs = opH.getInputTypes();
 		if (inputs != null) {
@@ -1551,17 +1566,17 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			while (iter.hasNext()) {
 				Element elem = iter.next();
 
-				params = HtmlUtils.getAnchorTag(null, locBase + "types" + SEPARATOR
-						+ elem.getType() + Constants.DOT_HTML, elem.getType(),
-						elem.getType());
+				params = HtmlUtils.getAnchorTag(null, locBase + "types"
+						+ SEPARATOR + elem.getType() + Constants.DOT_HTML,
+						elem.getType(), elem.getType());
 				params += " " + elem.getName();
 				if (iter.hasNext()) {
 					params += ",";
 				}
-				
+
 			}
 		}
-		
+
 		logger.exiting("JavaDocOutputGenerator", "setInputTypes", params);
 		return params;
 	}
@@ -1625,9 +1640,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		html.append(Constants.HTML_TABLE_TR_END);
 		html.append(Constants.HTML_TABLE_END);
 		for (OperationHolder opH : portType.getOperations()) {
-			html
-					.append(HtmlUtils.getAnchorTag(opH.getName(), null, null,
-							null));
+			html.append(HtmlUtils.getAnchorTag(opH.getName(), null, null, null));
 			html.append(getTextInDiv(opH.getName(), "javaDocInlineHeading"));
 
 			html.append("<pre wrap='true'>");
@@ -1724,7 +1737,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 									"javaDocRelatedHeading"));
 							html.append(getTextInSpan(summary,
 									"javaDocOpDetail")
-									+ Constants.HTML_BR + Constants.HTML_BR);
+									+ Constants.HTML_BR
+									+ Constants.HTML_BR);
 						}
 					}
 					documentation = annotationInfo.getDocumentation();
@@ -1732,8 +1746,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 						html.append(getTextInDiv("Request Description: ",
 								"javaDocRelatedHeading"));
 						html.append(getTextInSpan(documentation,
-								"javaDocOpDetail")
-								+ Constants.HTML_BR);
+								"javaDocOpDetail") + Constants.HTML_BR);
 					}
 				}
 
@@ -1752,8 +1765,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 								+ getTextInDiv("Response Description: ",
 										"javaDocRelatedHeading"));
 						html.append(getTextInSpan(opDocumentation,
-								"javaDocOpDetail")
-								+ Constants.HTML_BR);
+								"javaDocOpDetail") + Constants.HTML_BR);
 					}
 				}
 			}
@@ -1828,33 +1840,26 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 						.replaceAll("\\{#\\}", "class=\""
 								+ "JavadocOccurancesTable" + "\""));
 				html.append(getTableRowTagWithStyle("JavadocOccurancTableTr"));
-				html
-						.append(getTableHeadTagWithStyle("JavadocOccurancTableHeaders"));
+				html.append(getTableHeadTagWithStyle("JavadocOccurancTableHeaders"));
 				html.append("Call Name");
 				html.append(Constants.HTML_TABLE_TH_END);
-				html
-						.append(getTableHeadTagWithStyle("JavadocOccurancTableHeaders"));
+				html.append(getTableHeadTagWithStyle("JavadocOccurancTableHeaders"));
 				html.append("Required");
 				html.append(Constants.HTML_TABLE_TH_END);
-				html
-						.append(getTableHeadTagWithStyle("JavadocOccurancTableHeaders"));
+				html.append(getTableHeadTagWithStyle("JavadocOccurancTableHeaders"));
 				html.append("Returned");
 				html.append(Constants.HTML_TABLE_TH_END);
 				html.append(Constants.HTML_TABLE_TR_END);
 				for (Map.Entry<String, String[]> callsRet : callReqRet
 						.entrySet()) {
-					html
-							.append(getTableRowTagWithStyle("JavadocOccurancTableTr"));
-					html
-							.append(getTableDataTagWithStyle("JavadocOccurancTableTd"));
+					html.append(getTableRowTagWithStyle("JavadocOccurancTableTr"));
+					html.append(getTableDataTagWithStyle("JavadocOccurancTableTd"));
 					html.append(callsRet.getKey());
 					html.append(Constants.HTML_TABLE_TD_END);
-					html
-							.append(getTableDataTagWithStyle("JavadocOccurancTableTd"));
+					html.append(getTableDataTagWithStyle("JavadocOccurancTableTd"));
 					html.append(callsRet.getValue()[0]);
 					html.append(Constants.HTML_TABLE_TD_END);
-					html
-							.append(getTableDataTagWithStyle("JavadocOccurancTableTd"));
+					html.append(getTableDataTagWithStyle("JavadocOccurancTableTd"));
 					html.append(callsRet.getValue()[1]);
 					html.append(Constants.HTML_TABLE_TD_END);
 					html.append(Constants.HTML_TABLE_TR_END);
@@ -1942,9 +1947,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				repeatableString = Constants.HTML_BR + " Occurrence : ["
 						+ minOccurs + "..." + maxOccurs + "]";
 			}
-			html
-					.append(getTextInDiv(repeatableString,
-							"javaDocRelatedHeading"));
+			html.append(getTextInDiv(repeatableString, "javaDocRelatedHeading"));
 			if (anno != null) {
 				List<ParsedAnnotationTag> callInfos = AnnotationsHelper
 						.getCallInfo(anno);
@@ -2107,23 +2110,23 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * {@inheritDoc}
 	 * 
-	 * @see
-	 * org.ebayopensource.turmeric.tools.annoparser.outputformatter.DocHandler
-	 * #handleXsdDoc
-	 * (org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface,
-	 * java.lang.String)
+	 * Java Doc is not available for XSD.
 	 */
-
 	public void generateXsdOutput(XSDDocInterface xsdDoc,
 			OutputGenaratorParam outputGenaratorParam) {
-		// Java Doc is not available for XSD
 		return;
 
 	}
 
+	/**
+	 * Creates the tree files.
+	 * 
+	 * @throws OutputFormatterException
+	 *             the output formatter exception
+	 */
 	public void createTreeFiles() throws OutputFormatterException {
 		List<XSDDocInterface> allPackages = new ArrayList<XSDDocInterface>();
 		for (Map.Entry<String, List<XSDDocInterface>> entry : packageDocMap
@@ -2133,7 +2136,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			for (XSDDocInterface xsd : list) {
 				List<ComplexType> cTypes = xsd.getAllComplexTypes();
 				for (ComplexType cType : cTypes) {
-					cType.setPackageName(((WSDLDocInterface)xsd).getPackageName());
+					cType.setPackageName(((WSDLDocInterface) xsd)
+							.getPackageName());
 				}
 			}
 
@@ -2141,7 +2145,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 
 			allPackages.addAll(entry.getValue());
 		}
-	
+
 		writePackageTree(allPackages, null, true);
 
 	}
@@ -2154,11 +2158,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				.entrySet()) {
 			StringBuffer html = new StringBuffer();
 			html.append(HtmlUtils.getStartTags("index-" + i, "../"));
-			Map<String, String> replacementMap=new HashMap<String, String>();
+			Map<String, String> replacementMap = new HashMap<String, String>();
 			replacementMap.put("REL_PATH", "..");
 			replacementMap.put("TREE_REL_PATH", "..");
 			replacementMap.put("KEY_LINKS", keyLinks.toString());
-			buildHeader(html,replacementMap,"indexHeader");
+			buildHeader(html, replacementMap, "indexHeader");
 			html.append("<h2><b>" + entry.getKey() + "</b></h2><dl>");
 			List<IndexerBaseDataObject> data = entry.getValue()
 					.getDataObjects();
@@ -2247,7 +2251,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				}
 			}
 			html.append("</dl>");
-			addFooter(html,replacementMap,"indexHeader");
+			addFooter(html, replacementMap, "indexHeader");
 			html.append(HtmlUtils.getEndTags());
 			writeFile(html, getCurrentOutputDir() + "index-files", "index-" + i
 					+ ".html");
@@ -2281,15 +2285,15 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 						if (element.getContainerComplexType() != null
 								&& element.getContainerComplexType().getName()
 										.equals(complexType.getName())) {
-							addElementToIndexMap(completeMap, element, wsdl
-									.getServiceName(), entry.getKey());
+							addElementToIndexMap(completeMap, element,
+									wsdl.getServiceName(), entry.getKey());
 						}
 					}
 					if (complexType.getSimpleAttributeContent() != null) {
 						for (Element element : complexType
 								.getSimpleAttributeContent()) {
-							addElementToIndexMap(completeMap, element, wsdl
-									.getServiceName(), entry.getKey());
+							addElementToIndexMap(completeMap, element,
+									wsdl.getServiceName(), entry.getKey());
 						}
 					}
 					IndexerType type = new IndexerType();
@@ -2436,8 +2440,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 									.getElement().getAnnotationInfo());
 					if (depreDetails != null) {
 						deprecatedElements.put(
-								((IndexerElementHolder) dataObj), depreDetails
-										.toString());
+								((IndexerElementHolder) dataObj),
+								depreDetails.toString());
 					}
 				}
 				if (dataObj instanceof IndexerOperationHolder) {
@@ -2480,11 +2484,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 		}
 		StringBuffer html = new StringBuffer();
 		html.append(HtmlUtils.getStartTags("Deprecation Details", null));
-		Map<String, String> replacementMap=new HashMap<String, String>();
+		Map<String, String> replacementMap = new HashMap<String, String>();
 		replacementMap.put("REL_PATH", ".");
 		replacementMap.put("TREE_REL_PATH", ".");
 		replacementMap.put("KEY_LINKS", "");
-		buildHeader(html,replacementMap,"indexHeader");
+		buildHeader(html, replacementMap, "indexHeader");
 		html.append(getTextInDiv("Deprecation Details", "pageHeading"));
 		html.append(Constants.HTML_BR);
 		if (!(deprecatedTypes.isEmpty() && deprecatedElements.isEmpty()
@@ -2502,19 +2506,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					html.append(getTableRowTagWithStyle("JavadocTableTr"));
 					html.append(getTableDataTagWithStyle("JavadocTableTd"));
 
-					html
-							.append("<a href='"
-									+ op.getPackageName()
-									+ op.getBaseName()
-									+ Constants.DOT_HTML
-									+ "' title='Operation in "
-									+ op.getPackageName()
-									+ "'>"
-									+ op.getBaseName()
-									+ "</a>"
-									+ "<br>"
-									+ "<i>"
-									+ entry.getValue() + "</i>&nbsp;");
+					html.append("<a href='" + op.getPackageName()
+							+ op.getBaseName() + Constants.DOT_HTML
+							+ "' title='Operation in " + op.getPackageName()
+							+ "'>" + op.getBaseName() + "</a>" + "<br>" + "<i>"
+							+ entry.getValue() + "</i>&nbsp;");
 					html.append(Constants.HTML_TABLE_TD_END);
 					html.append(Constants.HTML_TABLE_TR_END);
 				}
@@ -2533,20 +2529,11 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 					html.append(getTableRowTagWithStyle("JavadocTableTr"));
 					html.append(getTableDataTagWithStyle("JavadocTableTd"));
 
-					html
-							.append("<a href='"
-									+ op.getPackageName()
-									+ "/types/"
-									+ op.getBaseName()
-									+ Constants.DOT_HTML
-									+ "' title='Type in "
-									+ op.getPackageName()
-									+ "'>"
-									+ op.getBaseName()
-									+ "</a>"
-									+ "<br>"
-									+ "<i>"
-									+ entry.getValue() + "</i>&nbsp;");
+					html.append("<a href='" + op.getPackageName() + "/types/"
+							+ op.getBaseName() + Constants.DOT_HTML
+							+ "' title='Type in " + op.getPackageName() + "'>"
+							+ op.getBaseName() + "</a>" + "<br>" + "<i>"
+							+ entry.getValue() + "</i>&nbsp;");
 					html.append(Constants.HTML_TABLE_TD_END);
 					html.append(Constants.HTML_TABLE_TR_END);
 				}
@@ -2603,10 +2590,8 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 							+ "'><b>" + elemHolder.getBaseName() + "</b></a> -"
 							+ typeDesc + "<a href='" + baseHref + "' title='"
 							+ baseTitleDesc + "'>" + baseName + "</a>");
-					html
-							.append("<br>"
-									+ "<i>"
-									+ entry.getValue() + "</i>&nbsp;");
+					html.append("<br>" + "<i>" + entry.getValue()
+							+ "</i>&nbsp;");
 					html.append(Constants.HTML_TABLE_TD_END);
 					html.append(Constants.HTML_TABLE_TR_END);
 				}
@@ -2619,7 +2604,6 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 				html.append(Constants.HTML_TABLE_TH_END);
 				html.append(Constants.HTML_TABLE_TR_END);
 
-				
 				for (Map.Entry<IndexerEnumValueElements, String> entry : deprecatedEnums
 						.entrySet()) {
 					html.append(getTableRowTagWithStyle("JavadocTableTr"));
@@ -2641,10 +2625,7 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 							+ "'><b>" + elemHolder.getBaseName() + "</b></a> -"
 							+ typeDesc + "<a href='" + baseHref + "' title='"
 							+ baseTitleDesc + "'>" + baseName + "</a>");
-					html
-							.append("<br>"
-									+ "<i>"
-									+ entry.getValue() + "</i>");
+					html.append("<br>" + "<i>" + entry.getValue() + "</i>");
 					html.append(Constants.HTML_TABLE_TD_END);
 					html.append(Constants.HTML_TABLE_TR_END);
 				}
@@ -2654,18 +2635,14 @@ public class JavaDocOutputGenerator implements OutputGenerator {
 			html.append("<h2>None of the enitites are Deprecated</h2>");
 		}
 
-		addFooter(html,replacementMap,"indexHeader");
+		addFooter(html, replacementMap, "indexHeader");
 		html.append(HtmlUtils.getEndTags());
 		writeFile(html, getCurrentOutputDir(), "DeprecatedObjects.html");
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.ebayopensource.turmeric.tools.annoparser.outputformatter.OutputGenerator
-	 * #completeProcessing()
+	/**
+	 * {@inheritDoc}
 	 */
 	public void completeProcessing() throws OutputFormatterException {
 		if (packageServicesMap != null && !packageServicesMap.isEmpty()) {

@@ -13,15 +13,15 @@ import org.ebayopensource.turmeric.tools.annoparser.parser.AnnotationParser;
 import org.w3c.dom.Element;
 
 /**
- * The Class TestAnnoParserClass is just a test implementation to check if Custom Class is getting Instantiated.
- *
+ * The Class TestAnnoParserClass is just a test implementation to check if
+ * Custom Class is getting Instantiated.
+ * 
  * @author sdaripelli
  */
 public class TestAnnoParserClass implements AnnotationParser {
 
-
-	/* (non-Javadoc)
-	 * @see org.ebayopensource.turmeric.tools.annoparser.parser.AnnotationParser#parseAnnotation(org.w3c.dom.Element)
+	/**
+	 * {@inheritDoc}
 	 */
 	public ParsedAnnotationTag parseAnnotation(Element elem) {
 		System.out.println(" IN Parse Annotation");

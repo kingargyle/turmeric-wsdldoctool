@@ -35,6 +35,8 @@ public class Utils {
 
 	
 	private final static String CLASS_NAME = WsdlParserImpl.class.getClass().getName();  
+	
+	/** The logger. */
 	static Logger logger  = Logger.getLogger(CLASS_NAME);
 	
 	/**
@@ -120,6 +122,13 @@ public class Utils {
 		}
 		return retList;
 	}
+	
+	/**
+	 * Gets the previous comment.
+	 *
+	 * @param element the element
+	 * @return the previous comment
+	 */
 	public static String getPreviousComment(Node element) {
 		while (element.getPreviousSibling() != null) {
 			Node prev = element.getPreviousSibling();
@@ -134,6 +143,12 @@ public class Utils {
 		return null;
 	}
 
+	/**
+	 * Gets the next comment.
+	 *
+	 * @param element the element
+	 * @return the next comment
+	 */
 	public static String getNextComment(Node element) {
 		while (element.getNextSibling() != null) {
 			Node prev = element.getNextSibling();
@@ -183,12 +198,10 @@ public class Utils {
 
 	/**
 	 * Gets the file as string.
-	 * 
-	 * @param path
-	 *            the path
+	 *
+	 * @param iStream the i stream
 	 * @return the file as string
-	 * @throws OutputFormatterException
-	 *             the output formatter exception
+	 * @throws OutputFormatterException the output formatter exception
 	 */
 	public static StringBuffer getFileAsString(InputStream iStream)
 			throws OutputFormatterException {
@@ -216,11 +229,10 @@ public class Utils {
 	 * Convert to url. The path supplied is first tried as a URL external form
 	 * string, if it fails it is tried as a Class path resource, Then it is
 	 * tried as a local file path.
-	 * 
-	 * @param path
-	 *            the path
+	 *
+	 * @param path the path
 	 * @return the uRL
-	 * @throws OutputFormatterException
+	 * @throws OutputFormatterException the output formatter exception
 	 */
 	public static URL convertToURL(String path) throws OutputFormatterException {
 		URL url = null;

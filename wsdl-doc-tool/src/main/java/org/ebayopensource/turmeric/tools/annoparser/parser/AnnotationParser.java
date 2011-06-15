@@ -12,12 +12,13 @@ import org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotation
 import org.w3c.dom.Element;
 
 /**
- * The Interface AnnotationParser is to be implemented to supply the Annotation Parser for supporting the Custom Annotations.
- *
+ * The Interface AnnotationParser is to be implemented to supply the Annotation
+ * Parser for supporting the Custom Annotations.
+ * 
  * @author srengarajan
  */
 public interface AnnotationParser {
-	
+
 	/**
 	 * Parses the annotation.
 	 * 

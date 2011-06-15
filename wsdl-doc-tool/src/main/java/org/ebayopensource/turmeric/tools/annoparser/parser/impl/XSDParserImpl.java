@@ -55,7 +55,7 @@ import org.xml.sax.SAXException;
 /**
  * Implementation of the XSDParser interface Provides a light weight
  * representation of the xsd document either provided as input or part of the
- * wsdl document
+ * wsdl document.
  * 
  * @author srengarajan
  */
@@ -63,6 +63,8 @@ public class XSDParserImpl implements XSDParser {
 
 	private final static String CLASS_NAME = XSDParserImpl.class.getClass()
 			.getName();
+
+	/** The logger. */
 	Logger logger = Logger.getLogger(CLASS_NAME);
 
 	/**
@@ -86,7 +88,9 @@ public class XSDParserImpl implements XSDParser {
 	private Map elemCTypeMap = new HashMap<Element, List<ComplexType>>();
 
 	/**
-	 * association of ComplexType -> Operations
+	 * association of ComplexType -> Operations.
+	 * 
+	 * @return the elem c type map
 	 */
 
 	/**
@@ -155,7 +159,7 @@ public class XSDParserImpl implements XSDParser {
 	 * Instantiates a new xSD parser impl.
 	 * 
 	 */
-	public XSDParserImpl(){
+	public XSDParserImpl() {
 	}
 
 	/**
@@ -203,12 +207,8 @@ public class XSDParserImpl implements XSDParser {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.ebayopensource.turmeric.tools.annoparser.parser.XSDParser#parse(java
-	 * .lang.String)
+	/**
+	 * {@inheritDoc}
 	 */
 	public synchronized XSDDocInterface parse(String url)
 			throws ParserException {
@@ -218,7 +218,7 @@ public class XSDParserImpl implements XSDParser {
 			URL file = new URL(url);
 			Document doc = initialize(file);
 			xsdDocument.setDocumentURL(file);
-			
+
 			if (doc != null) {
 
 				this.visit(doc);
@@ -227,8 +227,8 @@ public class XSDParserImpl implements XSDParser {
 				this.linkChildTypes(xsdDocument);
 				this.parseAllNSSimpleTypes(doc, xsdDocument);
 				this.buildElementToTypeMap(xsdDocument);
-				mergeImportedXsd(doc, xsdDocument,"import");
-				mergeImportedXsd(doc, xsdDocument,"redefine");
+				mergeImportedXsd(doc, xsdDocument, "import");
+				mergeImportedXsd(doc, xsdDocument, "redefine");
 				handleAnonymous(doc, xsdDocument);
 			}
 		} catch (SAXException e) {
@@ -247,73 +247,76 @@ public class XSDParserImpl implements XSDParser {
 		postProcessXsdDocument(xsdDocument, doc);
 		return xsdDocument;
 	}
-	private void handleAnonymous(Document document, XSDDocument xsdDocument){
-		List<Element> elements=new ArrayList<Element>(xsdDocument.getAllIndependentElements());
-		int anonymousIndex=0;
-		for(ComplexType cType:xsdDocument.getAllComplexTypes()){
-			if(Utils.isEmpty(cType.getName())){
-				cType.setName("Type "+anonymousIndex++);
+
+	private void handleAnonymous(Document document, XSDDocument xsdDocument) {
+		List<Element> elements = new ArrayList<Element>(
+				xsdDocument.getAllIndependentElements());
+		int anonymousIndex = 0;
+		for (ComplexType cType : xsdDocument.getAllComplexTypes()) {
+			if (Utils.isEmpty(cType.getName())) {
+				cType.setName("Type " + anonymousIndex++);
 			}
 			elements.addAll(cType.getChildElements());
-			if(cType.getSimpleAttributeContent()!=null){
-				for(AttributeElement attr: cType.getSimpleAttributeContent()){
-					if(Utils.isEmpty(attr.getName())){
-						attr.setName("Attribute "+anonymousIndex++);
+			if (cType.getSimpleAttributeContent() != null) {
+				for (AttributeElement attr : cType.getSimpleAttributeContent()) {
+					if (Utils.isEmpty(attr.getName())) {
+						attr.setName("Attribute " + anonymousIndex++);
 					}
-					if(Utils.isEmpty(attr.getType())){
+					if (Utils.isEmpty(attr.getType())) {
 						attr.setType("string");
-						if(Utils.isEmpty(attr.getBaseType())){
+						if (Utils.isEmpty(attr.getBaseType())) {
 							attr.setBaseType("string");
 						}
-					}else if(Utils.isEmpty(attr.getBaseType())){
+					} else if (Utils.isEmpty(attr.getBaseType())) {
 						attr.setBaseType(attr.getType());
 					}
-					
-					
+
 				}
 			}
 		}
-		
-		for(SimpleType cType:xsdDocument.getAllSimpleTypes()){
-			if(Utils.isEmpty(cType.getName())){
-				String typeName="Type "+anonymousIndex++;
+
+		for (SimpleType cType : xsdDocument.getAllSimpleTypes()) {
+			if (Utils.isEmpty(cType.getName())) {
+				String typeName = "Type " + anonymousIndex++;
 				cType.setName(typeName);
-				if(cType.getEnums()!=null){
-					for(EnumElement enumE:cType.getEnums()){
+				if (cType.getEnums() != null) {
+					for (EnumElement enumE : cType.getEnums()) {
 						enumE.setType(typeName);
 					}
 				}
 			}
-			
+
 		}
-		
-		for(Element element:elements){
-			if(Utils.isEmpty(element.getName())){
-				String refType=null;
-				for(Attribute attr:element.getAttributes()){
-					if(attr.getName().equals("ref")){
-						refType=attr.getValue();
-						refType=Utils.removeNameSpace(refType);
+
+		for (Element element : elements) {
+			if (Utils.isEmpty(element.getName())) {
+				String refType = null;
+				for (Attribute attr : element.getAttributes()) {
+					if (attr.getName().equals("ref")) {
+						refType = attr.getValue();
+						refType = Utils.removeNameSpace(refType);
 						break;
 					}
 				}
-				if(refType!=null){
-					Element refElem=xsdDocument.searchIndependentElement(refType);
-					if(refElem!=null){
+				if (refType != null) {
+					Element refElem = xsdDocument
+							.searchIndependentElement(refType);
+					if (refElem != null) {
 						element.setName(refElem.getName());
 						element.setType(refElem.getType());
 					}
 				}
-				if(Utils.isEmpty(element.getName())){
-					element.setName("Element "+anonymousIndex++);
+				if (Utils.isEmpty(element.getName())) {
+					element.setName("Element " + anonymousIndex++);
 				}
-				if(Utils.isEmpty(element.getType())){
+				if (Utils.isEmpty(element.getType())) {
 					element.setName("Anonymous Type");
 				}
 			}
-			
+
 		}
 	}
+
 	/**
 	 * Convert to url. The path supplied is first tried as a URL external form
 	 * string, if it fails it is tried as a Class path resource, Then it is
@@ -372,7 +375,6 @@ public class XSDParserImpl implements XSDParser {
 		return url;
 	}
 
-
 	private void mergeImportedXsd(Document document, XSDDocument xsdDocument,
 			String tagName) throws ParserException, SAXException, IOException {
 		if (document != null) {
@@ -382,14 +384,15 @@ public class XSDParserImpl implements XSDParser {
 					org.w3c.dom.Element element = (org.w3c.dom.Element) nodes
 							.item(i);
 					if (element.hasAttribute("schemaLocation")) {
-						URL url = convertToURL(element
-								.getAttribute("schemaLocation"), xsdDocument
-								.getDocumentURL());
+						URL url = convertToURL(
+								element.getAttribute("schemaLocation"),
+								xsdDocument.getDocumentURL());
 						if (url != null) {
 							String schemaLocation = url.toExternalForm();
 							if (!xsdDocument.getXsdsProcessed().contains(
 									schemaLocation)) {
-								XSDParserImpl parser = Context.getContext().getNewXsdParser();
+								XSDParserImpl parser = Context.getContext()
+										.getNewXsdParser();
 								XSDDocument parsedDocument = (XSDDocument) parser
 										.parse(schemaLocation);
 								for (Element elem : parsedDocument
@@ -398,25 +401,35 @@ public class XSDParserImpl implements XSDParser {
 								}
 								for (ComplexType elem : parsedDocument
 										.getAllComplexTypes()) {
-									ComplexType cType=xsdDocument.searchCType(elem.getName());
-									if(cType!=null && cType.getParentType()!=null && cType.getParentType().equals(elem.getName())){
-										if(cType.getChildElements()!=null){
-											cType.getChildElements().addAll(elem.getChildElements());
-										}else{
-											cType.setChildElements(elem.getChildElements());
+									ComplexType cType = xsdDocument
+											.searchCType(elem.getName());
+									if (cType != null
+											&& cType.getParentType() != null
+											&& cType.getParentType().equals(
+													elem.getName())) {
+										if (cType.getChildElements() != null) {
+											cType.getChildElements().addAll(
+													elem.getChildElements());
+										} else {
+											cType.setChildElements(elem
+													.getChildElements());
 										}
-										if(cType.getAttributes()!=null){
-											cType.getAttributes().addAll(elem.getAttributes());
-										}else{
-											cType.setAttributes(elem.getAttributes());
+										if (cType.getAttributes() != null) {
+											cType.getAttributes().addAll(
+													elem.getAttributes());
+										} else {
+											cType.setAttributes(elem
+													.getAttributes());
 										}
-										if(cType.getInstanceElements()!=null){
-											cType.getInstanceElements().addAll(elem.getInstanceElements());
-										}else{
-											cType.setInstanceElements(elem.getInstanceElements());
+										if (cType.getInstanceElements() != null) {
+											cType.getInstanceElements().addAll(
+													elem.getInstanceElements());
+										} else {
+											cType.setInstanceElements(elem
+													.getInstanceElements());
 										}
 										cType.setParentType(null);
-									}else{
+									} else {
 										xsdDocument.addComplexType(elem);
 									}
 								}
@@ -438,12 +451,9 @@ public class XSDParserImpl implements XSDParser {
 										schemaLocation);
 							}
 						} else {
-							Logger
-									.getLogger(XSDParserImpl.class.getName())
-									.log(
-											Level.SEVERE,
-											element
-													.getAttribute("schemaLocation")
+							Logger.getLogger(XSDParserImpl.class.getName())
+									.log(Level.SEVERE,
+											element.getAttribute("schemaLocation")
 													+ " is Not valid");
 						}
 					}
@@ -452,7 +462,6 @@ public class XSDParserImpl implements XSDParser {
 
 		}
 	}
-	
 
 	/**
 	 * Builds the element to type map.
@@ -523,9 +532,10 @@ public class XSDParserImpl implements XSDParser {
 	 *            the src doc
 	 * @param xsdDocument
 	 *            the xsd document
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
-	private void parseAllNSElements(Document srcDoc, XSDDocument xsdDocument) throws ParserException {
+	private void parseAllNSElements(Document srcDoc, XSDDocument xsdDocument)
+			throws ParserException {
 		logger.log(Level.FINER,
 				"Entering parseAllNSElements method in XSDParser",
 				new Object[] { srcDoc, xsdDocument });
@@ -546,9 +556,10 @@ public class XSDParserImpl implements XSDParser {
 	 *            the src doc
 	 * @param xsdDocument
 	 *            the xsd document
-	 * @throws XsdDocException 
+	 * @throws XsdDocException
 	 */
-	private void parseAllNSComplexTypes(Document srcDoc, XSDDocument xsdDocument) throws ParserException {
+	private void parseAllNSComplexTypes(Document srcDoc, XSDDocument xsdDocument)
+			throws ParserException {
 		parseComplexTypes(srcDoc, xsdDocument);
 		logger.log(Level.FINER,
 				"Exiting parseAllNSComplexTypes method in XSDParser",
@@ -562,14 +573,15 @@ public class XSDParserImpl implements XSDParser {
 	 *            the src doc
 	 * @param xsdDocument
 	 *            the xsd document
-	 * @throws XsdDocException 
+	 * @throws XsdDocException
 	 */
-	private void parseAllNSSimpleTypes(Document srcDoc, XSDDocument xsdDocument) throws ParserException {
+	private void parseAllNSSimpleTypes(Document srcDoc, XSDDocument xsdDocument)
+			throws ParserException {
 		logger.log(Level.FINER,
 				"Entering parseAllNSSimpleTypes method in XSDParser",
 				new Object[] { srcDoc, xsdDocument });
-		parseSimpleTypes( srcDoc, xsdDocument);
-		
+		parseSimpleTypes(srcDoc, xsdDocument);
+
 		logger.log(Level.FINER,
 				"Exiting parseAllNSComplexTypes method in XSDParser",
 				new Object[] { srcDoc, xsdDocument });
@@ -586,11 +598,11 @@ public class XSDParserImpl implements XSDParser {
 	 *            parses "element" nodes from the document and constructs its
 	 *            POJO representation. sticks the annotation associated with the
 	 *            element.
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	private void parseAllElements(String tagName, Document srcDoc,
 			XSDDocument xsdDocument) throws ParserException {
-		
+
 		logger.log(Level.FINER,
 				"Entering parseAllElements method in XSDParser", new Object[] {
 						tagName, srcDoc, xsdDocument });
@@ -601,40 +613,42 @@ public class XSDParserImpl implements XSDParser {
 			org.w3c.dom.Element obj = (org.w3c.dom.Element) domElements.item(i);
 			String name = obj.getAttribute("name");
 			Element elem = Context.getContext().getNewElement();
-			
+
 			elem.setName(name);
 			String type = obj.getAttribute("type");
-			if(!Utils.isEmpty(type)){
+			if (!Utils.isEmpty(type)) {
 				String[] typeParts = type.split(":");
-				if (typeParts != null && typeParts.length > 1){
+				if (typeParts != null && typeParts.length > 1) {
 					type = typeParts[1];
 				}
-			}else{
-				NodeList nodes=obj.getElementsByTagNameNS("*", "complexType");
-				if(nodes!=null && nodes.getLength()>0){
-					org.w3c.dom.Element node=(org.w3c.dom.Element)nodes.item(0);
-					ComplexType cType=processComplexType(xsdDocument, node);
-					if(Utils.isEmpty(cType.getName())){
-						cType.setName(name+"Type");
-						List<Element> instances = (List<Element>) typeElementsMap.get(name);
+			} else {
+				NodeList nodes = obj.getElementsByTagNameNS("*", "complexType");
+				if (nodes != null && nodes.getLength() > 0) {
+					org.w3c.dom.Element node = (org.w3c.dom.Element) nodes
+							.item(0);
+					ComplexType cType = processComplexType(xsdDocument, node);
+					if (Utils.isEmpty(cType.getName())) {
+						cType.setName(name + "Type");
+						List<Element> instances = (List<Element>) typeElementsMap
+								.get(name);
 						if (instances != null) {
 							cType.setInstanceElements(instances);
-						}else{
+						} else {
 							instances = new ArrayList<Element>();
 							instances.add(elem);
 							cType.setInstanceElements(instances);
 						}
 					}
-					type=cType.getName();
+					type = cType.getName();
 					xsdDocument.addComplexType(cType);
 				}
 			}
-			
+
 			elem.setType(type);
-			String prevComment=Utils.getPreviousComment(obj);
-			String nextComment=Utils.getNextComment(obj);
-			if(prevComment!=null || nextComment!=null){
-				Comment comment=new Comment();
+			String prevComment = Utils.getPreviousComment(obj);
+			String nextComment = Utils.getNextComment(obj);
+			if (prevComment != null || nextComment != null) {
+				Comment comment = new Comment();
 				comment.setNextComment(nextComment);
 				comment.setPreviousComment(prevComment);
 				elem.setComment(comment);
@@ -661,14 +675,12 @@ public class XSDParserImpl implements XSDParser {
 					elem.getAttributes().add(attribute);
 				}
 			}
-			elem.setAnnotationInfo(parseAnnotation( obj));
+			elem.setAnnotationInfo(parseAnnotation(obj));
 			postProcessElement(elem, obj);
 			elements.add(elem);
 			xsdDocument.addIndependentElement(elem);
-			logger
-					.log(Level.FINER,
-							"Exiting parseAllElements method in XSDParser",
-							xsdDocument);
+			logger.log(Level.FINER,
+					"Exiting parseAllElements method in XSDParser", xsdDocument);
 		}
 	}
 
@@ -687,19 +699,18 @@ public class XSDParserImpl implements XSDParser {
 	 *            handle to xsd document
 	 * @return list of all children of the given element node and also
 	 *         associates with the complex type to enable traversal.
-	 * @throws XsdDocException 
+	 * @throws XsdDocException
 	 */
 	private Set<Element> parseChildElements(ComplexType ctype,
-			 org.w3c.dom.Element element,
-			XSDDocument xsdDocument) throws ParserException {
+			org.w3c.dom.Element element, XSDDocument xsdDocument)
+			throws ParserException {
 		logger.log(Level.FINER,
 				"Entering parseChildElements method in XSDParser",
-				new Object[] {  ctype, ctypes, element, xsdDocument });
+				new Object[] { ctype, ctypes, element, xsdDocument });
 		Set<Element> elements = new TreeSet<Element>();
 		// System.out.println("element name is " +
 		// element.getAttribute("name"));
-		NodeList domElements = element.getElementsByTagNameNS( "*",
-				 "element");
+		NodeList domElements = element.getElementsByTagNameNS("*", "element");
 		int noOfDomElements = domElements.getLength();
 		for (int i = 0; i < noOfDomElements; i++) {
 			org.w3c.dom.Element obj = (org.w3c.dom.Element) domElements.item(i);
@@ -712,10 +723,10 @@ public class XSDParserImpl implements XSDParser {
 			elem.setName(name);
 			elem.setType(type);
 			elem.setContainerComplexType(ctype);
-			String prevComment=Utils.getPreviousComment(obj);
-			String nextComment=Utils.getNextComment(obj);
-			if(prevComment!=null || nextComment!=null){
-				Comment comment=new Comment();
+			String prevComment = Utils.getPreviousComment(obj);
+			String nextComment = Utils.getNextComment(obj);
+			if (prevComment != null || nextComment != null) {
+				Comment comment = new Comment();
 				comment.setNextComment(nextComment);
 				comment.setPreviousComment(prevComment);
 				elem.setComment(comment);
@@ -732,48 +743,52 @@ public class XSDParserImpl implements XSDParser {
 					elem.getAttributes().add(attribute);
 				}
 			}
-			elem.setAnnotationInfo(parseAnnotation( obj));
+			elem.setAnnotationInfo(parseAnnotation(obj));
 			elements.add(elem);
 			postProcessElement(elem, obj);
 			xsdDocument.addIndependentElement(elem);
 		}
-		NodeList attributeNodes = element.getElementsByTagNameNS( "*", "attribute");
+		NodeList attributeNodes = element.getElementsByTagNameNS("*",
+				"attribute");
 		if (attributeNodes != null) {
 			int count = attributeNodes.getLength();
 			for (int j = 0; j < count; j++) {
 				org.w3c.dom.Element attrElem = (org.w3c.dom.Element) attributeNodes
 						.item(j);
 
-				AttributeElement attr =Context.getContext().getNewAttribute();
+				AttributeElement attr = Context.getContext().getNewAttribute();
 				String name = attrElem.getAttribute("name");
-				if(Utils.isEmpty(name)){
+				if (Utils.isEmpty(name)) {
 					for (int k = 0; k < count; k++) {
 						org.w3c.dom.Element ref = (org.w3c.dom.Element) attributeNodes
-						.item(k);
+								.item(k);
 						name = ref.getAttribute("name");
 					}
 				}
 				String type = attrElem.getAttribute("type");
 				attr.setContainerComplexType(ctype);
-				String prevComment=Utils.getPreviousComment(attrElem);
-				String nextComment=Utils.getNextComment(attrElem);
-				if(prevComment!=null || nextComment!=null){
-					Comment comment=new Comment();
+				String prevComment = Utils.getPreviousComment(attrElem);
+				String nextComment = Utils.getNextComment(attrElem);
+				if (prevComment != null || nextComment != null) {
+					Comment comment = new Comment();
 					comment.setNextComment(nextComment);
 					comment.setPreviousComment(prevComment);
 					attr.setComment(comment);
 				}
-				if(Utils.isEmpty(type)){
-					NodeList simpleTypes=attrElem.getElementsByTagNameNS("*", "simpleType");
-					if(simpleTypes.getLength()>0){
-						org.w3c.dom.Element elem=(org.w3c.dom.Element) simpleTypes.item(0);
-						
-						SimpleType simpleType=populateSimpleType(xsdDocument,elem,true);
-						if(Utils.isEmpty(simpleType.getName())){
-							simpleType.setName(ctype.getName()+ name+"Type");
+				if (Utils.isEmpty(type)) {
+					NodeList simpleTypes = attrElem.getElementsByTagNameNS("*",
+							"simpleType");
+					if (simpleTypes.getLength() > 0) {
+						org.w3c.dom.Element elem = (org.w3c.dom.Element) simpleTypes
+								.item(0);
+
+						SimpleType simpleType = populateSimpleType(xsdDocument,
+								elem, true);
+						if (Utils.isEmpty(simpleType.getName())) {
+							simpleType.setName(ctype.getName() + name + "Type");
 						}
-						if(simpleType.getEnums()!=null){
-							for(EnumElement enumE:simpleType.getEnums()){
+						if (simpleType.getEnums() != null) {
+							for (EnumElement enumE : simpleType.getEnums()) {
 								enumE.setType(simpleType.getName());
 								xsdDocument.addEnum(enumE);
 							}
@@ -782,11 +797,11 @@ public class XSDParserImpl implements XSDParser {
 						attr.setType(simpleType.getName());
 						attr.setBaseType(simpleType.getName());
 					}
-				}else{
+				} else {
 					attr.setType(type);
 				}
 				attr.setName(name);
-				
+
 				org.w3c.dom.Element parent = (org.w3c.dom.Element) attrElem
 						.getParentNode();
 				if (parent.getTagName().endsWith(":extension")) {
@@ -809,7 +824,8 @@ public class XSDParserImpl implements XSDParser {
 				ctype.addSimpleAttributeContent(attr);
 			}
 		}
-		NodeList extensibleElements = element.getElementsByTagNameNS("*", "extension");
+		NodeList extensibleElements = element.getElementsByTagNameNS("*",
+				"extension");
 		org.w3c.dom.Element extensionbaseElem = (org.w3c.dom.Element) extensibleElements
 				.item(0);
 		if (extensionbaseElem != null) {
@@ -823,8 +839,8 @@ public class XSDParserImpl implements XSDParser {
 			ctype.setParentType(parentType);
 
 			if (!Utils.isEmpty(parentType)) {
-				xsdDocument.addParentToComplexTypeMap(parentType, ctype
-						.getName());
+				xsdDocument.addParentToComplexTypeMap(parentType,
+						ctype.getName());
 			}
 		}
 		logger.log(Level.FINER,
@@ -902,14 +918,15 @@ public class XSDParserImpl implements XSDParser {
 	 * @param xsdDocument
 	 *            handle parses the complex types, its annotations and populates
 	 *            the xsd
-	 * @throws XsdDocException 
+	 * @throws XsdDocException
 	 */
-	private void parseComplexTypes(Document srcDoc,
-			XSDDocument xsdDocument) throws ParserException {
+	private void parseComplexTypes(Document srcDoc, XSDDocument xsdDocument)
+			throws ParserException {
 		logger.log(Level.FINER,
 				"Entering parseComplexTypes method in XSDParser", new Object[] {
-						 srcDoc, xsdDocument });
-		NodeList ctypeElements = srcDoc.getElementsByTagNameNS("*", "complexType");
+						srcDoc, xsdDocument });
+		NodeList ctypeElements = srcDoc.getElementsByTagNameNS("*",
+				"complexType");
 		this.setCtypes(ctypeElements);
 		int noOfDomElements = ctypeElements.getLength();
 		for (int i = 0; i < noOfDomElements; i++) {
@@ -926,7 +943,7 @@ public class XSDParserImpl implements XSDParser {
 		String name = cTypeElem.getAttribute("name");
 		ComplexType cType = Context.getContext().getNewComplexType();
 		cType.setName(name);
-		cType.setAnnotationInfo(parseAnnotation( cTypeElem));
+		cType.setAnnotationInfo(parseAnnotation(cTypeElem));
 		NamedNodeMap nameNodeMap = cTypeElem.getAttributes();
 		int size = nameNodeMap.getLength();
 
@@ -939,8 +956,8 @@ public class XSDParserImpl implements XSDParser {
 				cType.getAttributes().add(attribute);
 			}
 		}
-		cType.setChildElements(this.parseChildElements( cType,
-				 cTypeElem, xsdDocument));
+		cType.setChildElements(this.parseChildElements(cType, cTypeElem,
+				xsdDocument));
 		List<Element> instances = (List<Element>) typeElementsMap.get(name);
 		if (instances != null) {
 			cType.setInstanceElements(instances);
@@ -960,15 +977,16 @@ public class XSDParserImpl implements XSDParser {
 	 *            the xsd document
 	 * @return collection of enums contained by an element associates enums to
 	 *         its annotations
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
-	private List<EnumElement> parseEnumElements(
-			org.w3c.dom.Element element, XSDDocument xsdDocument) throws ParserException {
+	private List<EnumElement> parseEnumElements(org.w3c.dom.Element element,
+			XSDDocument xsdDocument) throws ParserException {
 		logger.log(Level.FINER,
 				"Entering parseEnumElements method in XSDParser", new Object[] {
 						element, xsdDocument });
 		List<EnumElement> elements = new ArrayList<EnumElement>();
-		NodeList domElements = element.getElementsByTagNameNS("*",  "enumeration");
+		NodeList domElements = element.getElementsByTagNameNS("*",
+				"enumeration");
 		int noOfDomElements = domElements.getLength();
 		for (int i = 0; i < noOfDomElements; i++) {
 			org.w3c.dom.Element obj = (org.w3c.dom.Element) domElements.item(i);
@@ -977,7 +995,7 @@ public class XSDParserImpl implements XSDParser {
 			EnumElement elem = Context.getContext().getNewEnumeration();
 			elem.setValue(value);
 			elem.setType(element.getAttribute("name"));
-			elem.setAnnotations(parseAnnotation( obj));
+			elem.setAnnotations(parseAnnotation(obj));
 			elements.add(elem);
 			postProcessEnum(elem, obj);
 		}
@@ -996,10 +1014,10 @@ public class XSDParserImpl implements XSDParser {
 	 * @param xsdDocument
 	 *            parses SimpleTypes within the document TBD: has to make it
 	 *            generic across namespaces
-	 * @throws XsdDocException 
+	 * @throws XsdDocException
 	 */
-	private void parseSimpleTypes(Document srcDoc,
-			XSDDocument xsdDocument) throws ParserException {
+	private void parseSimpleTypes(Document srcDoc, XSDDocument xsdDocument)
+			throws ParserException {
 		logger.log(Level.FINER,
 				"Entering parseSimpleTypes method in XSDParser", new Object[] {
 						srcDoc, xsdDocument });
@@ -1008,35 +1026,35 @@ public class XSDParserImpl implements XSDParser {
 		// System.out.println("no. of simple types" + noOfDomElements);
 		for (int i = 0; i < noOfDomElements; i++) {
 			org.w3c.dom.Element obj = (org.w3c.dom.Element) domElements.item(i);
-			SimpleType sType=populateSimpleType(xsdDocument, obj,false);
-				org.w3c.dom.Element parent = (org.w3c.dom.Element) obj
-				.getParentNode();
-				if(!parent.getTagName().endsWith(":attribute")){
-					if(Utils.isEmpty(sType.getName())){
-						sType.setName("SimpleType"+i);
-					}
-					if(sType.getEnums()!=null){
-						for(EnumElement enumE:sType.getEnums()){
-							enumE.setType(sType.getName());
-							xsdDocument.addEnum(enumE);
-						}
-					}
-					xsdDocument.addSimpleType(sType);
+			SimpleType sType = populateSimpleType(xsdDocument, obj, false);
+			org.w3c.dom.Element parent = (org.w3c.dom.Element) obj
+					.getParentNode();
+			if (!parent.getTagName().endsWith(":attribute")) {
+				if (Utils.isEmpty(sType.getName())) {
+					sType.setName("SimpleType" + i);
 				}
-				
-			
+				if (sType.getEnums() != null) {
+					for (EnumElement enumE : sType.getEnums()) {
+						enumE.setType(sType.getName());
+						xsdDocument.addEnum(enumE);
+					}
+				}
+				xsdDocument.addSimpleType(sType);
+			}
+
 		}
 		logger.log(Level.FINER, "Exiting parseSimpleTypes method in XSDParser",
 				xsdDocument);
 	}
 
 	private SimpleType populateSimpleType(XSDDocument xsdDocument,
-			org.w3c.dom.Element obj,boolean fromAttribute) throws ParserException {
-		NodeList nodes = obj.getElementsByTagNameNS("*",  "restriction");
+			org.w3c.dom.Element obj, boolean fromAttribute)
+			throws ParserException {
+		NodeList nodes = obj.getElementsByTagNameNS("*", "restriction");
 		String base = ((org.w3c.dom.Element) nodes.item(0))
 				.getAttribute("base");
 		String name = obj.getAttribute("name");
-		//String type = obj.getAttribute("type");
+		// String type = obj.getAttribute("type");
 		// System.out.println("name + ......." + name + " type " + type);
 		SimpleType sType = Context.getContext().getNewSimpleType();
 		sType.setBase(base);
@@ -1054,36 +1072,93 @@ public class XSDParserImpl implements XSDParser {
 				sType.getAttributes().add(attribute);
 			}
 		}
-		sType.setAnnotationInfo(parseAnnotation( obj));
-		sType.setEnums(this.parseEnumElements( obj, xsdDocument));
+		sType.setAnnotationInfo(parseAnnotation(obj));
+		sType.setEnums(this.parseEnumElements(obj, xsdDocument));
 		if (instances != null) {
 			sType.setInstanceElements(instances);
 		}
-		
-		postProcessSimpleType(sType,obj);
+
+		postProcessSimpleType(sType, obj);
 		return sType;
 	}
 
-	protected void postProcessSimpleType(SimpleType type,org.w3c.dom.Element typeElement){
-		//Do Nothing exposed for extensibility
+	/**
+	 * Post process simple type.
+	 * 
+	 * @param type
+	 *            the type
+	 * @param typeElement
+	 *            the type element
+	 */
+	protected void postProcessSimpleType(SimpleType type,
+			org.w3c.dom.Element typeElement) {
+		// Do Nothing exposed for extensibility
 	}
-	
-	
-	protected void postProcessComplexType(ComplexType type,org.w3c.dom.Element typeElement){
-		//Do Nothing exposed for extensibility
+
+	/**
+	 * Post process complex type.
+	 * 
+	 * @param type
+	 *            the type
+	 * @param typeElement
+	 *            the type element
+	 */
+	protected void postProcessComplexType(ComplexType type,
+			org.w3c.dom.Element typeElement) {
+		// Do Nothing exposed for extensibility
 	}
-	protected void postProcessElement(Element type,org.w3c.dom.Element typeElement){
-		//Do Nothing exposed for extensibility
+
+	/**
+	 * Post process element.
+	 * 
+	 * @param type
+	 *            the type
+	 * @param typeElement
+	 *            the type element
+	 */
+	protected void postProcessElement(Element type,
+			org.w3c.dom.Element typeElement) {
+		// Do Nothing exposed for extensibility
 	}
-	protected void postProcessAttribute(AttributeElement type,org.w3c.dom.Element typeElement){
-		//Do Nothing exposed for extensibility
+
+	/**
+	 * Post process attribute.
+	 * 
+	 * @param type
+	 *            the type
+	 * @param typeElement
+	 *            the type element
+	 */
+	protected void postProcessAttribute(AttributeElement type,
+			org.w3c.dom.Element typeElement) {
+		// Do Nothing exposed for extensibility
 	}
-	protected void postProcessEnum(EnumElement type,org.w3c.dom.Element typeElement){
-		//Do Nothing exposed for extensibility
+
+	/**
+	 * Post process enum.
+	 * 
+	 * @param type
+	 *            the type
+	 * @param typeElement
+	 *            the type element
+	 */
+	protected void postProcessEnum(EnumElement type,
+			org.w3c.dom.Element typeElement) {
+		// Do Nothing exposed for extensibility
 	}
-	protected void postProcessXsdDocument(XSDDocument doc,Document document){
-		//Do Nothing exposed for extensibility
+
+	/**
+	 * Post process xsd document.
+	 * 
+	 * @param doc
+	 *            the doc
+	 * @param document
+	 *            the document
+	 */
+	protected void postProcessXsdDocument(XSDDocument doc, Document document) {
+		// Do Nothing exposed for extensibility
 	}
+
 	/**
 	 * Parses the annotation.
 	 * 
@@ -1094,18 +1169,20 @@ public class XSDParserImpl implements XSDParser {
 	 * @return parses annotation dom element and populates its POJO
 	 *         representation ParsedAnnotationInfo
 	 */
-	private ParsedAnnotationInfo parseAnnotation(
-			org.w3c.dom.Element elem) {
+	private ParsedAnnotationInfo parseAnnotation(org.w3c.dom.Element elem) {
 		logger.log(Level.FINER, "Entering parseAnnotation method in XSDParser",
 				elem);
-		org.w3c.dom.Element anno= (org.w3c.dom.Element) getFirstChildElementWithTagName(elem,"annotation");
+		org.w3c.dom.Element anno = (org.w3c.dom.Element) getFirstChildElementWithTagName(
+				elem, "annotation");
 		ParsedAnnotationInfo info = new ParsedAnnotationInfo();
-		if(anno!=null){
-			org.w3c.dom.Element docElement = (org.w3c.dom.Element) getFirstChildElementWithTagName(anno,"documentation");
+		if (anno != null) {
+			org.w3c.dom.Element docElement = (org.w3c.dom.Element) getFirstChildElementWithTagName(
+					anno, "documentation");
 			if (docElement != null) {
 				processDocumentation(docElement, info);
 			}
-			org.w3c.dom.Element node = (org.w3c.dom.Element)  getFirstChildElementWithTagName(anno,"appinfo");
+			org.w3c.dom.Element node = (org.w3c.dom.Element) getFirstChildElementWithTagName(
+					anno, "appinfo");
 			if (node != null) {
 				for (Node childNode = node.getFirstChild(); childNode != null;) {
 					Node nextChild = childNode.getNextSibling();
@@ -1126,13 +1203,15 @@ public class XSDParserImpl implements XSDParser {
 				info);
 		return info;
 	}
+
 	private Node getFirstChildElementWithTagName(org.w3c.dom.Element element,
 			String withTagName) {
 		for (Node childNode = element.getFirstChild(); childNode != null;) {
 			Node nextChild = childNode.getNextSibling();
 			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-				String tagName = ((org.w3c.dom.Element)childNode).getLocalName();
-				if(tagName.equals(withTagName)){
+				String tagName = ((org.w3c.dom.Element) childNode)
+						.getLocalName();
+				if (tagName.equals(withTagName)) {
 					return childNode;
 				}
 			}
@@ -1140,9 +1219,18 @@ public class XSDParserImpl implements XSDParser {
 		}
 		return null;
 	}
+
+	/**
+	 * Process documentation.
+	 * 
+	 * @param docElement
+	 *            the doc element
+	 * @param info
+	 *            the info
+	 */
 	protected void processDocumentation(org.w3c.dom.Element docElement,
 			ParsedAnnotationInfo info) {
-		String documentation="";
+		String documentation = "";
 		for (Node childNode = docElement.getFirstChild(); childNode != null;) {
 			Node nextChild = childNode.getNextSibling();
 			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -1153,10 +1241,11 @@ public class XSDParserImpl implements XSDParser {
 							.parseAnnotation((org.w3c.dom.Element) childNode);
 					info.addParsedAnnotationTag(tagName, parsedData);
 				}
-			}else if(childNode.getNodeType()==Node.TEXT_NODE){
-				documentation=documentation+childNode.getNodeValue();
-			}else if(childNode.getNodeType()==Node.COMMENT_NODE){
-				documentation=documentation+("<!--"+childNode.getNodeValue()+"-->");
+			} else if (childNode.getNodeType() == Node.TEXT_NODE) {
+				documentation = documentation + childNode.getNodeValue();
+			} else if (childNode.getNodeType() == Node.COMMENT_NODE) {
+				documentation = documentation
+						+ ("<!--" + childNode.getNodeValue() + "-->");
 			}
 			childNode = nextChild;
 		}
@@ -1181,7 +1270,5 @@ public class XSDParserImpl implements XSDParser {
 		}
 		return null;
 	}
-
-	
 
 }

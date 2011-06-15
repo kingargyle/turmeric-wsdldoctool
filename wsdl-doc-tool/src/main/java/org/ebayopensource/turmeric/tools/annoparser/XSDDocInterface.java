@@ -20,86 +20,85 @@ import org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType;
 
 /**
  * The Interface XSDDocInterface.
- *
+ * 
  * @author srengarajan
  */
 public interface XSDDocInterface {
-	
+
 	/**
 	 * Gets the all independent elements.
-	 *
+	 * 
 	 * @return the all independent elements
 	 */
 	public List<Element> getAllIndependentElements();
-	
+
 	/**
 	 * Gets the all enums.
-	 *
+	 * 
 	 * @return the all enums
 	 */
 	public List<EnumElement> getAllEnums();
-	
+
 	/**
 	 * Gets the all simple types.
-	 *
+	 * 
 	 * @return the all simple types
 	 */
 	public List<SimpleType> getAllSimpleTypes();
-	
+
 	/**
 	 * Gets the all complex types.
-	 *
+	 * 
 	 * @return the all complex types
 	 */
 	public List<ComplexType> getAllComplexTypes();
-	
+
 	/**
 	 * Gets the element complex type map.
-	 *
+	 * 
 	 * @return the element complex type map
 	 */
-	public Map<String,List<ComplexType>> getElementComplexTypeMap();
-	
+	public Map<String, List<ComplexType>> getElementComplexTypeMap();
+
 	/**
 	 * Search c type.
-	 *
-	 * @param name the name
+	 * 
+	 * @param name
+	 *            the name
 	 * @return the complex type
 	 */
 	public ComplexType searchCType(String name);
-	
+
 	/**
 	 * Search simple type.
-	 *
-	 * @param name the name
+	 * 
+	 * @param name
+	 *            the name
 	 * @return the simple type
 	 */
 	public SimpleType searchSimpleType(String name);
-	
+
 	/**
 	 * Search independent element.
-	 *
-	 * @param elementName the element name
+	 * 
+	 * @param elementName
+	 *            the element name
 	 * @return the element
 	 */
 	public Element searchIndependentElement(String elementName);
-	
+
 	/**
 	 * Gets the document url.
-	 *
+	 * 
 	 * @return the document url
 	 */
 	public URL getDocumentURL();
-	
-	
-	
+
 	/**
 	 * Gets the parent to complex type map.
-	 *
+	 * 
 	 * @return the parent to complex type map
 	 */
 	public Map<String, Set<String>> getParentToComplexTypeMap();
-	
-	
-	
+
 }

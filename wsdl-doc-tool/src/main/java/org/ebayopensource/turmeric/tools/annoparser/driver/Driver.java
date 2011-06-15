@@ -37,6 +37,8 @@ import org.ebayopensource.turmeric.tools.annoparser.utils.Utils;
 public class Driver {
 
 	private final static String CLASS_NAME=Driver.class.getClass().getName();  
+	
+	/** The logger. */
 	Logger logger  = Logger.getLogger(CLASS_NAME);
 	
 	/** The output dir. */

@@ -9,9 +9,9 @@
 package org.ebayopensource.turmeric.tools.annoparser.exception;
 
 /**
- * The Class ConfigurationException.
- * This exception is thrown when the Configuration file supplied is not valid.
- *
+ * The Class ConfigurationException. This exception is thrown when the
+ * Configuration file supplied is not valid.
+ * 
  * @author sdaripelli
  */
 public class ConfigurationException extends RuntimeException {

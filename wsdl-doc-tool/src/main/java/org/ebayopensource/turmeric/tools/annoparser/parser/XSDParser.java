@@ -12,25 +12,26 @@ import org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface;
 import org.ebayopensource.turmeric.tools.annoparser.exception.ParserException;
 
 /**
- * xsd parser interface which parses an schema document and
- * provides a very light weight POJO version of the same which
- * captures the types and their relationships with specific
- * importance to documentation and annotation elements. Note that
- * the POJO interface returned is not a heavy weight replica of the
- * DOM of the input document.
+ * xsd parser interface which parses an schema document and provides a very
+ * light weight POJO version of the same which captures the types and their
+ * relationships with specific importance to documentation and annotation
+ * elements. Note that the POJO interface returned is not a heavy weight replica
+ * of the DOM of the input document.
  * 
  * TBD: Standardize interface names
- *
+ * 
  * @author srengarajan
  */
 public interface XSDParser {
-	
+
 	/**
 	 * Parses the.
-	 *
-	 * @param url representation of the input document
+	 * 
+	 * @param url
+	 *            representation of the input document
 	 * @return light weight POJO interface to the document
-	 * @throws ParserException the parser exception
+	 * @throws ParserException
+	 *             the parser exception
 	 */
 	public XSDDocInterface parse(String url) throws ParserException;
 }

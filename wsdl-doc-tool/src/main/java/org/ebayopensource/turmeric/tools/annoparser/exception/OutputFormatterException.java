@@ -10,7 +10,7 @@ package org.ebayopensource.turmeric.tools.annoparser.exception;
 
 /**
  * The Class OutputFormatterException.
- *
+ * 
  * @author srengarajan
  */
 public class OutputFormatterException extends WsdlDocException {
@@ -22,8 +22,9 @@ public class OutputFormatterException extends WsdlDocException {
 
 	/**
 	 * Instantiates a new output formatter exception.
-	 *
-	 * @param t the t
+	 * 
+	 * @param t
+	 *            the t
 	 */
 	public OutputFormatterException(Throwable t) {
 		super(t);

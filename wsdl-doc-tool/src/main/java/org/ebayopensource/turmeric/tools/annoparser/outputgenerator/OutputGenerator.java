@@ -35,14 +35,14 @@ public interface OutputGenerator {
 	 *
 	 * @param xsdDoc the xsd doc
 	 * @param outputGenaratorParam the output genarator param
-	 * @throws WsdlDocException the wsdl doc exception
+	 * @throws XsdDocException the xsd doc exception
 	 */
 	public void generateXsdOutput(XSDDocInterface xsdDoc,OutputGenaratorParam outputGenaratorParam) throws XsdDocException;
 	
 	/**
 	 * Complete processing.
 	 *
-	 * @throws WsdlDocException the wsdl doc exception
+	 * @throws XsdDocException the xsd doc exception
 	 */
 	public void completeProcessing() throws XsdDocException;
 }

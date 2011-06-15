@@ -18,16 +18,18 @@ import java.util.List;
  */
 public class AbstractType implements Comparable<AbstractType>{
 
-	/**
-	 * type name 
-	 */
+	/** type name. */
 	public String name;
 	
+	/** The Constant SIMPLE_TYPE. */
 	public static final int SIMPLE_TYPE = 0;
+	
+	/** The Constant COMPLEX_TYPE. */
 	public static final int COMPLEX_TYPE = 1;
 	
 	private int schemaType = -1;
 
+	/** The annotations. */
 	public ParsedAnnotationInfo annotations;
 	
 	
@@ -113,6 +115,9 @@ public class AbstractType implements Comparable<AbstractType>{
 		this.annotations = annotations;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
 	@Override
 	public int compareTo(AbstractType o) {
 		return this.getName().compareToIgnoreCase(

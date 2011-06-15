@@ -8,49 +8,37 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.tools.annoparser.dataobjects;
 
-
-
 /**
- * The Class EnumElement.Representation for type Enumeration
- *
+ * The Class EnumElement.Representation for type Enumeration.
+ * 
  * @author srengarajan
  * 
  */
 public class EnumElement implements Comparable<EnumElement> {
 
-	/**
-	 * annotations associated with enum
-	 */
+	/** annotations associated with enum. */
 	public ParsedAnnotationInfo annotations;
 
-	
-
-	/**
-	 * represents the extended type
-	 */
+	/** represents the extended type. */
 	public String type;
 
-	/**
-	 * captures the value of this enum 
-	 */
+	/** captures the value of this enum. */
 	public String value;
-	
 
 	/**
 	 * Gets the type.
-	 *
-	 * @return type
-	 * getter for type
+	 * 
+	 * @return type getter for type
 	 */
 	public String getType() {
 		return type;
 	}
 
-	
 	/**
 	 * Sets the type.
-	 *
-	 * @param type setter for type
+	 * 
+	 * @param type
+	 *            setter for type
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -58,7 +46,7 @@ public class EnumElement implements Comparable<EnumElement> {
 
 	/**
 	 * Gets the annotations.
-	 *
+	 * 
 	 * @return annotations
 	 */
 	public ParsedAnnotationInfo getAnnotations() {
@@ -67,8 +55,9 @@ public class EnumElement implements Comparable<EnumElement> {
 
 	/**
 	 * Sets the annotations.
-	 *
-	 * @param annotations setter for annotations
+	 * 
+	 * @param annotations
+	 *            setter for annotations
 	 */
 	public void setAnnotations(ParsedAnnotationInfo annotations) {
 		this.annotations = annotations;
@@ -76,7 +65,7 @@ public class EnumElement implements Comparable<EnumElement> {
 
 	/**
 	 * Gets the value.
-	 *
+	 * 
 	 * @return value
 	 */
 	public String getValue() {
@@ -85,30 +74,34 @@ public class EnumElement implements Comparable<EnumElement> {
 
 	/**
 	 * Sets the value.
-	 *
-	 * @param val setter for value
+	 * 
+	 * @param val
+	 *            setter for value
 	 */
 	public void setValue(String val) {
 		this.value = val;
 	}
-	
-	
 
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	public int compareTo(EnumElement object) {
-		  return this.getValue().toUpperCase().compareTo(object.getValue().toUpperCase());
+		return this.getValue().toUpperCase()
+				.compareTo(object.getValue().toUpperCase());
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		StringBuffer retVal=new StringBuffer();
-		retVal.append("Enum Type: " +type + "\n");
-		retVal.append("Enum Value: " +value+ "\n");
-		
-		if(annotations!=null){
+		StringBuffer retVal = new StringBuffer();
+		retVal.append("Enum Type: " + type + "\n");
+		retVal.append("Enum Value: " + value + "\n");
+
+		if (annotations != null) {
 			retVal.append("Annotations: \n");
 			retVal.append(annotations.toString());
 		}

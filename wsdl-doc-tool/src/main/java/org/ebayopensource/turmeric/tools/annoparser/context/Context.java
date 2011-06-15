@@ -245,54 +245,132 @@ public class Context {
 		this.defaultAnnotationParser = defaultParser;
 	}
 
+	/**
+	 * Adds the factory class.
+	 *
+	 * @param factoryTypes the factory types
+	 * @param clazz the clazz
+	 */
 	public void addFactoryClass(FactoryTypes factoryTypes, Class clazz) {
 		factoryClasses.put(factoryTypes, clazz);
 	}
 
+	/**
+	 * Gets the factory class.
+	 *
+	 * @param factoryTypes the factory types
+	 * @return the factory class
+	 */
 	public Class getFactoryClass(FactoryTypes factoryTypes) {
 		return factoryClasses.get(factoryTypes);
 	}
 
+	/**
+	 * Gets the new simple type.
+	 *
+	 * @return the new simple type
+	 * @throws ParserException the parser exception
+	 */
 	public SimpleType getNewSimpleType() throws ParserException {
 		return (SimpleType) getNewObject(FactoryTypes.SimpleType);
 	}
 
+	/**
+	 * Gets the new element.
+	 *
+	 * @return the new element
+	 * @throws ParserException the parser exception
+	 */
 	public Element getNewElement() throws ParserException {
 		return (Element) getNewObject(FactoryTypes.Element);
 	}
 
+	/**
+	 * Gets the new attribute.
+	 *
+	 * @return the new attribute
+	 * @throws ParserException the parser exception
+	 */
 	public AttributeElement getNewAttribute() throws ParserException {
 		return (AttributeElement) getNewObject(FactoryTypes.Attribute);
 	}
 
+	/**
+	 * Gets the new complex type.
+	 *
+	 * @return the new complex type
+	 * @throws ParserException the parser exception
+	 */
 	public ComplexType getNewComplexType() throws ParserException {
 		return (ComplexType) getNewObject(FactoryTypes.ComplexType);
 	}
 
+	/**
+	 * Gets the new enumeration.
+	 *
+	 * @return the new enumeration
+	 * @throws ParserException the parser exception
+	 */
 	public EnumElement getNewEnumeration() throws ParserException {
 		return (EnumElement) getNewObject(FactoryTypes.Enumeration);
 	}
 
+	/**
+	 * Gets the new operation.
+	 *
+	 * @return the new operation
+	 * @throws ParserException the parser exception
+	 */
 	public OperationHolder getNewOperation() throws ParserException {
 		return (OperationHolder) getNewObject(FactoryTypes.Operation);
 	}
 
+	/**
+	 * Gets the new port type.
+	 *
+	 * @return the new port type
+	 * @throws ParserException the parser exception
+	 */
 	public PortType getNewPortType() throws ParserException {
 		return (PortType) getNewObject(FactoryTypes.PortType);
 	}
 
+	/**
+	 * Gets the new xsd parser.
+	 *
+	 * @return the new xsd parser
+	 * @throws ParserException the parser exception
+	 */
 	public XSDParserImpl getNewXsdParser() throws ParserException {
 		return (XSDParserImpl) getNewObject(FactoryTypes.XsdParser);
 	}
 
+	/**
+	 * Gets the new wsdl parser.
+	 *
+	 * @return the new wsdl parser
+	 * @throws ParserException the parser exception
+	 */
 	public WsdlParserImpl getNewWsdlParser() throws ParserException {
 		return (WsdlParserImpl) getNewObject(FactoryTypes.WsdlParser);
 	}
 
+	/**
+	 * Gets the new xsd document.
+	 *
+	 * @return the new xsd document
+	 * @throws ParserException the parser exception
+	 */
 	public XSDDocument getNewXsdDocument() throws ParserException {
 		return (XSDDocument) getNewObject(FactoryTypes.XsdDocument);
 	}
 
+	/**
+	 * Gets the new wsdl document.
+	 *
+	 * @return the new wsdl document
+	 * @throws ParserException the parser exception
+	 */
 	public WSDLDocument getNewWsdlDocument() throws ParserException {
 		return (WSDLDocument) getNewObject(FactoryTypes.WsdlDocument);
 	}
