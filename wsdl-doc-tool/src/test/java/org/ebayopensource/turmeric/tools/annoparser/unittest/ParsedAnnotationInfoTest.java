@@ -9,60 +9,58 @@
 package org.ebayopensource.turmeric.tools.annoparser.unittest;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ebayopensource.turmeric.tools.annoparser.dataobjects.EnumElement;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationInfo;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.ParsedAnnotationTag;
-import org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
-import junit.framework.TestCase;
 
 /**
- * The Class SimpleTypeTest.
- *
+ * The Class ParsedAnnotationInfoTest.
+ * 
  * @author sdaripelli
  */
-public class SimpleTypeTest extends TestCase {
-	
+public class ParsedAnnotationInfoTest {
+
 	/**
-	 * Test print.
+	 * Test add parsed annotation tag.
 	 */
 	@Test
-	public void testPrint()
-	{
-		SimpleType simpleType = new SimpleType();
-		simpleType.setBase("Base");
-		simpleType.setName("Name");
-		
+	public void testAddParsedAnnotationTag() {
 		ParsedAnnotationInfo p = new ParsedAnnotationInfo();
 		p.setDocumentation("Documentation");
-		Map<String,List<ParsedAnnotationTag>> value= new HashMap<String, List<ParsedAnnotationTag>>();
+		Map<String, List<ParsedAnnotationTag>> value = new HashMap<String, List<ParsedAnnotationTag>>();
+
+		if (p.getDocumentation() != null) {
+			assertTrue(true);
+		}
+
 		ParsedAnnotationTag childTag = new ParsedAnnotationTag();
 		childTag.setTagName("childTagName");
 		childTag.setTagValue("childTagValue");
-		if(childTag.getTagValue()!=null)
-		{
+		if (childTag.getTagValue() != null) {
 			assertTrue(true);
 		}
-		Map<String,String> childAttrMap = new HashMap<String, String>();
+		Map<String, String> childAttrMap = new HashMap<String, String>();
 		childAttrMap.put("key", "value");
 		childAttrMap.put("key1", "value1");
 		childTag.setAttributes(childAttrMap);
-		
+
 		ParsedAnnotationTag parseAnnoTag = new ParsedAnnotationTag();
 		parseAnnoTag.setTagName("TagName");
 		parseAnnoTag.setTagValue("TagValue");
-		Map<String,String> attrMap = new HashMap<String, String>();
+		Map<String, String> attrMap = new HashMap<String, String>();
 		attrMap.put("key", "value");
 		attrMap.put("key1", "value1");
 		parseAnnoTag.setAttributes(attrMap);
 		List<ParsedAnnotationTag> childList = new ArrayList<ParsedAnnotationTag>();
 		childList.add(childTag);
-		Map<String,List<ParsedAnnotationTag>> children = new HashMap<String, List<ParsedAnnotationTag>>();
+		Map<String, List<ParsedAnnotationTag>> children = new HashMap<String, List<ParsedAnnotationTag>>();
 		children.put("Child", childList);
 		parseAnnoTag.setChildren(children);
 		p.addParsedAnnotationTag("tagName", parseAnnoTag);
@@ -70,38 +68,12 @@ public class SimpleTypeTest extends TestCase {
 		parsedAnnotationTagList.add(parseAnnoTag);
 		value.put("key", parsedAnnotationTagList);
 		p.setValue(value);
-		
-		EnumElement enumElement = new EnumElement();
-		enumElement.setType("type");
-		if(enumElement.getType()!=null)
-		{
+		if (p.getValue().containsKey("key")) {
 			assertTrue(true);
 		}
-		enumElement.setAnnotations(p);
-		enumElement.setValue("value");
-		EnumElement enumElement1 = new EnumElement();
-		enumElement1.setType("type");
-		if(enumElement1.getType()!=null)
-		{
+		if (p.value.containsKey("tagName")) {
 			assertTrue(true);
 		}
-		enumElement1.setAnnotations(p);
-		enumElement1.setValue("value");
-		enumElement.compareTo(enumElement);
-		
-		
-		List<EnumElement> enumElementList = new ArrayList<EnumElement>();
-		enumElementList.add(enumElement);
-		simpleType.setAnnotationInfo(p);
-		simpleType.setEnums(enumElementList);
-		simpleType.setBase("base");
-		if(simpleType.getBase()!=null)
-		{
-			assertTrue(true);
-		}
-		
-		
-		
 	}
 
 }

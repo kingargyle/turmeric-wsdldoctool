@@ -10,8 +10,6 @@ package org.ebayopensource.turmeric.tools.annoparser.parser.impl;
 
 import static org.junit.Assert.*;
 
-import java.io.InputStream;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,38 +22,39 @@ import org.ebayopensource.turmeric.tools.annoparser.customparser.impl.TestAnnoPa
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.ComplexType;
 import org.ebayopensource.turmeric.tools.annoparser.dataobjects.OperationHolder;
 import org.ebayopensource.turmeric.tools.annoparser.exception.ParserException;
-import org.ebayopensource.turmeric.tools.annoparser.parser.WsdlParser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * The Class WsdlParserTest.
- *
+ * 
  * @author sdaripelli
  */
 public class WsdlParserTest {
 
 	private String wsdlPath = null;
-	private WSDLDocInterface wsdlInterface = null; 
-	private WsdlParserImpl parser = null; 
-		
+	private WsdlParserImpl parser = null;
+
 	/**
 	 * Sets the up.
-	 *
-	 * @throws Exception the exception
+	 * 
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		wsdlPath = this.getClass().getClassLoader().getResource("ebaySvc.wsdl").toExternalForm();
+		wsdlPath = this.getClass().getClassLoader().getResource("ebaySvc.wsdl")
+				.toExternalForm();
 		ConfigurationReader.loadDefaultConfiguration();
-		Context.getContext().addParser("maxLength",new TestAnnoParserClass());
+		Context.getContext().addParser("maxLength", new TestAnnoParserClass());
 	}
 
 	/**
 	 * Tear down.
-	 *
-	 * @throws Exception the exception
+	 * 
+	 * @throws Exception
+	 *             the exception
 	 */
 	@After
 	public void tearDown() throws Exception {
@@ -74,17 +73,18 @@ public class WsdlParserTest {
 		op.add(operation);
 		ComplexType ctype = new ComplexType();
 		ctype.setName("test");
-		
-		Map<String, List<OperationHolder>> testMap = new HashMap<String,List<OperationHolder>>();
+
+		Map<String, List<OperationHolder>> testMap = new HashMap<String, List<OperationHolder>>();
 		testMap.put(ctype.getName(), op);
 		parser.setTypeOpMap(testMap);
-		
+
 		Map returnMap = parser.getTypeOpMap();
-		if(returnMap != null && returnMap.containsKey("test")) {
-			List<OperationHolder> operList = (List<OperationHolder>)returnMap.get("test");
-			assertEquals(1,operList.size());
+		if (returnMap != null && returnMap.containsKey("test")) {
+			List<OperationHolder> operList = (List<OperationHolder>) returnMap
+					.get("test");
+			assertEquals(1, operList.size());
 		}
-		
+
 	}
 
 	/**
@@ -100,16 +100,16 @@ public class WsdlParserTest {
 		op.add(operation);
 		ComplexType ctype = new ComplexType();
 		ctype.setName("test");
-		
+
 		Map returnMap = parser.getTypeOpMap();
-		//Map<String, List<OperationHolder>> testMap = new HashMap<String,List<OperationHolder>>();
+		// Map<String, List<OperationHolder>> testMap = new
+		// HashMap<String,List<OperationHolder>>();
 		returnMap.put(ctype.getName(), op);
 		parser.setTypeOpMap(returnMap);
-		
+
 		Map testMap = parser.getTypeOpMap();
-		assertEquals(1,testMap.keySet().size());
-		
-		
+		assertEquals(1, testMap.keySet().size());
+
 	}
 
 	/**
@@ -127,11 +127,9 @@ public class WsdlParserTest {
 		ctype.setName("test");
 		parser.addEntry(ctype.getName(), operation);
 		Map testMap = parser.getTypeOpMap();
-		assertEquals(1,testMap.keySet().size());
-		
-	}
+		assertEquals(1, testMap.keySet().size());
 
-	
+	}
 
 	/**
 	 * Test parse.
@@ -140,11 +138,10 @@ public class WsdlParserTest {
 	public void testParse() {
 		parser = new WsdlParserImpl();
 		try {
-			WSDLDocInterface wsdlInterface  = parser.parse(this.wsdlPath);
+			WSDLDocInterface wsdlInterface = parser.parse(this.wsdlPath);
 			List<OperationHolder> operations = wsdlInterface.getAllOperations();
 			assertEquals(8, operations.size());
 		} catch (ParserException e) {
-			// TODO Auto-generated catch block
 			fail("Failed to parse wsdl file" + e.getMessage());
 		}
 	}
@@ -152,43 +149,41 @@ public class WsdlParserTest {
 	/**
 	 * Test find all paths.
 	 */
-//	@Test
-//	public void testFindAllPaths() {
-//		try {
-//			if (parser == null) {
-//				parser = new WsdlParserImpl();
-//			}
-//
-//			WSDLDocInterface wsdlInterface = parser.parse(this.wsdlPath);
-//			List<String> paths = parser
-//					.getUsageHiearchyForField("bestMatchBusinessRules");
-//			System.out.println(paths);
-//		} catch (ParserException e) {
-//			// TODO Auto-generated catch block
-//			fail("Failed to parse wsdl file" + e.getMessage());
-//		}
-//	}
+	// @Test
+	// public void testFindAllPaths() {
+	// try {
+	// if (parser == null) {
+	// parser = new WsdlParserImpl();
+	// }
+	//
+	// WSDLDocInterface wsdlInterface = parser.parse(this.wsdlPath);
+	// List<String> paths = parser
+	// .getUsageHiearchyForField("bestMatchBusinessRules");
+	// System.out.println(paths);
+	// } catch (ParserException e) {
+	// // TODO Auto-generated catch block
+	// fail("Failed to parse wsdl file" + e.getMessage());
+	// }
+	// }
 
-//	/**
-//	 * Test get usage hiearchy for field.
-//	 */
-//	@Test
-//	public void testGetUsageHiearchyForField() {
-//		try {
-//			if (parser == null) {
-//				parser = new WsdlParserImpl();
-//			}
-//
-//			WSDLDocInterface wsdlInterface = parser.parse(this.wsdlPath);
-//			List<String> paths = parser
-//					.getUsageHiearchyForField("bestMatchBusinessRules");
-//			System.out.println(paths);
-//		} catch (ParserException e) {
-//			// TODO Auto-generated catch block
-//			fail("Failed to parse wsdl file" + e.getMessage());
-//		}
-//	}
-
-	
+	// /**
+	// * Test get usage hiearchy for field.
+	// */
+	// @Test
+	// public void testGetUsageHiearchyForField() {
+	// try {
+	// if (parser == null) {
+	// parser = new WsdlParserImpl();
+	// }
+	//
+	// WSDLDocInterface wsdlInterface = parser.parse(this.wsdlPath);
+	// List<String> paths = parser
+	// .getUsageHiearchyForField("bestMatchBusinessRules");
+	// System.out.println(paths);
+	// } catch (ParserException e) {
+	// // TODO Auto-generated catch block
+	// fail("Failed to parse wsdl file" + e.getMessage());
+	// }
+	// }
 
 }

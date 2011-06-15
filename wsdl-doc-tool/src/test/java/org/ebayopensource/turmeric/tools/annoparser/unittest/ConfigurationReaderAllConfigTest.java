@@ -17,10 +17,10 @@ import org.junit.Test;
 
 /**
  * The Class ConfigurationReaderAllConfigTest.
- *
+ * 
  * @author sdaripelli
  */
-public class ConfigurationReaderAllConfigTest  extends TestCase{
+public class ConfigurationReaderAllConfigTest extends TestCase {
 
 	/**
 	 * Test load configurations all.
@@ -28,25 +28,24 @@ public class ConfigurationReaderAllConfigTest  extends TestCase{
 	@Test
 	public void testLoadConfigurationsAll() {
 		try {
-			ConfigurationReader.loadConfigurations("ConfigurationWithAllProps.xml");
-			if(Context.getContext().getOutputGenerators()==null){
-				fail("O/p gen  Not Loaded" );
+			ConfigurationReader
+					.loadConfigurations("ConfigurationWithAllProps.xml");
+			if (Context.getContext().getOutputGenerators() == null) {
+				fail("O/p gen  Not Loaded");
 			}
-			if(Context.getContext().getAnnotationParsers().get("TestAnno")==null){
+			if (Context.getContext().getAnnotationParsers().get("TestAnno") == null) {
 				fail("Anno Parsers Not Loaded");
 			}
-			if(!"test_case.css".equals(Context.getContext().getCssFilePath())){
+			if (!"test_case.css".equals(Context.getContext().getCssFilePath())) {
 				fail("Css File Not Loaded");
 			}
-			if(Context.getContext().getOutputDir()==null){
+			if (Context.getContext().getOutputDir() == null) {
 				fail("O/p Not Loaded");
 			}
-			
+
 		} catch (ConfigurationException e) {
 			fail(e.getMessage());
 		}
 	}
-	
-	
 
 }

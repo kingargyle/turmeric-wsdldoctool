@@ -8,38 +8,34 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.tools.annoparser.unittest;
 
-import junit.framework.TestCase;
 
 import org.ebayopensource.turmeric.tools.annoparser.utils.Utils;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * The Class UtilTest.
- *
+ * 
  * @author sdaripelli
  */
-public class UtilTest extends TestCase 
-{
-	
+public class UtilTest {
+
 	/**
 	 * Test get empty for null.
 	 */
 	@Test
-	public void testGetEmptyForNull() 
-	{
+	public void testGetEmptyForNull() {
 		assertEquals(Utils.getEmptyForNull(null), "");
 	}
-	
+
 	/**
 	 * Test remove name space.
 	 */
 	@Test
-	public void testRemoveNameSpace()
-	{
-		String tag="xsd:Documentation";
-		if(Utils.removeNameSpace(tag).indexOf(":")==-1)
-		{
-		   assertTrue(true);	
+	public void testRemoveNameSpace() {
+		String tag = "xsd:Documentation";
+		if (Utils.removeNameSpace(tag).indexOf(":") == -1) {
+			assertTrue(true);
 		}
 	}
 

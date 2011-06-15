@@ -20,40 +20,38 @@ import org.ebayopensource.turmeric.tools.annoparser.dataobjects.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.*;
-import java.io.InputStream;
-
-import javax.print.DocFlavor.URL;
 
 /**
  * The Class XSDDocInterfaceTest.
- *
+ * 
  * @author sdaripelli
  */
 public class XSDDocInterfaceTest {
 
-	
 	private XSDDocInterface xsdIntf = null;
-	
+
 	/**
 	 * Sets the up.
-	 *
-	 * @throws Exception the exception
+	 * 
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		String xsdPath = this.getClass().getClassLoader().getResource("ebaySvc.wsdl").toExternalForm();
+		String xsdPath = this.getClass().getClassLoader()
+				.getResource("ebaySvc.wsdl").toExternalForm();
 		ConfigurationReader.loadDefaultConfiguration();
-		Context.getContext().addParser("maxLength",new TestAnnoParserClass());
+		Context.getContext().addParser("maxLength", new TestAnnoParserClass());
 		XSDParser parser = new XSDParserImpl();
 		xsdIntf = parser.parse(xsdPath);
 	}
 
 	/**
 	 * Tear down.
-	 *
-	 * @throws Exception the exception
+	 * 
+	 * @throws Exception
+	 *             the exception
 	 */
 	@After
 	public void tearDown() throws Exception {
@@ -84,8 +82,8 @@ public class XSDDocInterfaceTest {
 	public void testGetAllSimpleTypes() {
 		List<SimpleType> simpleTypes = xsdIntf.getAllSimpleTypes();
 		int noOfSimpleTypes = simpleTypes.size();
-		assertEquals(5,noOfSimpleTypes);
-		
+		assertEquals(5, noOfSimpleTypes);
+
 	}
 
 	/**
@@ -95,7 +93,7 @@ public class XSDDocInterfaceTest {
 	public void testGetAllComplexTypes() {
 		List<ComplexType> complexTypes = xsdIntf.getAllComplexTypes();
 		int noOfComplexTypes = complexTypes.size();
-		assertEquals(55,noOfComplexTypes);
+		assertEquals(55, noOfComplexTypes);
 	}
 
 	/**
@@ -105,10 +103,10 @@ public class XSDDocInterfaceTest {
 	public void testGetElementComplexTypeMap() {
 		Map elemCTypeMap = xsdIntf.getElementComplexTypeMap();
 		int noOfElems = elemCTypeMap.keySet().size();
-		assertEquals(47,noOfElems);
-		
+		assertEquals(47, noOfElems);
+
 		int noOfCTypes = elemCTypeMap.values().size();
-		assertEquals(47,noOfCTypes);
+		assertEquals(47, noOfCTypes);
 	}
 
 	/**
@@ -116,8 +114,10 @@ public class XSDDocInterfaceTest {
 	 */
 	@Test
 	public void testSearchCType() {
-		ComplexType ctype = xsdIntf.searchCType("FindBestMatchItemDetailsByKeywordsInternalResponse");
-		assertEquals("FindBestMatchItemDetailsByKeywordsInternalResponse", ctype.getName());
+		ComplexType ctype = xsdIntf
+				.searchCType("FindBestMatchItemDetailsByKeywordsInternalResponse");
+		assertEquals("FindBestMatchItemDetailsByKeywordsInternalResponse",
+				ctype.getName());
 	}
 
 	/**
@@ -126,10 +126,11 @@ public class XSDDocInterfaceTest {
 	@Test
 	public void testSearchSimpleType() {
 		List<SimpleType> stypes = xsdIntf.getAllSimpleTypes();
-		for(SimpleType stype: stypes) {
+		for (SimpleType stype : stypes) {
 			System.out.println("stype name" + stype.getName());
 		}
-		SimpleType stype = xsdIntf.searchSimpleType("BestMatchOutputSelectorType");
+		SimpleType stype = xsdIntf
+				.searchSimpleType("BestMatchOutputSelectorType");
 		assertEquals("BestMatchOutputSelectorType", stype.getName());
 	}
 
@@ -141,11 +142,5 @@ public class XSDDocInterfaceTest {
 		Element elem = xsdIntf.searchIndependentElement("formatBucketParam");
 		assertEquals("formatBucketParam", elem.getName());
 	}
-
-	
-
-	
-	
-
 
 }

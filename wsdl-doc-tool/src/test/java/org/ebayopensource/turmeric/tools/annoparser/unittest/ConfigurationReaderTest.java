@@ -17,10 +17,10 @@ import org.junit.Test;
 
 /**
  * The Class ConfigurationReaderTest.
- *
+ * 
  * @author sdaripelli
  */
-public class ConfigurationReaderTest  extends TestCase{
+public class ConfigurationReaderTest extends TestCase {
 
 	/**
 	 * Test load configurations only css.
@@ -28,45 +28,47 @@ public class ConfigurationReaderTest  extends TestCase{
 	@Test
 	public void testLoadConfigurationsOnlyCss() {
 		try {
-			ConfigurationReader.loadConfigurations(getFilepathFromTestConfigFolder("ConfigurationCSS"));
-			if(!"test_case.css".equals(Context.getContext().getCssFilePath())){
+			ConfigurationReader
+					.loadConfigurations(getFilepathFromTestConfigFolder("ConfigurationCSS"));
+			if (!"test_case.css".equals(Context.getContext().getCssFilePath())) {
 				fail("Css File Not Loaded");
 			}
 		} catch (ConfigurationException e) {
 			fail(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Test load configurations only anno.
 	 */
 	@Test
 	public void testLoadConfigurationsOnlyAnno() {
 		try {
-			ConfigurationReader.loadConfigurations(getFilepathFromTestConfigFolder("ConfigurationOnlyAnnoParsers"));
-			if(Context.getContext().getAnnotationParsers().get("TestAnno")==null){
+			ConfigurationReader
+					.loadConfigurations(getFilepathFromTestConfigFolder("ConfigurationOnlyAnnoParsers"));
+			if (Context.getContext().getAnnotationParsers().get("TestAnno") == null) {
 				fail("Anno Parsers Not Loaded");
 			}
 		} catch (ConfigurationException e) {
 			fail(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Test load configurations only op.
 	 */
 	@Test
 	public void testLoadConfigurationsOnlyOp() {
 		try {
-			ConfigurationReader.loadConfigurations(getFilepathFromTestConfigFolder("ConfigurationOnlyOpGen"));
-			if(Context.getContext().getOutputGenerators()==null){
+			ConfigurationReader
+					.loadConfigurations(getFilepathFromTestConfigFolder("ConfigurationOnlyOpGen"));
+			if (Context.getContext().getOutputGenerators() == null) {
 				fail("O/p gen  Not Loaded");
 			}
 		} catch (ConfigurationException e) {
 			fail(e.getMessage());
 		}
 	}
-	
 
 	/**
 	 * Test load default configuration.
@@ -78,16 +80,17 @@ public class ConfigurationReaderTest  extends TestCase{
 		} catch (ConfigurationException e) {
 			fail(e.getMessage());
 		}
-		
+
 	}
-   
-   /**
-    * Gets the filepath from test config folder.
-    *
-    * @param filename the filename
-    * @return the filepath from test config folder
-    */
-   private String getFilepathFromTestConfigFolder(String filename){
-	   return filename+".xml";
-   }
+
+	/**
+	 * Gets the filepath from test config folder.
+	 * 
+	 * @param filename
+	 *            the filename
+	 * @return the filepath from test config folder
+	 */
+	private String getFilepathFromTestConfigFolder(String filename) {
+		return filename + ".xml";
+	}
 }

@@ -8,8 +8,6 @@
  *******************************************************************************/
 package org.ebayopensource.turmeric.tools.annoparser.unittest;
 
-
-
 import java.util.Map;
 
 import junit.framework.TestCase;
@@ -20,7 +18,7 @@ import org.junit.Test;
 
 /**
  * The Class CommandLineParserTest.
- *
+ * 
  * @author sdaripelli
  */
 public class CommandLineParserTest extends TestCase {
@@ -30,68 +28,68 @@ public class CommandLineParserTest extends TestCase {
 	 */
 	@Test
 	public void testCreateArgMapWithAllParams() {
-		String args[]={"documents=test.wsdl","output_dir=c:/Test/Documents","config=abc.xml","css=abc.css"};
+		String args[] = { "documents=test.wsdl",
+				"output_dir=c:/Test/Documents", "config=abc.xml", "css=abc.css" };
 		try {
-			Map<String,String> argMap=CommandLineParser.createArgMap(args);
-			if(!argMap.containsKey("documents")){
+			Map<String, String> argMap = CommandLineParser.createArgMap(args);
+			if (!argMap.containsKey("documents")) {
 				fail("Documents not found");
 			}
-			if(!argMap.containsKey("output_dir")){
+			if (!argMap.containsKey("output_dir")) {
 				fail("Output Dir not found");
 			}
-			if(!argMap.containsKey("config")){
+			if (!argMap.containsKey("config")) {
 				fail("CSS not found");
 			}
-			if(!argMap.containsKey("css")){
+			if (!argMap.containsKey("css")) {
 				fail("Config not found");
 			}
 		} catch (CommandLineParserException e) {
 			fail(e.getMessage());
 		}
-		
+
 	}
-	
+
 	/**
 	 * Test create arg map one params.
 	 */
 	@Test
 	public void testCreateArgMapOneParams() {
-		String args[]={"documents=test.wsdl"};
+		String args[] = { "documents=test.wsdl" };
 		try {
-			Map<String,String> argMap=CommandLineParser.createArgMap(args);
-			if(!argMap.containsKey("documents")){
+			Map<String, String> argMap = CommandLineParser.createArgMap(args);
+			if (!argMap.containsKey("documents")) {
 				fail("Documents not found");
 			}
-			if(argMap.containsKey("output_dir")){
+			if (argMap.containsKey("output_dir")) {
 				fail("Output Dir not found");
 			}
-			if(argMap.containsKey("config")){
+			if (argMap.containsKey("config")) {
 				fail("CSS not found");
 			}
-			if(argMap.containsKey("css")){
+			if (argMap.containsKey("css")) {
 				fail("Config not found");
 			}
 		} catch (CommandLineParserException e) {
 			fail(e.getMessage());
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * Test create arg map wrong params.
 	 */
 	@Test
 	public void testCreateArgMapWrongParams() {
-		String args[]={"documents"};
+		String args[] = { "documents" };
 		try {
-			Map<String,String> argMap=CommandLineParser.createArgMap(args);
+			Map<String, String> argMap = CommandLineParser.createArgMap(args);
 		} catch (CommandLineParserException e) {
 			return;
-			
+
 		}
 		fail("Not rightly parsed");
-		
+
 	}
 
 }

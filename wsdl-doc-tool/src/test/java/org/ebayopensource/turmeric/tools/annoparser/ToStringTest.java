@@ -16,10 +16,9 @@ public class ToStringTest  extends TestCase{
 	public void testToStringWithSample() {
 			List<String> docs=new ArrayList<String>();
 			docs.add("sampleWsdl/FindingService(1.8.0).wsdl");
-			//docs.add("ebaySvc_705_doc_public.wsdl");
-			//docs.add("SampleWsdl.wsdl");
 			docs.add("ClientAlertsService_707_doc_private.wsdl");
-			Driver driver=new Driver("c:\\ToStringOutput\\","ToStringConfiguration.xml",docs,null);
+			String tempdir = System.getProperty("java.io.tmpdir");
+			Driver driver=new Driver(tempdir, "ToStringConfiguration.xml",docs,null);
 			driver.process();
 		
 	}
