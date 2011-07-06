@@ -83,8 +83,6 @@ public class WsdlParserImpl implements WsdlParser {
 	//
 	// private List<String> allOutputPaths = new ArrayList<String>();
 
-
-
 	/**
 	 * Gets the type op map.
 	 * 
@@ -232,15 +230,19 @@ public class WsdlParserImpl implements WsdlParser {
 									ctype = (typeName != null) ? xsdDocument
 											.searchCType(getLocalName(typeName))
 											: null;
-									elem = Context.getContext().getNewElement();
-									elem.setType(typeName);
-									elem.setContainerComplexType(ctype);
-									elem.setName(typeName);
-									if (elem != null)
-										this.addEntry(elem.getType(), opHolder);
-									List<Element> inputs = new ArrayList<Element>();
-									inputs.add(elem);
-									opHolder.setInput(inputs);
+									if (ctype != null) {
+										elem = Context.getContext()
+												.getNewElement();
+										elem.setType(typeName);
+										elem.setContainerComplexType(ctype);
+										elem.setName(typeName);
+										if (elem != null)
+											this.addEntry(elem.getType(),
+													opHolder);
+										List<Element> inputs = new ArrayList<Element>();
+										inputs.add(elem);
+										opHolder.setInput(inputs);
+									}
 								}
 
 							}
@@ -249,7 +251,6 @@ public class WsdlParserImpl implements WsdlParser {
 
 					if (outputParts != null) {
 						for (Object obj2 : outputParts.values()) {
-							
 
 							Part ipPart = (Part) obj2;
 							QName type = ipPart.getElementName();
@@ -286,15 +287,19 @@ public class WsdlParserImpl implements WsdlParser {
 									ctype = (typeName != null) ? xsdDocument
 											.searchCType(getLocalName(typeName))
 											: null;
-									elem = Context.getContext().getNewElement();
-									elem.setType(typeName);
-									elem.setContainerComplexType(ctype);
-									elem.setName(typeName);
-									if (elem != null)
-										this.addEntry(elem.getType(), opHolder);
-									List<Element> inputs = new ArrayList<Element>();
-									inputs.add(elem);
-									opHolder.setOutput(inputs);
+									if (ctype != null) {
+										elem = Context.getContext()
+												.getNewElement();
+										elem.setType(typeName);
+										elem.setContainerComplexType(ctype);
+										elem.setName(typeName);
+										if (elem != null)
+											this.addEntry(elem.getType(),
+													opHolder);
+										List<Element> inputs = new ArrayList<Element>();
+										inputs.add(elem);
+										opHolder.setOutput(inputs);
+									}
 								}
 
 							}
