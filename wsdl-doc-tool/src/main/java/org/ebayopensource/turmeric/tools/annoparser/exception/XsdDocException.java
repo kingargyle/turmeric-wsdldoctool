@@ -10,43 +10,39 @@ package org.ebayopensource.turmeric.tools.annoparser.exception;
 
 /**
  * The Class XsdDocException.
- * 
+ *
  * @author sdaripelli
  */
 public class XsdDocException extends Exception {
-
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * Instantiates a new xsd doc exception.
-	 * 
-	 * @param t
-	 *            the t
+	 *
+	 * @param t the t
 	 */
 	public XsdDocException(Throwable t) {
 		super(t);
 	}
-
+	
 	/**
 	 * Instantiates a new xsd doc exception.
-	 * 
-	 * @param message
-	 *            the message
-	 * @param t
-	 *            the t
+	 *
+	 * @param message the message
+	 * @param t the t
 	 */
-	public XsdDocException(String message, Throwable t) {
-		super(message, t);
+	public XsdDocException(String message ,Throwable t) {
+		super(message,t);
 	}
-
+	
 	/**
 	 * Instantiates a new xsd doc exception.
-	 * 
-	 * @param message
-	 *            the message
+	 *
+	 * @param message the message
 	 */
 	public XsdDocException(String message) {
 		super(message);

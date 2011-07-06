@@ -9,9 +9,9 @@
 package org.ebayopensource.turmeric.tools.annoparser.exception;
 
 /**
- * The Class CommandLineParserException. This exception is thrown when command
- * line arguments are not passed correctly.
- * 
+ * The Class CommandLineParserException.
+ * This exception is thrown when command line arguments are not passed correctly.
+ *
  * @author sdaripelli
  */
 public class CommandLineParserException extends WsdlDocException {
@@ -28,7 +28,7 @@ public class CommandLineParserException extends WsdlDocException {
 	public CommandLineParserException(Throwable t) {
 		super(t);
 	}
-
+	
 	/**
 	 * Instantiates a new command line parser exception.
 	 * 
@@ -38,7 +38,7 @@ public class CommandLineParserException extends WsdlDocException {
 	public CommandLineParserException(String message) {
 		super(message);
 	}
-
+	
 	/**
 	 * Instantiates a new command line parser exception.
 	 * 
@@ -47,7 +47,7 @@ public class CommandLineParserException extends WsdlDocException {
 	 * @param t
 	 *            the t
 	 */
-	public CommandLineParserException(String message, Throwable t) {
-		super(message, t);
+	public CommandLineParserException(String message,Throwable t) {
+		super(message,t);
 	}
 }

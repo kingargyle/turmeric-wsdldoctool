@@ -46,9 +46,10 @@ import org.ebayopensource.turmeric.tools.annoparser.utils.Utils;
 import org.w3c.dom.Node;
 
 /**
+ * 
  * This Class does the light-weight parsing of wsdl to POJO interface to wsdl It
  * also acts as a container to xsddocument handle and provides a window to the
- * schema.
+ * schema
  * 
  * @author srengarajan
  */
@@ -56,8 +57,6 @@ public class WsdlParserImpl implements WsdlParser {
 
 	private final static String CLASS_NAME = WsdlParserImpl.class.getClass()
 			.getName();
-
-	/** The logger. */
 	Logger logger = Logger.getLogger(CLASS_NAME);
 
 	/**
@@ -75,10 +74,16 @@ public class WsdlParserImpl implements WsdlParser {
 	 */
 	private Map<String, List<OperationHolder>> typeOpMap = new HashMap<String, List<OperationHolder>>();
 
-	/**
-	 * captures the association between element it its Calling Operations
-	 */
-	private Map<String, Set<String>> elemCallMap = new HashMap<String, Set<String>>();
+	// /**
+	// * captures all possible paths to a particular field.
+	// */
+	// private List<String> allPossiblePaths = new ArrayList<String>();
+	//
+	// private List<String> allInputPaths = new ArrayList<String>();
+	//
+	// private List<String> allOutputPaths = new ArrayList<String>();
+
+
 
 	/**
 	 * Gets the type op map.
@@ -124,8 +129,12 @@ public class WsdlParserImpl implements WsdlParser {
 	public WsdlParserImpl() {
 	}
 
-	/**
-	 * {@inheritDoc}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.ebayopensource.turmeric.tools.annoparser.parser.WsdlParser#parse(
+	 * java.lang.String)
 	 */
 	public synchronized WSDLDocument parse(String url) throws ParserException {
 		logger.entering("WsdlParser", "parse", url);
@@ -170,6 +179,7 @@ public class WsdlParserImpl implements WsdlParser {
 						.getDocumentationElement()));
 				List<Operation> operations = p.getOperations();
 				for (Operation op : operations) {
+
 					OperationHolder opHolder = Context.getContext()
 							.getNewOperation();
 					opHolder.setName(op.getName());
@@ -188,75 +198,106 @@ public class WsdlParserImpl implements WsdlParser {
 					if (inputParts != null) {
 						for (Object obj1 : inputParts.values()) {
 							Part ipPart = (Part) obj1;
-
 							QName type = ipPart.getElementName();
-							if (type == null) {
-								type = ipPart.getTypeName();
-							}
-							String ipElemName = type.getLocalPart();
-							Element elem = xsdDocument
-									.searchIndependentElement(ipElemName);
-							if (elem != null)
-								this.addEntry(elem.getType(), opHolder);
+							ComplexType ctype = null;
+							Element elem = null;
+							if (type != null) {
+								String ipElemName = type.getLocalPart();
+								elem = xsdDocument
+										.searchIndependentElement(ipElemName);
+								if (elem != null)
+									this.addEntry(elem.getType(), opHolder);
 
-							ComplexType ctype = (elem != null) ? xsdDocument
-									.searchCType(getLocalName(elem.getType()))
-									: null;
-							if (ctype != null) {
-								List<Element> elements = ctype
-										.getInstanceElements();
-								if (elements != null) {
-									List<Element> inputs = new ArrayList<Element>();
-									for (Element insElem : elements) {
-										if (insElem.getName().equals(
-												elem.getName())) {
-											inputs.add(insElem);
+								ctype = (elem != null) ? xsdDocument
+										.searchCType(getLocalName(elem
+												.getType())) : null;
+								if (ctype != null) {
+									List<Element> elements = ctype
+											.getInstanceElements();
+									if (elements != null) {
+										List<Element> inputs = new ArrayList<Element>();
+										for (Element insElem : elements) {
+											if (insElem.getName().equals(
+													elem.getName())) {
+												inputs.add(insElem);
+											}
 										}
+										opHolder.setInput(inputs);
 									}
+								}
+							} else {
+								type = ipPart.getTypeName();
+								if (type != null) {
+									String typeName = type.getLocalPart();
+									ctype = (typeName != null) ? xsdDocument
+											.searchCType(getLocalName(typeName))
+											: null;
+									elem = Context.getContext().getNewElement();
+									elem.setType(typeName);
+									elem.setContainerComplexType(ctype);
+									elem.setName(typeName);
+									if (elem != null)
+										this.addEntry(elem.getType(), opHolder);
+									List<Element> inputs = new ArrayList<Element>();
+									inputs.add(elem);
 									opHolder.setInput(inputs);
 								}
+
 							}
-
-							logger.finest("part name " + ipElemName);
-
 						}
 					}
 
 					if (outputParts != null) {
 						for (Object obj2 : outputParts.values()) {
-							Part opPart = (Part) obj2;
-							QName type = opPart.getElementName();
-							if (type == null) {
-								type = opPart.getTypeName();
-							}
-							String opElemName = type.getLocalPart();
+							
 
-							// String opElementName = opPart.getElementName()
-							// .getLocalPart();
-							Element elem = (opElemName != null) ? xsdDocument
-									.searchIndependentElement(opElemName)
-									: null;
-							ComplexType ctype = (elem != null) ? xsdDocument
-									.searchCType(getLocalName(elem.getType()))
-									: null;
+							Part ipPart = (Part) obj2;
+							QName type = ipPart.getElementName();
+							ComplexType ctype = null;
+							Element elem = null;
+							if (type != null) {
+								String ipElemName = type.getLocalPart();
+								elem = xsdDocument
+										.searchIndependentElement(ipElemName);
+								if (elem != null)
+									this.addEntry(elem.getType(), opHolder);
 
-							if (ctype != null) {
-								List<Element> elements = ctype
-										.getInstanceElements();
-								if (elements != null) {
-									List<Element> inputs = new ArrayList<Element>();
-									for (Element insElem : elements) {
-										if (insElem.getName().equals(
-												elem.getName())) {
-											inputs.add(insElem);
+								ctype = (elem != null) ? xsdDocument
+										.searchCType(getLocalName(elem
+												.getType())) : null;
+								if (ctype != null) {
+									List<Element> elements = ctype
+											.getInstanceElements();
+									if (elements != null) {
+										List<Element> inputs = new ArrayList<Element>();
+										for (Element insElem : elements) {
+											if (insElem.getName().equals(
+													elem.getName())) {
+												inputs.add(insElem);
+											}
 										}
+										opHolder.setOutput(inputs);
 									}
+								}
+							} else {
+								type = ipPart.getTypeName();
+								if (type != null) {
+									String typeName = type.getLocalPart();
+									ctype = (typeName != null) ? xsdDocument
+											.searchCType(getLocalName(typeName))
+											: null;
+									elem = Context.getContext().getNewElement();
+									elem.setType(typeName);
+									elem.setContainerComplexType(ctype);
+									elem.setName(typeName);
+									if (elem != null)
+										this.addEntry(elem.getType(), opHolder);
+									List<Element> inputs = new ArrayList<Element>();
+									inputs.add(elem);
 									opHolder.setOutput(inputs);
 								}
 
 							}
-							if (elem != null)
-								this.addEntry(elem.getType(), opHolder);
 						}
 					}
 					postProcessOperation(opHolder, op);
@@ -282,41 +323,17 @@ public class WsdlParserImpl implements WsdlParser {
 
 	}
 
-	/**
-	 * Post process operation.
-	 * 
-	 * @param type
-	 *            the type
-	 * @param operation
-	 *            the operation
-	 */
 	protected void postProcessOperation(OperationHolder type,
 			Operation operation) {
 		// Do Nothing exposed for extensibility
 	}
 
-	/**
-	 * Post process port type.
-	 * 
-	 * @param type
-	 *            the type
-	 * @param operation
-	 *            the operation
-	 */
 	protected void postProcessPortType(
 			org.ebayopensource.turmeric.tools.annoparser.dataobjects.PortType type,
 			PortType operation) {
 		// Do Nothing exposed for extensibility
 	}
 
-	/**
-	 * Post process wsdl document.
-	 * 
-	 * @param doc
-	 *            the doc
-	 * @param wsdlDefinition
-	 *            the wsdl definition
-	 */
 	protected void postProcessWsdlDocument(WSDLDocument doc,
 			Definition wsdlDefinition) {
 		// Do Nothing exposed for extensibility
@@ -345,14 +362,6 @@ public class WsdlParserImpl implements WsdlParser {
 		return info;
 	}
 
-	/**
-	 * Process documentation.
-	 * 
-	 * @param docElement
-	 *            the doc element
-	 * @param info
-	 *            the info
-	 */
 	protected void processDocumentation(org.w3c.dom.Element docElement,
 			ParsedAnnotationInfo info) {
 		String documentation = "";

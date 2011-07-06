@@ -15,13 +15,14 @@ import java.util.logging.Logger;
 import org.ebayopensource.turmeric.tools.annoparser.commons.Constants;
 import org.ebayopensource.turmeric.tools.annoparser.exception.CommandLineParserException;
 
+
 /**
  * The Class CommandLineParser.
- * 
+ *
  * @author sdaripelli
  */
 public class CommandLineParser {
-
+	
 	/**
 	 * Creates the arg map.
 	 * 
@@ -31,32 +32,27 @@ public class CommandLineParser {
 	 * @throws CommandLineParserException
 	 *             the command line parser exception
 	 */
-	public static Map<String, String> createArgMap(String[] args)
-			throws CommandLineParserException {
-
-		Logger.getLogger(CommandLineParser.class.getName()).entering(
-				"CommandLineParser", "createArgMap", args);
-		Map<String, String> retMap = null;
-		if (args != null) {
-			retMap = new HashMap<String, String>();
-			for (String arg : args) {
-				if (Constants.COMMAND_LINE_HELP_ARG.equalsIgnoreCase(arg)) {
-					retMap.put(Constants.COMMAND_LINE_HELP_ARG, null);
-				} else {
-					String[] values = arg.split("=");
-					if (values == null || values.length != 2) {
-						Logger.getLogger(CommandLineParser.class.getName())
-								.severe("Command Line Arguments should be in name=value pairs");
-						throw new CommandLineParserException(
-								"Command Line Arguments should be in name=value pairs");
-					}
-
-					retMap.put(values[0], values[1]);
+	public static Map<String,String> createArgMap(String[] args) throws CommandLineParserException{
+		
+		Logger.getLogger(CommandLineParser.class.getName()).entering("CommandLineParser", "createArgMap",args);
+		Map<String,String> retMap=null;
+		if(args!=null){
+			retMap=new HashMap<String, String>();
+			for(String arg:args){
+				if(Constants.COMMAND_LINE_HELP_ARG.equalsIgnoreCase(arg)){
+					retMap.put(Constants.COMMAND_LINE_HELP_ARG,null);
+				}else{
+				String[] values=arg.split("=");
+				if(values==null || values.length!=2){
+					Logger.getLogger(CommandLineParser.class.getName()).severe("Command Line Arguments should be in name=value pairs");
+					throw new CommandLineParserException("Command Line Arguments should be in name=value pairs");
+				}
+				
+				retMap.put(values[0], values[1]);
 				}
 			}
 		}
-		Logger.getLogger(CommandLineParser.class.getName()).exiting(
-				"CommandLineParser", "createArgMap", retMap);
+		Logger.getLogger(CommandLineParser.class.getName()).exiting("CommandLineParser", "createArgMap",retMap);
 		return retMap;
 	}
 }

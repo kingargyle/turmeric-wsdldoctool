@@ -82,27 +82,14 @@ public class PortType {
 		operations.add(operation);
 	}
 
-	/**
-	 * Gets the annotations.
-	 *
-	 * @return the annotations
-	 */
 	public ParsedAnnotationInfo getAnnotations() {
 		return annotations;
 	}
 
-	/**
-	 * Sets the annotations.
-	 *
-	 * @param annotations the new annotations
-	 */
 	public void setAnnotations(ParsedAnnotationInfo annotations) {
 		this.annotations = annotations;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		StringBuffer retVal=new StringBuffer();

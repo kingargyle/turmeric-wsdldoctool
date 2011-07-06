@@ -28,32 +28,35 @@ import org.ebayopensource.turmeric.tools.annoparser.utils.Utils;
 
 /**
  * This the is Main class which should be invoked from command line for
- * Annotation parsing and Documentation Generation. The Parameters can be passed
- * in 3 ways, 1. Through System Environment variables 2. Through Configuration
- * xml, whose path can passed as Command Line argument or System Envronment
- * variable 3. Through Command line argument.
+ * Annotation parsing and Documentation Generation.
+ * The Parameters can be passed in 3 ways,
+ * 1. Through System Environment variables
+ * 2. Through Configuration xml, whose path can passed as Command Line argument or System Envronment variable
+ * 3. Through Command line argument.
  * 
- * The Names of system variables are, ANNOPARSER_OUTPUT_DIR = This System
- * Environment variable should specify the Output Directory. ANNOPARSER_CONFIG=
- * This System Environment variable should specify the Config file location
- * ANNOPARSER_CSS=This System Environment variable should specify the CSS file
- * path which has to be used for Documents
+ * The Names of system variables are, 
+ * ANNOPARSER_OUTPUT_DIR = This System Environment variable should specify the Output Directory.
+ * ANNOPARSER_CONFIG= This System Environment variable should specify the Config file location 
+ * ANNOPARSER_CSS=This System Environment variable should specify the CSS file path which has to be used for Documents
  * 
- * The Command line Arguments should be passed as follows, output_dir=<Output
- * Directory Path> config=<Configuration file Location> css=<CSS file path>
+ * The Command line Arguments should be passed as follows,
+ * output_dir=<Output Directory Path>
+ * config=<Configuration file Location>
+ * css=<CSS file path>
  * 
- * The precedence of input methodology is taken in low to high precedence of
- * below order. 1. System Environment variables 2. Configuration xml 3. Command
- * line arguments
+ * The precedence of input methodology is taken in low to high precedence of below order. 
+ * 1. System Environment variables
+ * 2. Configuration xml
+ * 3. Command line arguments
  * 
  * We can invoke with argument to get the complete help text.
  * 
  * @author sdaripelli
  */
 public class Main {
-
+	
 	/** The help content. */
-	private static String helpContent = getHelpText();
+	private static String helpContent=getHelpText();
 
 	/**
 	 * The main method.
@@ -66,12 +69,12 @@ public class Main {
 	public static void main(String[] args) throws WsdlDocException {
 		// args java Main output_dir=abc documents=abc.wsdl;xyz.xsd
 		// config=abc.xml css=abc.css
-
-		Map<String, String> argMap = CommandLineParser.createArgMap(args);
-		if (argMap.containsKey(Constants.COMMAND_LINE_HELP_ARG)) {
-			System.out.println(helpContent);
-			return;
-		}
+		
+        Map<String, String> argMap = CommandLineParser.createArgMap(args);
+        if(argMap.containsKey(Constants.COMMAND_LINE_HELP_ARG)){
+        	System.out.println(helpContent);
+        	return;
+        }
 		List<String> documents = null;
 		if (argMap.containsKey(Constants.INPUT_DOCUMENT)) {
 			String documentValues = argMap.get("documents");
@@ -83,8 +86,8 @@ public class Main {
 			documents = removeEmptyValues(documentval);
 		}
 		Driver driver = new Driver(argMap.get(Constants.INPUT_OUTPUT_DIR),
-				argMap.get(Constants.INPUT_CONFIG), documents,
-				argMap.get(Constants.INPUT_CSS));
+				argMap.get(Constants.INPUT_CONFIG), documents, argMap
+						.get(Constants.INPUT_CSS));
 		try {
 			driver.process();
 		} catch (ConfigurationException e) {
@@ -98,21 +101,19 @@ public class Main {
 	 * @return text displayed when help option is supplied.
 	 */
 	private static String getHelpText() {
-		String help = null;
-		InputStream is = Main.class.getClassLoader().getResourceAsStream(
-				"Help.txt");
+		String help=null;
+		InputStream is = Main.class.getClassLoader().getResourceAsStream("Help.txt");	
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			StringBuffer sb = new StringBuffer();
 			String line = "";
 			while ((line = br.readLine()) != null) {
-				sb.append(line + System.getProperty("line.separator"));
+				sb.append(line+System.getProperty("line.separator"));
 			}
-
-			help = sb.toString();
+			
+			help=sb.toString();	
 		} catch (IOException e) {
-			Logger.getLogger(Main.class.getName()).throwing(
-					Main.class.getName(), "main", e);
+			Logger.getLogger(Main.class.getName()).throwing(Main.class.getName(), "main", e);
 		}
 		return help;
 	}
