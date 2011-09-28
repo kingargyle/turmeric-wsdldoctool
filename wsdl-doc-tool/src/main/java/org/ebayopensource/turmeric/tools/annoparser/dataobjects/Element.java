@@ -17,7 +17,8 @@ import java.util.List;
  * @author srengarajan
  */
 
-public class Element implements Comparable<Element>, Cloneable {
+public class Element implements Comparable<Element>,Cloneable {
+
 
 	/**
 	 * captures the type of the element
@@ -31,21 +32,10 @@ public class Element implements Comparable<Element>, Cloneable {
 
 	private Comment comment;
 
-	/**
-	 * Gets the comment.
-	 * 
-	 * @return the comment
-	 */
 	public Comment getComment() {
 		return comment;
 	}
 
-	/**
-	 * Sets the comment.
-	 * 
-	 * @param comment
-	 *            the new comment
-	 */
 	public void setComment(Comment comment) {
 		this.comment = comment;
 	}
@@ -163,11 +153,6 @@ public class Element implements Comparable<Element>, Cloneable {
 		this.annotation = Object;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		StringBuffer retVal = new StringBuffer();
@@ -194,17 +179,19 @@ public class Element implements Comparable<Element>, Cloneable {
 		return retVal.toString();
 	}
 
-	/**
-	 * {@inheritDoc}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(Element object) {
-		int retVal = this.getName().toUpperCase()
-				.compareTo(object.getName().toUpperCase());
+		int retVal = this.getName().toUpperCase().compareTo(
+				object.getName().toUpperCase());
 		if (retVal == 0
-				&& (this.getType().equals(object.getType()) && ((this
-						.getContainerComplexType() != null && this
-						.getContainerComplexType().equals(
-								object.getContainerComplexType())) || (object
+				&& (this.getType().equals(object.getType())
+						&& ((this.getContainerComplexType() != null && this
+								.getContainerComplexType().equals(
+										object.getContainerComplexType())) || (object
 						.getContainerComplexType() == null && this
 						.getContainerComplexType() == null)))) {
 			return 0;
@@ -216,13 +203,8 @@ public class Element implements Comparable<Element>, Cloneable {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
 	@Override
 	public Element clone() throws CloneNotSupportedException {
-		return (Element) super.clone();
+		return (Element)super.clone();
 	}
 }

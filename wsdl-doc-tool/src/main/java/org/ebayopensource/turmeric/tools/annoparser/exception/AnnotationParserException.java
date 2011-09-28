@@ -9,9 +9,9 @@
 package org.ebayopensource.turmeric.tools.annoparser.exception;
 
 /**
- * The Class AnnotationParserException. This exception is raised when the
- * annotation xml is not valid.
- * 
+ * The Class AnnotationParserException.
+ * This exception is raised when the annotation xml is not valid.
+ *
  * @author sdaripelli
  */
 public class AnnotationParserException extends RuntimeException {
@@ -28,7 +28,7 @@ public class AnnotationParserException extends RuntimeException {
 	public AnnotationParserException(Throwable t) {
 		super(t);
 	}
-
+	
 	/**
 	 * Instantiates a new annotation parser exception.
 	 * 
@@ -37,8 +37,8 @@ public class AnnotationParserException extends RuntimeException {
 	 * @param t
 	 *            the t
 	 */
-	public AnnotationParserException(String message, Throwable t) {
-
-		super(message, t);
+	public AnnotationParserException(String message ,Throwable t) {
+		
+		super(message,t);
 	}
 }

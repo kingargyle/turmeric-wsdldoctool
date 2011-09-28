@@ -23,155 +23,142 @@ import org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType;
 
 /**
  * The Class XSDDocument.
- * 
+ *
  * @author srengarajan
  */
 public class XSDDocument implements XSDDocInterface {
-
+	
 	private URL documentURL = null;
 	private List<Element> elements = new ArrayList<Element>();
 	private List<SimpleType> simpleTypes = new ArrayList<SimpleType>();
 	private List<ComplexType> complexTypes = new ArrayList<ComplexType>();
 	private List<EnumElement> enums = new ArrayList<EnumElement>();
-
-	private Map<String, ComplexType> nameToCTypeMap = new HashMap<String, ComplexType>();
-	private Map<String, SimpleType> nameToSimpleTypeMap = new HashMap<String, SimpleType>();
-	private Map<String, Element> nameToElemMap = new HashMap<String, Element>();
-	private Map<String, List<ComplexType>> elemToComplexTypeMap = new HashMap<String, List<ComplexType>>();
-	private Map<String, Set<String>> parentToComplexTypeMap = new HashMap<String, Set<String>>();
-
-	private List<String> xsdsProcessed = new ArrayList<String>();
-
-	/**
-	 * Gets the xsds processed.
-	 * 
-	 * @return the xsds processed
-	 */
+	
+	private Map<String,ComplexType> nameToCTypeMap = new HashMap<String,ComplexType>();
+	private Map<String,SimpleType> nameToSimpleTypeMap = new HashMap<String,SimpleType>();
+	private Map<String,Element> nameToElemMap  = new HashMap<String,Element>();
+	private Map<String,List<ComplexType>> elemToComplexTypeMap = new HashMap<String,List<ComplexType>>();
+	private Map<String,Set<String>> parentToComplexTypeMap = new HashMap<String,Set<String>>();
+	
+	private List<String> xsdsProcessed=new ArrayList<String>();
+	
 	public List<String> getXsdsProcessed() {
 		return xsdsProcessed;
 	}
 
-	/**
-	 * Sets the xsds processed.
-	 * 
-	 * @param xsdsProcessed
-	 *            the new xsds processed
-	 */
 	public void setXsdsProcessed(List<String> xsdsProcessed) {
 		this.xsdsProcessed = xsdsProcessed;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public Map<String, Set<String>> getParentToComplexTypeMap() {
 		return parentToComplexTypeMap;
 	}
 
-	/**
-	 * Sets the parent to complex type map.
-	 * 
-	 * @param parentToComplexTypeMap
-	 *            the parent to complex type map
-	 */
 	public void setParentToComplexTypeMap(
 			Map<String, Set<String>> parentToComplexTypeMap) {
 		this.parentToComplexTypeMap = parentToComplexTypeMap;
 	}
-
-	/**
-	 * Adds the parent to complex type map.
-	 * 
-	 * @param parent
-	 *            the parent
-	 * @param child
-	 *            the child
-	 */
-	public void addParentToComplexTypeMap(String parent, String child) {
-		Set<String> children = this.parentToComplexTypeMap.get(parent);
-		if (children == null) {
-			children = new HashSet<String>();
+	public void addParentToComplexTypeMap(String parent,String child) {
+		Set<String> children=this.parentToComplexTypeMap.get(parent);
+		if(children==null){
+			children=new HashSet<String>();
 			parentToComplexTypeMap.put(parent, children);
 		}
 		children.add(child);
 	}
 
 	/**
-	 * Add a ComplextType.
+	 * public Map getUsageHierarchy() {
+	 * return usageHierarchyForField;
+	 * }
 	 * 
-	 * @param ctype
-	 *            the complext type
+	 * 
+	 * public void addUsageHierarchyMapping(String elementName, String path) {
+	 * List<String> paths = null;
+	 * if(usageHierarchyForField.containsKey(elementName)) {
+	 * paths = (List<String>)usageHierarchyForField.get(elementName);
+	 * paths.add(path);
+	 * } else {
+	 * paths = new ArrayList<String>();
+	 * usageHierarchyForField.put(elementName, paths);
+	 * }
+	 * }*
+	 *
+	 * @param ctype the ctype
 	 */
+	
 	public void addComplexType(ComplexType ctype) {
 		complexTypes.add(ctype);
 		this.nameToCTypeMap.put(ctype.getName(), ctype);
 	}
-
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getAllComplexTypes()
 	 */
 	public List<ComplexType> getAllComplexTypes() {
 		return complexTypes;
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#searchCType(java.lang.String)
 	 */
 	public ComplexType searchCType(String ctypeName) {
 		ComplexType ctype = null;
-		ctype = (ComplexType) this.nameToCTypeMap.get(ctypeName);
+		ctype = (ComplexType)this.nameToCTypeMap.get(ctypeName);
 		return ctype;
 	}
-
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#searchSimpleType(java.lang.String)
 	 */
 	public SimpleType searchSimpleType(String simpletypeName) {
 		SimpleType simpletype = null;
-		simpletype = (SimpleType) this.nameToSimpleTypeMap.get(simpletypeName);
+		simpletype = (SimpleType)this.nameToSimpleTypeMap.get(simpletypeName);
 		return simpletype;
 	}
-
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#searchIndependentElement(java.lang.String)
 	 */
 	public Element searchIndependentElement(String elementName) {
 		Element elem = this.nameToElemMap.get(elementName);
 		return elem;
 	}
+	
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getAllIndependentElements()
 	 */
 	public List<Element> getAllIndependentElements() {
 		// TODO Auto-generated method stub
 		return elements;
 	}
-
+	
 	/**
 	 * Adds the independent element.
-	 * 
-	 * @param element
-	 *            the element
+	 *
+	 * @param element the element
 	 */
 	public void addIndependentElement(Element element) {
 		elements.add(element);
-		this.nameToElemMap.put(element.getName(), element);
+		this.nameToElemMap.put(element.getName(),element);
 	}
 
-	/**
-	 * {@inheritDoc}
+
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getAllEnums()
 	 */
 	public List<EnumElement> getAllEnums() {
 		// TODO Auto-generated method stub
 		return enums;
 	}
-
+	
 	/**
 	 * Adds the enum.
-	 * 
-	 * @param enumElem
-	 *            the enum elem
+	 *
+	 * @param enumElem the enum elem
 	 */
 	public void addEnum(EnumElement enumElem) {
 		enums.add(enumElem);
@@ -179,90 +166,84 @@ public class XSDDocument implements XSDDocInterface {
 
 	/**
 	 * Adds the simple type.
-	 * 
-	 * @param type
-	 *            the type
+	 *
+	 * @param type the type
 	 */
 	public void addSimpleType(SimpleType type) {
 		simpleTypes.add(type);
 		this.nameToSimpleTypeMap.put(type.getName(), type);
 	}
-
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getAllSimpleTypes()
 	 */
 	public List<SimpleType> getAllSimpleTypes() {
 		// TODO Auto-generated method stub
 		return simpleTypes;
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getDocumentURL()
 	 */
 	public URL getDocumentURL() {
 		return this.documentURL;
 	}
-
+	
 	/**
 	 * Sets the document url.
-	 * 
-	 * @param url
-	 *            the new document url
+	 *
+	 * @param url the new document url
 	 */
 	public void setDocumentURL(URL url) {
 		this.documentURL = url;
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getElementComplexTypeMap()
 	 */
 	public Map<String, List<ComplexType>> getElementComplexTypeMap() {
 		return this.elemToComplexTypeMap;
 	}
-
+	
 	/**
 	 * Sets the element to complex type map.
-	 * 
-	 * @param elementCTypeMap
-	 *            the new element to complex type map
+	 *
+	 * @param elementCTypeMap the new element to complex type map
 	 */
-	public void setElementToComplexTypeMap(
-			Map<String, List<ComplexType>> elementCTypeMap) {
+	public void setElementToComplexTypeMap(Map<String, List<ComplexType>> elementCTypeMap) {
 		this.elemToComplexTypeMap = elementCTypeMap;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
+	
 	@Override
 	public String toString() {
-		StringBuffer retVal = new StringBuffer();
-		retVal.append("Complex Types\n");
+		StringBuffer retVal=new StringBuffer();
+		retVal.append("Complex Types\n" );
 		retVal.append("=========================================================\n");
-		if (complexTypes != null) {
-			for (ComplexType cType : complexTypes) {
+		if(complexTypes!=null){
+			for(ComplexType cType:complexTypes){
 				retVal.append("=========================================================\n");
 				retVal.append(cType.toString());
 				retVal.append("=========================================================\n");
 			}
 		}
-		retVal.append("Simple Types\n");
+		retVal.append("Simple Types\n" );
 		retVal.append("=========================================================\n");
-		if (simpleTypes != null) {
-
-			for (SimpleType cType : simpleTypes) {
+		if(simpleTypes!=null){
+			
+			for(SimpleType cType:simpleTypes){
 				retVal.append("=========================================================\n");
 				retVal.append(cType.toString());
 				retVal.append("=========================================================\n");
 			}
 		}
-
-		retVal.append("Independent Elements\n");
-		if (elements != null) {
-			for (Element cType : elements) {
-				if (cType.getContainerComplexType() == null) {
+		
+		retVal.append("Independent Elements\n" );
+		if(elements!=null){
+			for(Element cType:elements){
+				if(cType.getContainerComplexType()==null){
 					retVal.append("=========================================================\n");
 					retVal.append(cType.toString());
 					retVal.append("=========================================================\n");

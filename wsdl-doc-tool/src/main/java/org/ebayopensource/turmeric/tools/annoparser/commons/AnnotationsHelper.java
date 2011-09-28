@@ -110,7 +110,9 @@ public class AnnotationsHelper {
 	/**
 	 * Gets the call info.
 	 *
-	 * @param annInfo the ann info
+	 * @param comp the comp
+	 * @param operation the operation
+	 * @param isInput the is input
 	 * @return the call info
 	 */
 	public static List<ParsedAnnotationTag> getCallInfo(ParsedAnnotationInfo annInfo){
@@ -125,7 +127,7 @@ public class AnnotationsHelper {
 	/**
 	 * Gets the actual occurance.
 	 *
-	 * @param callInfo the call info
+	 * @param comp the comp
 	 * @param isInput the is input
 	 * @param operationName the operation name
 	 * @return the actual occurance
@@ -201,12 +203,6 @@ public class AnnotationsHelper {
 	}
 	
 	
-	/**
-	 * Process deprication.
-	 *
-	 * @param annInfo the ann info
-	 * @return the string buffer
-	 */
 	public static StringBuffer processDeprication(ParsedAnnotationInfo annInfo){
 		String deprVersion=getFirstAnnotationValue(annInfo, "DeprecationVersion");
 		String deprDetails=getFirstAnnotationValue(annInfo, "DeprecationDetails");

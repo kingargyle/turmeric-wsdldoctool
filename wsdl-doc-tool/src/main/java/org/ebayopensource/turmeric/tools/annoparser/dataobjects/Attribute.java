@@ -9,63 +9,59 @@
 package org.ebayopensource.turmeric.tools.annoparser.dataobjects;
 
 /**
- * Meant to be used as a holder for attribute of elements in a wsdl/xsd
- * document.
- * 
+ * Meant to be used as a holder for attribute of elements in a
+ * wsdl/xsd document.
+ *
  * @author srengarajan
  */
 public class Attribute {
-
+	
 	private String name;
-
+	
 	private String value;
-
+	
 	/**
 	 * getter for the attribute value.
-	 * 
+	 *
 	 * @return attribute value
 	 */
 	public String getValue() {
 		return value;
 	}
-
+	
+	
 	/**
 	 * setter for attribute value.
-	 * 
-	 * @param value
-	 *            the new value
+	 *
+	 * @param value the new value
 	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
-
+	
+	
 	/**
 	 * name of the attribute.
-	 * 
+	 *
 	 * @return attribute name
 	 */
 	public String getName() {
 		return name;
 	}
-
+	
+	
 	/**
 	 * setter for attribute name.
-	 * 
-	 * @param name
-	 *            the new name
+	 *
+	 * @param name the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
+	
 	@Override
 	public String toString() {
-		return " name='" + name + "' value='" + value + "'";
+		 return " name='" + name + "' value='" + value+"'";
 	}
 
 }

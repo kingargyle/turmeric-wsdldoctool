@@ -1,0 +1,27 @@
+This repository houses the WSDL documentation tool. A tool to generate service documentation from wsdl annotations.
+
+
+=Building from Source at the Command Line=
+
+==Prerequisites==
+
+The Turmeric project uses Maven 3.0 as a build tool and Git as the source
+code repository. It also requires Java 6.0. You must  install them before
+performing this task. These instructions assume  that you are running from
+the command line.
+
+* Apache Maven 3.0 installed.
+* Java 6.0
+
+== How can I build a local copy of the wsdldoctool component? ==
+
+# Download a copy of the Maven [[https://github.com/ebayopensource/turmeric-wsdldoctool/blob/master/settings.xml|settings.xml]] file and install in your local Maven repository.
+## Optionally you may store the settings.xml in another directory and specify -s <pathtosettings.xml> as part of your build.
+## For Linux users this is under your home directory, in a hidden directory called .m2.
+## For more information about settings.xml please visit the [[http://maven.apache.org/settings.html|Maven Reference page]].
+# Clone a copy of the WsdlDocTool source code. {{{git clone git://github.com/ebayopensource/turmeric-wsdldoctool.git}}}
+# Make sure you have an active Internet connection, which the build requires to download all required dependencies.
+# Once you have checked out the files, change to the directory where  you checked the files out, and you can start a build by running:{{{mvn clean install}}}
+# Unit tests run during the build. To skip these tests, use the following command instead:{{{mvn clean install -DskipTests=true}}}
+
+The build takes 1 to 5 minutes.

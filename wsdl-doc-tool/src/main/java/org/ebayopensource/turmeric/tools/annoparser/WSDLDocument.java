@@ -24,55 +24,62 @@ import org.ebayopensource.turmeric.tools.annoparser.dataobjects.SimpleType;
 
 /**
  * The implementation of WSDLDocInterface.
- * 
+ *
  * @author srengarajan
  */
 public class WSDLDocument implements WSDLDocInterface {
 
 	/** The xsd document defined in the WSDL. */
 	private XSDDocInterface xsdDocument = null;
-
+	
 	/** The service name. */
 	private String serviceName = null;
-
+	
 	/** List of all operations defined in the WSDl */
 	private List<OperationHolder> operations = new ArrayList<OperationHolder>();
-
+	
 	/** List of all port types defined in the WSDL. */
 	private List<PortType> portTypes;
-
+	
 	/** The package name. */
 	private String packageName;
-
+	
+	
+	
 	/** The annotations. */
 	private ParsedAnnotationInfo annotations;
+	
+	
 
 	/** The complete remote path. */
 	private String completeRemotePath;
-
-	/** Actual URL of the WSDL document. */
+	
+	/** Actual URL of the  WSDL document.*/
 	private URL documentURL;
 
-	/**
-	 * {@inheritDoc}
+
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getDocumentURL()
 	 */
 	public URL getDocumentURL() {
 		return documentURL;
 	}
-
+	
 	/**
 	 * Sets the document url.
-	 * 
-	 * @param documentURL
-	 *            the new document url
+	 *
+	 * @param documentURL the new document url
 	 */
 	public void setDocumentURL(URL documentURL) {
 		this.documentURL = documentURL;
 	}
 
+	
+
 	/**
 	 * Gets the operations.
-	 * 
+	 *
 	 * @return the operations
 	 */
 	public List<OperationHolder> getOperations() {
@@ -81,7 +88,7 @@ public class WSDLDocument implements WSDLDocInterface {
 
 	/**
 	 * Gets the xsd document.
-	 * 
+	 *
 	 * @return the xsd document
 	 */
 	public XSDDocInterface getXsdDocument() {
@@ -90,9 +97,8 @@ public class WSDLDocument implements WSDLDocInterface {
 
 	/**
 	 * Sets the xsd document.
-	 * 
-	 * @param xsdDocument
-	 *            the new xsd document
+	 *
+	 * @param xsdDocument the new xsd document
 	 */
 	public void setXsdDocument(XSDDocInterface xsdDocument) {
 		this.xsdDocument = xsdDocument;
@@ -105,106 +111,122 @@ public class WSDLDocument implements WSDLDocInterface {
 		super();
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface#getAllOperations()
 	 */
 	public List<OperationHolder> getAllOperations() {
 		return operations;
 	}
-
+	
 	/**
 	 * Sets the operations.
-	 * 
-	 * @param operations
-	 *            the new operations
+	 *
+	 * @param operations the new operations
 	 */
 	public void setOperations(List<OperationHolder> operations) {
 		this.operations = operations;
 	}
-
+	
 	/**
 	 * Adds the operation.
-	 * 
-	 * @param operation
-	 *            the operation
+	 *
+	 * @param operation the operation
 	 */
 	public void addOperation(OperationHolder operation) {
 		operations.add(operation);
 	}
 
-	/**
-	 * {@inheritDoc}
+
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface#getServiceName()
 	 */
 	public String getServiceName() {
 		return serviceName;
 	}
-
+	
 	/**
 	 * Sets the service name.
-	 * 
-	 * @param serviceName
-	 *            the new service name
+	 *
+	 * @param serviceName the new service name
 	 */
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getAllComplexTypes()
 	 */
 	public List<ComplexType> getAllComplexTypes() {
 		// TODO Auto-generated method stub
 		return xsdDocument.getAllComplexTypes();
 	}
+	
+	
 
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getAllIndependentElements()
 	 */
 	public List<Element> getAllIndependentElements() {
 		return xsdDocument.getAllIndependentElements();
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getAllEnums()
 	 */
 	public List<EnumElement> getAllEnums() {
 		return xsdDocument.getAllEnums();
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getAllSimpleTypes()
 	 */
 	public List<SimpleType> getAllSimpleTypes() {
 		return xsdDocument.getAllSimpleTypes();
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#searchCType(java.lang.String)
 	 */
 	public ComplexType searchCType(String name) {
-		if (xsdDocument != null) {
+		if(xsdDocument!=null){
 			return this.xsdDocument.searchCType(name);
 		}
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+
+	
+
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#searchIndependentElement(java.lang.String)
 	 */
 	public Element searchIndependentElement(String elementName) {
 		return xsdDocument.searchIndependentElement(elementName);
 	}
 
-	/**
-	 * {@inheritDoc}
+
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#getElementComplexTypeMap()
 	 */
 	public Map<String, List<ComplexType>> getElementComplexTypeMap() {
 		// TODO Auto-generated method stub
 		return xsdDocument.getElementComplexTypeMap();
 	}
-
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface#getPortTypes()
 	 */
 	public List<PortType> getPortTypes() {
 		return portTypes;
@@ -212,32 +234,31 @@ public class WSDLDocument implements WSDLDocInterface {
 
 	/**
 	 * Sets the port types.
-	 * 
-	 * @param portTypes
-	 *            the new port types
+	 *
+	 * @param portTypes the new port types
 	 */
 	public void setPortTypes(List<PortType> portTypes) {
 		this.portTypes = portTypes;
 	}
-
+	
 	/**
 	 * Adds the port type.
-	 * 
-	 * @param portType
-	 *            the port type
+	 *
+	 * @param portType the port type
 	 */
-	public void addPortType(PortType portType) {
-		if (portTypes == null) {
-			portTypes = new ArrayList<PortType>();
+	public void addPortType(PortType portType){
+		if(portTypes==null){
+			portTypes=new ArrayList<PortType>();
 		}
 		this.getPortTypes().add(portType);
 	}
 
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#searchSimpleType(java.lang.String)
 	 */
 	public SimpleType searchSimpleType(String name) {
-		if (xsdDocument != null) {
+		if(xsdDocument!=null){
 			return this.xsdDocument.searchSimpleType(name);
 		}
 		return null;
@@ -245,86 +266,64 @@ public class WSDLDocument implements WSDLDocInterface {
 
 	/**
 	 * Sets the package name.
-	 * 
-	 * @param packageName
-	 *            the new package name
+	 *
+	 * @param packageName the new package name
 	 */
-	public void setPackageName(String packageName) {
-		this.packageName = packageName;
+	public void setPackageName(String packageName){
+		this.packageName=packageName;
 	}
-
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface#getPackageName()
 	 */
 	public String getPackageName() {
-		return packageName;
+		return packageName;	
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see org.ebayopensource.turmeric.tools.annoparser.WSDLDocInterface#getCompleteRemotePath()
 	 */
 	public String getCompleteRemotePath() {
-
+		
 		return completeRemotePath;
 	}
 
 	/**
 	 * Sets the complete remote path.
-	 * 
-	 * @param completeRemotePath
-	 *            the new complete remote path
+	 *
+	 * @param completeRemotePath the new complete remote path
 	 */
 	public void setCompleteRemotePath(String completeRemotePath) {
 		this.completeRemotePath = completeRemotePath;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public ParsedAnnotationInfo getAnnotations() {
 		return annotations;
 	}
 
-	/**
-	 * Sets the annotations.
-	 * 
-	 * @param annotations
-	 *            the new annotations
-	 */
 	public void setAnnotations(ParsedAnnotationInfo annotations) {
 		this.annotations = annotations;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.ebayopensource.turmeric.tools.annoparser.XSDDocInterface#
-	 * getParentToComplexTypeMap()
-	 */
 	@Override
 	public Map<String, Set<String>> getParentToComplexTypeMap() {
-
+		
 		return xsdDocument.getParentToComplexTypeMap();
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
+	
 	@Override
 	public String toString() {
-		StringBuffer retVal = new StringBuffer();
+		StringBuffer retVal=new StringBuffer();
 		retVal.append("Service Name " + serviceName + "\n");
-		retVal.append("Service Domain " + packageName + "\n");
-		if (annotations != null) {
-			retVal.append(serviceName + " Annotations: \n");
+		retVal.append("Service Domain " + packageName+ "\n");
+		if(annotations!=null){
+			retVal.append(serviceName+" Annotations: \n");
 			retVal.append("=========================================================\n");
 			retVal.append(annotations.toString());
 			retVal.append("=========================================================\n");
 		}
-		if (portTypes != null) {
-			for (PortType port : portTypes) {
+		if(portTypes!=null){
+			for(PortType port:portTypes){
 				retVal.append(port.toString());
 			}
 		}
