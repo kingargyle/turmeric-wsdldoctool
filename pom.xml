@@ -1,67 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ================================================================== -->
-<!--  Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.            -->
-<!--  Licensed under the Apache License, Version 2.0 (the "License");   -->
-<!--  you may not use this file except in compliance with the License.  -->
-<!--  You may obtain a copy of the License at                           -->
-<!--                                                                    -->
-<!--     http://www.apache.org/licenses/LICENSE-2.0                     -->
+<!-- Copyright (c) 2006-2010 eBay Inc. All Rights Reserved. -->
+<!-- Licensed under the Apache License, Version 2.0 (the "License"); -->
+<!-- you may not use this file except in compliance with the License. -->
+<!-- You may obtain a copy of the License at -->
+<!-- -->
+<!-- http://www.apache.org/licenses/LICENSE-2.0 -->
 <!-- ================================================================== -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.ebayopensource.turmeric</groupId>
-    <artifactId>turmeric-project</artifactId>
-    <version>1.1.0.2-SNAPSHOT</version>
-  </parent>
-  <groupId>org.ebayopensource.turmeric.wsdldoc</groupId>
-  <artifactId>turmeric-wsdldoc-parent</artifactId>
-  <version>1.0.0.0-SNAPSHOT</version>
-  <name>Turmeric WSDL DOC:: Parent</name>
-  <packaging>pom</packaging>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.1</version>
-        <configuration>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-          <tagBase>http://www.ebayopensource.org/svn/turmeric/soa-platform/tags</tagBase>
-        </configuration>
-      </plugin>
-      <plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
-        <configuration>
-           <show>package</show>
-           <excludePackageNames>*.impl.*</excludePackageNames>
-        </configuration>
-	<executions>
-	  <execution>
-	    <id>wsdldoc-javadocs</id>
-	    <goals>
-		<goal>jar</goal>
-	    </goals>
-	  </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <modules>
-    <module>wsdl-doc-tool</module>
-  </modules>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.ebayopensource.turmeric</groupId>
+		<artifactId>turmeric-project</artifactId>
+		<version>1.1.0.3</version>
+	</parent>
+	<groupId>org.ebayopensource.turmeric.wsdldoc</groupId>
+	<artifactId>turmeric-wsdldoc-parent</artifactId>
+	<version>1.0.0.0-SNAPSHOT</version>
+	<name>Turmeric WSDL DOC:: Parent</name>
+	<packaging>pom</packaging>
+	<scm>
+		<connection>scm:git:git@github.com:ebayopensource/turmeric-wsdldoctool.git</connection>
+		<developerConnection>scm:git:git@github.com:ebayopensource/turmeric-wsdldoctool.git</developerConnection>
+		<url>scm:git:git@github.com:ebayopensource/turmeric-wsdldoctool.git</url>
+	</scm>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<show>package</show>
+					<excludePackageNames>*.impl.*</excludePackageNames>
+				</configuration>
+				<executions>
+					<execution>
+						<id>wsdldoc-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<modules>
+		<module>wsdl-doc-tool</module>
+	</modules>
 </project>
