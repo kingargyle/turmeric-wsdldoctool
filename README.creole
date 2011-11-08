@@ -15,7 +15,7 @@ the command line.
 
 == How can I build a local copy of the wsdldoctool component? ==
 
-# Download a copy of the Maven [[https://github.com/ebayopensource/turmeric-wsdldoctool/blob/master/settings.xml|settings.xml]] file and install in your local Maven repository.
+# Download a copy of the Maven [[https://github.com/ebayopensource/turmeric-releng/blob/master/settings.xml|settings.xml]] file and install in your local Maven repository.
 ## Optionally you may store the settings.xml in another directory and specify -s <pathtosettings.xml> as part of your build.
 ## For Linux users this is under your home directory, in a hidden directory called .m2.
 ## For more information about settings.xml please visit the [[http://maven.apache.org/settings.html|Maven Reference page]].
