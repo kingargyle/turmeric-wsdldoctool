@@ -60,4 +60,79 @@
 	<modules>
 		<module>wsdl-doc-tool</module>
 	</modules>
+	   <repositories>
+	      <repository>
+                 <id>ebaythird-party</id>
+                 <name>eBayOpenSource Third Party Public</name>
+                 <url>http://www.ebayopensource.org/nexus/content/groups/public/</url>
+                 <releases>
+                    <enabled>true</enabled>
+                 </releases>
+                 <snapshots>
+                    <enabled>false</enabled>
+                 </snapshots>
+              </repository>
+	      <repository>
+		 <id>ebayopensource-releases</id>
+		 <name>eBayOpenSource Release Repository</name>
+		 <url>http://www.ebayopensource.org/nexus/content/repositories/releases</url>
+		 <releases>
+		    <enabled>true</enabled>
+		 </releases>
+		 <snapshots>
+		    <enabled>false</enabled>
+		 </snapshots>
+	      </repository>
+	      <repository>
+		 <id>ebayopensource-snapshots</id>
+		 <name>eBayOpenSource Snapshots Repository</name>
+		 <url>http://www.ebayopensource.org/nexus/content/groups/all-snapshots</url>
+		 <releases>
+		    <enabled>false</enabled>
+		 </releases>
+		 <snapshots>
+		    <enabled>true</enabled>
+		    <updatePolicy>interval:30</updatePolicy>
+		    <checksumPolicy>warn</checksumPolicy>
+		 </snapshots>
+	      </repository>
+	   </repositories>
+	   <pluginRepositories>
+              <pluginRepository>
+                 <id>ebaythird-party</id>
+                 <name>eBayOpenSource Third Party Public</name>
+                 <url>http://www.ebayopensource.org/nexus/content/groups/public/</url>
+                 <releases>
+                    <enabled>true</enabled>
+                 </releases>
+                 <snapshots>
+                    <enabled>false</enabled>
+                 </snapshots>
+              </pluginRepository>
+	      <pluginRepository>
+		 <id>ebayopensource-releases</id>
+		 <name>eBayOpenSource Release Repository</name>
+		 <url>http://www.ebayopensource.org/nexus/content/repositories/releases</url>
+		 <releases>
+		    <enabled>true</enabled>
+		 </releases>
+		 <snapshots>
+		    <enabled>false</enabled>
+		 </snapshots>
+	      </pluginRepository>
+	      <pluginRepository>
+		 <id>ebayopensource-snapshots</id>
+		 <name>eBayOpenSource Snapshots Repository</name>
+		 <url>http://www.ebayopensource.org/nexus/content/groups/all-snapshots</url>
+		 <releases>
+		    <enabled>false</enabled>
+		 </releases>
+		 <snapshots>
+		    <enabled>true</enabled>
+		    <updatePolicy>interval:30</updatePolicy>
+		    <checksumPolicy>warn</checksumPolicy>
+		 </snapshots>
+	      </pluginRepository>
+	   </pluginRepositories>
+
 </project>
